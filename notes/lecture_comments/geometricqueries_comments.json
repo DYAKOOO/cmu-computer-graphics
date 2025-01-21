@@ -1,0 +1,194 @@
+{
+  "metadata": {
+    "lecture_name": "geometricqueries",
+    "total_slides_with_comments": 22,
+    "last_slide_number": 31,
+    "total_comments": 140
+  },
+  "comments": {
+    "slide_2": [
+      "Are these slides from a previous semester? The video does not mention them and, unless I'm going crazy, there was no quiz.",
+      "Did we go over this material previously? The slide says review, but I do not remember going over this material in previous classes."
+    ],
+    "slide_3": [
+      "Why it goes as V-E+F=2 here? It feels like giving us a negative number here.",
+      "Why this is neglected?  since it prevent us from turning it into metrics?"
+    ],
+    "slide_8": [
+      "Couldn't we still experience some loss of information/aliasing after projecting onto the closest point? Or is this intended to mitigate, not solve, the aliasing problem?",
+      "What's an actual situation that we need to repetitively downsample and upsample a model?",
+      "Are there any applications that would require downsampling and then upsampling?",
+      "if we downsample and then upsample again, why will the result be much different than the original?"
+    ],
+    "slide_9": [
+      "I think in one of the previous lectures, when testing for rasterization, there was a decomposition idea about subdividing the problem. Can we apply the same technique and test on \"undersampled\" mesh to narrow down the set of triangles, before testing on a more fine-grained mesh?",
+      "Implicit representation probably makes equation solving easier.",
+      "Why would HalfEdge data structure, which does not encode any distance relation, help this problem?",
+      "Maybe I missed when you said it, but what is the point of these closest point queries? What use cases are there for such a query?",
+      "For the halfedge data structure, we've made so many assumptions on how the halfedges' vertex and face are stored. Would this also be a problem?",
+      "Maybe implicit representation will make things easier? We can plug in the coordinate of point into the function and the value we get can represent the distance of the point to the surface.",
+      "I\u2019m somehow find it hard to believe that our halfedge data structure can help determine points of intersection? Unless there is a distance parameter I\u2019m missing, I think you need to have other information to help calculate closest points and stuff",
+      "Maybe we can use halfedges to find some points connected with this given one, so that we narrow down the scope?",
+      "Is there some way to utilize the normal of vertices to find the minimum distance?",
+      "If it is a close enough point rather than a strict closet point? it is ok?",
+      "I think for the first task, an implicit approach is easier. just express the distance from p as a sphere function, and we can find the points that are in the smallest radius possible",
+      "What scenarios would we want to find the closest point?",
+      "Is it possible to use a mix of geometry representations to get better closest point queries?"
+    ],
+    "slide_12": [
+      "I'm a bit confused on where the logic/intuition for this approach comes from. What are x and c?",
+      "What is N here? I looks like a vector perpendicular to the line, but why the multiplication between it and x simulate a line? Is c a constant?",
+      "^ I think c is a constant and x is a point that satisfies the \"nTx = c\"\nBut I am also a little confused about \"nT\", is nT just a vector parallel to the line? And how is t defined here?",
+      "Can this same formula be used to compute the closest on any hyper plane for R^n?",
+      "Could you also do this by writing p in the basis formed by the normal and the line as unit vectors?",
+      "Could you just write this in coordinated version so we can understand it more easily?",
+      "I understand that N is the normal to the line, but then N^T x is the dot product of N and the vector to some point x on the line, but then is this constant because we know that for some x and y on the line, N^T(y-x) = 0?",
+      "It seems like a linear equation to be solved, I guess the matrix could work here.",
+      "Could there possibly be an example of this? I do not quite understand what these abstract variables mean."
+    ],
+    "slide_14": [
+      "If we used barycentric coordinates, wouldn't we be able to easily distinguish between all seven cases?",
+      "Does barycentric interpolation work for points outside the triangle?",
+      "I think barycentric coordinates won't work for distinguishing all these cases. It only calculates the distance ratio, but distance should always be nonnegative?",
+      "I a little bit confused about the term \"possibility\" here. What does \"possibility of closest point\" refer to?",
+      "Can you explain the \"possibility\" a bit more here?",
+      "Using barycentric interpolation, we can find the location relative to the triangle.",
+      "If a query point is inside the triangle, would the closest point not be itself?",
+      "If we use barycentric coordinates just to tell whether the point is in the triangle, would that make the operation cheaper?",
+      "What is possibility? Do you mean that all the possible options to place the point around the triangle ?",
+      "I get that people ask about barycentric coordinates, but aren't those specific to each triangle? So how would we use those coordinates for points outside the triangle?",
+      "Could we write these cases into one matrix?"
+    ],
+    "slide_15": [
+      "A bit confused about where the triangle is here - it seems like we have a triangle with a non-zero height?",
+      "Is half space test literally the same thing as the half plane test except in 3D?",
+      "I'm confused about what the planes here are for. Are we combining the plane test with the space test?",
+      "What are different considerations we have to make for half space vs. half plane tests?",
+      "If you're trying to see if the projection of the point is in the triangle, why can't you do 3 half plane tests?"
+    ],
+    "slide_16": [
+      "How do people in computer graphics balance the efficiency improvement that spatial data structures provide against their overhead? For example, in one of the early lectures, it was mentioned that a hierarchical structure could be used for rasterizing a triangle, yet in practice, such structures generally were not used due to their overhead. Does something similar occur for geometric queries?",
+      "What would happen if we wanted to reconstruct a mesh that was not a triangle mesh? Are there algorithms to do this? Or are there algorithms to break non-triangular meshes into triangular meshes?",
+      "Would it be a large waste to compute on all triangles in parallel?",
+      "Could this be done much more efficiently (but still using the same representation) by utilizing a coarse-to-fine approach?",
+      "How would we select or define subset of triangles to loop through?",
+      "Would there be any situation this 'simple' way is preferred over complex but faster alternative solutions?",
+      "Can we project the point to the mesh in some way, and find the closest triangle?",
+      "Are there special ways to downsample a mesh which try to maintain closest distance query accuracy?",
+      "Are there algorithms that find this without checking every single triangle by say starting at a triangle and moving closer and closer to the point? Or is that inefficient/incorrect?"
+    ],
+    "slide_17": [
+      "I was thinking about when the algorithm should stop and thought about two possibilities: checking if the function value drops below a certain threshold, or multiplying the gradient by a scalar between 0 and 1 until the point converges. In practice, which of these methods are used? Which of these methods are better?",
+      "How much significant is the memory tradeoff in practice of storing the closest point?",
+      "How would we know what the bounds should be for the grid cells that we are storing information in?",
+      "Which direction should we go when doing the gradient move?",
+      "Is there a way to vary the step size when we are finding a closest point, since we want to step faster when we are far away from the zero-distance surface and slower when we are closer?",
+      "Is this a kind of greedy algorithm?",
+      "In 2D, we can just store the closest point in each pixel since we already have that nice grid. But how would that work in 3D? Would you just store a 3D grid of x, y, z positions? This doesn't seem to work as nicely as 2D (among other issues, how would you decide how deep to go in z when building the grid?)",
+      "Another question: why do we need to take small steps? Why can't you just move a distance equal to the value of the distance function in the direction of the negative gradient, in one big step?",
+      "How do we know what to make the step size? In some cases, it might be really inefficient to have a small step size, but in other cases, we might miss the boundary if we have a large step size.",
+      "Wouldn't this be less accurate than the explicit representation one?",
+      "Is there an intelligent way to update the closest point of each grid point if we move/animate the object?",
+      "This is much faster than the explicit expression. And you can do tradeoffs between performance and memory.",
+      "I think I forgot what we talked before, but what is an implicit surface? From my search, I found it is some surface cannot be computed for x,y,z. Why is it hard for computing x,y,z for it?",
+      "Do we ever want to apply gradient descent to an explicit representation or would this be impractical to do compared to the ray tracing approach?",
+      "This looks like a gradient descent. Would Newton method give a better result here if the distance function is differentiable?",
+      "Is this the standard way for computing these points in the real world or is there some other similar-type algorithm that is performed on graphics hardware?",
+      "Which direction should the step we take be in?",
+      "What are the tradeoffs between implicit and explicit closest point queries? Are there cases where we would convert from one representation to the other just for doing queries?",
+      "Are there any guarantees that we would find the closest point on the surface? Intuitively, it seems that the greedy approach might give us approximately the closest point most of the time, but it might go wrong sometimes.",
+      "How accurate would the closest point have to be? Since explicit would be more accurate right?",
+      "Usually does the specialized hardware aim to improve on the speed or memory of these alogrithms?",
+      "If we try this on larger graphs, would there be situations where it takes up so much memory that the cache slows things down rather than speeding it up?",
+      "What is tradeoff between accuracy and computational complexity?",
+      "How difficult is it to store a signed distance function for a surface instead of the surface itself?"
+    ],
+    "slide_18": [
+      "Is ray tracing used for light sources in Computer Graphics? If so, how can it be rasterized properly since a light source would have infinitely many rays shooting out?",
+      "What data structure can be used to prevent from calculating all triangles?",
+      "How is it more efficient to pierce a ray through all triangles as an alternative to calculating the distance from a point to all triangles?",
+      "By multiple points, do you mean it can go through a surface and come out from the other side?",
+      "If a ray intersects the surface multiple times, how would that impact our representation? Technically, the first point would be represented since it\u2019s the first thing we see, but it seems wasteful to just ignore all the other possible intersections",
+      "How is ray used in collision detection?",
+      "Are rays used in collision detections by checking the order of which shape was intersected by the ray",
+      "Is there any reason we would have ray-ray intersection? maybe atmospheric effects of something idk",
+      "How do we determine the direction of a ray in performing ray-related operations?"
+    ],
+    "slide_19": [
+      "Do we trace it until the ray hits the \"Boundary\" of the world so t does not go to infinity?",
+      "Following the previous question, what happens if the shape we want to intersect the plane with is clipped at the \"boundary?\" Wouldn't that gives us the wrong result for, say, an inside-outside test?",
+      "Is the unit direction here similar as what we used (tangent.normalize() or normal.normalize()) in a2? Is it the amount of increase for each unit in the certain direction?",
+      "Why would ray tracing perform better than rasterization? What makes the difference?",
+      "Can ray tracing be used with explicit representations?"
+    ],
+    "slide_20": [
+      "Does it ever make sense to do ray intersection testing when the form of the implicit surface doesn't admit a simple algebraic solution for t? Or is it the case that in practice you always model implicit surfaces in such a way that guarantees intersections can be easily computed when doing ray tracing?",
+      "Does it ever make sense to approximate an implicit surface in a form that doesn't naturally admit simple algebraic solutions for ray intersection to a form that does admit simple algebraic solutions for ray intersection?",
+      "What would t be for a ray that lies directly a plane?",
+      "^ I guess t can be any value in that case",
+      "If we are trying to find the intersections of a ray with a mesh with many surfaces, is there a way to filter out some surfaces and speed up our search, since solving for intersections with every surface seems inefficient.",
+      "What if we have an explicit surface instead?",
+      "For \"uglier\" implicit surfaces, solving the equation could be much harder. Are there any other solutions for these situations?",
+      "Isn't it more effective to use explicit surfaces than implicit surfaces for more general cases?",
+      "Solving some hard equations is time-consuming. Are there any ways to solve that?",
+      "If the answer ends up being imaginary, is there some nice geometric explanation based on our discussion with imaginary numbers?",
+      "Is there a way to search for only a select few surface? How long does this operation take in practice?"
+    ],
+    "slide_21": [
+      "In real software (like Scotty3D), do we check (add an if statement) for division by zero or we define a point at infinity to handle this case?",
+      "What happens when the ray is completely on the plane?"
+    ],
+    "slide_22": [
+      "Is there an optimal ray triangle intersection algorithm, or do some work better than others in specific cases?",
+      "Is there any specific reasons that we use barycentric coordinates? Why not simply do a in-triangle check in the plane?"
+    ],
+    "slide_23": [
+      "I'm curious about how the performance of geometric queries is typically quantified between implementations such as Embree and OptiX - are there standard workloads or benchmarks that are commonly used in practice?"
+    ],
+    "slide_24": [
+      "Relating to the example videos of combining ray tracing and rasterization, how does one in practice decide when to use each scenario? Is this formatted as some optimization problem with photo-realistic rendering or are there clear cases to apply each?",
+      "It seems like ray tracing is most commonly used for lighting / coloring. Are there other uses where the hardware acceleration of ray tracing is exploited?"
+    ],
+    "slide_25": [
+      "This seems like an insanely expensive task for a complicated mesh. Will we see algorithms for this?",
+      "What's the difference between an intersection happened for geometry and a collision occurred for animation?",
+      "Do people use these checks to run physics simulations with 3d meshes? Such as preventing collisions?",
+      "How does collision detection work in video games where there can be thousands of moving objects at any time?",
+      "What is the definition for intersection? Does this mean edge intersection?",
+      "Some elements might want to be able to intersect with other elements while some elements may not wish to do so (e.g. liquid vs solid). How can we differentiate these qualities in meshes/animation?",
+      "For unintended intersections, are they always checked for everywhere in a render or could a render potentially ignore them in certain places if it determines if it would not be visible, or would that have a further adverse effect?",
+      "I assume that the mesh would also depend on the material/physics of the material. Would you just check for collision and do another action according to the material?",
+      "How do we detect these intersections and collisions?",
+      "I'm assuming we'd use vector calculus (similar to line intersection of some kind, but also with planes/meshes) to determine this?"
+    ],
+    "slide_26": [
+      "Is there ever a need to consider two points the same even if they are not exactly overlapping with each other, for example in applications with numerical instability or if floating point errors cause the coordinates to slightly differ, etc.?"
+    ],
+    "slide_28": [
+      "Is solving the system the most efficient way, or is doing something such as using homogenous coordinates and taking the cross product of the planes formed by the lines preferable?"
+    ],
+    "slide_29": [
+      "Would one way to account for this situation is to see whether the slopes of the two lines are different by some threshold (if they are too similar, say that they don't intersect)?",
+      "How can you detect this case happening? Do you just check that the slopes are within some small threshold?",
+      "If we want to find the intersection of two lines that are almost parallel, can we find the segment of the degenerate intersection and take the midpoint since it is symmetric?",
+      "Does this mean that mesh/mesh intersection is really only difficult if the mesh is moving?",
+      "Is this easier to do if both lines are stored implicitly?",
+      "Would overlapping lines also fall under the degenerate intersection case? since it would cause a change from many intersections to just one.",
+      "Can't we project the problem into a different set of coordinates, where the lines are not as parallel and we don't run into floating point numbers, then project back?"
+    ],
+    "slide_30": [
+      "In the edge-triangle intersection check, is there any value to knowing how much the two triangles intersected? Or can we also harvest these potential benefits using a more fine-grained mesh?",
+      "I don't think there is any way for two triangles to intersect without an edge of one intersecting with the other. For an intersection to occur, there must be some points shared by both triangles by definition. From a barycentric perspective, these shared points must be linear combinations of the vertices of both triangles. From this it is visually clear that there must be some point along the edge of the triangle at which the intersection begins.",
+      "Do we ever care about the line segment where the intersection occurs, or are we only interested in the yes/no answer?",
+      "Would edge sharing or surface sharing be considered intersection?",
+      "Would Minkowski sum help here to find intersection?",
+      "If we represent triangles with prisms, how do we tell the difference between collisions and when the paths of the triangles cross, but they don't actually collide because they're not at the same place at the same time?",
+      "There are different cases here. It can either be two rays from the same triangle intersects the other triangle (on the left), or one ray from each triangle intersects the other triangle. Cannot think about if there're other cases.",
+      "What if motion in time isn't linear? Do our algorithms get much more complicated to check for intersection?"
+    ],
+    "slide_31": [
+      "Are there specialized hardware designed for fast querying?",
+      "How would we define sizing of the bounding boxes?"
+    ]
+  }
+}

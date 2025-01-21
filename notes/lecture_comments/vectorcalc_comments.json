@@ -1,0 +1,271 @@
+{
+  "metadata": {
+    "lecture_name": "vectorcalc",
+    "total_slides_with_comments": 38,
+    "last_slide_number": 51,
+    "total_comments": 185
+  },
+  "comments": {
+    "slide_3": [
+      "These animations are cool",
+      "Is the rabbit animation achieved by scaling the 'derivative' of a surface? It almost looks like it uses polar coordinates since it collapse down to a sphere"
+    ],
+    "slide_4": [
+      "Since norms can also be quantities like brightness or differences in brightness, how would rotations/translations/reflections affect the image/would those quantities be affected in a weird way or would that just rotate/translate/reflect the image",
+      "Thinking about 'Canonicalizing Things' in the last exercise, will we calculate the norm in a non-orthonormal basis via the same canoicalizing process?"
+    ],
+    "slide_5": [
+      "If there is no geometric meaning if the coordinates are not from an orthonormal basis, then where do we uses inner products for non-orthonormal basis? Or do we rather convert the coordinates into an orthonormal basis and then do the inner product to get a geometric meaning out of it?",
+      "It sounds like most things play nice with an orthonormal basis. Is it a good idea then to wrap all operations into a process that first converts vectors to an orthonormal basis and then applies said operation?",
+      "Is there a good visualization/intuition for why the dot product is meaningless without an orthonormal basis?"
+    ],
+    "slide_6": [
+      "What about the cross product for 7 dimensions? I'm assuming we won't necessarily be using it, I just don't really know much about it other than that it exists.",
+      "What are some use cases in which we would want to use a negative area/how can area be negative?",
+      "If we wanted something that worked similarly in 4D, would we have an operator that takes three vectors and returns a fourth?",
+      "Why does the direction matter here? If we only want to use the cross product to get a vector orthogonal to both vectors, both direction should work. Is there any practical reason that forces us to figure out its direction?",
+      "Didn't really get it for 2d. Why we will use it in 2D?",
+      "Does cross product have any meaning in higher dimensional space?",
+      "I think some software or system tend to use left-handed coordinate systems, I wonder which is more general for CG and why the aother would be used in nother scenarios?",
+      "Suppose u and v have both coordinates in meters, for example. It just occurred to me that the cross product would have all of its coordinates have units of square meters. This somehow suggests that the cross product (from a more physics / physical interpretation) doesn't really represent a vector of the same \"kind\" as the two input vectors. Is there something more to be said about this observation?"
+    ],
+    "slide_7": [
+      "Is there a geometric meaning for the notation abuse in 2D?",
+      "Whats the derivation for the cross product? Can it be derived from the \"More precise definition above\"?",
+      "How does one get an intuition for the determinant in a way that is not dependent on geometry? This is a vague question, and it's definitely dependent on context, but I've generally gotten intuition for it in the past as a \"scaling factor\" on volume and I'm just curious to see other ways to make sense of it."
+    ],
+    "slide_8": [
+      "I'm having trouble understanding the concept. A quarter rotation simply means rotation of 90 degrees right? It doesn't indicate the direction it rotates to. But cross product has a specific direction.",
+      "Are there any other ways to represent rotations in graphics?",
+      "Can we use the rotation matrix to get a rotation by arbitrary angle?",
+      "u and (N x u) form an orthogonal (not necessarily normal) basis for the plane, so I believe to achieve an arbitrary rotation theta, we can take cos(theta) times u, and sin(theta) times (N x u)",
+      "The wording \u201cquarter rotation in the plane with normal N\u201d suggests that the vector nxu is a quarter rotation from the vector u specifically. Isn\u2019t the vector nxu a quarter rotation, or 90 degrees, away from both n and u?",
+      "We can take additional cos(theta) to make it?",
+      "I think cos(theta)u + sin(theta)(N x u) would do the trick?",
+      "Is this the most common way to perform rotations on vectors and objects in computer graphics or are there other methods that are more commonly used or efficient?",
+      "Is there a simple intuition for cross products in higher dimensions?"
+    ],
+    "slide_9": [
+      "I guess A^T = A would be true for every inner product. As by its defn, it should satisfy <u,v> = <v,u>. Therefore, u1v2 and u2v1 should have the same coefficient, and hence the upper right and lower left entry should have the same value, so it would always be symmetric.",
+      "I think this is because that inner product should be symmetric by definition.",
+      "bacause only when A=AT, <u,v> can be equal to <v,u>",
+      "Since <u,v> = <v,u>. If it is not symmetric, it doesn't not obey the definition.",
+      "Yes, because <u,v> = <v,u>."
+    ],
+    "slide_10": [
+      "What's the derivation for u hat here? I'm lost on how we got there.",
+      "I have the same question, how did we get u hat?",
+      "I think u hat is obtained similarly like how we obtain matrix to represent the dot product, where we first compute the result of cross product, and compare it with v to figure what each entry is on the matrix?",
+      "How did we get -uv = u^Tv? Does this generally hold or is it a special property of u hat?",
+      "How do we generalize the procedure from u to u_hat with vectors that represent other dimensions?",
+      "Is it possible to elaborate the last proven more?",
+      "Can we approximate all transformations with matrix representation in graphics?",
+      "How do we get u_hat?"
+    ],
+    "slide_12": [
+      "Why is taking the dot product with the third vector equivalent to multiplying by the length?",
+      "How does the determinant formula generalize to arbitrary dimensions?",
+      "Where did the dot product come from?",
+      "Is this parallelepiped supposed to look this skewed? It seems to be that the diagram suggests that every side looks different, but shouldn't each vertex be either vector u, v, or w?",
+      "To add to fzeng's question, is there some geometric interpretation of taking the determinant with an arbitrary number of vectors?",
+      "For what purpose is it useful to know the volume of the parallelepiped formed by these vectors?",
+      "Is there any intuition behind how the algebraic representation of the determinant leads to that geometric interpretation? I get that the determinant satisfies those properties of signed volume, but why is it this way?",
+      "What exactly do we mean by 'signed' volume here? When do we say the volume is positive and when do we say it is negative?",
+      "How is this meaningful in defining the determinant, since we don't usually use the determinant in this way in its applications?",
+      "Why is the sign of the volume important? Also, for the initial u, v, w order in the input of the determinant, how would one choose which order is the right one for their calculations?",
+      "Though we may not actually use it in practice, how would we find the determinant for dimensions greater than 3, and what would that determinant mean in terms of the matrix for these larger dimensions?",
+      "Why does computing the determinant of three vectors equal to a cross product and a dot product operation?",
+      "Is volume ever going to be negative? I would think probably not for physical simulations and the like, right? Also can the triple product formula ever generalize out or do we have to switch back to calculating sub-determinants after the third dimension?",
+      "What is a parallelpiped?",
+      "Why do we use dot product here?",
+      "what is the physical meaning of triple product?"
+    ],
+    "slide_15": [
+      "If Det(A) is the change in volume, I would expect the sign to indicate whether the volume increased or decreased rather than the orientation. Can I get some more insight on why it doesn't tell me the increase/decrease of volume?",
+      "Can a given linear map only mirror once? If you mirror horizontally and then vertically, is this equivalent to no mirroring? The fact that the determinant can only either be positive or negative would suggest this.",
+      "How does it measure the change in volume? Could we go over it more in class?",
+      "What happens if the determinant is zero? (can there be a case?)",
+      "Does this mean the change in volume from a cube with dimensions (1,1,1)?",
+      "How would this apply to structures that are difficult to represent with matrices?",
+      "Can we think of the matrix as implementation and determinant as an abstract concept?",
+      "if the direction changes along two dimensions, will the result still be positive?",
+      "Why do we care about the change in volume and could we do a mathematical example about how the determinant tells the change in volume?",
+      "Not exactly familiar with how determinant describes a change in volume. How would we take the determinant in the above two cases to show that? Could we get examples?",
+      "Do determinants represent anything for higher dimension matrices?"
+    ],
+    "slide_16": [
+      "Why is u x (v x w) the altitude of the triangle that hits the base represented by u? I'm having a tough time visualizing this.",
+      "I was trying to think of the geometric interpretation but could not. As far as I know, given LaGrange's identity, I think that the cross product of three vectors is the volume of their respective parallelepiped. However, I can't really visualize the right hand side of the identity. I'm thinking that it could be a different way to calculate the volume...",
+      "In what circumstances we can use these identities in CG?",
+      "I'm a little confused about the correspondence between the provided diagram and the Jacobi identity. Is it illustrating a special case of some kind? The identity seems to hold for arbitrary u, v, and w whose lengths, in general, need not satisfy the triangle inequality.",
+      "In v(u dot w), what is the operator between v and (u dot w)?",
+      "From a visualization perspective, is the Jacobi Identity true because each of the terms, e.g. u x (v x w), represents a vector stemming out from the triangle (basically reflect each altitude against the side to which it is perpendicular)?",
+      "How is the Jacobi identity working in this illustration? I can see that (v x w) would be orthogonal to the triangle, and then u x (v x w) would be perpendicular to u, but why is the result 0 when you sum all three?"
+    ],
+    "slide_18": [
+      "Are approximations ever used to approximate the derivative at certain points?",
+      "How do we deal with functions that are not differentiable in CG?",
+      "How do we compute derivatives on computers in practice? Do we use a very small epsilon?",
+      "How do we compute the derivative for discretized images where we cannot use the limit definition? Do we weight closer points more than farther away points when computing the slope using nearby points?"
+    ],
+    "slide_19": [
+      "Is quadratic usually sufficient for a good approximation? What situations require greater-than-quadratic approximation?",
+      "How quickly does the error term for the approximation shrink as we expand the Taylor series?",
+      "How strict is the tradeoff between number of operations to compute the approximation and how good the approximation is? At what point would you say \"that's enough\"?",
+      "Since the Taylor series have an error term at the very end, replacing complicated functions with approximation could be helpful but error prone. How can we determine whether the error term ignored would not have a negative influence.",
+      "Is there a function we can use to approximate the error for the Taylor series? There are definitely ways to generate upper bounds, but I feel like there are times when the upper bound is not tight enough.",
+      "How does quadratic approximation help with graphics algorithm?",
+      "in practice, how many terms of taylor expansion do we usually consider taking? for the tradeoff between accuracy and computational cost",
+      "How do we make linear approximations when the function is not differentiable/non-continuous?"
+    ],
+    "slide_20": [
+      "Maybe this is slightly off-topic / meta, but what software do you use to generate these graphics? They look really nice!"
+    ],
+    "slide_22": [
+      "Here, we assumed that u was a unit vector. Aren't there times where we would want to relax that condition?",
+      "Does there exist another formula of directional derivative other than the limit one?",
+      "I'm not sure if this was covered elsewhere and I missed it, but how do we handle the directional derivative if the function is not differentiable? Or do we avoid computing it altogether?",
+      "What are the common use cases of directional derivative in CG?",
+      "Similar to above question: how often are our datasets/objects 'smooth'? Is much effort spent on ensuring models are?"
+    ],
+    "slide_23": [
+      "Is the gradient usually approximated in graphics? Or does it depend on the function?",
+      "how does gradient work if we have many directions"
+    ],
+    "slide_24": [
+      "What does it mean that there is no finite list of coordinates for functions of functions? As in that, there are functions that take in an infinite number of variables?"
+    ],
+    "slide_26": [
+      "Can you clarify how this term changes depending on the direction we move? I'm not sure I fully understand how this approximation works",
+      "What is the relationship between the gradient and the tangent plane?",
+      "Why can we consider each coordinate independently when calculating direction of greatest change?",
+      "it's clearly that this approximation has a limit: x cant be too far from x0. in practice is there a way to define the range x we can use to approximate? or is there a way to know if we have done too far?"
+    ],
+    "slide_27": [
+      "What kinds of optimization problems would be typical in graphics?",
+      "Why is it true that the gradient points in the direction of steepest ascent? I get the intuition behind it, but the justification seems non-obvious.",
+      "Is it common to use second order derivatives info for optimizations in computer graphics?",
+      "How is this used in graphics?",
+      "Is this heavily used in geology and geography graphics?",
+      "Would stochastic gradient ascent work better in many optimization tasks?"
+    ],
+    "slide_28": [
+      "In the real world, there are many places there it is not differentiable, from table edges to hairs. How will computer graphics handle that?",
+      "Does the gradient remain consistent when we change the coordinate system or reproject to different bases?",
+      "Is it possible to approximate functions that are not differentiable to handle the problem?",
+      "How are gradients and directional derivatives calculated in coordinate systems that are not orthonormal?",
+      "Given that many functions have points or lines that are not differentiable, how do we deal with that in functions and algorithms? Is there any way, or do we simply restrict the domain?",
+      "When trying to model an edge, would computer graphics just make a curve as small as possible? In that case, it would still be differentiable right?",
+      "If there is a not differentiable component in computer graphics, can we replace it with a differentiable component"
+    ],
+    "slide_29": [
+      "i dont quite get it, what uk?\nand why does that equals to zero unless i = k?",
+      "What does the gradient of the dot product mean, geometrically?"
+    ],
+    "slide_30": [
+      "Are there any matrix derivatives that DON'T look like the corresponding derivative if the matrix was replaced with variables (i.e. x and y), and if so, will we be seeing them in this course?",
+      "Why does the matrix have to be symmetric?",
+      "Will we ever have to differentiate an inverse matrix / how does that look like?",
+      "Is it useful to just know that they look like ordinary derivatives to help us remember the matrix derivatives? Or is there more to the relation that can help with understanding?",
+      "I have sometimes struggled with reasoning whether the derivative should be x or x^T (it's transpose). Do you have any intuition for this?"
+    ],
+    "slide_31": [
+      "What other types of gradients are there?",
+      "What would be the applications of a gradient of a function of a function?",
+      "When we are using this gradient strategy, since we picked a nabla(F) that works with all u, how do we pick the function u? And how does this choice impact the computation? Are certain u choices going to complicate the derivatives and make computation more expensive?"
+    ],
+    "slide_32": [
+      "I feel confused about where the g comes in this function. There is only one argument, f, taken in F.",
+      "I also am confused about g. I get that we define the L2 gradient to be for all functions u, so does that mean here that our gradient would be in terms of f, g, and an arbitrary function u? Or is g our u for this example?",
+      "Is g a free parameter here? Or is it considered a 'fixed' value here?",
+      "I understand that this is important for optimization, but what does gradient of a function of a function represent? Is there an intuitive explanation of what it is?",
+      "Why are we adding a little bit of g to f each time? Shouldn't it be better if we add a little bit of (g-f) to f each time?",
+      "Do we have any alternatives to determine how well two function \"aligned\"?",
+      "We've seen that grad <x,y> = y for both the Euclidean inner product and the integral inner product that we defined on functions. Does this hold in general for arbitrary inner products as well?"
+    ],
+    "slide_35": [
+      "How would you visualize/use a 3D vector field?"
+    ],
+    "slide_37": [
+      "How are the divergence and curl used within the graphics sphere? Are they used for shapes? Animations? Both?",
+      "Are there any other logical and possibly useful \u201cderivatives\u201d for vector fields that we might encounter but not specifically in this class?",
+      "Would vector fields and their derivatives (divergence/curl) be useful in simulating \"force fields\" on objects/bodies of objects? For example, in a gravity system simulation?",
+      "When do we care more about divergence, and when about curl?",
+      "Why do we need such concepts for vector field?"
+    ],
+    "slide_38": [
+      "When writing out Nabla as a \"vector of derivatives,\" are the elements in that vector acting more like operators and don't actually have a defined function until it gets applied to X?",
+      "Is it correct to understand divergence as the total rate of change of a vector field at different locations in the space/plane?"
+    ],
+    "slide_39": [
+      "It says that divergence is how much the field is shrinking/expanding - I'm a little confused as to how we get the right image. Doesn't this seem like divergence is larger where the field is \"pointing\" to? How does that reflect shrinking/expanding? (Edit: nvm, I think I figured it out)"
+    ],
+    "slide_40": [
+      "Is curl defined in higher dimensions?",
+      "Is the direction of the resulting vector then just giving the change in direction of the function at u?",
+      "The example of curl on the following slides seems to be in 2D. How would you visualize/use curl with three dimensions?",
+      "What would we use curls for in practice? What meaningful information does it give that's applicable to graphics?",
+      "I know curl is used to determine how much a vector \"rotates/circles\" around a specific point. I can imagine it being used for things like modeling fluids or other objects that flow. Does it have another application besides this or is curl not even used for fluid dynamics?",
+      "Curl turns out to be scaler values in 2D vector field but 3D vectors in 3D vector field. Isn't it not well-defined? Is it because that cross product is not well defined in nD spaces?",
+      "In a higher dimension, what will the curl look like?",
+      "So is curl in 3 dimensions a vector while in 2 dimensions it is a scalar?",
+      "In  graphics, in what scenario would using curl be useful and in what scenario would using divergence is more so?",
+      "In relations to actually visualizing something graphics, will we be determining the curl of a vector space in order to map some visualization on to it in this class?"
+    ],
+    "slide_43": [
+      "doesn't this feels overly familiar to magnetic induction and the current direction...?\ncoincidence?",
+      "This seems to say that in 2D, there is one (essentially unique) notion of change for vector fields. In 3D, we had div and curl. So in some n-dimensional space, would there be n - 1 notions of change?",
+      "I think it's not a coincidence how it is similar to magnetic induction. The magnetic induction is kind of like a vector field that allows you to see the direction and magnitude of the magnetic force at given points",
+      "Is there an intuitive explanation for this relationship between curl and divergence?",
+      "Would this relationship be relevant for graphics applications?",
+      "Are there any more notions of change besides divergence and curl of vector fields in higher dimensions?",
+      "Intuitively, if the divergence indicates how much a field is changing in size, curl represents how much a field is spinning, how does the divergence of X equal the curl of X (after rotating it 90 degrees)? Since we are working with 2-dimension fields, it is hard to geometrically picture the divergence and curl. Could you elaborate on what divergence and curl represent in a 3-dimensional space?",
+      "Could you provide more examples of fields that would use this property?",
+      "These ideas can sometimes be useful for sailing (kind-of 3d!)",
+      "How curl does 90 degree rotation in more than 2d?"
+    ],
+    "slide_44": [
+      "When simulating fluids with calculus, do we consider each pixel in terms of (x,y) and then apply the functions?",
+      "In general, what sort of mathematical/physical considerations do we have to make when simulating the motion of fluids?"
+    ],
+    "slide_45": [
+      "How were these operators created? It's amazing that Mathematicans found so many operations that are applicable for many more areas.",
+      "If I remember correctly, Laplace and Fourier transform are similar in concept where we convert from one domain to another. Is there a reason we would use one over the other in graphics? Is there something one provides that the other doesn't?",
+      "I'm not quite sure how this second derivative could relate to these examples. What's a simpler way it relates or a concrete example of how the Laplacian is used?"
+    ],
+    "slide_46": [
+      "How do we use higher order derivatives (beyond 2nd), or does their significance stop at 2?",
+      "Can we also get this information from eigenvector analysis of the Hessian?",
+      "Whats the connection between gradients and Laplacian?",
+      "If the Laplacian is like the second derivative in an ordinary function, does it serve a similar function in telling whether a point is local maxima or minima?"
+    ],
+    "slide_47": [
+      "Is there a reason someone would choose to not denote the Laplacian with delta? I don't see why it wouldn't just be standard to consistently write it one way.",
+      "What does Dirichlet energy measure?",
+      "Does the curl of the gradient have any meaning or value?",
+      "What does the graph Laplacian mean?"
+    ],
+    "slide_48": [
+      "Is there a good way to do Laplacian when the function in question is a function of functions, like in the L2 gradient examples?",
+      "This wouldn't always happen, right? It's just by nature of the function being in terms of the sinusoids and their second derivatives are just the opposite of the original function, and the derivative of what's inside the sin/cos functions are scalars in this case."
+    ],
+    "slide_49": [
+      "We used the gradient for a linear term and the hessian for the quadratic term\u2026 is there any way we could keep moving forward or are there no closed form / easy expressions for these terms?",
+      "How expensive is the Hessian to compute? Is the extra cost of using the second derivative worth the increased accuracy of the approximation?"
+    ],
+    "slide_50": [
+      "Laplacian is also about the second derivatives. Why are there two quantities (Laplacian and Hessian) associated with the quadratic terms? How are they related?",
+      "are 3rd derivatives ever useful?",
+      "Is the Hessian always symmetric because the order of differentiation doesn't matter?",
+      "Does f here need to have continuous second derivatives in order for the order of differentiation to be irrelevant?",
+      "Will higher order derivatives ever be used in practice?"
+    ],
+    "slide_51": [
+      "Is the reason why we are multiplying the Hessian in the quadratic term by (x - x_0) is so that when we perform the dot product, we get out the \"quadratic\" that we are looking for?",
+      "Would this typically work as expected if our basis isn't e.g. orthonormal?",
+      "Are there \\nabla^3, \\nabla^4, etc. that are used in this sort of multivariable Taylor Series approximation as well?",
+      "In approximating a general f(u), is it typically sufficient to approximate up to the \"quadratic\" hessian component of the Taylor Series? When, why, and how might we incorporate cubic, quartic, etc. pieces to the approximation.",
+      "if we include  \\nabla^3, \\nabla^4, would it be helpful to have a more accurate result?"
+    ]
+  }
+}

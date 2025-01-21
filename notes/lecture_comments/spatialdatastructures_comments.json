@@ -1,0 +1,238 @@
+{
+  "metadata": {
+    "lecture_name": "spatialdatastructures",
+    "total_slides_with_comments": 36,
+    "last_slide_number": 49,
+    "total_comments": 156
+  },
+  "comments": {
+    "slide_4": [
+      "N here stands for a 1x3 normal vector (3D), NT x stands for inner product of N and x."
+    ],
+    "slide_5": [
+      "so in this case we describe every triangle mesh as some kind of changed unit triangle?",
+      "Is this idea of \"polygon can be thought of as affine map of unit polygon\" useful in other areas? I remember in one of the practice problems we had, an ellipse was thought of as a \"stretching\" of a circle.",
+      "maybe dumb question but is this affine map the border of the triangle or the entire region?",
+      "Are u and v bound between |u+v| <= 1? Or is this more of an implicit representation"
+    ],
+    "slide_6": [
+      "I'm confused, why does M^-1 transform the triangle into the unit triangle and the ray into an orthogonal ray? And by unit triangle, do you mean the one shown in the third picture on this slide, or the right triangle shown previously?",
+      "I also don't quite understand why the ray will be back project to the orthogonal direction. Is there any intuition for that?",
+      "Why does M^(-1) transform ray's direction to be orthogonal to the plane?",
+      "What is the \"z-axis\" on the third graphic? Like instead of the X,Y,Z on the second graphic we have (U,V,????)"
+    ],
+    "slide_8": [
+      "Why is the meaning of that box? It seems not to achieve anything if hitting the box.",
+      "The meaning of the box is to avoid calculation that is unnecessary, though the time complexity remains the same, I guess the coefficient would be smaller than before.",
+      "How is the bounding box more efficient? If you have to loop through all the vertices to create the box, isn't that the same time it takes to try intersections with all triangles? Isn't this the same in the case where there's no intersection and double in the case where there is?",
+      "What is the motivation behind introducing the box? Seems like we\u2019re only adding more work by having to compute the ray-box intersection as well as the intersections with all the triangles.",
+      "Is the bounding-box commonly used for other operations? Maybe if we can get a lot of re-use out of it that would motivate creating it even if you have to loop through all the vertices",
+      "would please add the ray-box intersection here?",
+      "Can boundary boxes with edges that aren't parallel to the xyz-axes be useful?",
+      "What is the point of using the bounding box if our complexity remains the same?",
+      "Can we divide a single bounding box into multiple boxes to optimize codes?",
+      "Just to be clear, while this still has the same worst case complexity, it allows us to most likely save a lot of time while checking in an actual use case of the algorithm because of the simplicity of the bounding box, correct?"
+    ],
+    "slide_9": [
+      "I think I'm a little confused as to what we mean by \"axis-aligned\" here."
+    ],
+    "slide_10": [
+      "The easiest trick is to split the rectangle into two triangles and test two intersections.",
+      "Why when there's no intersection the interval is empty? Even if there's not interaction with the box, the ray still creates same number of intersections with the planes, and that doesn't seem to reduce the number of intervals.",
+      "We can know that the ray misses the box if the two tmin/tmax intervals do not intersect. But do we also need to make sure the intersection is positive?",
+      "I'm still confused by this idea of taking the intersection of the tmin, tmax intervals. Is there case where the intersection of these intervals produce an interval that is nonempty yet still does not intersect the box?",
+      "What is the complexity of extending this to work with general polygons, and in higher dimensions, other representations of meshes? I would think that it would be too naive to intersect a ray with every possible segment, and there could be easy ways to speed this up (for example, by discarding large regions of space at a time).",
+      "Would it also miss the box if the intersection is entirely negative? I think there is a case where it misses the box but the min/max intervals do intersect -- like if the ray in the example was actually going in the negative direction. Then tmin and tmax would both be negative. I can imagine the intersection being totally empty if the point/ray is below/above both planes for an axis, though.",
+      "Would bounding box not aligned to axis in some way performs better because of a tighter volume? How much is the benefit gain compared to the performance loss?"
+    ],
+    "slide_13": [
+      "In the next few slides, I think we can use BVH to organize meshes into the tree data structure. However, how these primitives got flattened onto a 2D space from 3D space. Did I miss something from previous lectures?"
+    ],
+    "slide_14": [
+      "I am always confused about when we have a ray in the example, where does this ray come from? Do we pick up it randomly?",
+      "How 'many' ray-scene intersection tests would it take to justify the amortized cost? Or would running this more than once already be more efficient?",
+      "How does the preprocessing work here?"
+    ],
+    "slide_15": [
+      "How does the recomputing work when we deal with things that are animated/moving, wouldn't this cause it to be less efficient since we may have to recompute the entire BVH very often, or does it still turn out to be more efficient in practice?"
+    ],
+    "slide_16": [
+      "Similar to MIP level maps?"
+    ],
+    "slide_17": [
+      "This is only efficient for a static scene with multiple rays being casted, right? If there is motion, you would need to recalculate the BVH every time step. Does motion make this inefficient?",
+      "How are we defining the comparison operation here",
+      "Is it possible to use an arbitrary amount of children?",
+      "I think the better one should be the one with less branches (entropies) that can lead to every single element, like the concept in decision tree",
+      "But we need to consider the \"density\" in the boxes too...like how many triangles per area it has, so I guess the entropy idea isn't the best. I am very curious about this problems' optimized steps.",
+      "This reminds me a lot of the Barnes-Hutt trick for efficiently computing n-body interactions in space. Was any inspiration taken from that algorithm in making this technique?",
+      "Is finding a bounding box that is as large as possible always a better choice?",
+      "But in this method, how should we control the grain of the smaller cluster box?\nIf we define too many small boxes, would the situation back into normal condition?",
+      "Is there a fast way to update the bounding volumes if we add something to the scene?",
+      "Is the right BVH always better? If I know most of the rays in a scene are horizontal, wouldn't the left BVH be better?",
+      "The trees shown are always full, is that a property we should try to achieve? In what situation might you want a non-full tree?",
+      "are the leaves sorted by pixel order?",
+      "When doing motion capture, I see that often the output extension file has .bvh. Does it refer to the BVH introduced in this lecture?",
+      "How would we compare one to the other?",
+      "is there possible of duplicated bounding box or other duplicated data? In this case, can we drop some duplicated data to optimize efficiency?",
+      "What is the work and span of doing such computation?",
+      "What are the benefits of doing one version of volume bounding vs the other?",
+      "What if there are rays coming from other directions? Would that make one better than the other?"
+    ],
+    "slide_18": [
+      "Which sets do the triangles in the overlapping regions go into?",
+      "I'm still a bit confused on how exactly this works. If there exists a triangle that has portions in both bounding boxes, which one does it go into? Does it exist in both of them?",
+      "How would we determine these disjoint sets? By the primitives' center positions?",
+      "Is the BVH structure recreated from scratch every frame or is it modified based on triangles that change positions?",
+      "Would this be the same method of partitioning as the centroid partitioning explained in later slides?"
+    ],
+    "slide_19": [
+      "This seems like it could be inefficient for coherence reasons because of the pointer traversal, are there more efficient ways of storing a BVH to mitigate this problem?",
+      "What's the use of closest.t here? It seems that we only update closest.t when it is a node leaf node. But if it is a leaf node, it will not make recursive calls and use closest.t again.",
+      "Not so sure about this, but I don't think sorting would be very realistic, since the order of the primitives depends a lot on the origin and the direction of the ray. If we have a scene with a lot of different rays, we would keep a sorted list of primitives for each one of them.",
+      "@YutianW, It seems like the use of closest.t is to make sure that the first general bounding box you hit is the only one that'd for sure contain the closest primitive. If the update of closest.t were still greater than the first hit with a different bounding box, then that other bounding box might have an even closer object than the one in the closer \"box\"."
+    ],
+    "slide_20": [
+      "I get the high level overview of what this is doing, but shouldn't we also be careful and handle cases where the ray doesn't intersect one of its children bounding boxes? Currently, it looks like we are assuming it hits both but it can possibly only hit one.",
+      "For the condition of the second if statement, should we use the t value of \"second\" instead of hit2.t?",
+      "If intersection is allowed, wouldn't early termination be a problem?",
+      "my takeaway of this slide is: it's faster to find the closest t, so we can skip many other bounding boxes(and their interior primitives) that have bigger t",
+      "for @asheng's comment, I think we implicitly have the first check from the last slide and it just isn't included here for space."
+    ],
+    "slide_21": [
+      "I'm curious how difficult it would be to implement a massively parallel BVH construction algorithm (on GPU for example). Many of the steps of BVH construction are embarrassingly parallel, such as calculating the bounding box of each primitive and computing the cost at lower levels of the BVH, but it's a lot more difficult to reason about parallelizing partition operations due to the local and spatial dependencies involved."
+    ],
+    "slide_24": [
+      "In actual models, how do we choose which primitives go into a partition, is done based on spacial locality?",
+      "How would you optimize for something like a donut?"
+    ],
+    "slide_25": [
+      "i am still confused about how C is defined. Does this mean the more primitive a ray intersects in a box, the higher the cost this bounding box is?",
+      "So basically something like balanced binary tree?"
+    ],
+    "slide_26": [
+      "i am curious at which layer do we calculate this cost C? and what's the definition of a whole partition process? just the sum at the level of partition we want to look at? or the sum of all the bounding boxes?",
+      "It's quite different from ml where the accuracy matters more than the cost."
+    ],
+    "slide_27": [
+      "We note that this is pretty good despite its assumptions - can we do better by predicting the distribution of the rays somehow?",
+      "How often do we encounter convex objects? Can we circumvent the convexity assumption by modeling a concave shape as the difference of convex shapes?",
+      "Are there certain applications where we want to use a specific, different type of heuristic? If so, what are some examples of those cases and the different heuristics used?",
+      "I assume SN is the surface are of the parent and SA is the surface area of one of the children?",
+      "Why this estimate does not apply to the non-convex cases?",
+      "If A is not convex, what will be the consequence of using this heuristic? It seems just the same as the convex condition.",
+      "Is it a good way to try to find a convex primitive or partition the primitive to convex shape that helps this method?",
+      "How can we estimate the probabilities when the assumptions do not hold in practice?",
+      "What other heuristics are there when modeling intersection probability when you have occlusion. I see that it doesn't make sense to assume that you will have a strange ray distribution, but occluding objects occur pretty often from what I understand.",
+      "How would you compute these probabilities if there is occlusion? Occlusion seems to occur quite often in the real world.",
+      "This formula seems pretty general. Why is it only for convex polygons?",
+      "Can this be applied to non-convex polygons by doing some transformations?",
+      "Does the polygon being convex really matter? Additionally, if we were to remove the uniform ray distribution assumption and use some other distribution for the rays, would that lead to a noticeable different in actual runtime?",
+      "Does this work on all geometries? Is there a general computation for them?",
+      "If A is totally inside B, why does the convex part need to hold?"
+    ],
+    "slide_28": [
+      "I had an idea, we can slide the axis say from left to right, when find two primitives' shape is so overlapped that one of them reaches centroid, we split once and keep moving. This way we can ensure primitives that are close to each other are in one bounding box",
+      "So in this method, we are partitioning by primitive (or by primitives), rather than by space? If you have overlapping primitives then, you might have to make sure they're in the same partition, or maybe that doesn't matter so much?"
+    ],
+    "slide_29": [
+      "The title says \"Efficiently\", but this doesn't seem very efficient. What exactly makes this efficient?",
+      "I'm a bit confused on how the buckets are used when evaluating the cost of the partitioning planes. When we are looking at a partitioning plane, are we looking at all the buckets to the left and right of that plane?",
+      "Can we use clustering algorithms like k-means?",
+      "Why do we have to go through each axis x, y, and z? Would this not lead to nondisjoint nodes?",
+      "i dont understand the recursive part, what are we recursing on?",
+      "What is the base case of this recursive algorithm? Is it when we get a partition with nothing inside?",
+      "i think i understand it a bit now. you try a few times which 1 partition is good, apply it, and go to the next level until you reach every leaf",
+      "Is this similar to clustering?",
+      "I'm a bit confused on how exactly the recursive functions work. Are we recursively splitting into boxes and checking if there's a leaf inside? If there isn't that's our base case?",
+      "Why is having a constant (soft?) limit on the number of buckets better than having the number of buckets more or less scale slowly with the number of items to be partitioned?",
+      "Is node leaf the base case? Do we case on it to determine the recursion?",
+      "How is this algorithm necessarily efficient? Are there other ways to partition that approximate more quickly?",
+      "What is the cost of splitting? nlogn?",
+      "I'm confused on the recursion part as well. Can we go through it more indepth in class?"
+    ],
+    "slide_30": [
+      "Does this mean the method should adjust due to what type of primitives that we are dealing with?",
+      "Are there structures that deal with these special cases nicely?",
+      "Is there a way to ensure that we can separate the primitives/create new ones to end up in different partitions? Or, perhaps we could consider the largest bounding area that contains a primitive and define that as a new face (ignoring all the inner ones)?",
+      "What \"different strategy\" would work for these difficult cases?"
+    ],
+    "slide_31": [
+      "A potential problem with space-partitioning is triangles spanning multiple partitioned spaces. This is very similar to the primitives partitioning scheme above, except that the overlapping problem seems to be handled at a differently level. For this reason, what is the potential benefit of using one over the other?",
+      "Are there other popular partitioning structures that are used in practice?"
+    ],
+    "slide_32": [
+      "Just to clarify, in a K-D tree, if a triangle span multiple partitioned spaces, each corresponding node in the K-D tree needs to store a reference to the triangle to handle the overlapping problem. Is this correct?",
+      "Is the back to front order relative to the direction of the ray? If so, would we have to recompute the tree every time the ray changes direction?",
+      "How are we choosing where to make the split, and how much to recurse on each side?",
+      "my takeaway is: the advantage of this method is every box is neighboring each other, so there is an if else statement we can probably ignore in the previous front to back algorithm slide",
+      "Could we also try to transform a BVH into a K-D tree to make the two methods consistent?",
+      "what is the algorithms to generate this KD tree?",
+      "Storing calculations in memory may be more expensive than recomputing it in certain applications on certain hardware. Does this mean algorithms can often be optimized to certain hardware for purposes like this?",
+      "Is it relevant whether the two halves of the K-D tree are relatively balanced? Or does it not matter if the nodes all happen to be on one side?",
+      "I have heard that trees that partition space (like a quad tree, for instance) generally have bad algorithmic runtime guarantees. How does the kd-tree improve on these techniques? EDIT: I see this is covered in the rest of the lecture. But still it is not clear to me mathematically why the kd-tree is much better? Could we go through a proof of runtime, or at least an argument along those lines?",
+      "I am confused about the kd tree algorithm",
+      "I don't really understand why we can terminate after the first hit is found. How are primitives further back affected by those in front in terms of partitioning?",
+      "Is the reason behind terminating after first hit is that everything down the node will be further back in space, which will be covered by the current hit?"
+    ],
+    "slide_33": [
+      "one takeaway i get from this slide is: a big piece of primitive at the middle of the picture can really screw kd tree up"
+    ],
+    "slide_34": [
+      "How is this different from rasterization in a 2D setting?",
+      "So does this just mean figure out what pixels the ray intersects, figure out what triangles are in those pixels, and then only try with those triangles? I have the same question, how is that different from rasterization?"
+    ],
+    "slide_35": [
+      "This tradeoff also seems to appear in machine learning - for voxel-based neural network architectures which operate on point clouds or other 3D data, having too few grid cells could decrease the accuracy and resolution of the network, while having too many grid cells might cause scalability issues."
+    ],
+    "slide_36": [
+      "takeaway: uniform grid partition is good when the primitives have similar size and uniformly distributed among space."
+    ],
+    "slide_37": [
+      "haha yes that's what i thought!",
+      "Is there a way to automatically detect what situation it is and use the corresponding structure for the scene?",
+      "In a game engine or graphics program, is the bounding box strategy automatically optimized or is this something that the user needs to set beforehand?"
+    ],
+    "slide_38": [
+      "Is the only way to have good results on a teapot in stadium scene to use a non-uniform grid?"
+    ],
+    "slide_39": [
+      "What is the order of the number of triangles in this picture?"
+    ],
+    "slide_40": [
+      "So does this split a partition if there are a lot of objects in a partition? Or is a space only split like in the pattern shown above?",
+      "It seems like there is a set location for each of the splits. Would it be possible to split on a slightly different ratio eat layer?",
+      "I wonder if there is a way to automatically detect what is the best spacial sturcture given a triangle distribution?",
+      "I remember it was mentioned this isn't used much in practice, but it seems here like it could be quite useful. Is there something that incurs a high cost about this method?",
+      "Do we always split the quadrants, or only in areas where the objects are highly concentrated?",
+      "How does the code to determine this split different from that of k-d trees?",
+      "Is the disadvantage compared to K-D Tree caused by inflexible division point decision?"
+    ],
+    "slide_41": [
+      "We see a lot of places where we need to choose the right strategy for the job. Often, tasks don't exactly match data structures or algorithms. Are there deterministic strategies/rules for choosing which data structures/combinations to use in this case?",
+      "What does it look like to take combinations of spatial acceleration structures? When might such combinations be used?",
+      "Which algorithms are implemented on Nvidia RTX cards?",
+      "(primitive)BVH: every primitive in only one box, good for animation, complexity doesnt grow with dimension",
+      "Why is it troublesome for K-D trees to intersect many times",
+      "Can programs dynamically adjust which combinations of strategies (above) to use depending on the scene complexity for particular regions?",
+      "Are there good heuristics for choosing which strategies to use and how to combine them? For example, if half of the scene is uniform and the other half is not, it seems like you might want to do use non-adaptive and adaptive strategies for the two different halves.",
+      "Do some structures take advantage of or have special support in the hardware?"
+    ],
+    "slide_42": [
+      "For all these applications, how does one determine which of the data structures we learned today are best suited for the job?"
+    ],
+    "slide_48": [
+      "I recall that rasterization is highly optimized for parallelization. How effective is parallelization for ray casting?",
+      "rasterization: unbounded size\nray tracing: transparent objects",
+      "As a follow up to MrRockefeller, would we subdivide the object into smaller pieces to do ray tracing?",
+      "As a follow up to what gloose said, it seems like ray-tracing would definitely need to be parallelized since the order of shooting the rays from one point source doesn't seem to ultimately matter in the rendered outcome, but it would be expensive to shoot thousands of rays quickly.",
+      "As a follow-up to anag's comment, can rasterization be parallelized as well? Or are we limited by something like the depth buffer?"
+    ],
+    "slide_49": [
+      "I guess ray tracing can start as very uniform calculation. But depending on the nature of the surfaces, it may become less parallelizable (different rays wander off and some may \"disappear\" ver early on). Is this accurate? If so, how does GPUs handle this efficiently with the wide SIMDs?",
+      "Is it possible to mix ray casting and rasterization? Or is it preferable to stick to one technique for a particular application?",
+      "Do some rasterization pipelines in things like video games that require quick rendering every use raytracing to render reflective objects, or things that are hard to do with rasterization, or is this only done in a fully raytraced environment such as RTX?",
+      "Do reflections cause problems for organized trees if they are optimized to get rays from the origin?"
+    ]
+  }
+}

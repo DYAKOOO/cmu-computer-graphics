@@ -1,0 +1,226 @@
+{
+  "metadata": {
+    "lecture_name": "variancereduction",
+    "total_slides_with_comments": 38,
+    "last_slide_number": 63,
+    "total_comments": 140
+  },
+  "comments": {
+    "slide_5": [
+      "I really like the example here lol"
+    ],
+    "slide_8": [
+      "Is the only reason we would want to talk about variance rather than standard deviation that it's differentiable, or is there some other value to it? Standard Deviation does seem to have a more natural meaning."
+    ],
+    "slide_9": [
+      "What if the shadow in real life is due to some bad variance in the computer simulating this world",
+      "Would we ever want to increase variance?",
+      "We look at the average (first moment) and variance (second moment), but do we ever care about higher moments when rendering?",
+      "Would we have to adjust the variance based on the image we are trying to produce? Or can we assume that a lower variance is always desired?",
+      "What are some cases where a noisy image would be preferred?"
+    ],
+    "slide_13": [
+      "Although if there is a drastic change in color or stark lighting, wouldn't we want to keep that variance?",
+      "What is the significance of the variance here? Can we think of it as an error on the estimate?"
+    ],
+    "slide_14": [
+      "Is there a natural way to obtain a consistent estimator from an unbiased, and vice-versa?",
+      "Are there any other properties to consider for estimators, like computing cost? I feel like cost wouldn't really be an issue because the whole point of us using estimators in the first place is to save on cost.",
+      "Are there cases where unbiased implies consistent?",
+      "If we had to pick one between the two, which one would we want? In my eyes, I see the consistent one as better because just because the expected value of the different is zero, it doesn't mean that it will be zero very often in the real world.",
+      "I'm having a hard time wrapping my head around this definition of consistency. If the true integral has a continuous value, then isn't the probability of matching it exactly generally equal to zero?",
+      "Are there cases where using an almost unbiased estimator is useful? (i.e. E[I - I_n] <= 0.001, for example)",
+      "Does the definition of unbiased have to hold for all n?",
+      "How could bias relate to variance deduction? Since the bias is only related to the expected value, even a biased estimator could have a small variance. Are we only considering reducing the variance of biased estimator?",
+      "Is it right to say that Monte Carlo estimators are both biased and consistent by definition?",
+      "Why is it necessary to include the unbiased requirement given that we already have consistency.",
+      "Convergence in probability",
+      "Does unbiasedness imply consistency? Why do we need consistency if every sample is expected to be the true value?",
+      "I can see why convergence is a property, but I'm not too sure why it is needed. If you take many samples, both convergence and unbiased will point towards it getting closer to a correct value, but at small sample values, it is possible that the sample point would be extremely off but unbiased ensures that it is somewhat close?",
+      "Isn't consistency all we need? I think we just want the answer to be correct? What are the cases that the estimate is consistent but biased?",
+      "Since we will never have infinite samples, should we care whether an estimator is almost consistent (converges to something close to correct answer) or is actually consistent since both won't yield the true integral with a specified, finite, number of samples?",
+      "If this is the definition, isn't Monte Carlo both consistent and unbiased, or am I looking at this wrong? Monte Carlo gives the correct answer on average and with enough samples we eventually converge to the correct answer.",
+      "How important is the bias and consistency plays role in variance?",
+      "Is there an example of an estimator being consistent but biased?",
+      "Is there a relationship between bias and consistency?",
+      "So is bias and consistency evaluated completely separated or is there some relationship between them?",
+      "Wouldn't biased just mean that it more quickly converges to the right answer?",
+      "I feel like most of the times we introduce a bias because of certain assumptions or certain properties we know to be true -- even if the \"answer\" is biased, isn't this what we would expect/ or isn't this no less desirable?"
+    ],
+    "slide_15": [
+      "There is no random variable in this problem. Why can the concept of bias be applied here?",
+      "Here, it is clear that the estimator is consistent, but I cannot tell if it is unbiased. Would you say that because we know the exact point we draw from, it it unbiased?",
+      "I think this is consistent and unbiased",
+      "How do we tell?",
+      "How can we determine if it's unbiased or not",
+      "The sampling method seems to be both consistent and unbiased"
+    ],
+    "slide_16": [
+      "I think this is consistent but biased",
+      "What is the probablistic space we calculate the consistency and bias?",
+      "I understand why this estimator is inconsistent but why is it unbiased?",
+      "When you let n go to infinity, I understand that you're getting unbiased samples, but then when you average them don't all the other non-averaged areas (the dark space) mess with these samples?"
+    ],
+    "slide_17": [
+      "What about an unbiased + inconsistent estimator?",
+      "Why is the error on the consistent estimator not consistent?"
+    ],
+    "slide_18": [
+      "Why path tracing is most popular among GPU nowadays? Is it because GPU physically support path tracing calculations?",
+      "Why is path tracing 'almost' unbiased? I can agree to it being almost consistent but which part of it makes it not completely unbiased?",
+      "Why rasterization is considered biased and inconsistent?",
+      "Similar to the comment above, I'm having a hard time seeing why rasterization is not consistent nor unbiased. Is this because of randomization of samples and aliasing problems potentially?",
+      "Why is path tracing \"almost\" for being both consistent and unbiased? Doesn't path tracing share the same idea with the rest of the algorithms, which turns out to be \"yes\" for consistency?",
+      "So, rasterization is only biased and inconsistent because we never properly sample what we're supposed to be seeing? Then, it's at least consistent in its inconsistency, right?",
+      "Similar confusion on why rasterization is neither consistent nor unbiased. If we perform sufficiently fine-grained supersampling shouldn't we at least get consistency?",
+      "What are the edge cases for path tracing regarding bias and consistency?"
+    ],
+    "slide_19": [
+      "How to ray tracing keep track of Scattering? I feel different texture has different way of scattering. Over time the property also changes.",
+      "Is the reason why we can't see this phenomenon with naive path tracing that we are scattering in random directions? When I think about it from the light source perspective it makes perfect sense that the light rays get focused."
+    ],
+    "slide_23": [
+      "What would be an adversarial arrangement of a scene that makes the rays generated by our cosine-weighted sampling very unlikely to hit a light source?"
+    ],
+    "slide_26": [
+      "How can we know beforehand at what f looks like and what p should be?",
+      "Do we start with a complete understanding of f and p?",
+      "How do we figure out what p should be if we don't know exactly what f looks like when sampling?",
+      "Is there a way to do this dynamically, i.e. if our function is just an input stream of data points?",
+      "How did we derive the graphs of f and p?",
+      "Is there a specific way that we can know p if we do not know what exactly is f like?",
+      "I am still a little confused. Where does this probability distribution p come from? Does it depend on the function f or the material of the object?",
+      "I am confused with why this works. If you can have a good estimate of p(x), doesn't this also mean that you have an estimate of f(x) and you can just solve for the integral?",
+      "How do we get f and p specifically?",
+      "After we switch our sample distribution, the biasness has not changed right? What about consistency?"
+    ],
+    "slide_27": [
+      "How often is this used in practice? I'd imagine that there were many surfaces (like fur/fuzzy surfaces for example) that would be difficult to apply this technique on."
+    ],
+    "slide_28": [
+      "In this case, how would we determine f(x)? Since it is the light carried by that path, wouldn't we have to trace that entire path and sum up the radiances anyways? This just seems like a representational difference to me, what makes this \"open the door to intelligent global importance sampling\"?",
+      "What would be meant by 'global' sampling, as opposed to 'local' sampling?"
+    ],
+    "slide_29": [
+      "Does this approach suffer from the \"curse of dimensionality?\""
+    ],
+    "slide_31": [
+      "Do we accomplish this by traversing partially from the light and the eye to different points and connecting at those points?",
+      "Isn't this method prone to rounding errors? In particular, what if we sample from the light source and the camera, and instead at meeting at some expected point, they meet every so slightly off from that point?",
+      "Would this work for all situations? It seems like if a lot of surfaces are mirrors, when we connect a path from a light to a path from the eye, we likely won't get the exact reflection of the mirror so that path will not contribute anything to the integral",
+      "Will this algorithm cost much memory space to store the ray paths in both directions.",
+      "How do we incorporate importance sampling in this strategy is the path direction is predetermined by the bounce pattern?"
+    ],
+    "slide_32": [
+      "Is bidirectional path tracing how you know where to importance sample your distribution?",
+      "I don't really understand why backward path tracing fails for a pinhole camera?"
+    ],
+    "slide_33": [
+      "I didn't quite get what is being shown here. I think that different rows correspond to different path lengths, but are these samples from bidirectional sampling?",
+      "Is the data from different path lengths used together to render an image, or is one path length chosen at random to use?",
+      "Could you clarify what is happening here? The rows are different path lengths, and the columns is how many paths we take from tracing from the camera vs light source?",
+      "Why are images arranged into a pyramid shape? Is there a specific meaning attached to this?"
+    ],
+    "slide_34": [
+      "The noise is so similar to the digital cameras under dark scene.",
+      "I'm curious how commercial rendering engines get around cases like this. Even with the strategies discussed in the past few lectures, the images produced still have significantly more noise than photorealistic renders one might find online.",
+      "How can we tell if we are purturbing in a way that doesn't introduce bad \"preferences\"?",
+      "How do we know that we've found a \"good path\"? How do we assess the goodness of the nearby paths?",
+      "Could the noise be viewed as an undersample here?",
+      "Does that implies that the good paths are all nearby? What's the intuition behind it?",
+      "Is there any fast approach to find a good path?",
+      "What kind of optimizations are used by the current state of the art solutions in getting around this? Do they use some sort of notion to quantify how good a path is?",
+      "Is there a definition we can use to algorithmically define a good path?",
+      "What defines a \"good path.\" Also, is there a less computationally expensive way to find the first \"good path?\""
+    ],
+    "slide_35": [
+      "How do we ensure ergodicity which is a global property, by making appropriate local choices?",
+      "Is there a way to quantify the degree of mixing that's required before the initial point no longer matters?",
+      "This sounds to be biased. How can we decide the distribution density value of the chosen path?"
+    ],
+    "slide_36": [
+      "When do we terminate the random walk? And do we have a good metric of success for use in this algorithm? Besides just how it looks to us",
+      "Since this is a local algorithm, isn't it possible for it to stuck in some bright area surrounded by a dark area? Should we restart occasionally to prevent that from happening?",
+      "what exactly do we mean by \"normal\" here, since we're just looking at an image, right? Not an actual model of the city?",
+      "How much longer is the long walk compared to the short walk, and can the values used in the short walk still be used? (perhaps the differences in adjacent pixels are not noticable to the human eye, but a computer can still use that data, perhaps?)",
+      "If we don't limit the maximum time steps of the long walk, could we get a picture that is pretty similar to the original image in not enormously large number of steps?",
+      "Approximately how different in time does it take comparing short and long walk?",
+      "Is it possible to start multiple short walks to simulate a single long walk?",
+      "How is the \"occasionally\" quantified here?",
+      "Can we recursively do short walks in parallel to build up different parts of the image?"
+    ],
+    "slide_37": [
+      "Why does the metropolis light transport method provide such a clear image without much noise compared to path tracing in this image and a few slides back? Are there other methods that also achieve this more clear and realistic result?",
+      "Is path tracing generally inferior to the imaging results of the metropolis light transport method or are there types of images that the former would still be better/more efficient at? (e.g. smoke, heavy dust, etc.)",
+      "Is there a mathematical explanation of the decreased variance?"
+    ],
+    "slide_38": [
+      "Does balance mean multiple strategy are chosen evenly?"
+    ],
+    "slide_41": [
+      "These look very similar to the supersampling patterns that were used during rasterization",
+      "Why are the dots in the lower right uniform sampling not distributed evenly?"
+    ],
+    "slide_42": [
+      "Are there any common approaches that split the bins into non-equal sizes? If so, what are some common other ways to split them?",
+      "How do we determine the size of the bins?",
+      "How do you split a potentially non-uniform space into uniform bins? Also, why are there gaps in uniform sampling to begin with? Why don't we just pick points from a normal gaussian with lower variance?",
+      "Are there types of target distributions where stratified sampling would not work/be as effective in reducing variance?",
+      "How many bins is a good amount in practice?",
+      "Is there a certain strategy we can apply to all cases to determine size and number of bins? Or is it dependent on the situation?",
+      "Although it has already been asked above, I also want to know how bin width should be determined for stratification!",
+      "How do we know what bin width is good; and given a bin width and sampling, how do we know if the sample is good enough?"
+    ],
+    "slide_43": [
+      "I am still not quite sure how you would estimate the density distribution for something unknown?"
+    ],
+    "slide_44": [
+      "Are we assuming that all samples are within a unit box? Otherwise the term in the first equation should be the ratio of area of S to the area of the domain."
+    ],
+    "slide_45": [
+      "If it's very reasonable in practice then does that mean that in the vast majority of cases variance is bounded?",
+      "What if we don't have axis-aligned boxes? Do we just approximate them to be axis-aligned?",
+      "What is a common example of a reasonable use-case with unbounded variation? I assume most functions that behaves poorly at 0 would not have bounded variation?"
+    ],
+    "slide_46": [
+      "Is there any intuition for why this generates good samples? My intuition says that this seems like it would be almost random (at least for Halton), but from the picture, we can see that it's much more consistent than that.",
+      "How do we go from the sequence to the sampling? Seems like if we did this it would produce the same sequence every time.",
+      "Would it be a good idea to take multiple different point distributions and average the samples between them?"
+    ],
+    "slide_48": [
+      "So I guess we don't necessarily have to estimate the density distribution itself. We can just use the discrepancy as a metric to pick samples.",
+      "Could this be mitigated by starting out with a regular grid then uniformally randomly perturbing each point some way?"
+    ],
+    "slide_49": [
+      "So animals evolve into this \"blue noise\" pattern from natural selection. That is amazing.",
+      "Why is it called blue noise?"
+    ],
+    "slide_50": [
+      "In addition to the Fourier domain, are there any other changes of bases that would be helpful to look at, too?"
+    ],
+    "slide_51": [
+      "It seems that all these pictures can find their prototypes in nature, and light have a subtle but long-run influence on their formation.",
+      "How blue noise relate to these pictures and how they improve image qualities? Can we have some examples?"
+    ],
+    "slide_52": [
+      "How do we determine the size of the disks?",
+      "Does the size of the disks change in some pattern?"
+    ],
+    "slide_53": [
+      "How many neighbors do we typically use to decide where to move a disk?"
+    ],
+    "slide_55": [
+      "What happens to the precomputation if e.g. we change the camera angle? If we need to redo the precomputation, is there some kind of delta mechanism to help with the process?",
+      "Could we compute blue noise in 3d space first, then use the 2d version of the distribution from the POV of our camera for our sampling?",
+      "So if it's not that expensive these days, is it much more common?",
+      "In cases of providing additional lighting to a scene with environment maps/lighting, how would a pre-computed sampling / map be interfaced with traditional path tracing methods?"
+    ],
+    "slide_60": [
+      "How is this different from using rays? I mean, aren't particles also just vectors in a way?",
+      "What is a kd-tree in this case?"
+    ],
+    "slide_63": [
+      "\"Provably correct\" seems like an almost impossible goal not only because of this kind of corner case, but also because the ways in which light can interact with an object physically are likely more complex than we can every truly represent with a reasonable algorithm."
+    ]
+  }
+}

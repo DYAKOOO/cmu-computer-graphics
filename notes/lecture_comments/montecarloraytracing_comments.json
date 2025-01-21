@@ -1,0 +1,226 @@
+{
+  "metadata": {
+    "lecture_name": "montecarloraytracing",
+    "total_slides_with_comments": 36,
+    "last_slide_number": 52,
+    "total_comments": 144
+  },
+  "comments": {
+    "slide_4": [
+      "Is there a reason why there's some white shades on the bottom half of the picture of the ray tracing method?",
+      "Are there any situations for which we would prefer rasterization over ray tracing?",
+      "Yutian, I think it's to indicate that we haven't gone through all the samples yet.",
+      "Is either one of these approaches significantly better for parallelism? This makes me think ray tracing could be since each sample is non-conflicting whereas parallelizing over primitives would possibly have conflicts at the same samples at once",
+      "Is there a reason for the ordering of samples vs primitives for each?",
+      "This slide makes it seem like rasterization and raytracing are the two natural ways to render images (i.e. primitive first or sample first). Are there other, unrelated ways to render images?",
+      "In what case do we use rasterization or ray tracing?",
+      "It seems like ray tracing would be the method generally used to generate an image, when would rasterization be a better method?"
+    ],
+    "slide_5": [
+      "Can we say that in the future ray tracing will replace rasterization to produce high-quality images?",
+      "Would it be possible to emulate the effects of raytracing through rasterization and by using additional depth buffers for different camera orientations, and using that depth information to somehow draw reflections and shadows?",
+      "As the improvement of hardware is really quick, ray tracing could be a better choice to provide users better experience.",
+      "Are interreflections not possible to do with ray tracing? Or would it simply require multiple passes?",
+      "In the rasterization case, can't we augment the primitive data structure to have shadow information from other primitives?",
+      "Oops, ignore the above, just read the asterisk and the notion of \"shadow maps\".",
+      "Is shadow map a kind of texture map?",
+      "For the image on the right, one side of the cube looks very bright and reflects everything like a mirror, while the other sides looks much darker. It makes me feel that different sides of the cube were made of different material. Is this some artifacts of the ray tracing?",
+      "what is a possible way to do shadow reflection with rasterization",
+      "Are there hybrid approaches where rasterizing first can reduce the RT passes needed?",
+      "Ray tracing makes sense that it can better represent things like shadows. But the image on the right also seems to have a sense of reflections. Is rendering these reflections independent from just shooting a straight ray or are these rays also able to bounce off of surfaces to help generate the reflections?",
+      "The left misses shadow, refraction on edges, and shows less about surface texture",
+      "It appears that raytracing would need to actually trace all the pixels to make sure the shadows, reflections, and other things seem correct. How do some software combine rasterization with ray tracing?",
+      "what if we add ambient occlusion to the rasterized image? does it make it closer to the ray-tracing?",
+      "In high resolution context, will ray tracing outperform rasterization in hardware?",
+      "If you were to simulate ray tracing using rasterization, would that end up taking more processing power than ray tracing at this point? Or rather, is the tradeoff between computational cost and end result enough to justify ray tracing (at least in real time mediums such as games)?",
+      "Are there any cases in modern graphics that utilize rasterization method over the ray tracing method?",
+      "I'm curious about the comparison of speeds of these 2 approaches.",
+      "What is a shadow map and how would we create it? Would it ever be more efficient than simply using ray tracing?"
+    ],
+    "slide_6": [
+      "Just to confirm, is the cos(theta) here the Lambert's cosine law one or the spherical integral one? I was thinking it was the Lambert's cosine law meaning, but you say in the video that it's \"to account for the way we parameterize integration\", so now I'm realizing I may have been mistaken."
+    ],
+    "slide_7": [
+      "How does variance affect our results?",
+      "You mentioned that \"for most functions, this will work\". What is a function where it does not work?",
+      "What will be the cost of solving this equation? Will this be constant time?",
+      "Given a random function, is there any proper way to determine the sample importance conveniently?",
+      "So we pick points uniformly?",
+      "Won't we need to sample more points if the number of dimensions increases, to get the required approximation error? We did discuss it briefly in the last lecture, but I still find this non-intuitive?",
+      "How do we compute $|\\Omega|$? Isn't the number of points infinite.",
+      "What is the variance here and what factors could affect its value?",
+      "Why is variance related to this",
+      "What is the worst-case running time of calculating the integral?",
+      "How and why do we need to consider variance relative to ray-tracing/rendering?",
+      "I notice there is also an algorithm Las Vegas Algorithm which aims to find the best match, whereas Monte-Carlo is to find the one to approximate the best match. What would the rendering be like if we implement the Las Vegas one?",
+      "will seeds selection affect the image quality?",
+      "How does variance affect the final calculation?"
+    ],
+    "slide_8": [
+      "What kind of distribution should we be using for our Monte Carlo random variable?"
+    ],
+    "slide_9": [
+      "Should there be covariance terms for the second formula? \nV(x1 + x2) = V(x1) + V(x2) + 2COV(x1, x2)?",
+      "Can we think of the variance as an average of the derivatives at each point?"
+    ],
+    "slide_10": [
+      "Robinson found PI!",
+      "Why having more coconuts can estimate pi? What is the equation relate to coconuts on estimating pi?"
+    ],
+    "slide_11": [
+      "At what point do we start getting a diminishing returns situation like we had with our discussion on anti-aliasing and taking many more samples to get a color that differs by smaller and smaller amounts?",
+      "How do we mathematically express the idea of \"getting the right image\" for various ray sampling strategies?",
+      "How is it possible that we don't have any aliasing issues whatsoever with large samples? Is it just that the difference gets smaller with more samples (to the point where we can't distinguish between the real image and the reconstructed version)?",
+      "Tracing each random sample out seems like it could take a long time, and the Law of Large Numbers only tells us that it will eventually converge. What makes this technique good in practice when we would have to perform so much extra work? Is it only because we don't want to/ can't evaluate hard integrals?",
+      "What is the threshold in terms of a good sample of different types of light paths/",
+      "How is it determined when a 'right' image has been reached? Is there a threshold for an acceptable range of error?",
+      "How many sample do we realistically need to take before our image is close to correct? I feel like there's a certain point where this would just be inefficient to use since running the algorithm a million-plus times must take a while.",
+      "I think this similar to previous questions -- how do we determine a 'large' enough number?"
+    ],
+    "slide_12": [
+      "How do you know the exact probability distribution for something unknown?",
+      "What are certain scenarios where we wouldn't want to bias the samples, like maybe if we have enough lighting everywhere or maybe could the machine have enough compute to make taking less beneficial samples not that wasteful overall?",
+      "In what situations would we sample non-uniformly and how would we determine our probability distribution?",
+      "What would be the purpose of sampling non-uniformly if we wanted to weigh them into be uniform anyways?",
+      "So would you want to sample non-uniformly when it costs less to do so?",
+      "Are these probability distributions estimated? When do we want to sample non-uniformly vs uniformly?"
+    ],
+    "slide_13": [
+      "Why wouldn't we want to concentrate samples where the image is changing the most like at edges?",
+      "I still fail to see why we couldn't just sample uniformly, and as long as we take sufficient samples it seems we will still get values from where the integrand is large/small, and we don't need to bother with biasing? Is there an intuitive explanation for this?"
+    ],
+    "slide_14": [
+      "In the video, you talked about the ray from p to the light source. I am still not quite understanding the idea of a vector to the light source. Why would we want to think about it in this way in the first place? How does that make sense?"
+    ],
+    "slide_15": [
+      "Does this technique only work on diffuse lights? If a light is perfectly specular or has some weird BRDF, wouldn't we not want to sample from most directions?"
+    ],
+    "slide_16": [
+      "If we are only sampling from the surface of the hemisphere, wouldn't just randomly selecting x,y in [0,1] and z in [0.5,1] and plugging them into the equation for the hemisphere do the random sampling?",
+      "To get from sampling the sphere to sampling the hemisphere, can't you just sample from the sphere and negate the samples outside the hemisphere?",
+      "For the \"warp\" approach, how do we know the samples are still spatially uniform after warping?",
+      "If we want a sample of the whole sphere, how do we modify the z-component content to achieve this?",
+      "I think the sampling of a whole sphere would be: (2sqrt(e1(1-e1)cos(2pie2), 2sqrt(e1(1-e1)sin(2pie2), 1-2e1). I found this website really helpful in proving the correctness of the warp: https://pbr-book.org/3ed-2018/Monte_Carlo_Integration/2D_Sampling_with_Multidimensional_Transformations.",
+      "Why is this sampling uniform on the z axis?",
+      "Why is z value constant in the wrap function?",
+      "Is this similar to the method we use for uniform sampling of a circle in the previous lecture?"
+    ],
+    "slide_17": [
+      "How do we define the lighting source? I guess we just need radiance?"
+    ],
+    "slide_18": [
+      "light bending around edges... is this qUaNtUm MeChAnIcS?",
+      "I was curious about the interference too, how does ray tracing include the effect in micro scale?"
+    ],
+    "slide_20": [
+      "Since noise is a result of differing sample rays for each point, would it work to take the same set of random sample rays for each point (and then possibly offset with a constant)? I think it would smooth out the lighting, but might introduce error of some light sources not being considered?",
+      "Would it be correct to say that the noise we see is kind of like an aliasing artifact?"
+    ],
+    "slide_22": [
+      "What about that using some post-processing techniques such as filters?",
+      "Does this cause any approximation issues with indirect lighting or is it completely fine to restrict ourselves to the area?",
+      "Why can't we try using things like low pass, high pass, and band width filters to help get rid of noise?",
+      "Is there an \"optimal\" number of samples to take?",
+      "How can we determine which directions have non-zero incoming radiance without trying all of them?",
+      "Wouldnt we have to sample all the light rays to see which ones have non-zero incoming radiance anyway?"
+    ],
+    "slide_23": [
+      "How can we account for multiple light sources when we do direct lighting? Would we now have multiple integrals, each corresponding to a different light source?",
+      "Clarification question: is this change of variables just changing the region of integration from the whole hemisphere of angles to just that subset of angles that intersects the light area?",
+      "It seems like this technique would completely miss reflected light (unless the reflected light also happened to be in the direction of the light source). How do we account for that?",
+      "If you had multiple light sources, would you need to do each one separately and add them up?",
+      "So instead of integrating over all the possible directions of incoming light of our sample points, we now are integrating over all the outgoing light such that the direction of the light hits our sample points?",
+      "How would this method take account of reflected or refracted lights?",
+      "Is this saying, we're only going to take samples at each point when the solid angle is coming from the 'area of the light source'?",
+      "How would we reformat this equation/method to accommodate multiple lights?",
+      "Can we just approximate the binary visibility function for the small area to be the same at all points for simplicity and speed?",
+      "It seems like this is only for one light source, but as many have asked, how do we deal with the case when there are multiple light sources? Are we supposed to calculate them separately or can this equation be modified to accomodate multiple light sources?"
+    ],
+    "slide_24": [
+      "So we can combine as many distributions as we want into one distribution to do importance sampling?"
+    ],
+    "slide_25": [
+      "In this process, are we now sampling points from the area of the light source? And are we computing this for a specific point p on some object in our scene?"
+    ],
+    "slide_27": [
+      "It was mentioned that importance sampling can also impact the speed of the rendering (aside from the accuracy gains as shown on the slide). Can you elaborate on the computational gains we are getting in this approach?",
+      "What if we just do some sort of interpolation to smooth this?"
+    ],
+    "slide_29": [
+      "So picking better samples (more efficient sampler) is just decreasing the runtime since we don't need as many samples? Both methods will still get you the right answer right?",
+      "Specifically, how do we define cost? Is it strictly about the number of samples required to get the same variance, or does it also take computation time per sample and other possible costs into account?"
+    ],
+    "slide_30": [
+      "Is this biasing towards 'normal towards the light' or normal with respect to that center area of the hemisphere?"
+    ],
+    "slide_31": [
+      "Does this work well when the light is coming from the horizon?"
+    ],
+    "slide_34": [
+      "How do we deal with non-solid objects like smoke or fog?"
+    ],
+    "slide_37": [
+      "Why did some pixels (ex. of the lantern and the people in the back) get darker with another bounce?"
+    ],
+    "slide_39": [
+      "Is there any reason why the glass on the lanterns in the image are completely dark until four-bounce illumination?",
+      "I am also curious as to why the lantern is only illuminated on the 4th bounce. Is it because previous pictures did not have enough light reaching the lantern, or is it only til the 4th bounce that rays are actually able to hit the lantern?"
+    ],
+    "slide_40": [
+      "It seems like the regions that are visibly affected when we increase the number of bounces are really close to one another (e.g. in the lantern, and far away near the door). Is there anything we can do to take advantage of this locality? E.g. can we somehow notice that one region is getting a lot of hits on the eighth bounce, and add in some extra illumination there without actually needing to compute everything?"
+    ],
+    "slide_41": [
+      "It seems like parts of the lantern are still not lit up even after sixteen bounces. If we do want them to light up, is there any workarounds besides keep increasing the number of the bounces?",
+      "Would it work to differentiate refraction and bounced lighting, and not increment the bounce count of refracting rays (or count them separately and terminate them with a much higher count?) I feel like this would make sure we only render rays that are necessary? Would there be performance issues?",
+      "Why are we increasing by factors of 2 each time? Additionally what is the difference in time required to render this scene with 8 vs 16 bounces?",
+      "What is the criteria to select the number of bounces? Does it mean more is good? Or do we want to tweak it to find the best one which looks good using our eyes?",
+      "That is amazing. But it costs a lot of time. Do computer games do ray tracing all the time?",
+      "What is a good number of bounces to stop at? How do professionals tell when it's good to stop?"
+    ],
+    "slide_43": [
+      "Seems Li(wi) must be computed first? So how can this save computing time?",
+      "Could ray tracing be performed on a different image domain, such as the image gradients, in order to focus ray detail/computation on the detail (edges) of an image instead of a flat texture (then integrate the image afterwards)."
+    ],
+    "slide_44": [
+      "Why is this systematic error important? If it contributes very little anyways, won't the new convergence still be somewhat a reasonable approximation?",
+      "How can the tentative contribution be calculated without knowing where the direct light is?",
+      "In the previous case we experimented to determine the number of bounces for a nice rendering. Don't we still need to experiment to determine the proper value for the new probability distribution in this case?",
+      "Given two images, one render with the \"systematic error\" and the other with \"randomly discarded samples\", is there a good way to compare which one is better? With randomly discarded samples, is the idea to hopefully make small enough mistakes that are not noticeable?",
+      "For randomly discarding low-contribution samples, should we relate the probability of discarding with the contribution? If the contribution is lower, could we increase the probability to discard it?",
+      "Is there any way to avoid systematic error?",
+      "How to do \"random\" discard while making the result unbiased?",
+      "I think in the previous slides you mentioned something about cos(theta) but I could not remember exactly. Is this the magic which allows Russian roulette to ignore low distribution samples?",
+      "How significant is the systematic error? Can we assume it does not enough of an impact on the final image?",
+      "What does ignoring low-contribution samples bias the result towards?",
+      "How can we make sure the amount we are discarding is indeed leaving the estimator unbiased?",
+      "Does this mean we are biased towards higher contributing samples? Why may this be bad, even if it converges to a different value?"
+    ],
+    "slide_45": [
+      "How do we choose the probability for Russian roulette and at what luminance we should involve it at?",
+      "How is p_rr selected?",
+      "Is it true that in this case we don't bound the number of bounces?",
+      "Is p_rr more optimal when its value is large?",
+      "I am also confused what this means. If we didn't do this then wouldn't we have E(x/prr)? How does the expected value not change?",
+      "Wouldn't this increase the variance?",
+      "How do we decide what prr is"
+    ],
+    "slide_47": [
+      "Is this technique really worth using? I feel like I already notice a pretty nontrivial decrease in image quality here, and we've only managed to decrease the rendering time by around 15%. Are there situations where the degradation in quality is less noticeable and/or the speed improvement is greater?"
+    ],
+    "slide_49": [
+      "How do we select the luminance threshold then in reality? Do we actually have to look the rendered image or there is some metric to tell us?",
+      "At this point, the image is starting to have some noticeable artifacts, even without comparing it to the original. Was it really worth saving only 1/3 of the time to have an image that's this much worse?",
+      "Are the shadows always the first part of the image that become more emphasized? As the artifacts increase, it generally looks like the lighter areas tend to remain more accurate to the original."
+    ],
+    "slide_50": [
+      "Would some of this noise be solved with some slight blurring, and would a technique like that be used in practice?",
+      "In the real world, does a entire scene use a standard prr value or is there some algorithm that you can run that computes some optimum Russian roulette value to optimize run-time?",
+      "Are there any heuristics/intrinsic qualities about a scene that informs us what percent of low-contribution samples that we can terminate?",
+      "Are there ways to add post-processing without any information on the primitives/lightsource in the original scene to recover the first rendering without roulette?",
+      "Is there a standard way to figure out the right balance between efficiency and accuracy?"
+    ],
+    "slide_52": [
+      "Introducing more bias to reduce variance?"
+    ]
+  }
+}

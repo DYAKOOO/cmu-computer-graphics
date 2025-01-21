@@ -1,0 +1,223 @@
+{
+  "metadata": {
+    "lecture_name": "3drotations",
+    "total_slides_with_comments": 24,
+    "last_slide_number": 32,
+    "total_comments": 165
+  },
+  "comments": {
+    "slide_3": [
+      "I'm still confused as to why being able to keep Sao Paulo fixed prevents us from representing a rotation from Pittsburgh to Sau Paulo. Can we not rotate vertically, then horizontally, to get there? Is this just saying that to form a 3d rotation, we need 3 degrees of freedom and therefore 3 numbers?",
+      "I don't quite get where the 3rd degree of freedom comes from. Is it the direction of rotation?",
+      "Can we define a rotation by how the axis of rotation changes over time? I suppose this would be very difficult to do for abnormal rotations though.",
+      "Is there a general way to determine the degrees of freedom of a model statistically?",
+      "I think it makes sense that we need three degrees of freedom, but the example with Sao Paulo seemed to make it more confusing. Can you provide another example?"
+    ],
+    "slide_4": [
+      "It seems like since there is only 1 way to rotate in 2D, there is only 1 degree of freedom. Why does the degrees of freedom in rotations not scale linearly, why is there a jump from 1 degree to 3 degrees from 2D to 3D? How does this scale in higher dimensions?",
+      "We previously talked about how we can add \"fourth dimension\" to approximate non-linear transformations as linear transformations. Can rotation of these imaginary new coordinates hold any significance? If so, can we see an example of such case?"
+    ],
+    "slide_5": [
+      "When talking about rotations in 2D and 3D, why is it important to consider whether they are commutative or not? Are there other properties of rotation that we should be considering?",
+      "What makes the difference between the different behaviour with 2D and 3D? Is it related to some mathematical logic with rotation(sth like rotation is a 3D change)?",
+      "What makes the difference that 2D is commutativity while 3D is not? Is this changed by anything related to some mathematical fact with the motion of rotation?",
+      "If the rotation matrix can be divided into three rotations around orthogonal x,y,z axes respectively, which order of x,y,z do 3D software and CG library use to calculate the rotation?",
+      "Water would not spill out because there is a cap on the bottle",
+      "I don't understand this example, it seems like the result is the same if we keep the axis fixed relative to the bottle. 90 degree rotations about Y do nothing, and then the rotations about Z and X still occur one after the other both times. How is there a different result here?",
+      "What will happen if it is extended to 4d?",
+      "For 4D, if you consider Time as one dimension, things would be fun.",
+      "Are there any examples in graphics where due to rotations not being commutative, something bad happened?",
+      "What's the mathematical reason that 3D rotation is not communitive?"
+    ],
+    "slide_7": [
+      "Is it common to use Euler angles in animation programs/game engines/etc. that allow (x, y, z) rotation entry despite the limitation of potential gimbal lock, or do such programs usually use a different representation in the underlying mathematic manipulation and present the rotating circles/three values for the user's convenience/ease of understanding?",
+      "Are the Euler angles the same thing as yaw, pitch, and roll? I remember seeing these as part of the player's position in Minecraft (lol), which has a similar situation where rotation becomes locked (when looking completely up or down) -- curious if that's due to Euler angles.",
+      "Do the axes of rotation rotate with the object being rotated? What happens if whether they do or do not is changed?",
+      "In 3D Calculus classes, we often represented 3D polar coordinates with only two angle components. Why does it make sense to use 3 angle components here instead of the two angle components like we did in 3D calculus?",
+      "What do configurations mean in this case, and can we approximate Euler Angles when we reach the point of Gimbal Lock?",
+      "Does it matter what order of axes we use to describe euler angles? I would imagine euler angles where you rotate around x, then y, then z are different from rotating around z, then y, then x"
+    ],
+    "slide_8": [
+      "How often would a gimbal lock happen? Does it only occur when rotating in all three axes and theta_y os pi/2?",
+      "Has there been an incident where bad things happened because of their system of rotation? Just curious.",
+      "Is it possible to detect gimble lock and then reparameterize the three angles such that the overall rotation is equivalent but the three axes become independent again?",
+      "Can this be prevented if we don't immediate substitute in the value of theta_y? Like maybe evaluate it at theta_y as needed but also keep storing the original matrix with everything in terms of sin and cos?",
+      "Is rotation by Euler angles commutative? Is there a way to change the order to prevent a Gimbal lock, or will that end up with a different result?",
+      "Why are quarterions a better alternative to gimbal lock?",
+      "Is there a common solution to gimbal lock or is it just best to avoid it?",
+      "Is the matrix formed using Euler angles not memoryless?",
+      "Would using a different coordinate system solve the lock constraint?"
+    ],
+    "slide_9": [
+      "Besides Gimbal lock and the complexity of calculations with Euler representations, are there other well-known downsides in using Euler angles?",
+      "I am confusing here, as we fixed the theta y on the previous slide, why do we need to change it now? Or why could we change it if we have assumed its value already?",
+      "Can gimbal lock still happen if you go from euler->quaternions? Say you want to think about rotations in terms of euler angles, but convert them to quaternions when you apply the actual rotations. Is that ok?",
+      "I'm also confused here. We've already specify theta_y to be pi/2, so it make sense we are now performing rotation on theta_x and theta_z only -- we've already finished rotating theta_y?",
+      "Same here. I thought we fixed the angle theta_y on the previous slide",
+      "Chiming in to agree-- I don't doubt that Gimbal lock is a thing that can happen, but I don't think your explanation in the lecture that it's because only theta_x and theta_z show up in the matrix is correct. After all, there's nothing special about pi/2; no matter which angle we rotate to around the y axis, we have just set theta_y to a constant, so naturally the resulting matrix does not contain theta_y.",
+      "I'm still confusded as to how we are no longer able to rotate on one axis, I'm not sure why we can't rotate about the y-axis anymore, since doesn't the original matrix use a theta_y?",
+      "I wonder what you mean by saying it is locked; by applying Rz\\Ry\\Rx the rotation can exactly be like this, so why is it locked?",
+      "Is the reason that this matrix creates a lock that the expression for z comes out to 1 no matter the angle because of the sin^2 + cos^2 = 1 identity? It seems to hold when you do the multiplication out.",
+      "confused as well. Does it means that the y is not counted?",
+      "I've had gimbal lock show up in two classes and I'm still not sure how it works. What exactly does gimbal lock look like in motion?",
+      "I'm also confused. Does this specific setup prevent further rotations in the future? I thought fixing the y axis was the desired behavior.",
+      "The missing of theta_y is caused by our assigning theta_y a concrete value, right? How can this become a problem? Does it mean our following transformations of the object depending on the original axis will be limited because of the choice of representation or coordinates?",
+      "I think by setting theta_y to be pi/2, we are basically making two axes (in this case, i think is x and z) parallel to each other, so any changes in theta_x and theta_z apply to the same rotation axis of the object."
+    ],
+    "slide_10": [
+      "While this may not be practical to memorize, could it still be practical enough to code up?",
+      "Can we use quaternions in place of matrices?",
+      "How will the change of coordinate system affect the matrix?",
+      "How exactly was this matrix determined? Even if we are told to just memorize it, it would be significantly easier to understand how it was derived so we can also extend it to more dimensions",
+      "when i was imagining a scenario to rotate an object to an arbitrary orientation, i had two thoughts:\n1. you can reach any orientation with an angle variable with a given axis, defined by a normal vector that has 3 variables\n2. you can reach any orientation with two angles, theta and phi, like how we define spherical coordinates",
+      "another idea that came to my mind is, how do we generalize this rotation idea to n-dimensional space? is it the same that we only need to know the principal axis to perform any arbitrary rotation? and is there any mathematical meaning behind high dimensional rotation, like eigenvalue problems?",
+      "Is it useful to have specialized hardware that performs these kinds of rotation conversions, or is it sufficient to use normal floating point and matrix operations?"
+    ],
+    "slide_13": [
+      "Sure, we can focus on the geometric meaning on the complex plane. But does the fact that i = sqrt(-1) have NO significance in such transformations and vector calculations? Like I feel like this definition of the imaginary unit is too relevant to real numbers to be simply ignored.",
+      "Why all i and j in this lecture don't have a dot above? Is this a front issue of some other weird bug? Feels a bit weird.",
+      "Wouldn't the data that we're using be largely real and not contain imaginary components, so the additional operations offered by the complex number encoding wouldn't be able to be used?",
+      "When would we have to deal with imaginary units when we are commonly working with real numbers and shapes?"
+    ],
+    "slide_14": [
+      "Would it be valid to say that i=pi/2 then?",
+      "Is there any reason why this is so? Is this just within the complex plane?",
+      "this is a smart explanation! I am wondering what is the implementation of this in algorithm?"
+    ],
+    "slide_15": [
+      "Is there a typo on this slide? It seems like it should be \"e1, e2\" rather than \"e1, e1\".",
+      "What kind of data structure do we use for complex arithmetic? Seems like you would basically have to treat them like 2d vectors and manually check for when a multiplication transforms an imaginary component into a real one"
+    ],
+    "slide_16": [
+      "Do we ever want to use complex numbers for other transformations in graphics? Or does it not make as much sense since we possibly aren't dealing with the same angle manipulation or large complicated matrix operations?",
+      "Are there situations where the constraint that theta is in [0, 2pi) matters? Intuitively, it seems we could just store any angle up to a 2n\\pi factor and it'd be the same as the version in [0, 2pi) if we ever wanted to convert back to cartesian coordinates. Is it just a matter of computational efficiency?",
+      "So when coding this up, it seems like a class defining complex numbers could just inherit from the Vector2D class but with an added \"complex multiplication\" function. Is this a reasonable assumption?",
+      "Are there tradeoffs to using complex polar? Is it difficult to translate some vectors into a workable form, or is it just always better to do it this way?",
+      "Will the angle impact the result, let's say, from pi to 2pi range?"
+    ],
+    "slide_18": [
+      "Where is the \"beautiful\" form of the identity useful?"
+    ],
+    "slide_19": [
+      "Is the presence of exponentiation relevant here besides an easy way to do multiplication for magnitudes and addition for angles? (i.e. does the use of e as the constant for exponentiation matter for the purposes of these calculations?)",
+      "Are there cases where the rotation matrices on the left are better suited to a graphics problem than the polar coordinates on the right? It seems like the right equations are much simpler as you mentioned, but could there still be uses for the left equations?",
+      "Looks like e^(i * theta) has two meaning: it either represents a vector with length 1 that rotates theta CCW from x axis, or it means the operation of rotating a vector theta CCW from it current position while maintaining its length.",
+      "How does complex number calculations get evaluated in computers?",
+      "Another way to prove 2D rotations communicate right?",
+      "About precision, is complex computation has more precision than matrix form?",
+      "Suppose we do perform a 2D rotation using complex numbers, how would we revert back so that we get a vector with real components?",
+      "Is there an advantage of using one coordinate system over the other?",
+      "How does our computer use complex coordinates to perform calculations? I'd imagine it would be rather \"expensive\" to implement so is there a significantly greater benefit for doing so?",
+      "Are polar coordinates the reason why the complex system is so nice for 2D?"
+    ],
+    "slide_20": [
+      "Would it be feasible to have our graphics program dynamically switch between (potentially better by some metric) different methods during runtime?",
+      "Is there one representation that is usually used for say game development? If so why?",
+      "Out of easiest, most efficient, and most accurate, which factor is usually the most prioritized? Does it generally remain consistent in a particular field or would sometimes, for example, choosing a more efficient route degrade accuracy by a significant amount?"
+    ],
+    "slide_21": [
+      "I have been following the development of the 4d game Miegakure for a few years. One of the blog posts from the primary developer criticizes quaternions and suggests that rotors are a more natural and generalizable way to represent 3d rotations. Will we learn about rotors in this course?",
+      "Are there analogues of quaternions for even higher dimensions?",
+      "Is there any intuition that would help me understand why it is necessary to have 4 parts to describe a 3d rotation like this?",
+      "Doing math instead of going to a party? nerd",
+      "Is there a generalization to quaternions that is used in higher dimensional computations (including rotations)? In general, how does one know how many dimensions are needed to generalize to a d-dimensional vector?"
+    ],
+    "slide_22": [
+      "In quaternions, what is the real number (a) affecting? My intuition is the i, j, k values are mapping relative 3d axis in a way (although I might be wrong), but I'm having trouble seeing where the real number affects the rotation.",
+      "Is there a similar concept for higher dimensions? Eg. if we wanted to rotate a hypothetical 4D object, are there 2^3 - 1 = 7 imaginary coordinates?",
+      "Trying to imagine i, j, and k as actions onto the plane, it seems like multiplying by any one of them will rotate about some specific axis, sort of like Euler angles. If so, how can one make sense of ijk = -1? Also, what would it mean to \"rotate\" by i + j?",
+      "Another example of non-communitivity is that ij = k but ji = -k.",
+      "Could you give graphical examples of the quaternions and how it affects rotation? It is difficult for instance to imagine what a rotation of ij means.",
+      "In 2d, we have 1 and i as the two bases. But in 3d, if I understand correctly that i, j, k are the three bases, what does 1 do?",
+      "Is there any geometrical/physical reason why we need 4 basis vectors, or does the math just work out that way?",
+      "Extending on tianez's question. If quaternions represent rotations, and rotations have 3 degrees of freedom, wouldn't this force there to be rotations that can be represented by infinitely many different quaternions? i.e. the mapping from quaternions to rotations is not injective.",
+      "Is there a polar form for quaternions like there is for complex numbers?",
+      "What is the intuition behind the k component ?",
+      "I'm trying to understand quaternions and think that the i, j, and k components can represent 3D dimensions on a plane. Is this correct? If so, what does the 1 represent? The imaginary component?",
+      "What exactly are we calculating with quaternions? What's the intuition behind the 1 and why are 4 coordinates necessary?",
+      "How does ijk = -1? I think I\u2019m just generally confused about the role of k as well.",
+      "Is there anyway to interpret this as a use of homogeneous coordinates?",
+      "how are these equalities important?",
+      "How exactly do quaternions affect rotations and does this apply only to 3 dimensional objects?",
+      "Is there any rules or intuitive explanations on why we need 2 more complex units (j, k) to describe rotation in 3D than that in 2D space? What if we want to describe \"rotation\" in 4D space? Do we need 2 more units or 3 more?"
+    ],
+    "slide_23": [
+      "While impractical to remember or do by hand, is this feasible to use in code?",
+      "Where do these minus sign come from? How to expand q * p?",
+      "Would geometric interpretation of the complex numbers stop at 3D? What about 4D? Do we need 6 complex components?",
+      "If we express the product this way, can we prove that they do not commute?"
+    ],
+    "slide_24": [
+      "Is the last equation on this slide dimensionally correct? On the RHS, $u.v$ is a scalar and $u \\times v$ is a vector.",
+      "What happens to the \"scalar\" component in R3? Is the scalar component only used in rotations? What changes as we increase the value of the scalar component while keeping the vector components constant?",
+      "The last equation is dimensionally correct because quaternions are summations of scalars (real parts) and vectors (imaginary parts), as shown in the first equation of this slide.",
+      "How did we derive the simpler form of the Quarernion product? It's not clear how/if things are distributing",
+      "How did we get the first part of the product (ab - u.v)?",
+      "The simpler form of the quaternion product feels unintuitive, as we have both scalars and vectors within the parenthesis. Could you elaborate on this?",
+      "Maybe I missed this, but what exactly is the first coordinate for? How does it help us encode rotations?",
+      "I'm also confused about what the first coordinate represents intuitively. In particular, why can it be thought of as a scalar while ijk can be thought of as a vector?",
+      "If the three imaginary components encode a real vector, what's the point of working with complex numbers?",
+      "For the third equation on this page, I don't understand where does the u dot v in the scalar component come from.",
+      "When we encode a 3D vector in our quaternary encoding, what does the the scalar part of the scalar-vector form represent, intuitively and/or geometrically?",
+      "One can see intuitively that this is much nicer than using rotation matrices and the like, but how much of a speedup does using quaternions actually create over matrices. Has there ever been a study which quantified it?",
+      "Is it possible to express the scalar+vector form in 3D geometry? Does it behave similarly to the homogeneous coord?",
+      "Confused about where the dot product in the simpler quaternion product form is coming from. Could this be elaborated on / is there an intuitive explanation?",
+      "Based on the last formula on this slide, if we were to write code to compute the quaternion products of 3D vectors, we would not need to implement anything related to the quaternion basis (I don't even know how we could even do this). We can simply just compute the last formula?",
+      "Is there a derivation for this? Not sure I understand how we'd arrive at this formula.",
+      "I feel confused how it is represented in 3D",
+      "What is happening in the third equation? I have no idea how we went from (a, u)*(b, v) to the final expression."
+    ],
+    "slide_25": [
+      "Intuitively, what does q bar mean? You said it was a reflection, but across what axes?",
+      "How do we know that the cross product of the reflection of q and q is a rotation?",
+      "For the operation q_bar, do we inverse every imaginary element of q?",
+      "How can we determine the direction of the rotation here?",
+      "Why do quaternions not have a gimbal-lock?",
+      "Why do we multiply the x with the q and the q_bar? Is there a geometric meaning in this?",
+      "Why do we need to multiply by q bar and what is the significance of q bar/ negating the imaginary component?",
+      "How do we know that the quaternion cross product definition on the previous slide represents a rotation? Is there any geometric meaning that we can see from the formula?",
+      "What does q bar represent? How is this a rotation?",
+      "Why do we take Imaginary part of H out instead of the whole part of H?"
+    ],
+    "slide_26": [
+      "Would it be possible to go over an example of what q bar, q, and x are and why this works out the way it does? I didn't quite follow where theta and u are coming from.",
+      "This seems very unintuitive because in particular, rotating by 0 does nothing as expected, but rotating by 2pi reflects x twice. Although correct, I don't see why the two reflections are necessary. Is there a geometric reason behind the usage of half angles, or is there an equivalent formulation for q that is more insightful?",
+      "Is there any special situation that rotation by matrix can compute more faster than complex form?",
+      "I'd love to have an example of actually doing something with q bar and q. Things are moving so fast in the lecture. T_T",
+      "I'm having a hard time understanding how the first component of the quaternion fits into all of this, like what does it mean geometrically? Is there an intuitive explanation for why we set it to cos(theta/2) here?",
+      "Is there a polar form of q so the geometric meaning of quaterions can be made clearer?",
+      "Why is q constructed like this? I don't understand the geometric meaning of this equation in this picture.",
+      "Is the axis u in terms of quaternions? Additionally, is the real part essentially just reduced to a scaling factor? In that case why do we need it?",
+      "Is this process reversible? When two out of the three values in u, theta, and q are known, is it possible/easy to find the third?",
+      "Do we represent these as a matrix or a vector when we actually perform transformations? It seems like it could be done with a vector but it would probably be easier to keep things 4x4"
+    ],
+    "slide_27": [
+      "What makes power a better choice? Why does it outperform f(q0, q1, t) = q0 + t * (q1 - q0)?",
+      "How does the Slerp approach implementation compare to the efficiency of the Euler interpolation or other interpolation methods? Are there situations where it is ideal to select one of the less accurate interpolation methods over the Slerp approach?",
+      "Why did the Euler interpolation seem to speed up/slow down as we saw previously?",
+      "It was mentioned earlier that Euler angles cannot interpolate into all possible rotations. Is the speedup mentioned on this slide a different issue? Or was the speedup we saw caused by some rotations missing?",
+      "What does the t represent in the Slerp equation?",
+      "You said \"wiggles the least\", so does that mean there is still some inconsistency/weird wiggles along the way using quaternion?",
+      "Is the Slerp function result equivalent to a vector along the arc?",
+      "Is there a mathematical reason this Slerp approach is smoother/less problematic compared to the Euler angles?",
+      "What is the intuition behind the formula for Slerp?",
+      "What does q0^(-1)q1 represent?",
+      "What's the explanation of the SLERP equation?",
+      "I was trying to find some cool interpolation videos using SLERP and came across this: \nhttps://www.youtube.com/watch?v=PDRItEuaVR4"
+    ],
+    "slide_30": [
+      "If quaternions can be used for fractals, would it be possible to make the tree fractal we made in class using them?",
+      "Can we re-express the method to write trees via quaternions?"
+    ],
+    "slide_31": [
+      "For quaternions how do we show angles greater than 2pi?",
+      "Why would we necessarily want to encode angles larger than 2pi? Like when would we rely on a rotation that can't be done by some modulo operations over the unit circle?",
+      "Agree with above - would keeping track of rot's > 2pi be useful for keeping track of rotations over time? Maybe some issue with precision/overflow?",
+      "I think we might want angles larger than 2pi because of the difference in the visual representation process? Like a point rotating 3pi over the center of a sphere travels much more distance than if it rotated just pi, even if the ending location is the same.",
+      "Along the same lines as the other questions, it's unclear to me exactly why angles greater than 2 pi can't be handled through other means discussed (quaternions, etc). The slide mentions that Lie algebras are \"nice\" for these large rotations though, so even though we won't have time to cover this topic, what's a brief, intuitive reason as to why this is the case?"
+    ],
+    "slide_32": [
+      "(Not sure where this question should go, so just putting it on the last slide). It seems like all representations that we've seen have multiple representations for a given single rotation (at least, theta wraps around on angle/axis and euler, etc.) Do quaternions get away from this? If not, do any other rotation systems have unique representations?"
+    ]
+  }
+}

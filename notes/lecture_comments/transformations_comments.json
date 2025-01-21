@@ -1,0 +1,277 @@
+{
+  "metadata": {
+    "lecture_name": "transformations",
+    "total_slides_with_comments": 45,
+    "last_slide_number": 58,
+    "total_comments": 177
+  },
+  "comments": {
+    "slide_2": [
+      "Are there any instances where nonlinear maps are necessary in graphics?"
+    ],
+    "slide_5": [
+      "If the bottom holds in reverse, i.e. f(x) + f(y) = f(x+y) and af(x) = f(ax) does that imply that the map is linear, or does it only go in one direction?",
+      "Is this Algebraical character unique in all tranformations?",
+      "I usually found the geometrical way to think about problems in linear algebra and vector calculus is harder for me compared with the algebraical way. So is it necessary to think geometrically? If so, would you recommend some practices for it?"
+    ],
+    "slide_8": [
+      "How is a shear different from a rotation?",
+      "A these transformations appear to be uniform or relatively easy to recognize a mathematical concept behind it (multiplying by a constant, adding a constant to each coordinate, etc.) How do we mathematically describe more complicated functions/transformations that aren't as obvious (such dripping water, crumpling a soda can, etc.)",
+      "How is a shear transformation represented (for example translation may be given a vector to move by, rotation given an angle to rotate) what information must be given to perform a shear transformation?",
+      "The shear transformation here looks like a rotation, despite the explanation later in the slides of how it is different; do shear transformations in 3D often look similar to rotations?",
+      "How is a shear different than a scaling along a diagonal axis?",
+      "Is there any other transformation that is also linear?",
+      "Why is it called a shear transformation?",
+      "Are there any other types of transformations?"
+    ],
+    "slide_9": [
+      "Are there any other kinds of transformations, other than these four (such as projection/inversion of a plane in 3d space?).",
+      "Are there scenarios in which your brain thinks it knows what kind of transformation is looking at but it is actually a different one? I guess this is kind of falling into optical illusion territory.",
+      "In the lecture, you discussed how these transformations were formalized based on the geometric invariants they preserve, and the algebraic properties followed after. Is this generally the case in more advanced geometry?",
+      "What properties would the composition of these transformations have?",
+      "Does the order of basic transformation matter?"
+    ],
+    "slide_10": [
+      "Does preserving distance imply preserving orientation? (Oops, this was answered later in the lecture)",
+      "When we talk about the origin here we seem to be talking about the origin of the object. Do we always mean this, or does it sometimes refer to the origin of the space the object contains? In a translation this would make more sense it seems. Is it just based on context?",
+      "Is there any situation that origin and distance are preserved but orientation are altered? Can this be achieved by change the order of all vertexs?",
+      "What exactly does preserving orientation mean here, or rather what would not preserving orientation look like? I thought that rotations in 3D didn't always preserve orientation because the order of rotations matters (rotation about XYZ != rotation about ZYX).",
+      "Is rotating something around a point other than the origin still a linear map?"
+    ],
+    "slide_11": [
+      "How can we see the geometric equivalence between cos(theta + pi/2) and -sin(theta) (and by extension sin(theta + pi/2) and cos(theta))?",
+      "How can we represent rotation in the clock-wise direction? Is there an advantage in rotating clock-wise or counter-clock wise to arrive at the same position?"
+    ],
+    "slide_12": [
+      "Not really a question, but I've been working with rotation matrices for a few years now and I've never thought of them this way, which is really really cool and intuitive."
+    ],
+    "slide_13": [
+      "Does the location of the negative sign (top right, bottom left, top right) for the sin components determine the direction of rotation?",
+      "Can the rotation matrix be scalable to or programmable for higher dimensions?",
+      "Can any rotation be conveniently decomposed as a combination of these three matrices?",
+      "It seems like there is redundancy in some of the 9 values in a 3x3 rotation matrix. Are there more efficient ways to specify rotations that don\u2019t take 9 numbers?",
+      "How would you rotate an object about an arbitrary vector/axis in 3D?",
+      "Does the orientation of the axes affect how we'd write these rotation matrices? If so do we stick to one standard base orientation?",
+      "What matrix would we use for rotation about axis xi in n dimensions?",
+      "Can you explain the direction of rotation between two frames? Because when dealing with real problems, it always happens that mistakes in relative rotation lead to bad results, e.g. when transforming points from frame a to frame b, should we multiply rotation from a to b or b to a, and how to define rotation from a to b?",
+      "When encoding a rotation, is it more convenient to first multiply these three matrices together (and save the result), and then plug in angle, because calculating matrix multiplication for every rotation seems costly.",
+      "Why does rotation around x2 matrix a bit different from the other 2 matrices?",
+      "If we want to rotate around a self-defined axis, should we change all our point values to be based on the new axes or should we use the angle between the new axis and the original axis? Which would be easier for calculation and is picked in real life?"
+    ],
+    "slide_14": [
+      "Does this mean that to apply a rotation that is equal and opposite of R, you can instead multiply by R^T? Or am I too tired to be thinking about linear algebra right now",
+      "To dshernan, this means that R^T will rotate as opposite to R.",
+      "What's the geometric meaning of rotating by R^T",
+      "I don't really understand how this works. Does it work just because of the change of basis method? Matrix multiplication? Inverses?",
+      "Does the orthonormal basis preserve the magnitudes of the standard basis/would the graphic look different if the magnitudes of (e1,e2,e3) were larger/smaller?",
+      "This may not be related, but we often see that instead of multiplying by R in front of the vector/shape, we multiply the transpose of the R on the back such that is does the same operation. In which cases would we do this?",
+      "Frequently I see rotations represented by quaternion. What is the relationship with this and what is the pros and cons compared to this?"
+    ],
+    "slide_15": [
+      "What indicate that the orientation is not preserved?\n(got the answer from the next slide)"
+    ],
+    "slide_16": [
+      "Are rotation and reflection the only two scenarios of transformations satisfying QQ^T = I ?",
+      "What are some examples of non-orthogonal transformations?",
+      "Why does the sign of the determinant determine rotation/reflection?",
+      "What happens if det(Q) == 0? Does it transform all points to the origin?",
+      "What is the determinant's connection to orientation?"
+    ],
+    "slide_17": [
+      "What if scalar multiple a is negative, how could the direction of all vectors be preserved?",
+      "Can we even think of multiplying each vector by a negative scalar multiple as scaling? Would that kind of turn the object inside out?"
+    ],
+    "slide_18": [
+      "Is there any time where we want to use negative scaling matrices instead of rotation matrices and vice versa?"
+    ],
+    "slide_19": [
+      "Is this property the intuition behind 3D editors inversing objects when the scale becomes negative? Is it possible to pick such vectors u and v such that this reflection happens in shearing as well?",
+      "Is additional negative scaling terms/reflections something we need to worry when we move into homogeneous coordinates or up to higher dimensions?",
+      "Just want to comment that I noticed negative scaling matrix=multiplying 2 reflection matrix=180 degree rotation matrix",
+      "So does \"orientation\" only have two options (\"forward\" and \"backwards\") in all dimensions?",
+      "can we think this like all points move to its mirrored position which cause the shape as like a bag inside-out and we see its inner faces outside"
+    ],
+    "slide_20": [
+      "Does this still preserve vector direction? My brain says no intuitively. But this is still considered a form of scaling?"
+    ],
+    "slide_21": [
+      "The image in the lecture video sort of looks like a shear to me. Are shearing and nonuniform scaling at all related?"
+    ],
+    "slide_22": [
+      "Somewhat unrelated to the spectral theorem, but how does one visualize eigenvectors?",
+      "I know mathematically why an eigenvector/eigenvalue is significant, but I can't really understand the applications of it. Spectral theorem I believe has something to do with diagonalizable matrices, but I fail to see how these matrices make a visual difference",
+      "Is that statement covered in blue not accurate enough? I can have I = I * I * I, which is a uniform scaling.",
+      "I think this means every symmetric matrix have their eigenvectors represented as the rotation component and eigenvalues as the scaling component? How does this change in the case of non-symmetric matrix, what kind of transformations do the eigenvalues and eigenvectors represent?",
+      "What is the situation when two eigen vectors are same?",
+      "I'm still unsure how the spectral theorem implies that every symmetric matrix performs a non-uniform scaling transformation. Specifically, how does the fact that that A has orthonormal eigenvectors imply that? Is it because the eigenvectors are orthonormal, which represent a change in basis, and the fact that the eigenvalues are real allow for scaling?",
+      "When you say a scaling in non-uniform, does this mean it doesn't preserve the object's shape?",
+      "What are some intuitive geometric interpretations to understanding the eigenvalues of a symmetric matrix? One can view them as the scaling factors in a different set of axes, but I'm wondering if there are other ways to look at this."
+    ],
+    "slide_23": [
+      "It seems that shear operation requires the most computation. It is also the least commonly used one in practice?",
+      "After seeing the whole video, I now think that shear should be the most common one because we need to represent a translate operation as a shear operation in homogeneous coordinates.",
+      "Would any, for example, six-faced, twelve-edged, eight-cornered polyhedron then be a shear of a cube? Or are there certain shapes with those properties that a cube cannot be morphed into?",
+      "I'm having a little trouble visualizing this. What scene/image would be a good example where a shear is necessary (besides for translation)?",
+      "How did uv^T come out to be ((0, cos(t),0),(0,0,0),(0,0,0))",
+      "Shear seems similar to nonuniform scaling, is is possible to just interchange the two as shear seems more resource heavy in terms of computation?",
+      "how to know which element other than diagonal in matrix decide which direction of shear?",
+      "Can we have a visualization on how each point changes due to shearing? I could not visualize it through pure matrix or through the whole motion.",
+      "I am also confused with how exactly the factor cost is influencing the extent of shearing",
+      "I also am confused about, what is the difference between shear and nonuniform scaling?",
+      "Are there any other kinds of transformations that are shearing, scaling etc. that can be represented by linear transformations?"
+    ],
+    "slide_24": [
+      "Could you say a bit more about why we multiply the matrix corresponding to the last operation first? Are there composite transformations where order of multiplication does not matter?",
+      "Does the sequence of transformations matter in building up composite transformations?"
+    ],
+    "slide_26": [
+      "Why is uniqueness important for decomposition, rather than existence?",
+      "In many cases, the matrix of a composite transformation was obtained by multiplying the matrices of basic transformations in the first place. Couldn't we avoid the need for decomposing it again by remembering what the basic matrices were originally?",
+      "How do we analyze a linear transformation that cannot be decomposed? Is there a way to approximate it or something?"
+    ],
+    "slide_27": [
+      "I thought the singular value decomposition was a generalized form of the spectral theorem for non-square matrices. That being said, what exactly are the sizes of these matrices here? Because if A is m x n, then P must be n x n for the spectral decomposition, which leaves Q to be m x n. Then, the spectral decomposition will force V to be n x n, so U = QV comes out to be m x n which is not necessarily a rotation.",
+      "How can I get the QP out of A? I am confused and my brain stops thinking about matrixes.",
+      "I only see rotation and scaling here. Is it possible to recover a shear transformation in the decomposition? And does this decomposition imply that a shear is just a combination of a rotation and a scaling transformation? (This may be the answer to a question I had on an earlier slide...)",
+      "Does the rotation matrix V have to be orthonormal?",
+      "Can we get a more detailed, slower explanation on this slide during class? So many matrices my brain just left T_T.  Are V and D the eigenvectors and eigenvalues?",
+      "I'm having a hard time visualizing/understanding how U = QV eliminates possible reflections in the case where only Q is applied. Can someone explain this?",
+      "For every matrix, will the polar decomposition be unique?",
+      "I get how we can decompose a transformation into its components, but I still can\u2019t seem to think of a good application as to why we would ever want to decompose it.",
+      "What is polar decomposition?",
+      "What does rotation/reflection mean here? The rotation relative to what?",
+      "Is there any method that we can have choose better values in U that could expedite the computation",
+      "Are polar decomposition and spectral decomposition frequently used in graphics, I feel like most of the time we are building the matrix A instead of decomposing it into components.",
+      "How exactly are the matrices being applied to the 3D objects? Or maybe how is the cow being represented by matrices?"
+    ],
+    "slide_28": [
+      "decomposition is useful when you need to reverse the operation, and that you need to calculate the inverse of the transformation matrix. If you can decompose the operation nicely, every inverse matrix is easy and all you need to do is multiply the simple inverse matrices, therefore save a lot of computational cost.",
+      "but for decomposing regarding to interpolation, i think the useful part is to enhance user experience when they are, for example 3d rotating a CAD object. If you can parametrize the the interpolation with a t to make it tA+(1-t)A', it will save a lot of computational costs and the user can see a smoother transformation when they try to drag and look around the CAD object."
+    ],
+    "slide_29": [
+      "Is it always the case that this will look badly? Or does it behave fine in certain cases?",
+      "Would we be able to get a \"nice\" looking transition by decomposing the start and end transformations into their respective rotations, scales, etc. and linearly interpolating those, directly?",
+      "Is there a degree of change where the transition wouldn't need additional interpolation in-between? Just like in traditional animation, with the key frames and the in-between connecting frames, how much of a change from 'frame' to 'frame' would be the limit with such a movement?",
+      "Is this just so that it looks good for a human? Or is there an objective way to know if an interpolation \"looks good\"?"
+    ],
+    "slide_30": [
+      "If we wanted to animate a transition between the initial state and A_0 instead, would we still need to decompose A_0 into rotation and scaling or would taking the linear combination of A_0 and the identity matrix work?",
+      "If we just ignore X(t) in the transformation, how can we guarantee the composite transformation of Q(t) and P(t) together will generate a valid interpolation? Why can we just drop X(t) in this case?",
+      "If we drop X(t), wouldn't this result in wrong endpoints? Q(0) is not always equal to Q_0, and Q(t) is not always equal to Q_1.",
+      "What exactly does x(t) represent and is it still the same rotation as (1-t)Q_0 + tQ_1?",
+      "How did the shading on the cow change?",
+      "why can we throw away x?",
+      "How do people come up with more realistic ways of interpolating transformations? I'm probably lacking a lot of intuition but I don't understand how they decided to use a decomposition. Also, are there different ways of interpolating transformations used depending on the object being transformed?"
+    ],
+    "slide_31": [
+      "is there really a general decomposition that can smoothly translate between motions? or is it something we should always optimize case by case? (for example, to tort a beam and to rotate a human joint, can they both perform well under a same decomposition & parameterization method)?",
+      "a follow up question: we can't always judge a transformation by bare eyes. How do we quantify the quality of transformation? in other words, how can we tell which transformation is better in an objective way, so that we know how to optimize?",
+      "Does skinning work by simulating different materials, and therefore are there lots of different skinning methods based on materials?"
+    ],
+    "slide_32": [
+      "Are affine maps as convenient to work with as linear maps",
+      "Are there any other affine transformations that are commonly used in computer graphics?",
+      "Does a translation also move the origin and therefore is not a linear map? I\u2019m unsure how else the origin could be not preserved."
+    ],
+    "slide_35": [
+      "Do these use cases of homogeneous coordinates in (n+1)th dimension work the same way as the example explored later on? Or do other cases encode different values to the (n+1)th value?",
+      "Where does the name homogenous come from?",
+      "Are there other nonlinear transformations (besides affine transformations) that can be turned into linear transformations using either homogenous coordinates or some other method?"
+    ],
+    "slide_36": [
+      "Is the idea of homogeneous coordinates only work in 2D and 3D?",
+      "I'm still a little confused on how any point on L can be used to describe p. Why isn't it just p only?",
+      "Is there ever any disadvantage to using homogeneous coordinates? It seems like you only need to augment a few values to your original matrices to represent them, so just wondering if there's ever a reason to not use them for these kinds of applications.",
+      "Is there any advantage to using homogeneous coordinates in higher dimensions---i.e. turning a 2D point into a plane in 4D? Does this let us represent additional transformations?",
+      "Are there any situations where using homogeneous coordinates is not worth it? I.e. the memory constraints of having to store an extra dimension or computation costs",
+      "When the dimensions get higher, it is still a good idea to use homogeneous coordinates?"
+    ],
+    "slide_39": [
+      "I feel that the concept of Homogenous Coordinates is not hard to understand if we are only looking at matrices and calculations. Does visualizing them provide any real benefits when developing graphics code?"
+    ],
+    "slide_40": [
+      "Do all 2D affine transformations become a shear operation in 3D?",
+      "I'm genuinely in awe of homogenous coordinates' power. I'm curious on why haven't I never seen it in other places. It seems to be extremely powerful as we can theoretically bump up the dimensions to be always 1 higher than what we are dealing with. Does it have its limitations?",
+      "Is it ever useful to go in the other direction, turning a linear transformation in 3D into an affine transformation in 2D?"
+    ],
+    "slide_42": [
+      "Can a 2D reflection be seen as a rotation in 3D when using homogeneous coordinates?",
+      "I guess if we are thinking of the 2d shapes as a bunch of scaled copies in the homogeneous coordinate system, then scaling x3 along with x1 and x2 would mean doing nothing. Each point would get translated along the line associated with it, but all the points on the line correspond to the same point in 2d. So if we scale x3 along with x1 and x2, that would be equivalent to doing nothing.",
+      "scaling x3 could change the orientation? but I do agree with whalevomit",
+      "are there transformations in 2D that are a different type of transformation in 3D in homogenous coordinates?",
+      "From this slide I finally understand why homogeneous coordinates are important--it allows you to write the transformation operation in only one matrix (for translation-->shear)"
+    ],
+    "slide_43": [
+      "I understand that the previous slides were meant to provide geometric intuition into adding the 4th coordinate in here, but I'm having trouble conceptualizing what this \"looks like\" in the fourth dimension. Do we choose a \"3D plane\" at w = 1 and a point on it, and draw the line through that point and the origin?",
+      "Are there other transformations that can become linear when using homogeneous coordinates?"
+    ],
+    "slide_44": [
+      "Is there a specific use case for distinguishing between points and vectors? In real world code, whether a tuple is a vector or a point should be well-defined right?",
+      "What did we multiply by the matrix? It says a, b, c, and n - are those all individual multiplications, or did we stick a, b, c, n into a matrix and then multiply by said transformation matrix?"
+    ],
+    "slide_46": [
+      "Are there situations where it makes sense for the homogeneous coordinate to be anything other than 0 or 1?",
+      "Why do we divide by c for vectors? I didn't think this would apply for vectors because we are forcibly setting the 4th coordinate to 0 for ease of computation, when technically it should be 1 if we're thinking about the associated line in homogeneous coordinates.",
+      "So for the vector, we would just ignore the divide by C part and keep the (x,y) as is?",
+      "Do we need to distinguish using a divide-by-zero check because we otherwise compute transformations with points and vectors using the same functions?",
+      "when we use c=1 we are assuming the triangle is at z=1, when c=0 it means the vector is at z=0, which makes sense because for any linear transformation it's now still from the origin.",
+      "Can we not just treat points as vectors (with respect to the origin)?",
+      "Since we cannot actually carry out the division by zero operation, does this mean we can only approximate a vector by setting c closer to 0 but can not accurately express a vector using this division method."
+    ],
+    "slide_47": [
+      "Aren't the objects in a different coordinate system (world coordinate) than the camera coordinate? Don't we need a coordinate transformation from the world to the camera before perspective projection?",
+      "Can perspective projections be used to reduce the number of dimensions by more than 1 (such as going from 3d to 1d or from 4d to 2d)? What do objects in more than 3 dimensions look like?",
+      "On an unrelated note, in animated movies and videogames do we rely on one base \"pinhole camera\" point in 4d or 3d in order to render every frame's scene objects relative to the \"camera\"'s rotation and position?",
+      "What would it look like if we projected onto the x or y plane instead?"
+    ],
+    "slide_48": [
+      "I think you would need a vertical reflection, a translation down and to the right by 1, and non-uniform scaling by W, H.",
+      "Is the goal to stretch the normalized device coordinates to image space. Ideally, won't we need the center and size of the square in the form of unnormalized coordinates?"
+    ],
+    "slide_50": [
+      "It makes sense to me that each edge or each root stores a linear transformation, but when would we want both the edge and the root to store a transformation?",
+      "I think each edge in the tree should be undirected (or there can be a pair of directed edges between two neighboring nodes), since if something hit the left lower leg with some force, every part of the creature should react to it.",
+      "While it makes sense to use the stack, how is this approach scalable to a large number of objects and/or parallelizable? It seems that every transformation for each object would use the stack sequentially, but I could've misinterpreted how it works",
+      "I think it may not be highly parallel necessarily per object, but I imagine an objects scene graph can be operated on concurrently, at least.",
+      "Since we store previous multiplications on the stack, how important is the order that we visit nodes on performance?",
+      "If there are too many parts to the object (i.e., the object is very complex), is it possible to encounter stack-overflow when storing relative transformations all on the stack? How should we handle this situation?",
+      "I guess the read and store the new value of the stack requires a high volume of threads which requires a well-performed gpu?"
+    ],
+    "slide_51": [
+      "Is there any particular reason this rig is drawn with a quadrilateral mesh instead of a triangle mesh?",
+      "Why are square polymesh used for modeling and animating, but triangles are used for compu graphics? What's the difference?"
+    ],
+    "slide_52": [
+      "To render different instances in parallel, it looks like this tree structure is very natural for the divide and conquer scheme. But how do we encode different patterns into it and skill keep the calculations efficient? Do we use the same block of code with e.g. different random seeds? (this doesn't seem like a good solution for achieving realistic graphics...)"
+    ],
+    "slide_53": [
+      "I was confused about how this is an example of instancing, because it appears that each person had to react differently when pushed over, which seems to contradict the fact that they're all the same pointer"
+    ],
+    "slide_54": [
+      "Is this only a problem when translations are involved, or does order still matter when you're only doing linear ones?",
+      "I think this means we should do all transformations with respect to the origin before translating them to the desired location to avoid unexpected side effects?"
+    ],
+    "slide_55": [
+      "For sure there are many ways to do composition of linear transformations. But is there a way to determine which combination would be the most efficient without actually trying most options out?",
+      "Matrix multiplication has some large recurrences. Will this be too large?"
+    ],
+    "slide_56": [
+      "This pattern of \"multiply by a matrix, perform some operation, then multiply the inverse of the original matrix\" seems pretty common. Is there specialized hardware in the graphics card that performs such operations, or is this a higher-level task (e.g. for linear algebra packages)?",
+      "If we rotated without translating, the square would end up at the same angle, but it would also be displaced relative to where we want it. We can think of the center x as a point on a circle centered at the origin. If we rotate the square without translating x to the origin first, we also rotate x.",
+      "If we rotate first, can we still use translation after to get the correct final result?",
+      "The rotation probably would do something like slide 11, where the cube would be somewhere else",
+      "^^ I understand that we need both a rotation and translation to ever reach the desired result, but could this be done with a rotation first and then translating afterwards?"
+    ],
+    "slide_57": [
+      "But why rotate the whole world around instead of rotating the camera? any benefits to this?",
+      "Are we always going to maintain a fixed camera? Why would we apply world transformations instead of applying transformations to the camera?",
+      "Can we use different perspective projections to simulate different types of lenses? Or do we usually do that in post processing?",
+      "In general, which stage of this pipeline would be considered to be the bottleneck? I would assume it is the part where the transformations are applied, as that would take the most arithmetic instructions."
+    ],
+    "slide_58": [
+      "Do we deal with more complicated nonlinear transformations frequently in graphics? If so, would it ever be reasonable to somehow approximate one as linear due to the convenience or is that something that wouldn't make sense or work in practice?",
+      "With these decompositions, (considering homogenous coordinates), is there a decomposition that will allow us to split up the transformation into all of its possible components, or will you have to group some of them together?",
+      "Can we say that the spatial transformation is like the change of basis?"
+    ]
+  }
+}

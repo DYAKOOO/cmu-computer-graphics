@@ -1,0 +1,241 @@
+{
+  "metadata": {
+    "lecture_name": "introgeometry",
+    "total_slides_with_comments": 40,
+    "last_slide_number": 69,
+    "total_comments": 151
+  },
+  "comments": {
+    "slide_3": [
+      "Noooo, I think deducting theorem from axioms is fun. Geometry problems are hard, though"
+    ],
+    "slide_5": [
+      "Would another explicit representation be the points (x, sqrt(1-x^2)) and (x, -sqrt(1-x^2)) for -1 <= x <= 1?",
+      "we can use Bresenham Equation to draw it by using the character of symmetry",
+      "Is it useful to describe geometry by symmetry? I feel like we'd be missing out on a lot of information to actually characterize a shape"
+    ],
+    "slide_8": [
+      "For software which require very high precision, such as CAD modeling software like Solidworks, what representation is used?"
+    ],
+    "slide_17": [
+      "In applications, do we normally just pick 1 representation for geometry and stick to it? Or is it reasonable to have different objects use different representations?",
+      "Are there ways to convert between implicit and explicit representations?",
+      "Is it usually computationally more efficient to have implicit or explicit encodings?"
+    ],
+    "slide_18": [
+      "The points at the center should be the furtherest points from the boundary right? Why do they have a dark shadow in it and the neighboring non-center points seem have more light blue?",
+      "What are some special implicit representations such that they can be processed quickly and converted into an explicit representation quickly using modern hardware? For example, I would assume a circle would be one, and I already know triangles are one of them."
+    ],
+    "slide_20": [
+      "Without some prior information, we will have to test all points."
+    ],
+    "slide_23": [
+      "Isn't the use of the word \"inside\" kind of vague? For instance, I could supply g = -f and the surface would be the same, but the \"interior\" is now the points outside of the unit sphere.",
+      "If we use the function of the plane previously, there really is no notion of \"inside\" or \"outside\" either since the function doesn't enclose a region so how would we define it in that case?",
+      "Even if inside/outside tests on implicit surfaces are easy, isn't the process of finding the function f that implicitly defines the surface itself hard? Would this make implicitly expressing a surface useless in practice?"
+    ],
+    "slide_24": [
+      "If you instead had a function f : R^3 -> R^3, would you get \"filled-in\" 3D geometry instead of just a surface? Is this ever desirable, or is the surface of our shapes generally all we need for graphics purposes?",
+      "If we pick a point (u,v) outside the surface would f(u,v) be 0?",
+      "Does the surface in u-v plane serve as the domain for the function?",
+      "Why do we introduce (u, v) here? Do they have some geometrical meanings?",
+      "Why do we map R^2 to R^3 here?",
+      "^^ Usually, aren't we going from R^3 to R^2? Why and how in this situation do we start of with this 2D model and produce a 3D model from it?",
+      "can we conclude that explicit->parametric form, implicit->function form?",
+      "Is there exist any good coordinates that accelerates the computation of this form?"
+    ],
+    "slide_27": [
+      "Is there a way to represent explicit surfaces so that you can easily sample \"uniformly?\" It seems like with certain parameterizations, the samples might be biased/concentrated at some points over the surface."
+    ],
+    "slide_29": [
+      "I'm a little confused on why inside/outside tests are hard in this case. Couldn't we plug in the coordinates of our point and check if the last coordinate matches the output? Why is this representation different?",
+      "Is this just difficult because we don't know if a point is inside the hole of the torus as opposed to outside of the torus? Couldn't we have another function for the hole of the torus, and do two inside outside tests?",
+      "Is it that implicit surfaces are easier to represent within our code, but then at runtime the values are all converted to explicit in a way?",
+      "are we able to tell which expression works better as soon as we see the problem, but not based on experience? also are these two expressions always interchangeable?",
+      "Does the difficulty in this case come from the non-convexness of this geometry?",
+      "What is the benefit of modeling geometry as such and dealing with difficult formulas when we can use triangle approximations?"
+    ],
+    "slide_30": [
+      "Why not just use both, then? Our representation for a shape could be a tuple of its explicit and implicit representation, and then we could use whichever works best for the given task.",
+      "Is it worth converting between representations, if one works better than the other at specific tasks?",
+      "Is it common to use both implicit and explicit representations alongside each other in practice? It's evident how one makes up for the other's shortcomings.",
+      "that is interesting. So is there a common way we can convert implicit and explicit representation?"
+    ],
+    "slide_32": [
+      "How would one store this polynomial anyway? Just a list of coefficients, or is there a more clever data structure for dealing with multivariate polynomials? (3 lists?)",
+      "Given a 3d model/mesh is there a way for a computer to generate the algebraic surface or does this process need to be done manually?",
+      "If polynomials are really hard to come up with, how does 3D modeling software (like Blender) represent 3D shapes?",
+      "How do we represent these more intricate shapes in a model if these polynomials are very complicated?",
+      "I know it was mentioned that polynomials are rather difficult to come up with, but is there a general mathematical method to consider when coming up with them?",
+      "How do programs change the model to reflect deformities (e.g. the sphere being squished, when material allows)? Or would that be considered completely separately with some sort of movement function?",
+      "can geometry also be expressed in matrix format?",
+      "Is there a general threshold for whether or not a geometic object should be expressed with a single polynomial?",
+      "How do we decide if we want to express a geometry with polynomial?",
+      "I am always curious about how people render complex images on computer. Are there ton of complex equations to be computed and combined to form very real objects? Also, how they know if these equations just produce these shapes which looks like what we want?"
+    ],
+    "slide_33": [
+      "Can I know how to decide when should I use which basic operation given a complicated shape?",
+      "If these shapes are represented as a cluster of points or even a polynomial, how does the computer determine what to store as filled/empty when performing a union/intersection.",
+      "Is it computationally expensive to rasterize shapes when they are represented by a chain of booleans?"
+    ],
+    "slide_34": [
+      "Do we blend surfaces together via linear interpolation?",
+      "Sorry, what's a gaussian? I've never encountered it before.",
+      "willowpet, I could be wrong, but I think a gaussian is a multivariate normal distribution centered at some point p.",
+      "How is blending with gaussian different from blending with interpolation here? Would interpolation lead to unsmooth result?",
+      "Can we use different filtering methods to the blending? Is Gaussian the most commonly used approach?",
+      "Is x supposed to be a 2d coordinate here?",
+      "I'm confused about what it means by it's easier to understand in 2d? Not really understanding what is going on here visually.",
+      "What are possible interpolation methods that could be applied in this theorem?",
+      "Is the method of Gaussian trying to find the center so that we could blend the two-part together?"
+    ],
+    "slide_35": [
+      "I got confused about the function for blending.",
+      "Where did the equation on this slide come from?",
+      "Can we do something similar for 3D?",
+      "Can we use distance function on things such as intersections besides union?",
+      "Why are we blending distance functions?",
+      "What is the point of the constant? So that the function doesn\u2019t become too large or?",
+      "Do we get a new function from composing d1 with d2 and just draw out the points according to the new function?",
+      "Why blending the distance function can give us the effect of merging to shapes?",
+      "What does the Boolean union look like? (What shape corresponds to the second equation for f(x)?)",
+      "Would the boolean union just be the circle and the square overlapped with each other?",
+      "How does this function work? This slide makes it seems like a normal quadratic equation summation. Honestly I'm not sure how this translates to the two shapes above.",
+      "I am also confused about this function",
+      "Why does the equation contain the natural number?"
+    ],
+    "slide_37": [
+      "This stores all the data like a mesh, and even more storage than meshes; so you can calculate each sample based on this, why is it an implicit rather than explicit approach?",
+      "Does aliasing with level set methods cause problems in practice, like with interpreting medical data stored in this format? If so, how do we prevent misinterpreting results due to the effects of aliasing?",
+      "If this were in 3d, wouldn't we have to store a 3d grid of interpolated values? That seems really expensive because it takes O(n^3) memory where n is the side length."
+    ],
+    "slide_40": [
+      "I am not sure I followed. Why is 2D surface storage O(n^3) now?",
+      "I am also confused as to why it's O(n^3) storage if we're using a 2d grid?",
+      "What is the additonal dimension presented by O(n^3)?"
+    ],
+    "slide_41": [
+      "Why would we want to control the shape of fractals?"
+    ],
+    "slide_43": [
+      "Does this mean fractals depend on the starting point? What is the correct range of mandelbrot set to have a recursive effect?",
+      "Do these have any other use cases besides things relating to fractals?",
+      "how can we judge if it is going to infinite or it is still in the process of getting converges?"
+    ],
+    "slide_44": [
+      "This is too cool for my brain",
+      "Practically, does creating renderings of such fractals run into precision errors? How could one deal with these?"
+    ],
+    "slide_46": [
+      "Do 3d model file formats stick to one representation or do they have many types within them?",
+      "Are there any notable graphical methods which use hybrid implicit/explicit approaches for rendering?"
+    ],
+    "slide_48": [
+      "How might we encode color/texture/etc. with a point cloud?",
+      "How do people usually use point clouds? Is it mostly for visualization? Or does it get converted to triangles mesh or something like that?",
+      "Is the size of the data large for point clouds?"
+    ],
+    "slide_49": [
+      "Which neighboring pieces constitute a neighborhood? If we are dividing the polygons into triangles, there are 3 immediate neighbors. Do we count the non-immediate neighbors? Or is irregular neighborhood talking about the 3 immediate neighbors having irregular shapes?",
+      "What sort of data structure would we use to store a polygon mesh? Are the ones we came up with in class a week or so ago sufficient, or are there better ones used in practice?",
+      "How does this differ from what we've been doing in A1",
+      "Are there ways we can regularize the neighborhoods of polygon meshes? It seems like an ideal case would be where every triangle is as close to equilateral as possible",
+      "For upcoming assignments, will be be given a triangle mesh to draw to the screen, or will we have to find a way to stitch them together ourselves?"
+    ],
+    "slide_50": [
+      "Actually, is keeping track of how all the four vertices form the triangles of the tetrahedron (the matrix with header i,j,k) necessary here? Is there another way to form a tetrahedron in a 3D space if all the vertices are given?",
+      "To make sure I understand, the purpose of barycentric coordinates here is to provide an explicit formula for generating all the points within a given triangle, in terms of the basis formed by the three points of that triangle.",
+      "Does using this much space for storage slow down the computations we perform?",
+      "If we're just drawing the outline of a surface with a mesh why is keeping track of the bayrcentric coordinates important?"
+    ],
+    "slide_51": [
+      "Is the primary advantage of using nonlinear interpolation that we need fewer points to represent the same smooth surface? We could obviously approximate any surface defined in terms of NURBS or Subdivision by simply including lots of triangles/quads in a normal mesh. Is the reason we don't to avoid representing a huge number of triangles?",
+      "Are there advantages to simpler interpolation techniques, particularly when it comes to running time? I would assume that it may not always be desirable to work with a complicated basis, when hardware is very well-suited to doing work with lines."
+    ],
+    "slide_52": [
+      "What is the intuition behind using this basis? In particular, how does the binomial theorem relate to it?",
+      "Are these curves essentially identical to how a line would look if we applied the definition of Bezier curves?",
+      "Do these curves all sum to 1 for any given x? I can't recall if you explicitly stated this anywhere in the lecture, but it seems like they should. (Also, if this is true, is this why the Bezier curve is contained in the convex hull, as is mentioned a few slides later? Do we also need the fact that the curves are nonnegative?)",
+      "Is it possible to interpolate functions of varying orders, and if so, would there be a scenario in which this would be applicable?",
+      "Is there a visual intuition for using these basis functions?",
+      "This seems too abstract for me to understand. Can there be a more concrete example (visuals or values) to help understanding this?"
+    ],
+    "slide_53": [
+      "How is the value of 's' determined to evaluate the expression for a Bezier curve? Since we already have the vector for the initial line, what is the use of 's'? Is this like a 0~1 scale to show which percentile of the line we are evaluating?",
+      "Is 's' something like time would be if the curve expressed something traveling?",
+      "Why is being tangent to the end segments important?",
+      "Is there any constraint on how to choose these control points?",
+      "how does a convex hull make it more convenient for rasterization?",
+      "Can we perform transformations like rotation on a Bezier curve by performing the transformations on its control points?",
+      "Can any number of end points be applied to this theorem?",
+      "What does 's' represent?"
+    ],
+    "slide_54": [
+      "Are high-degree Bernstein polynomials used much in any setting, or considered too hard to control? It seems like they could be used to get very slightly wavy curves and make small adjustments.",
+      "If we add enough point to interpolate from, would it still eventually approach the defined curve?",
+      "Why can't Beizer curve modle arcs of a circle (even if we increase the degree of the polynomial?"
+    ],
+    "slide_55": [
+      "Since all fonts are represented using Bezier curves (and it sounds like they have a lot of other applications, too), is there specific hardware in the GPU dedicated to performing this task?",
+      "this one looks great, but if we want the connection of two curvs to be smooth and tangent, will that be difficult?"
+    ],
+    "slide_56": [
+      "Is this nice property of the cubic bezier why it is more frequently used than other bezier curves in computer graphics?",
+      "Reply to tacocat: I think the number of constraints and freedom match when we are using cubic bezier.",
+      "Why is it that in the image in the slide we have 4 degrees of freedom, but in a closed loop, we have 8 degrees of freedom?",
+      "I think I understand the tangent continuity and position continuity argument, and why there are 8 constraints and 8 DOFs for closed loop. But I'm having a hard time matching this argument with the definition given above for the cubic curves. For 2 cubic curves, we have p_{01} p_{11} p_{21} p_{31} and p_{02} p_{12} p_{22} p_{32} as the 8 variables. This seems to be telling me that there are two fixed curves that would form a smooth closed loop. This doesn't seem quite right... what am I missing here?",
+      "How would you actually go about calculating the values to make the endpoints and tangents meet? Do you manipulate only one Bezier curve or average the both of them?",
+      "After getting seamless curves, could we use the points and their corresponding tangent at each position to give a rough estimate of how the curve looks like?",
+      "Why is the joined curve 4DOF but the loop 8DOF? Are we not counting the other endpoints in the first example?",
+      "Does this guarantee the curve has a continuous derivative?"
+    ],
+    "slide_58": [
+      "Is there a notion of depth with Bezier patches? How would we address the overlapping issue?"
+    ],
+    "slide_61": [
+      "If we just keep using four patches around every vertex, can we still allow more connectivity by introducing more points and making each patch smaller? The idea is like taking the limit.",
+      "Do we need higher level B patches to enable more patching at one vertex?",
+      "What happens if we try to match up more than 4 patches?",
+      "Why is it necessary to have only 4 patches around a vertex?",
+      "Does this 4 patches meeting have to do with principal curvature of a surface and being able to form a sort of \"grid\" over local regions of a surface?",
+      "What does \"constrain\" mean? Does it mean that 4 patches not allow objects to have its original shape?"
+    ],
+    "slide_62": [
+      "Are there certain applications that have conflicting goals, i.e. one use case is best suited by a certain representation, but another use case is suited by a different representation? How do we handle these tradeoffs, do we take a performance/functionality hit or convert between representations in some way?",
+      "In 3D, does our geometry become rectangle-based instead of triangle-based?",
+      "If you're dealing with multiple objects, is it feasible to use different representations for different objects? How can we then, say, intersect shapes using different representations?"
+    ],
+    "slide_63": [
+      "How would homogeneous coordinates work here, since now our basis are sort of polynomials?"
+    ],
+    "slide_64": [
+      "How do we store a NURBS? Is a NURBS less space efficient than a quadratic Bezier curve?",
+      "What is the homogeneous coordinate w here?"
+    ],
+    "slide_65": [
+      "Can we always go from representing line to representing curves by using the tensor product? What constrains need to be satisfied in order for this to work?"
+    ],
+    "slide_66": [
+      "How difficult would it be to control the final shape when using subdivision compared to using spline schemes?",
+      "Since subdivision is iterative, does that make it inefficient in practice? How does performance compare to a Bezier Curve?",
+      "Are each of these steps computed sequentially, or can you just go straight to the last step when rasterizing?",
+      "After what point does subdivision stop subdividing midpoints?",
+      "How much does the control curve matter? Given any control curve, are we able to obtain all possible shapes within it?",
+      "If the intended final shape had both a curved edge and a flat edge (e.g. a semi-circle), would subdivision continue to divide midpoints on the flat edges so long as the curved edge isn't ideal yet/to the choice specifications? or would the flat edge stop to some extent?",
+      "Is this done at render time? Or is this usually pre-processing done on the geometry once before being rendered?",
+      "Is there some analytical proof out there for why subdividing midpoints using a certain scheme approaches a Bezier curve?",
+      "Is there a method behind calculating the best averaging rule in each case, or is it just a guess and check process?"
+    ],
+    "slide_67": [
+      "Are there examples of schemes where the limit is markedly different from the splines we've discussed, yet still useful in practice?",
+      "What\u2019s the significance of Pascal\u2019s triangle here? It makes sense why we\u2019d want to more heavily weight the middle but is there any significance to using binomial coefficients?"
+    ],
+    "slide_68": [
+      "How can we come up with the shape of the control cage if we have a specific smooth surface we want?",
+      "This seems like a lot of computation, is it computed pre-runtime (for example if you're making an animation) or during runtime to conserve space/update values live?"
+    ],
+    "slide_69": [
+      "What's the algorithm used in Pixar before Geri's Game?"
+    ]
+  }
+}

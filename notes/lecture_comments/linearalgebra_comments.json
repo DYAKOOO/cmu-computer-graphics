@@ -1,0 +1,291 @@
+{
+  "metadata": {
+    "lecture_name": "linearalgebra",
+    "total_slides_with_comments": 39,
+    "last_slide_number": 57,
+    "total_comments": 203
+  },
+  "comments": {
+    "slide_4": [
+      "Is there a graphical way to describe a vector in a higher dimension, (e.g. 4 dim or higher) or any intuitive interpretation for it?",
+      "How can we represent images with little arrows?",
+      "What exactly it means for these types of data to \"behave like vectors\"? Does it refer to the algebraic properties?"
+    ],
+    "slide_5": [
+      "Among all the coordinate systems, is there any single system that is most preferred in computer graphics?",
+      "Going off the other question, is there any coordinate system that is avoided in computer graphics?",
+      "What coordinate system is preferred in 3D scenario?",
+      "What coordinate system is SVG stored in?",
+      "When is polar coordinates system more useful then cartesian coordinate system?",
+      "Do we use polar coordinates more often than Cartesian coordinates in computer graphics?"
+    ],
+    "slide_6": [
+      "Is there a standard in the computer graphics world to either use cartesian or polar coordinates?",
+      "I'm assuming there are some operations that are easier to do in Cartesian and others that are easy to do in Polar. In graphics, do we usually store a vector in memory in both representations for faster operations?",
+      "Do the choice of coordinate system have an effect on the data format we choose to store coordinates in (e.g., do half floats work for one but wouldn't work as well for another?)"
+    ],
+    "slide_7": [
+      "I was wondering how would this operation work in polar coordinates? we cannot simply add the angle and radius together right?",
+      "^ I think you have to define addition a different way. Like with trig functions or something",
+      "I guess you can do some calculations to convert polar coordinates back and forth."
+    ],
+    "slide_10": [
+      "Are these rules \"independent\"? In other words, can I deduce some of these rules from others? If I want to verify if some collection of objects is a vector space, do I have to verify all these eight rules listed above, or only a subset of them would be sufficient?",
+      "How do we know that these rules are complete? It seems like we've gained them through observation, but how do they form a definition for a vector space? Is there a formal proof somewhere or does it just seem to work?",
+      "Are there any examples of collections that fulfill most (but not all) of these properties?"
+    ],
+    "slide_11": [
+      "Is the second point (that lists of floats can be easily represented) necessarily unique to R^n? It seems like any vector space over the field R would share this advantage.",
+      "What scenario or problem would lead us to consider n>3 dimensions in CG?",
+      "What is the relationship between describing points in some R^n dimension vector space and representing a vector in the same space?"
+    ],
+    "slide_12": [
+      "This slide states that images are also essentially functions. Does this specifically refer tothe RGBA values of pixels of an image? Or is there some other representation of an image as a datatype that this slide is referring to?",
+      "How do we take something with so many different attributes (hue, saturation, intensity of color, etc.) and mathematically represent it? It will be interesting to see how we can manipulate these functions with some of the linear algebra concepts discussed later.",
+      "Are there any easy/intuitive ways to visualize vector spaces for functions (in the scope of this class at least)?"
+    ],
+    "slide_13": [
+      "These are the usual visual representations of functions on the Cartesian plane. Since functions can be treated like vectors, are there also standard ways to display or consider arbitrary functions as finite-length arrows like we do for a member of R^n?",
+      "Do computers sample the functions to form a discrete vector in certain multimedia tasks? Since in most cases the computer can not handle continuous functions, so function should be converted to vector?",
+      "Is there a standard method to reverse the process of adding two functions together, to decompose a complicated function into several simpler ones?"
+    ],
+    "slide_14": [
+      "Should the second to last property be: a(u + v) = au + av instead of au + bv?"
+    ],
+    "slide_15": [
+      "My first intuition is you couldn't really \"add\" vectors in (r,0) form in an addition format, since both the r and theta values of u and v when added don't really point to where this depicted cartesian-added vector (u+v) is pointing. Unless \"adding vectors\" meant something different, then you could add (r,0) arrows to create a result that describes something like the \"cumulative radius\" and \"cumulative theta\"?"
+    ],
+    "slide_17": [
+      "Will we ever need to check if something defines a vector space in this class?"
+    ],
+    "slide_18": [
+      "Where did the rule of \"You should never blindly accept a rule given by authority\" come from? What does it mean geometrically?",
+      "Does every rule always have some geometrical meanings?",
+      "Isn't mathematics just assuming a bunch of axioms true then deriving whatever theorems you can from them? So in that sense, don't we have to blindly accept the axioms? I know trying to understand the intuition behind them helps with applying the theorems or deriving more, but in the end, they are still rules given to us that we must accept."
+    ],
+    "slide_21": [
+      "Vector addition, vector norms, and inner product seem to be most easily expressed in Cartesian coordinates. Are there certain operations for which other coordinate systems are more efficient?",
+      "What are the advantages to using some other coordinate systems other than the Cartesian (for example polar coordinates) for computer graphics applications?"
+    ],
+    "slide_22": [
+      "What are some common definitions of norm for images?",
+      "Does norms for images pertain to color/brightness and/or the number of pixels?",
+      "In the case of images, would using a different color space change our reference window for large and small norms?"
+    ],
+    "slide_24": [
+      "Pentagon inequality? Really?",
+      "How does the diagram look like a pentagon? I don't see it at all. Are we implicitly breaking up the vectors into smaller subcomponents or something?",
+      "Caught me zoning out for a second before I snapped back with the \"pentagon inequality.\"",
+      "I've always heard the final property be referred to as the triangle inequality, and never heard of the pentagon inequality - is it a graphics specific thing to call it the pentagon inequality?",
+      "Pentagon inequality, a nice trick for checking whether we are focusing lol",
+      "Guess we are using a coordinate system where 5 equals to 3 here :)",
+      "Since these slides have been used for several years, I assume these \"mistakes\", along with the one on slide 14, will continue to appear in the future to check we actually listened to the lecture?",
+      "How is this triangle a pentagon lol"
+    ],
+    "slide_25": [
+      "Are there any other interesting norms we will be using in class?"
+    ],
+    "slide_26": [
+      "Yes, this formula satisfies all the natural, geometric properties of a norm.",
+      "Yes",
+      "The square root makes sure that the norm is always >= 0, and the summation inside probably makes sure that the norm follows the pentagon (??) inequality.",
+      "Are there other types of norms (other than the Euclidean norm) that we will be using?",
+      "Maybe this is something off the topic, but this norm definition will not work on a complex plane (v=2+3i for example). Is this something we will discuss in this class?"
+    ],
+    "slide_27": [
+      "How do you compare function norms if the functions are defined over different regions?",
+      "Any benefits of using L2 norm rather than L1?",
+      "What is the relation between the norm of a function and the area covered by the function and the x-axis?",
+      "Why does the function need to be in the interval [0,1]?",
+      "If we have a scalar multiplication with ratio a for f, as a result of sqrt(a^2) don't we technically get both 'a' and '-a'? Do we just ignore the '-a' part of the solution because a norm must be non-negative?",
+      "Is there a reason that the L2 norm is written as L^2 but pronounced as \"L2\" (rather than \"L squared\")?",
+      "When we say \"well-defined integral\", do we disallow functions with integrals that evaluate to infinity?",
+      "Do we use other types of norm in graphics, like the L1 norm or the L-infinity norm, or we just go with the L2 norm because it makes most sense geometrically with the Pythagorean theorem. Is there a specific reason to choose each of them?",
+      "In this case, we are looking at functions defined over [0,1]. If we have functions defined over a larger range, would the definition of the L2 norm be modified to integrate over that larger range instead?",
+      "This surely meets the criteria of norms. However, why we are having the range limitation here? I feel according to the definition, we can have whatever ranges we like.",
+      "It seems like it satisfies all the properties, except that there are multiple potential \"zero vectors\", since you could have a function where it is 0 for all x, or a function like sin which for one period will have an integral of 0. This seems to be O.K. though?",
+      "Can we transform functions whose squares don't have well defined integrals over [0, 1] but has well defined integrals over another interval [a, b] to [0, 1] and then calculate the L2 norm for them? Would there be anything interesting about the result?",
+      "Can we use a general interval [a,b] instead of [0,1]? or is [0,1] just a convention?",
+      "What modifications to the norm would need to be made to compute a valid norm over a general interval?",
+      "How can we determine which kind of norm is more suitable for a specific situation?",
+      "In graphics, do we ever use other \"n norms\", like the 1 norm or 3 norm or even infinity norm?",
+      "I might've missed this, but where did \"L2\" come from? Is this only specific to functions or is it referencing something else?",
+      "Do we 'normalize' functions by dividing by their L2 Norm similar to how we normalize vectors?",
+      "Is the L2 norm purely defined over the [0,1] range or could that range be arbitrarily chosen? Also, what does this metric really measure? What is the function of the L2 norm?",
+      "Why do we sometime use L1 norm instead of L2 norm?",
+      "Are there notions of an L2 norm but for functions that have a greater domain than [0,1]. What about non-continuous functions?"
+    ],
+    "slide_28": [
+      "How do we represent images as functions, since it seems like the intensity of each pixel can be fairly random?",
+      "I might've missed it, but is there a mathematical/intuitive reason we only keep the norm as [0,1]? Or, is there a version of norm for other intervals (i.e. divide by length or something)?",
+      "Same as Dalyons, a little lost when it came to only having [0,1] for L2 norm",
+      "If the L2 norm of a vector comes from an intuition of length or distance, what is the motivation for us to extrapolate the idea to function? Or in other words, is there any application for this math tool?",
+      "Is there any application of this definition? Or it is only the necessary part of viewing functions as vectors.",
+      "In computer graphics, in what case will we use L2 norm for vectors and in what case we use L2 norm for functions?",
+      "In computer graphics what is the significance of other definitions of the norm (i.e. the L0 norm, L1 norm, L-infinity norm etc.) of functions?",
+      "What is the significance of the L2 norm in graphics in particular, as compared to other function norms? Intuitively I would suspect that the idea of an L2 norm on a function is fairly abstract (I find it hard to associate this with the concept of distance as in the euclidean case), and the supremum or L-infinity norm would have a more tangible or useful idea.",
+      "Why would we care about using different definitions of a vector norm?",
+      "when do we use this in computer graphics?"
+    ],
+    "slide_30": [
+      "I'm confused by what you mean when you say renaming the vectors should have no effect... Why would you ever rename them, and how can you write an equation <u, v> = <v, u> when in reality you are just saying <u, v> = <u, v>?",
+      "I think he means that it is fine to assign them different names. It doesn't matter whether you call the top vector u or v, as long as you know it is the top vector. (So <u,v> and <v,u> are actually referring to two different images)",
+      "What could be an inner product function for comparing images, like in the last slide?"
+    ],
+    "slide_31": [
+      "I'm slightly confused on how the inner product scales here - isn't the project of v onto 2u still the same?",
+      "Does the projection idea only hold for unit vectors? I'm confused because it doesn't seem to hold for all the examples behind? What is an actual use case if that's true?",
+      "It makes sense why the projection of 2v onto u would be twice the projection of v onto u, but what if you're projecting v onto 2u instead? Why is that still twice the projection of v onto u? The symmetry seems unintuitive here.",
+      "Sometimes I've heard the word \"projection\" used to describe the vector of the projection of, in this case, v onto u. In this class, when you ask for or describe a projection value, are you describing just the magnitude of the \"shadow\" of v onto u?",
+      "Based on the diagram, I'm confused as to why projecting v onto u would double (while the math seems t0 make sense), as the diagram never shows that projecting v would change.",
+      "This doesn't make sense to me - to generalize what the others are saying, it seems like by this visual explanation, the projection is only dependent on the magnitude of the vector being projected (and not the magnitude of the vector being projected onto. However, by the mathematical definition of an inner product, it should be dependent on both."
+    ],
+    "slide_32": [
+      "What are unit-length vectors? Why we can assume <u^, u^> as 1?"
+    ],
+    "slide_33": [
+      "For this formal definition and for the formal definition of norms, will any function that satisfies the given constraints also capture the idea of \"how close\" and \"how big\"?",
+      "For the last rule, I am not able to visualize geometrically. Is this related to the difference of angles that w makes with u, v, and u + v?",
+      "For the last rule, I tried sketching out the LHS and RHS with parallelogram method of vector addition, and by drawing vector v's tail to vector u's tip, we extend the portion where u+v is along the direction of vector w, by exactly the amount of <v, w>. Is this the correct intuition for a geometric proof?",
+      "Agreed with corgo. I proved the last rule similarly. From my understanding, the larger the inner product is, the closer the two vectors are.",
+      "I also proved the last rule using the parallelogram method, similar to what corgo explained above.",
+      "I'm a little confused about the intuition for rule 4",
+      "What is the relationship between the inner product and the norm? If we specify an inner product in some vector space, does that induce a norm? If we have a norm in some vector space, will the inner product be unique?",
+      "When we talk about an inner product, we need to first specify a vector space. Is that right?",
+      "I think the geometrical explanation with the last rule is that <u, w> and <v,w> are two parts that make up the projection of u + v to w, which is .",
+      "Usually when we think inner product we usually just think of the dot product (or a derivative of one). Are there any other inner products that we might find ourselves using during this semester?",
+      "To answer @niyiqiul's question, I do think there are inner product vector spaces, where you have a vector space and then specify that inner product + they're useful for generalizing vector spaces. However I think I've only seen the Euclidean vector space used in this class--are there other vector spaces used in graphics?"
+    ],
+    "slide_34": [
+      "It's not immediately clear to me why this definition satisfies the \"geometric\" interpretation mentioned earlier in the slides -- namely, that <u, v> represents the length of the projection of u onto v, or vice versa, at least when the vectors are unit length. Is there a nice way to see this correspondence?",
+      "Although the definition meets the specified rules, the geometric meaning behind this is kind of vague. Are there any specific reasons for defining the inner product like this?",
+      "The lecture has talk a lot about inner product, I heard that there is also a outer product, will we learn and use outer product in this course?"
+    ],
+    "slide_35": [
+      "By definition of a norm, the range of numbers for these functional inner values should be  [0, ||f|| * ||g||] right? Does this range allow us to claim a result such as 1/30 is \"small\"? What about comparing the L2 IP values among different functions with vastly different norms? Is there some kind of normalization we should do to these functions first?",
+      "Does this have something to do with convolution? For the similar formula structure they share.",
+      "How do we tell what values for the inner product constitute 'lining up'? Just this value alone seems to not be enough since we can let f(x) := 1, g(x) := c for any arbitrarily large constant c, causing the inner product to be arbitrarily large, yet the functions don't line up any more for greater values of c. It seems like it would be better to normalize by dividing the result by the L2 norm of f and g for this purpose.",
+      "Does \"line-up\" mean the similarity in shape of the two functions rather than the values?",
+      "I'm having a hard to connecting up the quantity 1/30 with the graph. Does it make sense to try to visualize everything? I can compare two norms e.g. 1/30 and 30, to tell that the former is definitely smaller, but what is the general scale of being large or small.",
+      "What practical applications does this have? Aside from maybe how \"different\" colors are or something similar, its hard for me to imagine an algorithm that would use the L2 norm to calculate an \"applicable/useful\" value.",
+      "Besides inner product of vectors and inner product of functions, is there also inner product of matrices and how is this inner product of matrices useful?",
+      "I am confused... is this the inner product of the L2 norm of fx and gx?",
+      "oh wait I see it now, if I replace gx with fx, I end up with the L2 norm",
+      "What would we do if we wanted to calculate the L2 norm/inner product outside of the unit interval? Would we just change the bounds?"
+    ],
+    "slide_36": [
+      "Has there been an attempt to capture the direction/concentration of these edges when computing the inner product of images? You could imagine a similar count of strong outlines for images that are radically different, and I was wondering what research has gone in to finding more representative inner products.",
+      "It seems like the derivative norm would be pretty high for random static, which isn't really \"interesting stuff\"; I'd say the Scottie picture is interesting because it has some sharp edges, but enough patches of sameness to keep the image coherent. Is there any kind of norm for images that captures this balance?",
+      "Would these examples calculate the inner product over the functional representation or an approximate vector representation of signals and derivatives? Are there specific applications where you would want to use functions vs vectors?",
+      "Is there a way to \"decide\" which norm is best to use besides just experimenting with many different norms to see what results they give?",
+      "Is the derivative the same definition as the mathematical derivative? If so, what variable does it derivate with respect to?",
+      "How does the derivative of an image manage to \"wipe away\" a lot of the details and just capture things like texture/brightness? Is it because, in a mathematical sense, the derivative represents change in direction?",
+      "Are these kinds of straightforward algebraic rules (e.g. differentiate the image, then take the norm) still used in graphics? It feels like the standard \"modern approach\" would be to just throw machine learning at the problem.",
+      "Do many linear algebra libraries work well with flexible or customized inner products?",
+      "What optimization on the linear algebra side can be done in real-time video processing?",
+      "What does derivative refer to in this context? How to mathematically define it?"
+    ],
+    "slide_37": [
+      "Do we ever approximate affine maps as linear maps using Taylor's Theorem? Or does that not make sense or is already handled by using homogeneous coordinates?",
+      "I'm wary that you said all maps can be approximated as linear maps. Doesn't Taylor's theorem depend on differentiability?"
+    ],
+    "slide_39": [
+      "this slide could be made more clearer to show that the origin maps back to origin is a important premise for a linear map.",
+      "What are some use cases for nonlinear maps in computer graphics? Are we going to use them in this course? If so, what for?",
+      "Is there a term for a map that satisfies the conditions of a linear map, but does not keep the origin fixed? If so, are they used for anything?",
+      "Since linear maps are themselves functions, can we treat any of them as vectors, and if so, are there any useful insights to be gained from this?",
+      "If the origin is fixed, how can a linear map represent a translation?",
+      "What exactly are the lines being preserved? In this case it seems like it would be the edge of the pentagon, but what if we were mapping a plane without defined edges?",
+      "What are the constraints from linear translation if the origin will be fixed?",
+      "Are nonlinear maps ever used in computer graphics applications and if so, what are the specific scenarios in which it would be advantageous to using those over linear maps?",
+      "where and when would nonlinear mappings be useful?",
+      "So visually, as it indicates in the diagram, would that indicate that linear maps really only rotate the figure or project it onto a plane?"
+    ],
+    "slide_40": [
+      "I noticed that the definition for linear map here is the same as the definition for a linear transformation. So does it mean that for any map that is linear, we can define a transformation matrix?",
+      "What's the difference between linear transformation and linear map? (Inspired by corgo)",
+      "Is a map another word for a function or does a map have some specific properties?"
+    ],
+    "slide_41": [
+      "Does this mean that every possible function from R^m to R^n satisfying the properties on the previous slide must have this form? I haven't thought about this much, but it seems non-obvious.",
+      "Is the second statement that a map is linear if it can be expressed as the sum of fixed vectors true in the opposite direction?",
+      "how do you map this new vector back to the original?",
+      "Can you map the new vector in the new space to the old vector? Does it depend on which spaces we are mapping in between?",
+      "What are a1, a2, ..., am here? Are they subject to any constraints?"
+    ],
+    "slide_43": [
+      "So based on the last bullet point...is the idea that affine exists more in the real world, and linear is what we need to program with, so we perform magic to translate? I guess why do we prefer one over the other?",
+      "I'm getting a little confused between functions, vectors and maps. Earlier, we said that we can think of functions as vectors because they follow the \"rules\" of a vector subspace (we just have to tweak our definitions). Here, are we describing functions as maps? And if so, is it possible to describe vectors as maps (through functions)?",
+      "According to the second bullet point, in other words, all linear maps must be that f(0) = 0?",
+      "What is the use of affine functions? Is there anything helpful or interesting about them? Also, is there any interesting use for them in graphics?",
+      "Does this mean that linear map and linear function are interchangeable terms?"
+    ],
+    "slide_46": [
+      "Is \"image\" the same thing as \"range?\"",
+      "I'm still a bit confused about the definition of \"image\", could we clarify with a more concrete math example?",
+      "Is this similar to the image of a function, i.e. the set of all outputs that a function can produce?",
+      "How do we mathematically represent or write out the image of any linear map?"
+    ],
+    "slide_47": [
+      "What about the bases of non-euclidean vector spaces?",
+      "Do we overload the meaning of the word \"span\" to include the verb? E.g. does a basis of R^n \"span\" R^n? If not, what is the correct word to use as a verb in this case?"
+    ],
+    "slide_48": [
+      "say we have a non orthonormal basis, what do we do to get the correct result?",
+      "In what situations is it most likely that it is not as convenient to have unit length or mutually orthogonal vectors? (since the first bullet is opened by 'most often')",
+      "To ask a similar question, why would you ever want a basis that is not orthonormal?",
+      "Can you show an example of projecting the same vector onto different basis (pref. one orthonormal and one NOT orthonormal)?",
+      "In which cases (if any) would a non-orthonormal basis be wanted or needed and why?",
+      "I feel in some cases, I need to use polar coordinates. This is surely a non-orthonormal basis and it makes me confused.",
+      "Could you do an example where you take a vector in a non orthonormal basis and show how the norm is no longer the same? When I write one as a linear combination of my basis it seems I am always using the basis of (1,0) and (0,1).",
+      "Is there any use in choosing an non-orthonormal basis?",
+      "Would we ever need to convert from an orthonormal basis to a non-orthonormal basis?"
+    ],
+    "slide_49": [
+      "What is the time complexity of Gram Schmidt? It seems like this is at least O(k^2) or O(k^3) since you have to repeatedly subtract components of the first few vectors from all the remaining vectors, and each of these subtractions is a vector computation. Are there any more efficient algorithms for finding an orthonormal basis in a high dimensional space?",
+      "Is this algorithm still used in production anymore? It sounds like the other algorithm can be generalized to more cases.",
+      "What algorithms are used besides Gram-Schmidt?",
+      "What's an intuitive explanation for why <u2, e1> is the magnitude of the vector we should subtract from u2? I'm having trouble seeing why the dot product is being used here.",
+      "When talking about the disadvantage of the Gram-Schmidt algorithm when dealing with large number of vectors, you mentioned the QR decomposition method. How faster is the QR decomposition method comparing to the Gram-Schmidt method?",
+      "If the vectors are near parallel, what makes Graham Schmidt a poor choice? Would this be due to precision errors? Would an alternative approach involve finding a different basis, and then using Graham Schmidt on that?",
+      "I do not get what the relationship is between Gram-Schmidt and Orthonormal Basis. How do we choose between them?",
+      "This algorithm seems to be highly inefficient for a basis with a dimension of 3 or higher? Will we go over more efficient algorithms to find an orthonormal basis?"
+    ],
+    "slide_50": [
+      "What are some other popular choices of basis for functions?",
+      "I don't fully understand this idea. What would the vector space be? How many basis vectors are there for the space?",
+      "Are there functions that are orthonormal in higher dimensions for functions?",
+      "this is pretty interesting, thinking of fourier transforms in terms of orthonomal changes in basis.",
+      "I don't really understand how the sin and cosine functions are \"orthonormal.\" For example, if we use have sin(2x) and cos(4x) as our basis, how are we defining orthonormal in this case? What if it was sin(4x) and cos(2x) instead?",
+      "Can you explain more about how to find the basis of the given function?",
+      "Are there other bases that can be used to represent functions other than the set of sinusoids/Fourier transform?",
+      "Are the sinusoids the only relevant repeating functions that can be used as a basis?",
+      "Intuitively, simple polynomials (x^n) also seem like they should make sense as basis vectors for other functions. Is there some intuition to why we would prefer sin and cos? Is it primarily because they are orthonormal?",
+      "Can we still have norm for functions after Fourier transform?",
+      "If sinusoid functions are used as the basis, then what does it mean for functions to be orthogonal? Does this relate to how sine and cosine are shifted by 90 degrees? Also, does the different values of m and n mean that the function is decomposed into more dimensions?"
+    ],
+    "slide_51": [
+      "What are some practical applications of these different decomposed frequencies in modern graphics/haptics?",
+      "What is the difference between a \"Fourier decomposition\" and a \"Fourier transform\"?",
+      "By frequency decomposition using Fourier Transform, we can represent the original function with the strength of various frequency basis.\nWhile this can help compress the data, what techniques is usually applied to minimize information loss, since the basis that we can take into consideration is limited, and many frequency can not be included?",
+      "Are convolutions useful in graphics? (Fourier transforms can be used to calculate convolutions using the convolution theorem)",
+      "Can using frequency decomposition of signals be used to reduce the complexity of a mesh? Or \"predict\" more detail?",
+      "How close do rendering engines stick to general ideas when implementing their versions of freq decomp for example - are there lots of innovations/customizations hidden in the source?",
+      "What exactly is the frequency decomposition of signals meant to look like on a 2d or 3d function? As in, what would a basis image/mesh give you?",
+      "Not quite understand the Fourier Decomposition with the examples. Can you explain a little bit?"
+    ],
+    "slide_55": [
+      "Is it problematic if we have many solutions since wouldn't mapping a larger space onto a smaller space still result in the same smaller space?",
+      "In general, is there an application-transparent way to deal with these problems? \nI would imagine either \n1. the library/system provide validation checks, e.g. for non-parallel equations in the first case;\n2. or provide corrections/signals after calculations.",
+      "Would there only be one solution when we're mapping from a space to the same dimensional space, since mapping to a larger space would always result in not every point being \"reached\"?",
+      "What happens to our program/algorithm if the system we have yields no solutions? Do we get rid of any constrictions until the system isn't overdetermined or look for an approximation that minimizes error?"
+    ],
+    "slide_57": [
+      "Does this mean that in Computer Graphics, we normally will not use matrix?",
+      "for this course will we be expected to run our programs on computers with specialized hardware for efficient parallel computation (critical for fast matrix operations) like GPU's? Or can we successfully complete this course with just (reasonably modern) CPU machines?",
+      "Will we be given assignments with speed requirements? I remember there are a lot of optimizations for matrix multiplication.",
+      "Will we work with matrices whose entries are complex numbers?",
+      "How much matrix math will be doing in this class?"
+    ]
+  }
+}

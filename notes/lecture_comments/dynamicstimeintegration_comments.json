@@ -1,0 +1,172 @@
+{
+  "metadata": {
+    "lecture_name": "dynamicstimeintegration",
+    "total_slides_with_comments": 29,
+    "last_slide_number": 44,
+    "total_comments": 104
+  },
+  "comments": {
+    "slide_3": [
+      "Sir Wiki Pedia was ahead of his time...",
+      "I believe keyframe interpolation is kinematic?"
+    ],
+    "slide_4": [
+      "I'm forgetting my high school physics. Does this account for inertia?",
+      "how do we link this high level physics to just create a continuous animation? cause doesnt seem like it's necessary to obey physics in an animation",
+      "Is this for systems with non-relativistic speed? Where is the \"true\" equation",
+      "Is it possible to replicate the phenomenon that happens in reality with just this equation? Is there an advantage of using the physics based animation over the data based animation? How could we fuse the two to make it more realistic?",
+      "Can we also think of spline interpolations as the animation equation? Acceleration can be mimicked through interpolation.",
+      "Do we have to actually build a physical model using Newton's 2nd law such as this one for animation? Any other techniques?",
+      "Is the equation for animation actually this simple, how do other forces and changes in acceleration play a part in the animations?"
+    ],
+    "slide_5": [
+      "So is configuration just the same as position? Is there a reason behind this specific terminology? (i.e. could this q represent more than just the coordinates?)"
+    ],
+    "slide_6": [
+      "So we need to calculate the force when balls collide? I think if we use kinematics, the problem is easier."
+    ],
+    "slide_7": [
+      "Are we always able to express it in a smooth (continuous) curve?",
+      "I suppose that the time derivative of the generalized coordinates would change as time changes, so could we use a matrix to store the derivatives at each time point?",
+      "Are there places where the generalized velocity is fixed and the generalized coordinates are instead computed from the velocities?",
+      "Would we ever want to consider generalized coordinates which are not differentiable at certain points?"
+    ],
+    "slide_8": [
+      "Why does ODEs and PDEs correspond to changes in time and space respectively?"
+    ],
+    "slide_12": [
+      "Are Lagrangian Mechanics better even if we know the exact force that is being applied? In that case, are the external forces being incorporated into the different expressions of energy?",
+      "I guess this should give equivalent results to Newton's laws in theory, but are there cases when practical concerns (like numerical stability, how quickly numerical methods converge, etc.) would favor one over the other?",
+      "How would you determine of the object and apply this is there wasn't uniform density?",
+      "Scalar energy implies simpler gradient",
+      "Why is it that accurate physics seems to be the best for animation? Is there not some alternate motion laws that don't exist in the real world but might look good on camera?"
+    ],
+    "slide_13": [
+      "For the dL/dq equation, are we treating the m/2 L^2 (theta dot)^2 term as constant because we're only differentiating with respect to theta?",
+      "How can these equations be generalized to an arbitrary rotation system?",
+      "I think as long as the pendulum only has accelaration parallel to velocity, it doesn't matter which rotation orientation it is at...",
+      "If we were to use Euler-Lagrange equations on more complex objects, would we need to change something about the moment of inertia? I vaguely recall shapes in 3D having more complex moments.",
+      "When we calculate U, this is the process for finding the force which points to the ground right?",
+      "How can we translate this for systems that do not follow pendulum motion?"
+    ],
+    "slide_14": [
+      "How do we know no such solution exists? What if we jut don't currently have the tools to derive a closed form?",
+      "Wouldn't sin also work here? In that case how would you decide which one to use?"
+    ],
+    "slide_15": [
+      "Since a small change in the initial state can result in completely different behavior, doesn't this mean our numerical approximations have to be exact to model the system? In particular, won't floating-point rounding reflect a small change in the state and therefore model a completely different system?",
+      "How to estimate the accuracy of a given approximation algorithm on the double pendulum system?",
+      "If a small change in input result in wild changes in output, are there some methods of numerical approximation that fits the double pendulum better that we should use? Or is this again a tradeoff situation?",
+      "In my past experiences, modeling physical motion with kinematic equations is quite difficult (just plugging numbers into the formulas doesn't always get us the right results). How would we find a good numerical approximation for a system like this?",
+      "What kind of numerical approximation algorithms can we use here?",
+      "I think the accuracy may not very important in this scenario. Because even small changes can influence whole system and people may not care too much in such a scene.",
+      "How much approximation can we use here? What if we do not know how much difference would make to the whole system for a minor approximation in advance?",
+      "What kind of approximation algorithms would we use? How would we evaluate how good such an algorithm is?"
+    ],
+    "slide_16": [
+      "We may want to approximate a cluster of bodies into some mass centered at some point.",
+      "Shouldn't the solution just converge to zero? (For all of them to crash into each other at some point t very big)",
+      "How do we know that they are actually chaotic? What if there is a basis in which they are very well-behaved, i.e consider some sort of Fourier decomposition of their positions over time?"
+    ],
+    "slide_17": [
+      "Is there a specific definition for \"simulate\"? We talked about phenomena that are hard to describe, so is a simulation \"sufficient\" enough if it can only approximate such behavior?"
+    ],
+    "slide_19": [
+      "Is this kind of differential equation easy to solve?",
+      "Can we pre-solve helpful values or equations for common forces?",
+      "Is this just one large system of equations?",
+      "Do we solve systems for individual boids (in parallel?) or for the entire flock?",
+      "I think simulate this would inevitably have a much error. So, maybe we can use approximation aggresively?",
+      "How would this system generate any kind of global behavior? What parameters would you change to \"steer\" boids toward a particular direction?",
+      "If we try to simulate this, would the error add up and make it unrealistic?",
+      "How would we account for the error and collisions in such a large system of equations?"
+    ],
+    "slide_20": [
+      "So is the main downside to this representation that the number of particles in a system is very large?",
+      "What is a continuum model? Is it like a more flexible 3D model?"
+    ],
+    "slide_21": [
+      "Do physical simulations like this usually use probability-based decision making? If so, would there be consequences of not including probability (repeating patterns etc)?"
+    ],
+    "slide_23": [
+      "For simulations with liquids where we wouldn't want the particles to show up (like water), how many particles would we need to perform it? It seems as though we would need millions, and how do people efficiently simulate such phenomena?",
+      "How are collisions handled in such a complex simulation with so many particles?",
+      "Is the computation for this all done on CPU or can it be parallelized?",
+      "This is so cool! Do we have any classes that focus on particles?",
+      "Other than particle based fluids, are there other algorithms/models for fluid simulation?"
+    ],
+    "slide_26": [
+      "These situations seem very complex to evaluate in a program. What tricks do we use to make the computations more efficient? Are GPUs a major help for these numerical integration problems?",
+      "How does this kind of simulation even fit in memory? Does it have to work across several supercomputers?"
+    ],
+    "slide_29": [
+      "Are collisions typically detected by closed-form solutions or incrementing t?"
+    ],
+    "slide_30": [
+      "Interesting. If we had to model each hair to be a spring mass system, could it cause any run time issue?",
+      "I heard that for curly hair, hair is simulated by the spring system. What would be the best physical system to simulate straight hair?"
+    ],
+    "slide_32": [
+      "How easily can we extend the numerical integration methods discussed to partial differential equations? How useful would that be in graphics/animation?",
+      "How do we account for the errors in replacing accurate functions with samples?",
+      "To make the calculated value of the new configuration more concise, we might need to use very small time steps. But in real implementation, the calculation of small float values might lead to loss of precision. Is there a good solution to the problem?",
+      "How can we calculate the error here in the formula? Are there some ways to reduce it? Random sampling, monte carlo?",
+      "are we essentially approximating a continuous model in discrete time?",
+      "Is monte carlo a popular way to reduce the error?"
+    ],
+    "slide_33": [
+      "How did we go from the previous slide to this one? Is this the standard way of dealing with Euler?",
+      "Can you re-explain why this system increases in energy if this is seen in class?"
+    ],
+    "slide_34": [
+      "What do u stand for in this equation?"
+    ],
+    "slide_35": [
+      "Can we use the average of the velocities of the two configurations as velocity?",
+      "I had a hard time on understanding the configuration. In the previous slide, you said it is a list of all variable describe what it looks like in the current time. Then what does it really mean in this case?"
+    ],
+    "slide_36": [
+      "If we know the decay, can we account for it to get something that doesn't decay as badly?",
+      "How did you get the equation for the backward Euler approximation? It looks different from the one used in the forward Euler approximation, so I tried to move around the terms, yet I still am getting a different equation."
+    ],
+    "slide_37": [
+      "What's the difference between this and forward Euler? Maybe I'm missing something obvious, but they seem to be doing the same thing to me.",
+      "How would symplectic euler equation look like mathematically?",
+      "What will happen if we flip the update rule (i.e., update configuration using current velocity and update velocity using new configuration)?",
+      "Are there any advantages to Forward Euler over Symplectic Euler or is stable always better?",
+      "Is the backward euler evaluating the new velocity using next configuration?",
+      "How exactly is this better than forward/backward Euler? They seem similar enough that I find it hard to believe that one will produce a significantly better one over the other."
+    ],
+    "slide_41": [
+      "Is the only reason a really small h is worse because of floating point rounding?",
+      "When referring to relative error in the graph, what is the error \"relative\" to? If we were to plot the absolute error, instead of seeing the error shoot back up, would we instead get a plateau?",
+      "So how do we pick h? Do we just try many different values and see where the difference converges?",
+      "Why does the error function seen in the graph change so quickly? I would think that for \"reasonable\" functions, the impact of changing h slightly would be relatively small.",
+      "Do we just test bunch of h and pick the one with smallest error?",
+      "Is it possible to optimally pick h based on our function or do we have to sort of \"spray and pray\" with several different h values?",
+      "How would we determine if h is \"too small?\" And regarding relative error, what are we saying the error is relative to?",
+      "If we don't know the correct/true derivative of a function, how would we know the relative error?",
+      "Does h change very drastically from function to function or is there a default value that could work decently for a majority (or a certain subset)?",
+      "How can we know when we have a relative error if we have no idea what the actual function looks like?",
+      "Is this similar to aliasing where if the value you choose is too small/different, it would cause the values to be incorrect."
+    ],
+    "slide_42": [
+      "At least at first glance, the \"downside\" to automatic differentiation seems pretty trivial. Are there any major programming languages that have features to take care of this programming challenge automatically-- like an option to interpret all variables as derivative tuples, or just having this be the default?",
+      "It looks like this slide describes the forward approach to automatic differentiation where you operate on value/derivative pairs, which is different from the backward approach that many automatic differentiation frameworks seem to take (for example in machine learning). Are there any tradeoffs between forward and backward automatic differentiation? For example, in backward automatic differentiation I believe you'd need to store all the intermediate values of gradients but in forward automatic differentiation you can discard previous gradients once you've used them in your calculation"
+    ],
+    "slide_43": [
+      "With trees and symbols, we can often simplify the expression with more ease when compared to the previous approach. Is there a logic towards selecting one approach over another? Maybe if the expression is reused more often, or if it is possible to simplify at all..",
+      "Why are current systems not great with vectors/3D? Are there obstacles that make generalizing to higher dimensions especially difficult?",
+      "Can Automatic differentiation be seen as a simplified, dynamic version of symbolic differentiation?",
+      "I'm also wondering why the current system is not great with vectors. Can't we just perform the same operations element-wise?",
+      "What prevents current systems from further simplifying their complex formulae?",
+      "I don't really understand this method; would you still be applying it to functions and derivatives in parallel?",
+      "How do current symbolic differentiation systems simplify expressions? It seems quite expensive to search through the entire expression tree for common subexpressions that could be pulled out or terms that could be factored since there are an exponential number of ways to arrange each expression due to commutativity and associativity rules"
+    ],
+    "slide_44": [
+      "Assuming it exists, What's the disadvantage of using geometric differentiation?",
+      "I guess for geometric differentiation, we cannot let the system automatically come up with some algorithm. I am not sure if AI can do this kind of training to estimate the geometric derivative.",
+      "Can a computer find the geometric derivative by finding the \"level curve\" of a system? (since the gradient is perpendicular to the level curve)"
+    ]
+  }
+}

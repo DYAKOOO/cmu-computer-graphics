@@ -1,0 +1,217 @@
+{
+  "metadata": {
+    "lecture_name": "renderingequation",
+    "total_slides_with_comments": 35,
+    "last_slide_number": 57,
+    "total_comments": 137
+  },
+  "comments": {
+    "slide_1": [
+      "This lecture didn't have the sound effect at the beginning :("
+    ],
+    "slide_5": [
+      "Is there a reason why you chose to parameterize the sphere as in the slide, other than to bring up this point about cosine appearing for different reasons?",
+      "Could we parameterize the sphere differently and avoid having multiple cosines to confuse?",
+      "This question might be off-topic, but could the reason why there's a theta in the sphere integral be further illustrated?"
+    ],
+    "slide_7": [
+      "Is it possible that an \"iterative\" equation exists? Or is it just in the nature of this problem that we can really only reason about ray tracing recursively?",
+      "Is this 'angle between incoming direction and normal' the same meaning as Lambert's angle?",
+      "Is it ever possible to use data to train a model for reflection?",
+      "Say our point lies on the top of a cone, can't the energy contribution come from below the hemisphere too? Why do we only integrate over the hemisphere?",
+      "Is seems like a very mathematically intense computation to make. Is there a way that it is broken up into smaller iterative pieces to make faster or it is just some sort of hardware arithmetic in the GPU that can do something like this very quickly?",
+      "Why do we only consider all directions in a hemisphere here?",
+      "I am confused about the integrals here... Why do I need to sum them up instead of taking only 1 direction?",
+      "Just to clarify: is the cosine here based on Lambert's law or on spherical integrals?",
+      "For the unknown reason, I really like this slide. The equation shows the great high level overview of how outgoing radiance looks like in terms of incoming and emitted radiance.",
+      "Does this equation apply to non-hemispheric situations?",
+      "In order to speed up calculations, are memo tables used to store intermediate radiance values, or are there simply too many radiance values involved in a single scene for this to make sense?",
+      "This equation being recursive is the reason raytracing is so costly, right?",
+      "Is there any optimization on continuous recursion? i.e. save stack space used by recursion?",
+      "How is it that all of these variables can have their effects summarized by a single radiance value? Wouldn't the equation be more like \"x + y = z + w\", kind of thing?"
+    ],
+    "slide_8": [
+      "It seems the amount of computation needed for a given scene depends on the number of objects in the scene. I'm wondering if there are techniques to handle scenes with different complexity differently in modern GPUs?",
+      "I realize that the recursion has to stop at some point and a light source seems like a reasonable choice, but couldn't we keep going to get a more complete picture? Once we trace the ray backward and hit, say, a light bulb, I would think that the surface of the bulb could still reflect light from other sources. If it's a very dim light bulb, these other sources may even be the dominant effect. How do we decide whether it's okay to stop at a light source?",
+      "It seems possible that a light ray could bounce infinitely. At what number of surfaces should you stop?",
+      "I have a similar question as @twizzler, how does the light ray end up losing energy with every hit and then diminish, or does our renderer keep computing the radiance per time unit if there is a hit?",
+      "I just want to make this clear. When you talk about recursion, does this mean we use the recursion to track a ray and see how the ray is reflected in a space?",
+      "how do we decide when the recursion is finished?",
+      "What if there is some infinite reflection condition? like a ray of light keep reflecting among two mirrors?",
+      "I see, then maybe we are using the position, normal, and origin of the ray hit point to recursively evaluate new rays?",
+      "There are some games with a lot of light sources and a lot of objects. What are some ways to make raytracing less expensive?",
+      "Is there some sort of inflection point at which we should cap the amount of instances we allow our rays to reflect within a scene that will yield the best image results for least time/cost? How can we calculate or quantify this?",
+      "what is the base case for this recursion?",
+      "How do we handle the appearance of the light on a particular object fading out for aribitraely-shaped objects?",
+      "When does this recursion end? Wouldn't it be possible for the ray to continuously bounce back and forth across a few objects?"
+    ],
+    "slide_10": [
+      "If we are tracing rays from the camera, how do we handle rays which don't end up back at the light source?",
+      "If the light source is infinitely far away, wouldn't this mean that there are an infinite amount of rays that would hit the object? Is there a way of optimizing this so that we can filter out the ones that matter the most or have the most impact on the lighting?"
+    ],
+    "slide_11": [
+      "how do we calculate the normal direction if there is only a point(such as point cloud, the data the discrete)?"
+    ],
+    "slide_12": [
+      "What exactly do you mean by \"without change in frequency?\" Isn't the light reflected off of these surfaces reflected with different wavelengths (i.e. frequencies)?",
+      "Since light is reflected without change in frequency, how does reflecting light off of a surface cause its perception to be different? I assume then that this would have to do with other factors.",
+      "Do we need to take the incident angle into account? It seems we need this angle to calculate the out radiance",
+      "Are there a set of reflection functions that are most commonly used?"
+    ],
+    "slide_13": [
+      "What about something like \"perfect absorption\"? Do our reflective functions consider the amount of light being absorbed by the material?",
+      "Could the range of possible materials be considered in a 2D space with the two dimensions \"absorbed vs. reflected\" and \"direction of reflection,\" or is there added complexity that prevents this?",
+      "Why's does the moon have a retro-reflective phenomenon? I know for reflection light on the bicycle back, it has a zig-zag like material so that it makes the light reflect back to where it came from. But how about the moon?",
+      "If materials are just represented by giving them different reflection functions, then how would we represent a sphere with a rugged surface? For example, we had a sphere made of stone, and we could see this effect on the sphere based on lighting, but wouldn't the geometry still be perfectly smooth? Is this more of a modeling problem than a graphics problem?",
+      "Can all possible reflection functions be decomposed into the combination of one or more basic reflection functions?",
+      "Modeling material through reflective function provides a way to express and approximate different surfaces. When trying to render realistic photos, can we find a way to generate a combination of reflective functions to represent a surface, assuming that we define the invariants correctly?",
+      "When doing rendering in computer graphics, do we always assume that the objects are ideal specular or ideal diffuse?",
+      "How is ideal diffuse at really low levels different from absorption?",
+      "How much of physics can be realized in computers?",
+      "Are the reflection functions linear? Can we use bilinear interpolation for a mixture of two materials?",
+      "what are the factors that determines reflection functions? I can only think of material and concave/convex mirror on top of my head. My guess of the moon has nothing to do with material, is it because of its distance? How to quantify this",
+      "I am wondering how people know these reflection patterns which just match with what we saw in our lives? Did people do a lot of experiments on finding this pattern?",
+      "How are these reflection functions determined?",
+      "It seems like these actually cover a decently large portion of materials, since I feel as if most other materials would be combinations of these functions. However, is there a way to derive these reflection functions or do they need to be obtained by trial and error?",
+      "Is there a general equation for determining the glossy specular curve? Is there a lower bound for what would generally be considered \"a majority\" in that case?",
+      "Is these reflection functions calculated by specialized hardware?",
+      "I'm confused on the moon being a retro-reflective source. Does the moon reflect the light it gets from the sun back to the sun?",
+      "Can you elaborate a bit more on the retro-reflective aspect of the moon?",
+      "Can you tell that an object is retro reflective if you are not standing in the direction of the light source?",
+      "I am a bit confused about retro-reflective light sources, I understand things like the moon do reflect light back to the source, but how is that visualized in a computer model scene?"
+    ],
+    "slide_17": [
+      "How would a material like this be implemented? It seems like there is something interesting happening where from some angles it looks green and purple from other angles",
+      "Are the artifacts such as those on the left side of the teapot just from the geometry or are they from the material?",
+      "So we need to understand the basic physics features of the rendered material to calculate the actual light effects?"
+    ],
+    "slide_18": [
+      "Is this more expensive than rendering the other materials because we need to calculate reflections?"
+    ],
+    "slide_19": [
+      "are there materials that have different reflection function across the spectrum? like glossy when hit by red light, mirror when hit by blue light.\nslightly different but related question, material(surface finish included) isn't the only factor that influence the reflection function correct?"
+    ],
+    "slide_20": [
+      "Is the technique used here similar to the simulation of pores on human skin? Or can they be related?",
+      "In terms of all of these materials, I imagine it is still pretty hard to create these even given the reflection functions from earlier. Were these \u201cmaterial values\u201d and their respective functions found using educated guessing and checking using the reflection functions as foundations or were these materials closely analyzed physically and then their properties accurately emulated in simulations?"
+    ],
+    "slide_21": [
+      "Is it always true that what comes in must go out? Is it possible, say, some black material just absorbs the light and do little reflection (so that the energy transforms into thermal energy)?",
+      "It's not mentioned in the slide but you mentioned light actually bounces around several times inside skin, why is that the case?",
+      "In this case, the frequency of the incoming ray is not guaranteed to be the same when coming out. Do we have a mechanism to handle the frequency change and delete those out of the visible light spectrum?",
+      "Are there computational models simulating the last case?",
+      "Do we also model the other cases with a scattering function?",
+      "Different colors have different absorption of light. How to distinguish and calculate?",
+      "How do we distinguish the different cases of photon scattering? How do we know when it should behave for different materials/shapes?",
+      "Would scattering be modeled differently based on what perspective we were looking from, i.e. moving around in a VR?"
+    ],
+    "slide_26": [
+      "How do we know the absorption, etc. of different materials? Is there a way to predict it, or do we just have to try it out in a lab?"
+    ],
+    "slide_27": [
+      "But that simply assumes the object doesn't spit out new rays of light right? What if the object can absorb the light, somehow activated by the light and convert some of its internal energy into a stronger ray of light and spit out? Do things like this happen?",
+      "We do know that some energy would be absorbed by the material and never re-emitted again, but based on the material itself, isn't it possible to determine what proportion of the energy is absorbed?",
+      "In general, to find how light scatters around an object, would you have to evaluate this function on rays of all possible directions?",
+      "So do surfaces in our current basic understanding mainly differ in 'how much energy is reflected', assuming the surface is smooth, or are we considering both reflection/refraction of light?",
+      "Can you ever get infinite loops during ray tracing if you get two mirrors facing each other for example?",
+      "How would you find all the light scattered around?",
+      "The BRDF term looks quite abstract. Given any pair of direction, it produces a scalar. How would you store such a function?"
+    ],
+    "slide_29": [
+      "I guess this is a super niche situation where we get a closed-form expression for the integral as we can move the f_r to the front. Are there other 'nice' functions that are used in practice that don't require solving numerically?"
+    ],
+    "slide_30": [
+      "The brightness is dimmer for the reflection, does it mean that the rest of the \"light\" is being absorbed by the mirror or scattered in all other directions?"
+    ],
+    "slide_32": [
+      "What's the background in this pot?",
+      "If integral of fr cos(theta) has to be less than or equal to 1, why can this fr give an infinite value?",
+      "Is the integral of Dirac delta over all real numbers equal to 1?",
+      "How do we think about BRDF as distributions? Is there a simple example?"
+    ],
+    "slide_34": [
+      "To store the index of refraction, do we need to have some kind of lookup table or can those be computed? I woudl assume an image can have any kind of material, so how can we account for all of these materials?",
+      "Is Snell's law exact (in the sense that there truly are constants governing the angles of refraction), or are there second order negligible terms (or those of higher order) that need to be accounted for under certain conditions?",
+      "When a primitive is stored in the scene, is its index of refraction stored somewhere along side it to be used while rendering?"
+    ],
+    "slide_35": [
+      "Aren't there easier ways in optics to calculate this angle, like rules that apply?",
+      "How do you determine n_i for the different objects in your scene?"
+    ],
+    "slide_36": [
+      "Is this why fisheye lenses are named after fish?"
+    ],
+    "slide_37": [
+      "What's going on in the graph on this slide? In particular, what do 'S polarization', 'P polarization', and 'unpolarized' mean?",
+      "Why does this happen? I don't think I have any intuition for this",
+      "Confused about what S and P polarization are - and how they relate to viewing angle and reflectance.",
+      "How does polarization factor into this, exactly?"
+    ],
+    "slide_38": [
+      "Would we use a technique similar to mipmapping to account for the different levels of reflection for scenes like this?"
+    ],
+    "slide_41": [
+      "How do we decide what azimuthal angles to use for these materials? Would this be based on studies about materials or experimentation with what looks visually good? Also, what efficient way could we incorporate this in a program without hardcoding for each material?",
+      "Would most natural brdf's fall into the isotropic category?",
+      "How do we know if we need to include something like azimuthal angle into a texture map vs. calculating it while rendering?"
+    ],
+    "slide_42": [
+      "How to know the transparency of an object? Is this transparency related to the environment in which the object is located?"
+    ],
+    "slide_46": [
+      "Since this is a generalization of the BRDF, if we confine ourselves back to our original situation, does the equation reduce to the BRDF?",
+      "Doesn't this become computational very expensive as the surface area increases? How do we optimize this generalization to reduce the cost?",
+      "Even with the generalization, this is still a sampling problem right? The more we sample, the closer we can approximate the real function.",
+      "How do you write BRDF in terms of S?",
+      "How much slower does this become than BRDF as surface area increases?",
+      "If light is absorbed the surface, \"bounces around\" within the surface, and then goes back out from another point than the one the incoming light hits, how do we know these points? Isn't it random?"
+    ],
+    "slide_48": [
+      "When we switched to the BSSRDF, it looked like some of the detail of the structure got smeared out. Why did this happen? Is this an intended effect due to the material being marble?",
+      "This almost feels like a slight altered gaussian blur. Does gaussian blur use any similar algorithm?",
+      "I had the same questions. Why are the details blurred out in certain areas?",
+      "I also have the same question. Shadows seem to be stretched away from the light source, and I am curious what this is"
+    ],
+    "slide_49": [
+      "Integrating over the whole surface is also very costly to compute!"
+    ],
+    "slide_50": [
+      "Can the reflection equation capture subsurface scattering? Given that the incoming light may be at another location in the case of subsurface scattering, it seems like this model is unable to account for that."
+    ],
+    "slide_51": [
+      "Why do we choose to Monte Carlo integration on the BRDF instead of the surface integral?",
+      "Does the Monte Carlo algorithm have a high risk of missing powerful light sources coming from a very narrow area, i.e. a laser pointer? It seems unlikely that a random direction would happen to be pointing in the same direction as the laser pointer. I suppose the solution is just to take more samples?",
+      "This might be discussed later, but what part of this process is accelerated in RT chips?",
+      "I am missed... I hope we can talk about it in the lecture again.",
+      "How do we determine the sampling distribution?"
+    ],
+    "slide_52": [
+      "Will a poorly chosen random algorithm degrade the quality of the rendered picture?",
+      "This might be answered in the Monte Carlo lecture, but why did we choose to take the absolute value of the dot product of wi and the normal, instead of some other method like allowing the negative or clipping at 0?",
+      "It seems like this is very sequential, are there ways to parallelize this?",
+      "If we have to make recursive calls with this sampling method, then how is it an improvement from computing the exact integral of the rendering equation? Is computing the integral that much more computationally intensive?",
+      "Why don't we assume that each sample has the same probability?"
+    ],
+    "slide_53": [
+      "How is adding these two light sources here different from (or not different from) just a single light source?",
+      "Is this parallelizable (as in tracing rays from different pixels in parallel)? If so, is there a benefit to memoizing/caching the results?",
+      "Exactly how inefficient is this computation compared to rasterization? What attempts have been made to optimize its performance?"
+    ],
+    "slide_55": [
+      "Why is Russian roulette used? Is this so potentially far away features might still get captured? Why wouldn't you just have a cutoff when the contribution is low enough?",
+      "If indirect illumination gets bounced many times, doesn't it still end up as a ray to the eye? I'm a little confused as to what makes the difference between direct and indirect illumination.",
+      "It seems like this entire process is fairly involved, and may greatly differ from scene to scene, and depending on the creators goal. Does specialized hardware ever implement this, or is this generally done with software, which might use specialized hardware?",
+      "Is direct/indirect illumination the same as local/global illumination?",
+      "What would be some common optimizations for this process, if there were a lot of steps/surfaces that a light source would reflect off of in the process?",
+      "What are some ways that we could partition and parallelize this algorithm?",
+      "How does this work in practice? I feel like it would be very slow."
+    ],
+    "slide_56": [
+      "Does this scene looks darker because of loss of energy?"
+    ],
+    "slide_57": [
+      "How do we evaluate the quality of the rendered picture?",
+      "Piggybacking off of niyiqiul's question? Is the image \"realism\" just subjective, or is there some quantitive measurement for image \"realism\"?"
+    ]
+  }
+}

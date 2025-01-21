@@ -1,0 +1,211 @@
+{
+  "metadata": {
+    "lecture_name": "color",
+    "total_slides_with_comments": 33,
+    "last_slide_number": 65,
+    "total_comments": 135
+  },
+  "comments": {
+    "slide_13": [
+      "Black body radiation",
+      "Are heating the only source of light emission? For different types of lightbulbs, are they only differ in their heat?",
+      "...I guess maybe not? something like LED lightbulbs generate far more light but less heat than the conventional light bulb"
+    ],
+    "slide_14": [
+      "Why is it this specific range that is visible to our eyes? What does ultraviolet and infrared look like then and can other animals see it?",
+      "Even if we cannot see ultraviolet or infrared, we have our uses for it in everyday life. Despite the face that we cannot sense it with our eyes, do we take these wavelengths into consideration when doing color representation? Can we completely ignore it during digital representation or are there small impacts these non-visible waves can have on how we perceive images?",
+      "Can computer science one day maybe find a way to visualize non-seeble colors?",
+      "Some colors are harmful to people. That's why there are protect eyes modes. How do they work?",
+      "Do we ever consider this invisible spectrum during graphics, or are we mainly focusing on visible light?"
+    ],
+    "slide_15": [
+      "If the theory is that humans see this spectrum because it is the most advantageous according to the suns emissions, why is it that not every animal that lives on the surface have the same visible spectrum as us?"
+    ],
+    "slide_16": [
+      "How to quantify the value of heat, fusion, etc into units to measure the emission spectrum?",
+      "Are there conversions between additive and subtractive models?",
+      "If we would like to use the \"emission spectrum\", how could we determine the produced light frequency by heat or fusion?",
+      "It seems we will use emission spectrum for the light source only, and use absorption spectrum for objects which reflect light rather than emit. Is this correct?",
+      "what's the relationship between emission spectrum and absorbtion spectrum?",
+      "Is the emission spectrum of say like the chlorophyll whatever light it doesn't absorb? Is there a relationship between the two spectrums?",
+      "How does virtual computation of each model differ? Is one easier/harder than the other or have greater complexity?",
+      "How do these models affect our graphic models?",
+      "can emission and absorbtion spectrum  be drawn for a same thing?",
+      "I have a silly question, what is a spectrum? Is it something which represents the frequency over something? Based on previous slides, color is actually frequency, does that mean the spectrum is the representation of different colors for the object who produce color or absorb color?",
+      "Is it possible to emit light at strictly one frequency? Like I'm not talking about just a color, more like the exact frequency/wavelength such that the spectrum would literally be a line/point?"
+    ],
+    "slide_17": [
+      "The space of functions R->R is infinite dimensional, so does that imply that the set of colors is actually infinite dimensional, and the 3 dimensions of RGB is a crude approximation for human perception? Are there any animals that can see more than 3 dimensions of color?",
+      "I'm a bit confused what the emission spectrum graphs are showing, for example for the cool white LEDS is this saying that the light emitted by the LED is made up of these all of these frequencies, with varying intensities? Or is it saying that an LED producing blue light will be brighter than an LED producing green light?",
+      "What makes different light sources unique? I'm confused about how different light sources can produce different emission/absorption spectrums, rather than just manipulating the intensity of a general light source (like daylight for instance).",
+      "Given the emission spectrums, how would the associated light sources be perceived by the human eye? Is there an easy way to encode this difference using computer graphics? For example, daylight seems to have lower wavelengths than warm white light, but are perceived similarly."
+    ],
+    "slide_18": [
+      "The \"choppy\" spectrum is also the reason why CFL lights have lower color rendering index (compared with incandescent light).",
+      "What will be LED's graph look like if we add it here?",
+      "In mathematics, how to calculate the smoothness of a curve?"
+    ],
+    "slide_19": [
+      "I'm a little confused on the difference? Are the spectrums not equivalent? I'd think there would be some relationship between intensity and absorption.",
+      "Are either emission and absorption spectrums the opposite of each other? What is the relationship between them?",
+      "Would this object be a yellowish-green since it reflects green/yellow light and absorbs blue/red light?",
+      "How do the absorption and emission spectrums relate to one another?",
+      "Could we make an equivalent \"reflection spectrum\" computed as 100% - absorption for each wavelength? This feels like it would be much more intuitive (e.g. plants would actually peak at green, not blue and red), so why do we talk about absorption instead of reflection? (Edit: I see that you do use a reflection spectrum later in the lecture. Are there any cases where absorption is the more natural model to use?)",
+      "correct me if i am wrong, but i think objects' emission spectrum + absorption spectrum are just 1",
+      "I thought emission and absorption spectrums are different. According to my understanding, emission spectrums are for things that can produce light, and many objects cannot produce visible light in the normal condition. (correct me if I'm wrong)"
+    ],
+    "slide_20": [
+      "Are the intensities measuring how well a photosensor can perceive the color? Is there some threshold intensity for which the color is no longer visible?",
+      "Why does the intensity taper off slowly in higher than optimal frequencies, but increases sharply when achieving the optimal frequency?",
+      "Does this mean that different colors have different energy power?"
+    ],
+    "slide_23": [
+      "Since the x-axis for these graphs are wavelength and v is frequency, how would that change the graph, if at all?",
+      "I don't recall ever looking dim in the mirror. Does this mean that a mirror reflects most visible light at near 100%?",
+      "i have a question about materials' absorption spectrum. when striked by same frequency but different intensities, is the reflected percentage always proportional? like maybe when light is too strong it will have phase change?",
+      "Aside from the surface's reflection values, could it also be emitting some different spectrum of light on its own? If so, how do the surface's emission spectrum and reflection spectrum interact in the final color we see?"
+    ],
+    "slide_24": [
+      "So the color is actually decided by two factor, the light and the reflection of the paint?"
+    ],
+    "slide_25": [
+      "This is caused by incorrect white balance, how can we know the white balance value of our eyes?",
+      "I thought there would be a huge debate about the color under this slide. I guess I was wrong",
+      "White and gold!",
+      "Blue and Black!",
+      "That was a funny topic talked about many years ago; Now I can detect both two kinds of color combinations. I wonder how can we correctly interpret color when there is ambiguity?",
+      "Does the display of the screen affect how this image is perceived by people?"
+    ],
+    "slide_29": [
+      "When we talk about the sensitivity of a sensor, are we referring to how good a sensor is at absorbing or reflecting light?",
+      "What are the units here?",
+      "This looks similar to the inner product on functions that we defined earlier in the semester. Is there a relationship between the two?"
+    ],
+    "slide_30": [
+      "Since our eyes have three types of cones, and the screen also have RGB channels. Are RGB the only way of decompose light? Does the three cone types in eye corresponds/coincident with the 3 channels of RGB in modern color representation?",
+      "What causes things such as color blindness?"
+    ],
+    "slide_33": [
+      "Is this also the reason why difference between certain colors are more noticeable than others?",
+      "Is color blindness related to problem with the cones? If yes, can we reconstruct these cones in certain degree to mitigate color blindness?",
+      "There doesn't seem to be a huge difference between the graph for M and L cones; why is that?"
+    ],
+    "slide_34": [
+      "It's interesting to think about how the existence of three cone types S, M, and L may be influenced by environmental factors such as fruit coloration, since some other primate species are dichromatic and can differentiate blues and greens but not reds"
+    ],
+    "slide_35": [
+      "Are the SML response values mostly consistent between different people? It seems like they might be different for, say, colorblind people.",
+      "So our brain is also a digital computer?",
+      "So are we sharing a fake commonsense of colors, and when we describe some color, we are actually talking about different perceptions or feelings?"
+    ],
+    "slide_37": [
+      "Is that possible to distinguish without measuring their physical properties between monochromatic colors and mixed colors?"
+    ],
+    "slide_40": [
+      "I notice here that it looks like many of the triangles are \"skewed\" towards blue. Does this have to do with our cones and their different wavelength ranges?",
+      "Some monitors can perform bad in certain OS for a different RGB space. Why can't the software and hardware nicely work the color space mapping out together?"
+    ],
+    "slide_41": [
+      "Since we can also get black by combining cyan, magenta, and yellow, does that mean that there are multiple representations for the same color in CMYK? If so, how does one choose which representation to use?",
+      "I've seen RGB used plenty, but I haven't ever really heard/seen CMYK. What are the pros and cons of using CYMK in comparison to just using RGB?",
+      "Is this the foundation for the \"additive\" and \"subtractive\" filters you common see on photo editing software such as Photoshop?",
+      "Since combining paint colors is given as the example for the subtractive model, when modeling something like realistic paint combinations, is there a straightforward way that the combined color would be chosen? (e.g. combining cyan and magenta paint in real life would be some shade of purple and not blue)",
+      "Is there an effective way to translate between addition and subtraction? So instead of separating these two functionalities, is there a way to implement subtraction using addition?",
+      "Why do adding colors and subtracting colors work in this way? Does this change with how we represent colors (e.g. using line/angle representation)"
+    ],
+    "slide_43": [
+      "Why is everything that is called SML useless in practice?",
+      "Is LCh a better colour space than HSV?",
+      "What are some examples for why someone might want the Lab encoding? Are there a lot of applications where we want some uniform color model?",
+      "Are any of these color models more prevalent for ray/path tracing applications and why?",
+      "What are tradeoffs between these models?",
+      "Which model should I use in practice?",
+      "What's the point of using XYZ instead of HSV? The two models seem very similar to me.",
+      "What model is used the most?",
+      "Is there a particular reason why HSV is used more for Computer Vision (like opencv?)",
+      "How/why exactly is the encoding of colors in the Lab space considered \"perceptually uniform\"?",
+      "What is SML usually used for?"
+    ],
+    "slide_44": [
+      "Why is RGB chosen as the color encoding method? HSV shouldn't be too hard to encode and it's more intuitive than RGB.",
+      "Are there other ways to encode colors?",
+      "How was the length of the encoding determined? (why 6 characters instead of, say, a power of 2)"
+    ],
+    "slide_46": [
+      "How does our current scientific knowledge of light explain why the over operator generates transparent objects realistically?",
+      "How much worse is compression for RGB compared to YCbCr? If the compression algorithms improved for RGB, would there be less motivation to use these other encodings in digital video?",
+      "Then, the premultiplied over-operator algorithm must be different for HSV values compared to the one we used earlier?",
+      "Do we generally know what color model is good for what type of task, or is it random and with every task, we want to try the different color models to see which one fits best?"
+    ],
+    "slide_47": [
+      "What are the bases for choosing blue-yellow and red-cyan instead of other color deviations?"
+    ],
+    "slide_51": [
+      "Is this something that comes into play for image compression? That is, do image compression schemes place higher importance on preserving the brightness rather than hue?",
+      "It would be interesting to see the opposite construction: Blocky luminance and original colors."
+    ],
+    "slide_54": [
+      "Why is there a difference between user convenience and efficiency of encoding? It seems to me like simpler color models would accomplish both.",
+      "Are there color models that encompass wider range of colors that are used for applications such as professional photography and movie-making? How do animation companies like Pixar choose and apply their color models?",
+      "Does different model counts for a single medium ? like the image above, I can't tell the difference at all."
+    ],
+    "slide_56": [
+      "What actually happens if you look at a light emitter that gradually increases/decreases in wavelength until it leaves our visible range? Like, when you listen to a speaker gradually increase you just stop hearing any sound.",
+      "Why is the color space this particular shape?",
+      "What are the axis here and what do they mean?",
+      "How are we able to see colors outside of the RGB range on our computer display?",
+      "What is the significance of the shape of the color space?",
+      "You said \"most\" here, who is able to see more than this spectrum? Are you talking about people with tetrachromacy?",
+      "How was this determined to be the best space, is it simply an analysis of what a majority of people see, or is there a more scientific process?",
+      "What are x and y representing here?",
+      "Would a regular triangle be easier to capture the color?",
+      "Are (x, y) representing color and intensity of some kind?",
+      "What are the horizontal and vertical axis here?",
+      "Just interested, different softwares have different gamuts and I'm wondering how much of this is actually noticeable to consumers? If we use two different color spaces can viewers easily tell?"
+    ],
+    "slide_57": [
+      "Why do we not want to take a triangle that resembles the original color space the most (aka P3 leaning much more towards 520 point)? Is this just simply about how much information can we express with limited storage (like 8bpc)?",
+      "I might have missed this, but what does \"primaries\" mean here?"
+    ],
+    "slide_58": [
+      "As computers become better and better (can store more numerical precison), will we ever see an adoption of something better than sRGB, or is sRGB here to stay due to legacy reasons?",
+      "What are the axes on the left referring to? Is one of the axes the RGB value (between 0 and 1) and the other is intensity?",
+      "I'm a little bit confused about the reason why the nonlinear relationship could help make better use of limited set of numerical values.",
+      "Is the only reason that we don't use a wider range of color values because the technology doesn't exist/isn't mainstream enough?",
+      "Is it not possible to have a linear intensity graph?",
+      "I have a similar question to the other ones above; is there an intuitive way to understand this nonlinear relationship, and why it's preferable? It seems to me that the intensity of a color (as RGB goes from 0 to 1) should have a linearly varying intensity (so intensity would be linear in each of the three coordinates).",
+      "Is it possible to design a display that can capture the full range of colors visible to humans, and capture the sunset scene accurately?",
+      "Why is nonlinear better?"
+    ],
+    "slide_59": [
+      "Looking at this diagram makes me want to transform the space so that the ellipses become circles. Is there any merit to doing that?",
+      "I guess this explains why a triangle figure was used in chromaticity page. How were these sensitivity measured? There are infinitely many ellipses we can make from this diagram as well, how were representative ellipses chosen?",
+      "On the chromaticity diagrams, it makes sense to me why we might see more regions of green because our eyes are more sensitive to it, but why would we also see larger ellipses in the green region?",
+      "Even for colors within the same ellipse, displaying them correct is still value if the goal is to show transition. Is there a metric to tell how smooth the transitions are?",
+      "How is the \"just noticeable\" defined, since everyone's eyes have different color sensitivity?",
+      "How was these ellipses calculated?",
+      "Are these ellipses defined in some mathematical way by the science behind the colors or are they just taken through some sort of human survey?",
+      "How do we traverse through points on the ellipse?",
+      "If our eyes are sensitive to changes in color, when we stare at a constant picture, shouldn't we fail to see the colors because the change in color of every pixel is zero over time? How do our eyes balance between changes in color and the actual color?",
+      "This there more color beyond this scope that some people may possibly see?",
+      "I am also curious about how this works. Is this based on experimental results?",
+      "Aren't these ellipses displayed here way bigger than the actual ellipses computed, for demonstration purposes?"
+    ],
+    "slide_60": [
+      "What are typical variations between different perceptions of colors between people (besides color blindness)? Does this difference matter when we're designing displays?",
+      "Will there ever be a case where we have to adapt a color spectrum to be seen by a machine rather than the human eye?",
+      "Hmmm, wonder what mechanisms are used to actually capture this?",
+      "What kinds of tools are available to measure people's color vision?"
+    ],
+    "slide_62": [
+      "Is this nonlinearity transform done in the hardware of the monitor or individually for any image-displaying software?",
+      "How is gamma correction typically implemented, since it's probably fairly expensive to raise values to the 0.4-th power? Is it sufficient to use lookup tables to handle the non-linear transform?"
+    ],
+    "slide_64": [
+      "Why do I feel so much freedom when looking at this slide?"
+    ],
+    "slide_65": [
+      "I realized that, since I'm doing this at night with my computer's night mode on, all of the colors I saw were skewed. neat."
+    ]
+  }
+}

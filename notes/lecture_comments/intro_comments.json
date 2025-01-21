@@ -1,0 +1,286 @@
+{
+  "metadata": {
+    "lecture_name": "intro",
+    "total_slides_with_comments": 42,
+    "last_slide_number": 63,
+    "total_comments": 192
+  },
+  "comments": {
+    "slide_3": [
+      "It comes to my mind that in this year's Nvidia's new product announcement, Nvidia\u2019s CEO delivered his keynote by making everything up for a couple of seconds and no one knew."
+    ],
+    "slide_4": [
+      "In animations like Toy Story, how much role does design/art play in the creation of individual frames? Or, do they rely solely on technology to digitize the entire process?",
+      "In these animations, are parts all created separately?"
+    ],
+    "slide_5": [
+      "Could it be beneficial for computer graphics to be used in apps like zoom, for example creating a model of the person and animating the person instead of a real-time video live feed?"
+    ],
+    "slide_10": [
+      "What allowed for the biggest leap forward in computer graphics technology?",
+      "Are we going to talk about vector graphics in this course? They use an interesting (if a bit outdated) display technology.",
+      "Do we really need a monitor with higher and higher resolution, given the limitation of human eyes?"
+    ],
+    "slide_12": [
+      "What is the approximate bandwidth of human eyes?\nAs a side note, what is the number of pixels and framerate of our eyes?"
+    ],
+    "slide_13": [
+      "Can VR soon simulate the touching sensation? If so, how could that be accomplished in a conceptual way based on the current technology we have?"
+    ],
+    "slide_16": [
+      "This slide shows interesting new perspectives on reproduction of sensory information, but the following slides about the examples of computer graphics seem to only be concerned about the visual recreations. Can we get more examples of how computer graphics can be relevant in synthesizing and manipulating other sensory information, especially the taste and the smell?",
+      "Wow... I started searching on the internet after I read your comment, and it seems like there are already well-made products for taste and smell (like this one https://www.youtube.com/watch?v=sSJ63KXyMqU).",
+      "Until today, I never really thought of computer graphics being more than the animations that we see in the movies, but seeing how even taste and smell may be involved one day has definitely changed my perspective. This then means that newer innovations such as VR can be classified as a form of computer graphics; what other innovations are there that may involve the senses such as taste and smell that may end up becoming a big part of society such as VR has?",
+      "It will be very interesting to include taste and smell in the future computer experiences, but wouldn't it be a bit too much to include them in the term of Graphics? After all, graphics are visualizations. However, I am curious whether there is a word to encompass all the sensory information that can possibly be delivered by computer."
+    ],
+    "slide_17": [
+      "What techniques are used to create these 3d matter from a model? Like how does it go through layer by layer and figure out and print the outline for each?"
+    ],
+    "slide_18": [
+      "So CG only involves turning digital info into sensory, but not the other way around (turning/encoding/scanning what we see into digital information for simulation/demonstration purposes)?",
+      "Isn't this somewhat stretching the definition for one field? I would think \"graphics\" by definition refers to visual stimuli, and, for example, auditory stimuli deserves its own field called \"computer audio\" or something similar. Are there similarities between computer representations of these different types of stimuli that make it sensible to group them into one field?",
+      "It feels like when people talk about graphics, they primarily mean visual stimuli, potentially augmented by other types of sensory stimuli. Is there any work on strictly non-visual graphics, e.g. for accessibility reasons?"
+    ],
+    "slide_20": [
+      "This stuff is obviously more advanced than what we'll get to in class, but my question is how much more advanced is it? I can't even imagine how one would even start making things like this. A lot of it also seems to be related to AI, is that common these days?",
+      "How is the \"flat lattice of thin flexible shapes\" forming a \"complex 3d structure\" project related to computer graphics? Seems to me the researchers just showed a proof of concept made in real life but not on a computer. Did a computer aid in creating that lattice? Is it that it can be modeled easily on a computer since it can be made in real life?",
+      "This was mindblowing to watch. Computer graphics seems very powerful in creating realistic simulations, but this must come with great responsibility to the audience and those whose data is used in creating these simulations. What are some common ethical constraints and issues faced when creating computer graphics simulations?",
+      "In order to simulate the real world, I would imagine that the laws of physics/thermodynamics/fluid mechanics are highly involved. When making these projects, how are these laws incorporated into the creation and are scientists involved in the projects too?"
+    ],
+    "slide_22": [
+      "The Legend of Zelda, shown on the button left, was first developed in low pixel resolution without fancy rendering techniques. These techniques were added to the game later in the development cycle because the game designer wanted to make sure that this game was supreme without advanced computer graphics techniques."
+    ],
+    "slide_23": [
+      "How do cameras use computer graphics, especially older cameras that don't have a screen?"
+    ],
+    "slide_26": [
+      "Is the simulation here created with signals and data from a real car experiment and aiming to replay the real experiment, or is it generated virtually based on physical rules, etc. to replace experiments that cost real vehicles?"
+    ],
+    "slide_28": [
+      "Similar to proofs in computer science in general, I assume a great level of proof of robustness and correctness is required for scientific and mathematical visualization programs. How would one prove the correctness of a computer graphics algorithm or software, especially considering how our current understanding of any particular phenomenon is very likely to be incomplete?"
+    ],
+    "slide_29": [
+      "Have there been cases where bad graphics/implementations have caused issues (similar to therac-25 incident?)"
+    ],
+    "slide_30": [
+      "In autonomous driving, computer vision is needed for the car to know its surroundings. Where is the role of computer graphics in this scenario?",
+      "It seems like the vertex / edge model of geometry would not lend itself to extremely detailed and noisy data like LIDAR and 3d photoscans - what do we use to encode the geometry in those cases?",
+      "Is there any other use of graphics, apart from just visualizing the point clouds, drawing bounding boxes?"
+    ],
+    "slide_31": [
+      "The video talked about how the words that we see require algorithms to generate. Does this then mean that every font type uses a different algorithm to display the text that we see on screen?"
+    ],
+    "slide_32": [
+      "Are graphics-specific programming languages used in industry? Or are they still in the early stages of development?",
+      "What are tools like Unity and Unreal Engine? Is it accurate to call it a graphics system?",
+      "I'm also curious about the role of a game engine (e.g. Unreal). Which of the above problems does it help to solve? Should we understand it as a graphics library that helps with most of the rendering process, e.g. after users declare the object representation? (So perhaps it is similar to a graphics-specific programming language to help achieve ease of use, and efficiency?)",
+      "How do we define the \"signal\" here which we acquired & reproduced? Does it mean the bits stored in some certain area of memory?",
+      "What kinds of features would make a programming language graphics-specific?",
+      "How important is parallel and increased performance going to be in this course?",
+      "Do we need to get familiar with all of the related knowledge above during the course?",
+      "Is the main purpose of parallel, heterogeneous processing to render images faster? Are there different settings in which this applies? For instance, I'm aware of high performance ray tracing hardware (e.g. NVIDIA RTX 30 series) which can render ray traced images fast. Are there different kinds of hardwares that work better for different techniques (e.g. different hardware that works better than 30 series for animations)."
+    ],
+    "slide_33": [
+      "In our cube example, does \"modeling\" mean computing the edge coordinates on 2D paper and \"rendering\" mean rasterization to draw the edges?"
+    ],
+    "slide_34": [
+      "Would it ever be beneficial to represent the coordinates of the vertices in a non-cartesian coordinate system (cylindrical/spherical)?",
+      "For any general shape, is there a way to encode and control the curvature of an edge or a face?"
+    ],
+    "slide_35": [
+      "In this approach, we represent the cube by providing a list of all vertices and all edges (as represented by pairs of vertices). Are there ever situations where it would be computationally advantageous to provide an alternate representation, perhaps a more abstract one?",
+      "Are there general assumptions about the faces that connect the edges (as applied to situations that could be more complex than a simple cube), like that they are flat and connect the closest closed shape of edges and whether or not they exist between certain edges at all?",
+      "When modeling in 3D software, there is big emphasis on faces, so would it make sense to represent the cube in terms of its faces instead of edges?",
+      "This algorithm requires the edges and the endpoints to model the cube. How might one model a cube that has curvature and no edges?"
+    ],
+    "slide_36": [
+      "If we use the \"pinhole\" model to simulate how human eyes perceive 3D objects, would the difference among every single eye matter? Is there an easy model that could adapt to this kind of difference?",
+      "If we construct the graph this way, we may need to do this computation for each coordinate of each object in our model. Wouldn't that be rather computationally heavy? For example, if we have a cube we would do the calculation for 8 coordinates, but if we have 100 cubes, we would have 800 calculations and that computation is not limited by the total number of pixels, but rather the total coordinates of the objects.",
+      "It doesn't seem possible to determine the depth of an object (big tree far away vs small tree nearby) using an image generated with a pinhole model. Is there any modification to the model or to the resulting image that can be done to allow depth to be distinguished better by the viewer of the image?",
+      "I'm wondering if there's a small mistake in the picture? The 2D image of the tree should be central symmetry to the 3D object. But if we look into the detail of the picture, it seems that the 2D image is actually upside down and smaller compared to the real one.",
+      "How can depth of field be illustrated with this model?",
+      "How does this relate to the concept of \"focus\" and being \"nearsighted\" or \"farsighted\"? If our location as viewer impacts how the 3D object appears to us (in 2D), it seems our location would similarly impact what we can focus on in our field of view.",
+      "Since the pinhole camera is comparable to how our eyes work, would two pinhole cameras be needed to properly assess depth, since human depth perception is formed as a combination what both eyes take in?",
+      "What's the difference between using pinhole and lens?"
+    ],
+    "slide_37": [
+      "Are there types of cameras in which each beam of the light from the object travels in parallel to the camera? Such a camera would display the same size image at any distance."
+    ],
+    "slide_38": [
+      "Does it make a difference that the perspective is flipped? As in, the triangles are similar so we can find the absolute value of v, but are we also going to need to use a negative sign to account for the position of q being above or below that center horizontal line?",
+      "The unit is set to be 1, what if it changes? Plus, the eye is different from the pinhole.",
+      "Will the size of the pinhole matter here? For the calculations in this slide, it seems that we assume the size of the pinhole is infinitely small. But if the pinhole has a length of h, let's say, would there be any difference?",
+      "Does our eyes function exactly the same way as the pinhole, but just flipped?",
+      "What would happen if the camera is not perfectly square? eg. if the pinhole face or the image face was tilted",
+      "If we also want to capture the shadows of an object, such as the tree, would the same calculations here with the image coordinates work?",
+      "What do x in p and u in q measure for since they are not shown in the picture? Why we treat the image width as 1?",
+      "Could you explain how are x and z related and how the horizontal coordinate u is calculated? Since the relation of x and z is not drawn in the slide, I'm having difficulty visualizing it.",
+      "Thinking of an eye as a pinhole, is the distance (1) in the image equal to the distance between the cornea and the lens? If not, what is the \"pinhole\" and what is the \"photo paper\"? Also, how does changing the size of the pinhole (if that can be the analogue of the dilation of a pupil) change the equations?",
+      "Is the x coordinate \"depth\" in this case?",
+      "Is there any particular reason we choose the image width to be 1? Or is that just for convenience?",
+      "A long time ago I watched a video about 3D projection onto a 2D plane and vaguely remember something that mentioned the need for a smaller \"close z\" that represents the distance between the viewer's head and the screen since the viewer never actually has their face pressed right up against a computer screen. So in the case that I'm thinking of, the vertical plane that point c resides on would represent the screen itself, while the vertical plane point q resides on might represent where the viewer's head might be. Does the similar triangle with a length/width of 1 serve this purpose, or am I remembering something completely different? The more I write the more incorrect my assumption sounds, especially since this type of projection seems to be more of a \"camera obscura\" type of projection.\nAlso, the field of view is a cone, right? x is into/out of the screen, y is height, z is width, etc?",
+      "It seems rather inefficient to have to project point by point individually. In the example of the cube it is easy to project all the vertices and then connect them. However for more complicated shapes we may not necessarily have many straight lines edges and so it may not be so straightforward to do this. How does one go about doing this in the general case in an efficient manner?",
+      "Could also we take into account and translate the intensity of the coordinate through a variation of this method?",
+      "I'm wondering how people made this pinhole accurate to the eye? Or if not, why is this accepted?",
+      "I'm wondering how we can map from a 3D world (x,y,z) to a 2D image (u,v). It seems like there is a lot of ambiguity since many points may map onto the same image pixel. Is this the principle behind stereo vision to be able to estimate depth from images taken using multiple camera views?",
+      "Can we change the shape of the camera? What will happen if the shape of the camera is a triangle?",
+      "An implementation question, for example a tree here. It has so many points, but only about half of them need to be projected to a 2D screen, and it can save computational cost and time to only calculate the half. My question is in CAD software, when we change a viewpoint, does it always recalculate every points' projection? Or is there an easy way to ignore the points that won't be seen?"
+    ],
+    "slide_39": [
+      "By doing the subtraction, we are regarding the (x, y, z) the vector starting from the origin (0, 0, 0) and pointing to the vertices; So why are we assuming the distance between the projected picture and the origin (the camera) is 1?",
+      "Can we also achieve this more easily by multiplying the points by a projection matrix?",
+      "why dividing by z?",
+      "Are similar sorts of algorithms used to render graphics in things such as video games, of course with more complex parameters such as camera angle and such?",
+      "How do we transfer this method to draw curves instead of straight edges?",
+      "I felt that this is similar to ray tracing. The calculation seems relatively easy, but why is real-time ray tracing advertised by Nvidia to be something really hard.",
+      "Doesn't this algorithm flip the image, just like how we saw the top of the tree on the bottom of the pinhole camera in the previous slide? Would a more practical algorithm also multiply everything by -1 in step 2 in order to correct the image orientation?",
+      "If we had a second cube on the other side of the camera, would both cubes show up? It seems like the camera is looking in the -z and +z directions at the same time.",
+      "How do we adapt this to handle various focal lengths?",
+      "What actually happens if we put the camera inside the object? So, let's say we put c = (0, 0, 0)?",
+      "How does this algorithm deal with spherical objects(or anything with no distinct vertices)?",
+      "What are the axes of the graph representing? Are they the x and y coordinates?",
+      "By subtracting camera c from vertex (X,Y,Z) to get (x,y,z), do we assume that (x,y,z) is in the camera's coordinate (instead of an external reference window)?"
+    ],
+    "slide_41": [
+      "Based on this diagram, it looks like the edges of the cube aligned with the z-axis, which are parallel in reality, would all in the perspective projection intersect with the origin if they were to be extended.",
+      "What kind of transformation should we make if the direction of the camera is not parallel to an axis? Should we spin the coordinates by making a matrix multiply?",
+      "I see this cube very differently depending on whether I assume the smaller square is in front or in back. How would we encourage the viewer toward one interpretation or the other?",
+      "I think this cube somehow doesn't really look like a cube. At first glance it appears more like a cuboid or even a cross-section of a square pyramid. Is this because the pinhole is too close to the cube, and how do we ensure correct representation to the viewers?",
+      "Is the reason for the distortion of the front and back sides of the cube due to the unit focal length of the camera (distance from c to the image plane)?",
+      "I believe the distorted view would be because this is an orthographic view.",
+      "Let's say we assume that right is positive z, up is positive y, and going from the canvas towards us is positive z. In that case, I would have assumed that the smaller square made up by the points with negative z (E, F, G, H) would have been on the top right of the bigger square since that is the perspective I would have imaged for a camera at (2, 3, 5) looking at a cube at (0, 0, 0), which would be been looking down and to the left. Is there an explanation for this disconnect?",
+      "Is there a reasonable explanation for the fact that some edges that are supposed to be parallel do not look parallel? I literally tried with my camera and I couldn't find an angle to reproduce this picture.",
+      "Why do some of the cube edges appear skewed and not parallel despite the cube's axis-aligned model definition? Is this result just the nature of perspective projection? Will the degree of edge \"skewedness\" vary with camera intrinsics, distance, and the real size of the object we are viewing?",
+      "I believe the lines are supposed to be parallel so its very interesting that it doesn't appear to be that way. It would be nice to have an explanation as to why that is the case and maybe converse a little on how exactly different angles would distort an image.",
+      "You mention that the procedure is deterministic. Is there a reason for this to be considered important or good?",
+      "Why does the back side look bigger than the front side?"
+    ],
+    "slide_43": [
+      "Can we always transform digital information into visual information by some algorithmic procedure? What are the common challenges in this process?"
+    ],
+    "slide_45": [
+      "Does each pixel in this picture consist of one color? Or, are there three colors (red, green, blue) in each pixel? If the latter is true, why does our abstraction of a raster display (next slide) assume that each pixel has a single color value?",
+      "This picture reminds me of instances where I take photos of certain types of computer screens with my smartphone and the screen often shows a pattern which is not visible by the naked eye. Why is that?",
+      "How do the gray pixels (e.g. the ones directly next to the darkest ones that make up the letters but are not fully black) influence our perception of the letters? Does it make a noticeable change in the line width when viewed from a regular distance on the display? I can see why it would make curved lines smoother but not straight lines, like the L.",
+      "Taking a closer look at the letters, it seems that beyond the darkest black pixels in the middle of the letters, there are also the less black/grayish pixels at the outer edge. Are there more to the diamond rules mentioned later in the lecture when it comes to rasterizing letters?",
+      "How many brightness levels are there for each LED? (Like, I'd imagine there to be 256 because RGB ranges from 0 to 255. But that seems like a lot.)",
+      "For extremely high resolution photos/videos (like high res TV screens), is it as simple as there are a lot of pixels or has there been a vast improvement in methods for representing colors?",
+      "I remember older monitors used to \"create\" colors by putting pixels with different colors next to each other. Is one set of red, green, and blue lights enough to display a single color, or do we still do things to a region of lights to make the color more realistic?",
+      "What impact do the different colored pixels on this slide have on how we see the text from farther away compared to if all of the pixels were black?",
+      "How would a high resolution device compare to this image? Is this an average photo of a \"modern display\"?",
+      "What will be the price difference if we replace all of the bulbs with the bulb that could display color directly?",
+      "For this example, the pixels appear to be more rectangles than squares. Is this true or is it just a matter of illusion? If true, what are the advantages of this?"
+    ],
+    "slide_46": [
+      "What types of displays are not raster-based? Can you have vector or shape based displays?",
+      "Is there a convention for where the origin and coordinate axes are in this abstraction of a raster display?",
+      "How can this grid-based pixel representation be generalized to screens with different arrangements of red, green, blue pixel? Some monitors put those lighting units like diamonds while some put them like squares."
+    ],
+    "slide_47": [
+      "How do we know or control how thick the line gets on a raster grid and what defines one unit width?"
+    ],
+    "slide_49": [
+      "How do you determine which method of rasterizing a line is better? I personally think they all look around the same?",
+      "Is the diamond rule computationally efficient? It seems like it would require a lot of processing power for a very simple problem.",
+      "How are the GPUs efficient for computer graphics?",
+      "I've heard a technique called anti-aliasing. Does this technique use an algorithm similar to the diamond rule?",
+      "Is this only used for lines on modern GPU's? And what's the advantage (performance or appearance-wise) for doing so?",
+      "Is there a \"circle rule\" where they used circles instead of diamonds? What are the advantages/disadvantages of using diamonds instead?",
+      "Is there a specific reason of choosing \"diamond\" as the criteria here?",
+      "How would you be able to tell if the line passes through the diamonds? Would you have to encode coordinates for each diamond on each pixel, keeping estimated \"line thickness\" in mind, or is there a different approach?",
+      "How exactly do modern GPU's compute/store this \"diamond\" information about the pixels?",
+      "Are there some ways to quantify how much better one rasterization technique is compared to another kind?",
+      "How is line rendering using the diamond rule parallelized on GPUs? Is the line split into sections drawn in parallel or is parallelism not that important for an individual line?",
+      "Is the diamond method only used for 0-thickness lines?",
+      "Have there been attempts at improving this \"diamond\" technique or is it the most efficient we have so far?",
+      "Since the line divides every pixel that it touches into two parts, can we calculate the ratio of the area of the two parts and use that as a criteria to decide whether to light up a pixel?",
+      "Does everything use the diamond rule or are there other rules that are used?",
+      "Are there other rules (i.e circles instead of diamonds) that work better for different orientations / styles of lines and pictures, and are there easy ways to discern as to which rule should be used for a specific image?",
+      "What are some examples of other rules that work better for different criteria? Would it be possible to look at some analysis of that? Also, it seems to me that the diamond rule is chosen partly for reasons of computational efficiency on a GPU (just 4 sides of the diamond to intersect against) rather than another shape which would entail more complex operations.",
+      "How exactly do we divide up the pixel in half or determine the diamond shape for our computations? And how do we create this non-zero thickness line to actually do these computations?",
+      "I am also interested in, is there a specific reason that this diamond rule can help GPU acceleration, or other rules, say circle or hexagon, is equivalent in speed? Then what's the reason for using these diamonds?",
+      "How different can a picture look based on the rasterization technique used to light up and color the objects in the picture? Are these differences noticeable to the naked eye?",
+      "Are there any other shapes tried to get a smoother line?",
+      "How we implement the diamond rule?",
+      "Is there any efficient method to store all those information?",
+      "This looks like it would be vulnerable to aliasing on horizontal lines, which are fairly common, since they could be thin but light up two whole rows. Is there a way around that?"
+    ],
+    "slide_50": [
+      "Is the \"unit\" thickness of a line assumed to just be one pixel? How do these rasterization techniques change when drawing thicker lines? At what point do we stop considering something a line and instead consider it a shape?",
+      "Since we're viewing the individual pixels up close this line looks pretty chunky, but how small, on average, is a pixel? Do these various techniques matter when we zoom out?",
+      "How are we able to create and identify this diamond shape within a pixel? If a pixel can be broken down further, can we just use smaller pixels?"
+    ],
+    "slide_51": [
+      "What is a good big O for this sort of algorithm? Is it always similar to the size of the line?",
+      "How do we choose rasterization rule in the real scenario or how do software/hardware select between different rasterization rules?",
+      "It appears that the rasterization rule should be dependent on the object shape that we are drawing. For instance, we should have different rules for lines and irregular shapes. How are the algorithms optimized for choosing different rasterization rules?",
+      "how does the anti-aliased algorithm work here, say if the rasterized shape is not smoothed?"
+    ],
+    "slide_52": [
+      "By doing this, time complexity has been decreased to O(n), what further optimization is applied in modern sw/hw?",
+      "Since every lit up pixel should be close to one another, is it possible to use algorithms such as depth-first search to find all the pixels that need to be lit up?",
+      "I guess modern software/hardware can optimize the process with high parallelism, with parallel algorithm and hardware such as GPU?",
+      "Is further optimization in modern software/hardware primarily parallelization, or is there a lot of optimization to reduce total work as well? It seems like it would be difficult or impossible to do better than O(n) work on this problem, since O(n) pixel illuminations are required.",
+      "good interactive tutorial\nhttps://www.redblobgames.com/grids/line-drawing.html",
+      "What would be a brief high-level overview of how this is done in modern graphics, and how this gives a good improvement?",
+      "How do we represent curves with a similar method? Is it possible?",
+      "As the line is represented with two endpoints, what happens if I want to increase the line weight?",
+      "If the line passes through the crossing point of two diamonds, will both diamonds be rendered?",
+      "Does the assumption of integer coordinates are at pixel centers always hold in real situations?",
+      "Instead of incrementing the x-distance, wouldn't it be better to represent the line as a vector and increment in the direction of that vector?",
+      "What do people do for non-integer endpoints/slopes?",
+      "If the image is dense with many lines, would scanline rendering have an advantage?",
+      "What if the endpoints aren't at the pixel centers.. does that change anything?",
+      "Is this algorithm how they determine the diamond rule? Or was it a coincidence/for convenience that all the pixels chose matches the diamond rule?",
+      "How are lines drawn in modern software/hardware?",
+      "How is line rasterization actually preformed in modern hardware and software? Is there a de-factor method that is relatively widespread and accepted, or are there variations that are preferred in different use cases?",
+      "How should we prove the diamond rule is satisfied using this algorithm?",
+      "Can this sort of \"incremental\" thinking be applied to animation as well? It seems wasteful to clear every pixel and redraw the entire shape if only part of the shape actually changes between time steps.",
+      "If a line is drawn on the border of the diamonds (a line with 45-degree slope), which set of pixels will light up?",
+      "Could we connect points using more complex functions instead of straight lines by using a similar technique of incrementing u and changing v accordingly?",
+      "Could we apply this algorithm to rasterize a circle? Could we maybe consider different slopes at different points on the curve, and just follow the same algorithm?",
+      "I am wondering whether we can add random processes so that we can see this line slightly different each time. Is this probably a little bit comfortable?",
+      "What is the modern method for drawing lines?"
+    ],
+    "slide_53": [
+      "This cube still looks somewhat strange. What are the limitations in this approach that lead to its shortcomings? How would you do better?",
+      "The cube looks different when I see it in a different direction. It's hard to tell whether the large or small square is in the front. How can we improve this?",
+      "Does the cube look \"strange\" because we are used to seeing it in 3D from a camera in front of the cube rather than behind?",
+      "What causes the front and back face of the cube to appear different sizes? Is it due to how we are projecting the cube, the pinhole camera model, or some other factor?",
+      "Is there a way to determine whether [part of] an edge is \"behind\" another one? This way, we could make the far overlapped edges a lighter color to show which face is actually in the front.",
+      "I think this is how the camera sees the cube, but why we need the camera in graphics? Is it because we need the camera to convert 3D shape into 2D?",
+      "Why is the back face of the cube so much larger than the front? How can we correct for this visually?",
+      "Piggybacking on the comments about the back face of the cube being in front of vs behind the other, will we need to encode more data in the cube to account for that? Or do we just need to color the cube such that the smaller square is all shaded in, based off the camera location?",
+      "How can we determine the position of the camera and the focal point from graphs like these?",
+      "The cube does not look like what I typically imagine a rendered cube should like (more evenly distributed, rather than staggered). I know this is due to the position of the camera relative to the origin, but is there a way to visualize this better? It is hard to imagine a camera floating in some arbitrary 3D location when our model is 2D.",
+      "I think human eyes view is different from single point view. Can we draw a picture based on two points just like human eyes?",
+      "Is there any other ways to do this?"
+    ],
+    "slide_54": [
+      "Take as an example, a computer program that tries to predict how a scene will look from a certain perspective. This program would most likely want to use every model that it can, in order to make the graphics look realistic. However, there should be a limit for how realistic it can achieve if certain \"good\" models are missing. As an extreme example, if the program does not have a model to predict lighting, the image will probably not be realistic... How do we continuously learn about new models? Which other areas of studies contribute to computer graphics?",
+      "Given that we have a limited amount of computing resources. If we try to incorporate all models that we can, the graphics will be very realistic; however, the approach itself may not be realistic... (the rendering would be slow)"
+    ],
+    "slide_55": [
+      "To what extent can Scotty3D do?",
+      "How does Scotty3D compare to OpenGL?"
+    ],
+    "slide_57": [
+      "In the lecture video, the top left image was shown to be animated (with a very smooth animation to be precise, which makes me think that each frame was most likely not hand-made and rather generated through some procedure.)"
+    ],
+    "slide_58": [
+      "How do we ensure that the geometric rules are kept in the computer?",
+      "Are there any advantages of using quad-dominant meshes over triangular meshes? And any specific applications that prefer one over the other?"
+    ],
+    "slide_60": [
+      "It looks like the right sphere has almost an \"anti-shadow\" beneath it. Is that because the light from above is being refracted and focused below the sphere?",
+      "Why is this image so noisy? Is this an artistic choice or due to the rendering cost?",
+      "This assignment is crazy. I am wondering why this picture's quality is much better than mine? How much samples are used in this result?"
+    ],
+    "slide_61": [
+      "To generate these types of photo-realistic images, do we have all of the understanding of the physics of light necessary already? Or are there physical phenomena which we don't yet understand enough to capture in an algorithm?"
+    ],
+    "slide_63": [
+      "I'm very impressed by the fact that the robot arm is controlled by animation. What are some general reasons behind controlling physical objects with animation rather than other modes of control?"
+    ]
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "metadata": {
+    "lecture_name": "radiometry",
+    "total_slides_with_comments": 41,
+    "last_slide_number": 63,
+    "total_comments": 145
+  },
+  "comments": {
+    "slide_5": [
+      "haha photon go brrrr",
+      "Is this just a basic view of light or a realistic one that happens to be simple?"
+    ],
+    "slide_7": [
+      "Instead of hitting the scene with rays, can we add color filters on top of the intensity part of the image? Just add a red filter if there is red light in the scene or something. Is it because that would miss the different intensity of the filter?",
+      "How exactly is luminesce/light mimicked in generated photos? Is it typically a simple filter or do we have to manually calculate the new color that it would be if it were in bright light or in the shadows?",
+      "Are there setting in which the \"steady state\" assumption does not hold? For example, rendering images of outer space?"
+    ],
+    "slide_9": [
+      "Why we could not get a formula to calculate directly, but do something like sampling here?",
+      "Photons in real life should be colorless. When we mimic photons in cs, do we assign a color to them?",
+      "Should we store all the hitting positions and all the hitting timestamps?",
+      "Can we map the scene to a grid and record hitting positions and timestamps?"
+    ],
+    "slide_10": [
+      "Do all 'hits' have constant energy? If not, why do we only care about the number of hits?",
+      "Can radiant energy vary across the landscape of a scene?",
+      "Do hits of rays with different angles and different length all carry the constant energy?",
+      "Is radiant energy measured across an entire scene? Or by some smaller size like across an object",
+      "But how can we measure the number of hits in the scene?",
+      "This seems counterintuitive to me: I thought that the amount of energy in the scene should be fixed. How come the amount of energy can increase every time a photon hits something. Aren't we \"double-counting\" the energy associated with a photon?",
+      "Does the energy decrease after every hit/ how do we keep track of it if it does?",
+      "Is there a rate of decreasing energy we will have to measure given a photon of light or do we assume light is infinitely fast (so just for an instant) or do we assume it lasts forever?"
+    ],
+    "slide_11": [
+      "Isn't this just the reciprocal of 0.05 sec/hits? Or did we just assume that our video displays the hits sequentially so that it only worked out to its reciprocal mathematically?",
+      "What is the distinction between radiant energy and radiant flux when rendering a still scene, where no time is passing? In this case, do we only talk about one or the other?",
+      "Do we normally quantify this as a function of time or as a constant value?"
+    ],
+    "slide_12": [
+      "From just looking at a light bulb, it would seem that the amount of rays it shoots out on a surface is \"nearly infinite\". In practice, how would we actually measure how many hits this bulb shot onto some area?"
+    ],
+    "slide_13": [
+      "So we just take the area in the scene to be equivalent to one pixel?",
+      "I think the decision of how big of an area should be one pixel is arbitrary"
+    ],
+    "slide_17": [
+      "Is this analogous to type checking?"
+    ],
+    "slide_18": [
+      "Does the angle that the light ray hit the sensor affect its energy? Say, does a light ray in a normal direction of the sensor carry the same energy as the same light ray that is from a different direction?",
+      "I am a little confused about the other direction. Do we need an assumption that all radiant energy is received by the sensor to state that the time integral of flux is total radiant energy?",
+      "How are these (and more complex) integrals computed in practice? Fancy GPU hardware?",
+      "Why can we assume that the amount of energy received per unit time is constant?"
+    ],
+    "slide_19": [
+      "How is this limit taken in practice - do we continue sampling that point on the sensor repeatedly at small time intervals until it reaches steady state?"
+    ],
+    "slide_22": [
+      "How does a spectral power distribution get translated into RGB values?"
+    ],
+    "slide_24": [
+      "If the Earth's axis of rotation is non-zero, then how do we explain why countries near the equator do not experience seasons and are always hot.",
+      "@previous question: Draw normals at the equator on both Earths in the diagram. Note that the angle between the normal and the sunlight is the same, but in the other direction. Therefore the intensity of the light is the same, so the temperature remains similar all year."
+    ],
+    "slide_27": [
+      "Shouldn't the irradiance be distributed differently around the surface, though? Wouldn't the bottom of the beam, which is closer to the original position, get more intensity than the top?",
+      "I think this law assumes that light rays come in parallel (light source is far away). In this case, the distance just depends on the angle"
+    ],
+    "slide_28": [
+      "Why is L pointing from the object towards the light source and not the other way around?",
+      "How do we deal with transparent objects and caustics?",
+      "Why does the dot product between L and N produce the color of the surface? I can only understand it in the way of how L is projected onto N, but how this relates to color?",
+      "What are some other ways to shade surfaces?",
+      "Where is the color of the light reflected in the formula? Is it assumed to be in grayscale, since the vector would probably be the direction?",
+      "How do we deal with materials which allow light to pass through them?"
+    ],
+    "slide_29": [
+      "Do we use low-cost lighting techniques like this in a similar way to mip-maps, in that it's used in farther and lower-detailed environments?",
+      "It seems like a negative value still encodes some useful information, would this ever be used in other, non-opaque materials?"
+    ],
+    "slide_30": [
+      "Are the images this produces so bad? It seems like this method gives a significant speedup, so how bad are these images compared to other methods?",
+      "What kind of result does this produce? Seems like it would be ok in some scenarios.",
+      "Does it work to just not shade anything that is negative then?",
+      "WHy is the direction of the light not the other way?"
+    ],
+    "slide_31": [
+      "When I use light like this in Unity, if I move the light source even a little bit, it would bake for a very long time. I guess that's because it needs to calculate every surface lightly again."
+    ],
+    "slide_32": [
+      "Inverse square law",
+      "why is it quadratic instead of cubic?"
+    ],
+    "slide_33": [
+      "Does choosing alternative falloffs cause viewers to sense that something is wrong with the lighting (it subtly isn't behaving as they expect)?",
+      "Are there falloffs other than linear that people also use? What do they look like?",
+      "Will there ever be a need for cubic fallout?",
+      "So in the real world, there are some occurrences or approximations of a point source of light (say, a light fixture in the ceiling). If we would want to render this in a graphical setting, would we opt for the point light source, or is there something else we can do?",
+      "Do realistic falloffs depend on the material of objects in the scene?",
+      "Can we assume that the image as the light source approaches a large displacement will be fully dark? Is the falloff exponential, since smaller movements at the beginning causes more fallout and this will slowly approach full darkness?",
+      "Would this result in scenes that would be too dark for objects far away from the light source?"
+    ],
+    "slide_34": [
+      "What is the unit of omega? I think it does not have a unit because A and r^2 have the same units.",
+      "Is A the value of the area on the sphere surface? If so, in practice, how do we calculate its value? Do we do the approximation and assume that A is on a plane?",
+      "is A the surface area of a portion of the sphere or is it an approximation onto a plane?",
+      "It would be helpful if omega was labeled on the diagram as I'm not sure what quantity it represents.",
+      "Why do we measure the ratio of A to r^2 instead of measuring area-to-area ratio?",
+      "For sphere, why it's divided by r^2, where does ^2 comes from?",
+      "How exactly would you draw the angle that is being calculated? It seems like there can be many regions of area A that would produce different angles?",
+      "What exactly does it mean for something to have steradian units? I have no idea what that means since A/r^2 is unitless, meaning we'll need to give it some units, but why not just radians^2 or something like that?",
+      "would it be well-defined to have different sum of 2 pi and 4 pi?"
+    ],
+    "slide_35": [
+      "Why do we only consider solid angles? What about areas other than the projected area that are also lightened by the light source?",
+      "But if the light source(sun) is not taken as a point, (cause it's large as demonstrated in the graph) how to calculate the flux?"
+    ],
+    "slide_36": [
+      "I still don't understand why we need sin\\theta here. I think the rd\\theta and rd\\phi are already the width/height of the rectangle dA?",
+      "I am also wondering about the sin theta. I guess that r d\\theta * r d\\phi is not the true area because A is not actually a rectangle, but a curved region of a sphere that approximates a rectangle; but still, where does the sin theta come from?",
+      "you can kind of imagine that when theta goes up, per phi covers smaller and smaller areas...so it's definitely not r*dphi",
+      "rd\\theta is the height of the rectangle dA, r sin theta d\\phi is the width of the rectangle. If you look at the circle that lies in the upper horizontal plane, its radius is r sin theta. The width of the rectangle is an arc on that circle that corresponds to an angle of d\\phi.",
+      "Why is the differential angle the area projected?.. I'm very confused.  ;-(",
+      "Is this an easy way to sweep across the surface of a sphere? I'm a little bit confused on how exactly differential solid angles relate to light and radiance.",
+      "how many variables are there in this case?",
+      "Why is \"unit\" emphasized? Were we working with the unit sphere originally, or is this true for every sphere?",
+      "Are we using r, theta, and phi just to be in spherical coordinates? Would we also use these in practice?",
+      "I'm still not entirely sure what irradiance based on solid angle gives us, versus the many other quantities we've already seen. Is this to model that each point source of light may have different radiance along different directions?"
+    ],
+    "slide_37": [
+      "Shouldn't the limits of 2nd integral be from 0 to 2\\pi?\nEDIT: I figured out that it is \\pi because of the way \\theta, \\phi are defined.",
+      "If Omega is equal to 4pi, does that make A = 1? Additionally, why do we care about very small areas of A. What are its uses for image rendering?"
+    ],
+    "slide_38": [
+      "small nit: should \"donate\" be \"denote\"?",
+      "Why is this an \"abuse of notation\""
+    ],
+    "slide_39": [
+      "How does the idea of radiance as energy moving along a ray capture the \u201cper unit area\u201d part of this definition?",
+      "What does \"energy along a ray\" mean? I'm having trouble understanding what radiance measures.",
+      "I am also struggling with how the angle relates to this. Is the intuition that more photons hit at a perpendicular angle rather than a non-perpendicular angle?",
+      "it is different from the radiant flux that this radiance is same on different distances?"
+    ],
+    "slide_40": [
+      "What would be the final numbers / scale of numbers that are in the actual code"
+    ],
+    "slide_43": [
+      "What is a 4D light field? What about a 3D light field?"
+    ],
+    "slide_44": [
+      "What are some examples of when we might want to only capture a small light field? Would it only be for efficiency or approximation reasons?",
+      "Are bigger cameras on phones shifting to light-field cameras? I remember iPhones can change the focal lengths after the picture is taken.",
+      "If the object is too close, will some of the camera capture nothing or noise? If so, how can we address this issue when combining information",
+      "Are there any simple ways to capture bigger parts of the light field?",
+      "Cost must be a factor with these multi-lens cameras. What is the cost of creating these cameras?",
+      "How exactly is the camera on the left capturing a bigger slice of the light field than a standard camera? Do the newer smartphones with more cameras essentially do the same thing?",
+      "The \"re-focusing\" is quite amazing. I'm wondering if these techniques have been used in real applications like phones?",
+      "What are the cameras on smart phones doing with light field nowadays?",
+      "Is there a minimum number of additional photos/angles that a lightfield camera must take from a scene to do a proper refocusing?",
+      "How many images are usually combined in such a process?",
+      "Why would a small slice of the light field ever be advantageous over capturing the bigger slice and recombining after? Is it just due to efficiency that we wouldn't always need this bigger slice and it would be a waste to always capture it?"
+    ],
+    "slide_45": [
+      "Are there any examples (in cg/real life) where L_i == L_o?",
+      "Why do we need to make this distinction between incident radiance and extant radiance?",
+      "Is this only for certain types of surfaces (or different on certain types of surfaces)?",
+      "To model reflection, do we model L_o as a function of L_i? What are the parameters of that function?",
+      "Where does the surface's albedo come into play here?",
+      "How do transparent surfaces or surfaces that reflect light affect these rays?"
+    ],
+    "slide_46": [
+      "When doing ray tracing, do we sample more rays when the radiance value is big? Or is it enough to encode radiance as some form of \"brightness\"?",
+      "This slide states that radiance is constant along a ray in a vacuum. Does that mean that the quadratic falloff from earlier (or falloff in general) does not exist in vacuum?",
+      "Given the ability to compute radiance in different directions at a given point, how do we translate that into a color?",
+      "In what situations would radiance not being constant along a ray be important?",
+      "Is there any situation where one has to account for non-constant radiance along a ray, or is the assumption of a vacuum usually appropriate?"
+    ],
+    "slide_47": [
+      "I'm guessing that here we assume the surface is smooth so that in particular, there is a plane tangent to the surface at the point of interest and that is why we only integrate over a hemisphere. What if our surface was not smooth?",
+      "Or we could have a clear surface? Which means light can come from bottom half plane?",
+      "How big is H?",
+      "Is this something that is easily approximated with low resource overhead? For instance, if we want to approximate an integral like this, it may require storing a very large explicit representation of a surface, supposing that we would like to use approximate methods and not precise symbolic integration."
+    ],
+    "slide_48": [
+      "Is the first line of this missing the cos theta term in the integrand from the last slide? Otherwise d omega = sin theta d theta d phi and the second line doesn't make sense"
+    ],
+    "slide_49": [
+      "Without lights, this picture would just be blank, right?"
+    ],
+    "slide_50": [
+      "When we have directional lighting, we are also assuming a light source at infinity. But in this case, even though we again have a light source at infinity, are we saying that the light source is approximately an infinitely large sphere centered about the object we are interested in?",
+      "This requires us to assume a spherical light. In practice, particularly in gaming, how useful is this technique since most light sources don't seem to be spherical lights?",
+      "How can this information be efficiently stored and recomputed for a changing light source?",
+      "Does this mean this needs to get recomputed when the model moves?",
+      "When we look at a different position, the light should be changed in direction and needs more computation, is it?",
+      "Do we take reflections into account when generating ambient occlusion map?",
+      "Does this only take into account one light source? How would calculations change if there were multiple light sources, or if some material was reflective?",
+      "The value of this pre-computed map depends on where we put the assumed light source right? How do we decide which direction our lights are coming from?",
+      "What information do we bake into the pre-computed texture? How is this information useful when the lighting sources change?",
+      "What algorithm allows us to pre-compute the occlusion when making the texture?",
+      "How can the pre-computation be helpful and does the pre-computation directly affect the map?",
+      "What do we do when the light isn't spherical?",
+      "Can this be expressed as mipmap as well?",
+      "Is this technique only applicable for pre-computing on textures and how would this generalize or react to different light sources?",
+      "Can we also store color values as well when taking this into account? or is there some reason this couldn't be done well in practice?",
+      "What data structures allow us to efficiently calculate ambient occlusion?",
+      "The ambient occlusion map seems quite specific, only applying to spherical lighting. Is it actually applicable with other forms of lighting?",
+      "The model for ambient occlusion still doesn't make much sense yet, is it possible to go over this more? I understand intuitively how this might be computed, but is there a specific algorithm for it?",
+      "Does ambient occlusion only work with spherical lighting? I don't understand how with a different or changing light source how ambient occlusion could be efficiently calculated or transformed."
+    ],
+    "slide_51": [
+      "Does the \"screen space\" means this AO is not pre-baked but real-time calculated with information of screen space pixels?"
+    ],
+    "slide_52": [
+      "Is this image rendered using rasterization or raytracing? There are some parts of the image where the lighting behavior seems a bit odd, especially near object boundaries"
+    ],
+    "slide_54": [
+      "What does theta represent in this graph?",
+      "What do we mean by \"cosine-weighted\"? Still a bit confused by this."
+    ],
+    "slide_55": [
+      "I am having a hard time interpreting this diagram...which part is perpendicular to the plane?"
+    ],
+    "slide_56": [
+      "Does radiometry related calculation always come with raytracing? Is there any practice to incorporate them into rasterization?"
+    ],
+    "slide_59": [
+      "Is photometry what is typically actually used for rendering (e.g. via ray tracing) to account for human perception?",
+      "Do nighttime and daytime scenes in things like video games actually perform this conversion depending on the time of day? And if so, do they recompute the color output depending on the time of day or is there some sort of conversion that you can do to simplify?",
+      "does the translation between radiometric quantities and photometric quantities only involve the response of human visual system function, V?",
+      "Is this why most games ask you to calibrate the brightness until a symbol can be faintly seen on the screen?"
+    ],
+    "slide_63": [
+      "Reflection next time?"
+    ]
+  }
+}

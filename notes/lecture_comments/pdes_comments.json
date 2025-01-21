@@ -1,0 +1,191 @@
+{
+  "metadata": {
+    "lecture_name": "pdes",
+    "total_slides_with_comments": 27,
+    "last_slide_number": 49,
+    "total_comments": 127
+  },
+  "comments": {
+    "slide_3": [
+      "Does a PDE just describe the change between two frames in animation?",
+      "Can strategies for ODEs and PDEs be generalized to outside the context of time and space?",
+      "Is PDEs are only way to simulate this effect? Is there any approximation that works well?"
+    ],
+    "slide_4": [
+      "Why do we want to take a weighted combination of velocities to get a velocity, wouldn't each particle have it's own velocity and the particles could be traveling in opposite directions as well?"
+    ],
+    "slide_5": [
+      "Are there use cases for higher-level languages (e.g. Julia or Python) for solving more complicated PDEs in graphics?",
+      "Along the same line with the previous question, is it possible to code graphics simulation in Python? My understanding is that the reason we use low-level C++ is that because of memory allocation.",
+      "How do we deal with PDEs that are unsolvable/have specific rules given their type/format?"
+    ],
+    "slide_9": [
+      "this is quite funny looking lol"
+    ],
+    "slide_11": [
+      "How do we simulate fractures? Do we stop averaging/weigh the velocities of the points less after a certain distance from the point with the most concentrated force?"
+    ],
+    "slide_14": [
+      "Are time derivatives not derivatives of functions of space? Or like, do functions of space take in some point/position x and output some other output value?",
+      "What are the reasons of not writing variables in the partial form except simplicity? Doesn't u' create confusions when x is not specified?",
+      "I don't quite understand the influence with alpha, so the bigger the alpha is the function will propagate faster to the right through time?",
+      "How do we even come up with these equations for simulating various effects such as different elastic/viscuous materials and snow simulation?"
+    ],
+    "slide_15": [
+      "The Newton's notation could be a bit confusing sometimes.",
+      "Besides the easiness to solve, are there other reasons why we might prefer linear over non-linear or vice versa?",
+      "yeah its better to write whose derivative it is. By the way, Burger's equation is a shockwave simulation function. the one here is the general form called viscous burger equation. For ex, a thin ideal pipe with fluid running through it, Burgers' equation describes the speed of the fluid at each location along the pipe as time progresses.",
+      "Is the u here position, velocity, or something else?"
+    ],
+    "slide_16": [
+      "Is there any geometric reason for why these equations are also called \"elliptic\", \"parabolic\", and \"hyperbolic\"? Like what does the wave equation have to do with a hyperbola?",
+      "Is there a system of PDEs?",
+      "Is there any specific applications for elliptic equation, just as heat equation for heat and wave equation for wave simulation?",
+      "Isn't the transport equation also one kind of important PDE?",
+      "How can both the first derivative of time and second derivative of time both be the Laplacian?",
+      "What are other examples of fundamental model equations?",
+      "Is there any geometric reason for why these equations are also called \"elliptic\", \"parabolic\", and \"hyperbolic\"? Like what does the wave equation have to do with a hyperbola?"
+    ],
+    "slide_18": [
+      "How does the picture on the left relate to the one on the right?",
+      "Shouldn't every point on the object have the same temperature after a long time?",
+      "Does Laplace equation always converge at some point?",
+      "I think it was mentioned in lecture that in the long run that solution to heat & laplace is the same. How should I understand that? (time close to infinite being the same as time not changing at all.)",
+      "If change in time is equal to Laplacian and Laplacian in 0, then is the change in time 0? I am a little bit confused on how to interpret this :(",
+      "I am also confused with how heat equation after a long time is the same as laplacian. Is this heat different from the physics heat we think about?",
+      "Does the geometry of the object affect how the heat distribution spreads (e.g. the valley after a large hill may not get as much heat as a valley before a hill), or is it solely dependent on distance?",
+      "I\u2019m a bit confused: how can we get the right from the left? I see the connection but not quite sure how they correspond to each other.",
+      "How is this the same as laplace?"
+    ],
+    "slide_19": [
+      "In some cases, would we want the errors to persist for a long time (since that might more accurately reflect natural phenomena)? How would we differentiate between the errors we may want to propagate and those we don't and maybe fix only the numerical errors we don't want?",
+      "But wouldn't the problem of the spreading heat be much much harder? Different materials transmit heat differently. Plus, there can be so many different heat sources in a rabbit\n."
+    ],
+    "slide_21": [
+      "Is advancement on PDE mostly coming from hardware improvements?",
+      "In practice, which seems to be better? Using extra time to compute the solution to the PDE or just using some estimation method to approximate a solution at each point?"
+    ],
+    "slide_24": [
+      "Say we have a lake of water and we drop a ball into a certain location of the water. Would it be efficient to use Eulerian for the water particles away from the ball drop and Lagrangian for water particles near it? Is this even plausible? Or is there another method that one would use?",
+      "How would we even track these qualities of all moving particles? Like any visible material in real world would consist of incredible many particles floating around, so any reasonably realistic simulation that uses movement of particles should also include similarly many particles, which is computationally almost impossible I presume?",
+      "What are some approaches we might use to find a good particle distribution? What is commonly done when using Lagrangian space discretization in practice-- selecting according to different distributions?",
+      "Are the Lagrangian particles like the particles from A4 (i.e. just a bunch of little balls / some other shape), or are they generally more abstract than that? If one were to simulate a pool of water as a ton of ball particles floating around, I feel like you would need a massive amount of extremely tiny particles to make it look like water and not like a ball pit. Could you instead treat the particles as, for example, points on a mesh that are connected to nearby points to make a more cohesive shape?",
+      "How would we assign grids for tracking velocity? Does each cell of the grid represent a particle? If yes, I think particles are moving, and how can we adjust grid assignment dynamically based on particles movement?",
+      "A more basic question: I'm having a hard time wrapping my head around how these two approaches relate to the actual PDE equation and all the variables involved, like u, u dot, u', etc. Could you elaborate on that?",
+      "I assume Eulerian discretization would be much easier to parallelize?",
+      "How fine does the Eulerian grid need to be? It seems as though motion might be very \"low definition\" so to speak if it is too coarse/ the squares are too large.",
+      "For Eulerian method, how is the resolution of the grid determined?",
+      "How are the number of particles for the Lagrangian method and the resolution of the grid for the Eulerian method decided?",
+      "Would Lagrangian incur greater overhead and be more costly to compute than Eulerian? In which cases or apps would we want to use one over the other?",
+      "In Eulerian, how can the velocity of a certain grid location be tracked?",
+      "Which of these two methods has better hardware efficiency?",
+      "It seems like the Lagrangian would take more computing power but would also lead to more realistic results. Is this true?",
+      "Is lagragian similar in concept to the idea of Brownian motion and particles suspended in space?",
+      "Are there other ways to discretize space or do other methods tend to build on these two?",
+      "For Eulerian, do we require less space because we're using grid positions instead of tracking all particles?",
+      "How much is the latency difference between the two methods?",
+      "Does the Eulerian take much less computing power in a scene with lots of particles since the variables that are stored are not dependent on the number of particles in the space?",
+      "I understand how the Eulerian method would be calculated by just checking the flux at fixed locations but for the Lagrangian method, how would we keep track of all the moving particles and would that ever be efficient as supposed to the fixed locations?"
+    ],
+    "slide_26": [
+      "How do we mix the two? Is the ratio derived through some physics parameters? Or is it probabilistic?",
+      "Is there high overhead or cost to switching between these two methods? I'd think there would be an advantage to keeping it uniform.",
+      "Can you give a more detailed example of how to used the mixed method to solve the problem?",
+      "I don't think there is an easy way of just combining the two conceptually? Is it similar to our ray tracer where we flip a coin to determine/decide whether or not we want to sample?",
+      "By mixing the two methods, does that mean you would use the Lagrangian in some scenarios and Eulerian in others?"
+    ],
+    "slide_27": [
+      "Is it just the speed of computation that will be impacted? Or is it like, solving for some quantity might cause fewer visual errors to occur, resulting in a perceived higher-fidelity image?",
+      "Can we tell from the mathematical PDE which formulation may be better?",
+      "Is there a way to tell which PDE will result in faster computation without actually implementing and timing them?",
+      "What's the difference of an incompressible fluid from a compressible fluid? The properties listed seems like they could apply to all fluids."
+    ],
+    "slide_30": [
+      "In the lecture you mentioned that the Laplacian is invariant to your choice of direction -- what exactly does that mean? Is it like, we can take any set of n linearly independent vectors in R^n to compute the directional derivatives and it still gives the same output?",
+      "What does the coordinates don't matter mean?",
+      "How does the laplacian conceptually represent an average of neighbors? Are we using the derivatives in each direction as an approximation?",
+      "Can this be thought of intuitively as 'how fast the gradient changes as we follow it'?"
+    ],
+    "slide_31": [
+      "How does this compare with Monte Carlo? And how do we know which technique is preferred",
+      "When using a finer grid, would numerical (eg. floating point) errors cause problems?",
+      "How can we determine what grid size will be sufficient for an accurate approximation?",
+      "Is there an upper limit for h such that the solution we get in the end is stable? If the value of h is too large, the error might be too big even if we have a lot of samples."
+    ],
+    "slide_32": [
+      "when I am approximating the second derivative from the first derivative, shall I change my steps and use interpolations? Or I can use some other ways?",
+      "Has there been any research into what a sufficiently small grid size is? I assume this would cause aliasing if you don't get it right.",
+      "Are there theorems to determine how fine the grid would need to be to avoid aliasing?",
+      "How does the error introduced in the first approximation propagate to the second approximation?",
+      "Will the approximation errors compound?",
+      "How to extend this approximation to 2-D or even more dimensions? Is there any additional thing we need to do on the mesh?",
+      "Is there any example of other ways to discretize the second derivative?",
+      "Seconding the question on if approximation errors compound, especially since the wave equations were mentioned to have a similar sort of property with errors.",
+      "When computing both the first and second derivative, do we always care about the h/h%2 relationship or do we only care that they are sufficiently small numbers?",
+      "How do we avoid the compounding of errors? Since this method involves approximation.",
+      "Why doesn't it work well on other types of grids?",
+      "How much error is in this approximation?",
+      "What are some edge cases where the approximations would produce huge error?",
+      "How does the error play out in this method of approximating, as we are approximating twice would the errors compound?"
+    ],
+    "slide_33": [
+      "Can you elaborate on how the cotan laplacian becomes the one on the grid?",
+      "What about meshes with more than 4 edges? How can we approximate Laplacian? Do we triangulate them first?",
+      "Why don\u2019t we use the definition of the Laplacian (i.e. sum of second derivatives) to approximate it?",
+      "How would the triangle mesh operation be broken down into convolutions like in the grid case?",
+      "What do values at the vertices u and i represent? What are the underlying functions?",
+      "What do the convolutions on the triangle mesh look like?"
+    ],
+    "slide_34": [
+      "Is it ever faster/preferable to solve Laplacians numerically instead of a linear solver? I know that with stuff like integration we often preferred approximation.",
+      "Are there situations when numerically solving is preferable?",
+      "This numerical solution (averaging with neighbors) seems to exhibit great parallelism; is there a usage where certain hardware could leverage this to make it more feasible?",
+      "When is the numerical solution more preferable?"
+    ],
+    "slide_35": [
+      "Even though these libraries are designed for sparse matrices, surely the space utilization of such a matrix would be crazy large in practice?",
+      "It seems like this matrix is not only sparse, but has a very regular/particular structure. Is there an even better way to solve the equation than using a generic sparse linear solver?",
+      "How exactly does accounting for the boundary in a special manner fix our linear system?",
+      "What is the complexity of this?",
+      "It seems that this would be very costly in practice. Is there another alternative to store the sparse matrix information that is more efficient in terms of storage?",
+      "Are there substantial advantages in complexity when solving these problems on sparse matrices? My intuition is that some of the operations on sparse matrices (like finding eigenvalues) might not be easier than on dense matrices, but things like solving linear equations, for example, might be."
+    ],
+    "slide_36": [
+      "Is it intuitive to put the value a there or is there something simple I am overlooking",
+      "How would different boundary conditions fundamentally differ in the resulting boundary calculations? Like is one option smoother than other, etc?",
+      "It was mentioned previously that we can also use periodic boundary conditions. Is this not considered a \"basic\" boundary condition?",
+      "Can we solve a PDE where Dirichlet and Neumann are mixed together?",
+      "What are the tradeoffs associated with choosing a Dirichlet or a Neumann boundary condition?",
+      "With Neumann condition, would we somehow have to save data from across other boundaries to get this specific difference, or maybe I am misunderstanding?",
+      "How to add boundary conditions to the linear system in the previous page?"
+    ],
+    "slide_42": [
+      "Why the things that happen following in physics can be solved?",
+      "Is there a reason we want to do Laplace here? Since intuitively, it doesn't seem that the heat will interpolate with the same first derivative (the same rate), as higher heat points usually cool down faster than lower heat points.",
+      "Intuitively it seems like uniform heat should be around the source, but it seems like the heat is flowing more inwards. Is this also explained by Laplace?"
+    ],
+    "slide_43": [
+      "Why don't numerical libraries have verification themselves?",
+      "How do we choose the normal direction when computing this derivative? Does it matter if we are only examining the case where the derivative = 0 (because we are examining the boundary)?",
+      "Should the equivalent statement in 1D as 'two dirivatives are the same'?"
+    ],
+    "slide_44": [
+      "What exactly is the \"grid\" here? If we're talking about things like particles in 3d space, do we need to extend this to higher dimensions?",
+      "In another class, there is a lot of mention on how to implement code like this efficiently. Have you ever seen use for some domain-specific programming languages which can compile this looping code in such a way that cache misses are minimized?",
+      "How different is it to solve the heat equation in a Lagrangian vs. Eulerian framework? I imagine in an Eulerian framework you could use a grid solver like you said in the slide, but in a Lagrangian framework the neighbors are in irregular positions which would require using a spatial data structure like a BVH or quadtree or something similar",
+      "When you say grid, does that imply this method only words with eulerian representation?",
+      "Is there still a grid if we're working with particles in 3D space?",
+      "Does the loop over the grid ever become too inefficient when the grid is too large, even if it only remains in 2D? Which of the boundary conditions is usually used?",
+      "How different is it to solve the heat equation in a Lagrangian vs. Eulerian framework? I imagine in an Eulerian framework you could use a grid solver like you said in the slide, but in a Lagrangian framework the neighbors are in irregular positions which would require using a spatial data structure like a BVH or quadtree or something similar"
+    ],
+    "slide_45": [
+      "What are the choices on discretizing the Laplacian?"
+    ],
+    "slide_47": [
+      "Are interactive simulations constantly verifying if the new conditions are possible? Is there some approximation that occurs from an impossible to a possible condition?"
+    ],
+    "slide_49": [
+      "Are there any further CMU courses which dive deeper into things such as fluid simulation?"
+    ]
+  }
+}

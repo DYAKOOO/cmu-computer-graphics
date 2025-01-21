@@ -1,0 +1,288 @@
+{
+  "metadata": {
+    "lecture_name": "drawingatriangle",
+    "total_slides_with_comments": 49,
+    "last_slide_number": 78,
+    "total_comments": 180
+  },
+  "comments": {
+    "slide_2": [
+      "What is more costly/efficient in terms of resources - rasterization on steroids or ray tracing with enough time? Would you ever want to choose the worse option for some specific use cases?",
+      "In applications such as CG in movies or computer games, which one is considered to be a more popular approach, rasterization, ray tracing, or other techniques? I personally think that the scenes in modern movies and games are pretty photorealistic but I am wondering how it is possible if ray tracing is generally slower than rasterization.",
+      "Are there specific cases in which the two techniques especially differ in terms of speed and photorealism?",
+      "Are these the two main techniques of representation or are there others. If so, what are their costs and benefits in comparison to rasterization and ray tracing?",
+      "Is ray tracing something that only exists in 3D? Or can there also be 2D raytracing?",
+      "What does primitive mean in thiscontext?"
+    ],
+    "slide_3": [
+      "Why do we only focus on 3D images here? How about 2D image generation? Or, 2D = 3D - projection?",
+      "Thinking of image generation as a series of stages in a pipeline is conceptually clean, but are there any performance benefits from taking \"bigger steps\" that might be messier?"
+    ],
+    "slide_4": [
+      "Integrated graphics is CPU that does this rasterization right? So what is different about a GPU that makes it better?",
+      "Is there any reason behind describing primitives as triangles instead of squares? Since we need to make it a bitmap image at the very end, it might be easier to color an image made up of squares.",
+      "It seems that we actually take one D (the array) to three-D (object created by triangle) and then get the 2D (on the screen) that we want. Although the scene is 3D,  for calculation purposes, is there any way we could calculate the 2d picture directly from the input we get? (by some supermatrix or formula)",
+      "Why do we choose triangles among all the polygons? I understand that the triangles are the most basic polygons which can construct others. However, considering the physical implementation, the common pixels are rectangles, so why don't we just use rectangles as 3D \"primitives\"?",
+      "I know that modern GPUs often allow you to be very specific in defining the features of any given triangles, to the point where the descriptions could be Turing complete (which was the basis for CUDA, as I understand it). Will we be using CUDA at all in this class?",
+      "What are advantages of using triangles as 3D primitive? If we want a rough rasterization with faster computation, is changing primitive type (let's say from triangle to rectangle) be a possible approach?",
+      "How did people come up with the idea of using triangles as primitives or the idea of using such primitives in the first place?",
+      "what are the special properties of triangles that make it the best primitive type?"
+    ],
+    "slide_5": [
+      "If triangles are what graphics hardware/software is optimized to, why do many 3D modeling/animation pipelines focus on quadrilaterals as opposed to triangles?",
+      "i dont quite understand defining a point using two triangles, so whiere is the exact spot of the point? is it at a vertex of a triangle? or the center of the triangle?",
+      "Since the triangle is the optimally fundamental shape in rasterization, why are the monitor's pixels arranged in a rectangular shape? Will it be easier to display images if we use triangular pixels?",
+      "Is it because we are constructing a 3d image that makes the triangle the best? If we want to construct a 4d image(in the future), maybe a square is better?",
+      "Building off saphirasnow's question, are the quadrilaterals in graphics hardware/software implemented through triangles?",
+      "When making models in 3D softwares like Maya, it is usually advised that the mesh consists of only squares, and triangles should be avoided as much as possible. How do these two concepts differ from each other?",
+      "I understand how triangles are the most basic shape created from the least number of vertices/edges, but it seems unintuitive to me how triangles became the default shape used in graphics. What if you had a circular/spherical object you wanted to rasterize? How are triangles a better fit than, say, squares here?",
+      "Are lines always treated as a rectangular with thickness so it can be expressed with two triangles?"
+    ],
+    "slide_6": [
+      "All of this is happening inside the GPU, right? We feed it in 3d objects, and a 2d image comes out?",
+      "How big are these triangles/ how are these triangles determined?"
+    ],
+    "slide_7": [
+      "I'm wondering, do we store information about this \"occlusion\" concept in metadata about each triangle (like, keeping track of the norm of the vector from the camera point to the triangle centerpoint)?"
+    ],
+    "slide_10": [
+      "What system of coordinates are we using here and where is the plane of pixels situated relative to the triangle?",
+      "Why is it that we try to compute how many/which pixels are being covered by the triangle instead of just fixing all the pixels into the triangle? Wouldn't the image be higher definition/more realistic that way?",
+      "how does this change as objects get larger or smaller"
+    ],
+    "slide_12": [
+      "Maybe I'm not visualizing this correctly, but wouldn't this cause for really blurry edges?",
+      "How expensive is it to compute these fractional areas accurately?",
+      "I'm confused how turning up the redness by a certain percentage will help produce the defined shape, but if that is the case, how is this much slower than sampling?"
+    ],
+    "slide_13": [
+      "Why would convexity matter when considering coverage?",
+      "I don't see how the interpenetration case is possible. By the time we reach this point in the rasterization pipeline, shouldn't all the triangles be 2d? So they shouldn't be able to intersect like that.",
+      "Would it ever make sense to have the pixel alternate colors for two/three triangles instead of computing an average of the colors?",
+      "What type of graphic would cause interpenetration of triangles to occur?",
+      "When would this interpenetration of triangles case occur and would doing the average of both or just having one of the two colors be the best solution to this?",
+      "Why would we have inpenetration if the triangles are 2D?",
+      "Could we just split the interpenetrated triangles into smaller triangle pieces that do not interpenetrate?",
+      "Could you give some specific examples on when will these cases happen?",
+      "How does lighting change the giving effects of interpenetration when we consider coverage?"
+    ],
+    "slide_14": [
+      "When handling occlusion with sampling, can we apply the same break down logic used in the \"early-in\", \"early-out\" example later in the course? I imagine that without this logic, checking the relative order of the triangles at each location is quite costly. However, there is one more problem towards using a coarser granularity for sampling: we cannot take an average of the percentage of samples being yellow or green. It has to be either or for the occlusion problem right?",
+      "In the intro lecture, you mentioned the same problem of choosing which pixels to shade when drawing a triangle, and one solution was seeing whether the line goes through a diamond in the middle of the pixel, suggesting that area is more \"important\" than the rest of the pixel. Is there a similar way of weighing sampling to differentiate between the more or less important parts of a pixel?",
+      "So wait, from the the description in the slides, it sounds like we're testing multiple sample points per pixel? That seems kind of inefficient."
+    ],
+    "slide_17": [
+      "Is this process of sampling similar to how a digital camera works?",
+      "Is anything special done to the audio samples to reconstruct the sound? Or is the assumption just that 44,100 times per second will be sufficient",
+      "I'm also interested in the 44.1k sample rate. Our hearing can only go up to around 20kHz, why is our sampling rate twice that value?",
+      "How does Nyquist's Theorem inform the number of samples taken for a pixel? What is the maximum \"sample rate\" of the human eye for a pixel?",
+      "Would there still be any (minor) improvements if we sample above 44,100, or is this all we need because we cannot tell any differences by hearing them?"
+    ],
+    "slide_18": [
+      "With just the points alone, it is difficult to say what exactly the shape is like and there are possibly many signals that would adhere to the shape described above (aliasing). I recall that one of the ways aliasing was taken care of was by the Nyquist theorem. Is a similar concept applied to prevent the problem of aliasing if it exists at all?"
+    ],
+    "slide_20": [
+      "Would there be any benefit to using something like Lagrange Interpolation, or is that too slow/there is no need to use polynomials?"
+    ],
+    "slide_21": [
+      "What if we randomly sampled points?",
+      "Is there some heuristic for how many samples would be enough to represent the signal to some level of accuracy, or do we have to adjust it repeatedly until the result seems good?",
+      "Do we think of this as real-time sampling (in the case of sound for example)? If we don't sample a point in time then it's lost to us, so we need to come up with a sampling method beforehand?",
+      "will the way of sampling (random sampling, sampling by specific numbers, pixel ratios) be possible approaches",
+      "Does this concept of supersampling in graphics also depend a lot on the computing power of the GPU? I don't know much about graphics but I was curious if this is a factor."
+    ],
+    "slide_22": [
+      "is there a way we can extract features from a function, and only sample more when we detect the presense of a feature?",
+      "Is increasing the sample size the only way that makes the most accurate reconstruction?",
+      "Can we do some sort of slightly more complex approximation such as measuring derivative values at each point as well, or is the storage tradeoff generally not worth it?",
+      "If you know what the general shape of your signal would be (i.e. sinosudial, logarithmic, polynomial) would you approximate functions of those form at every interval between samples? How much more computationally expensive is this?"
+    ],
+    "slide_23": [
+      "Does the sample get better if we used splines instead of linear functions to interpolate?",
+      "Why do we sample from each direction for bi-linear? And also for an image would that mean sampling from all neighboring pixels instead of just two directions?",
+      "Is the type of interpolation/reconstruction filter chosen based on the image content (so that we can decide which one reconstructs more accurately)?"
+    ],
+    "slide_24": [
+      "It seems that sampling requires a numerical representation of the signal. If the numerical representation of a signal is hard to find or not unique, are there any ways to fix this?",
+      "Are the functions (e.g., piecewise constant, or linear) chosen dynamically when doing for specific models, or ahead of time depending on assumptions made?",
+      "Are there better methods than linear interpolation for reconstruction or is it best to stick with linear interpolation and just increase the number of samples to get better reconstructed results?"
+    ],
+    "slide_25": [
+      "Does the coverage function only depend on one particular triangle, or does it also depend on all the other triangles in the image? For example, if there is another triangle that partially overlaps the triangle that we're trying to draw, is coverage(x, y) 1 or 0 for a point (x, y) that lies on this triangle but is also covered by the overlapping triangle?"
+    ],
+    "slide_27": [
+      "The lecture talked about how this edge case here could lead to some nasty artifacts in your image when you generate it. Are there any specific examples where we can see this?",
+      "I would also like some elaboration as to how this could lead to nasty artifacts - I'm struggling to think of an instance where this would be problematic."
+    ],
+    "slide_28": [
+      "Should these be seen as just a convention or is there any reasoning behind this?",
+      "I am having a hard time understanding this idea of breaking ties. Could you be more specific and provide concrete examples that relate to the image on this slide? Thank you.",
+      "How can we determine whether an edge is top/bottom/left/right edge?",
+      "What happens when you have a triangle with one top edge and one left edge? How do we break ties with the third edge? What is that third edge called?",
+      "How do we decide if an edge is horizontal or not?",
+      "How could a triangle have 2 left sides?",
+      "Which of these triangles are left edge triangles and which are top edge triangles?",
+      "I don't quite understand what \"edge falls on a sample point\" mean. Why the two small triangles at the top do not cover any pixels?"
+    ],
+    "slide_29": [
+      "Do we always want to sample the center of each pixels? In what situations would we want to sample other part(s) of the pixels?"
+    ],
+    "slide_35": [
+      "Is this is same sense in which \"aliasing\"/\"anti-aliasing\" is used with respect to font rendering? I've heard it in that context before but was never sure what it meant."
+    ],
+    "slide_36": [
+      "Why do we actually need to reconstruct signals from the approximations in this case and others? Can't we just use these values and tell the speaker to move this amount/play this at the appropriate times? Is it to gain smoothness if the speaker or display can actually produce more than in a single piece of time than what we give it?"
+    ],
+    "slide_37": [
+      "Is this achieved through applying Fourier transforms, or through some other means?",
+      "Just by the final result in this slide it seems like the signals expressed as a superposition of frequencies will always end up repeating with some interval. Considering how an audio clip may start and end very drastically, I don't think an entire loop of the audio file is a valid continuous loop. Then how are these repeating superpositions actually turned into seemingly pattern-less audio signals?",
+      "Is the decomposition always unique? What are the implications if it is not?",
+      "If a decomposition is in infinite series, how can we approximate it in computing?",
+      "The Fourier series are generally infinite. In practice, how many terms should we use to approximate a function f so that this approximation can be considered acceptable?"
+    ],
+    "slide_40": [
+      "What if we sampled at semi-random intervals instead? It could prevent the high-frequency signal from looking the same as the low-frequency one.",
+      "Since we have full information about the original signal, can we do some not so expensive feature exaction to learn important points like local extremes, assuming the original function is differentiable or locally differentiable (which usually holds in computer graphics?)?",
+      "When we heard the constant frequency initially with the low frequency signals, was the constant frequency due to appropriate sampling (i.e. sampled points are actually on the same level) or the limitation of human brain (i.e. we can't really hear subtle differences)?",
+      "Similar to the above ideas, is there a reason we can't figure out the frequency and then sample accordingly? For instance, could we predict the first 1% of the signal, figure out how off we are to the actual, and then adjust our sampling rate based on the results?",
+      "curious about good ways to avoid or eliminate aliasing if we want o combine high freq with low freq."
+    ],
+    "slide_41": [
+      "How do you decompose an image into frequencies?",
+      "Could you clarify/re-explain what is consider high/low frequency aspects of images?",
+      "Does this frequency representation give you a complete picture of the image, or do you need to consider some kind of offset as well? For example, intuitively I assume that a solid black image would have 0 frequency, but how do you distinguish that from a solid white image in terms of frequencies?",
+      "Can you explain a bit more about the \"spectrum\" diagram? Is the center of the spectrum image the high frequencies and the more outward you go from the center are the low frequencies?",
+      "Could you give a definition of frequency in images? Also, I don't understand why the \"spectrum\" picture is only black-and-white? Shouldn't a spectrum consists of all colors?",
+      "The spectrum diagram is still a bit confusing to me. Also, what does \"spatial domain result\" mean?",
+      "Is frequency conversion invertible? Can we fully recover the original image given the image on the right or does the image on the right require very high resolution to be fully recoverable?",
+      "Why does the spectrum diagram have the white vertical and horizontal lines? I can see how the high amplitudes would be gathered in the middle and gradually pan out in a circular way, but the dividing lines in the middle don't seem like they would make much of a difference. Also, does the center gradient fan all the way out to the edge or does it have a smaller diameter?",
+      "While I visually seem to understand how the spectrum diagrams for images work with the following examples for different frequency passes, I'm still not really understanding how the spectrum diagram is generated/corresponds to the image. I think it would be helpful to see some examples of the frequency diagram for a few different images or just have some extra explanation here.",
+      "How can an image be decomposed into these \"frequencies\"? What is considered a low or high frequency in an image and how do we compare images on this property?",
+      "Why this spectrum diagram is centrosymmetric?",
+      "How is a color image decomposed into frequencies? Is the spectrum for each color just taken separately or is there a better way of doing it?",
+      "How can we interpret image frequency? The more complex the image is, the higher frequency it has?",
+      "I'm a bit confused about the spectrum diagram. Why is the light centered?",
+      "Is image decomposition very efficient in CPU?",
+      "How is the frequency of an image defined? Lightwave?",
+      "How do we calculate the spectrum for an image?"
+    ],
+    "slide_42": [
+      "When we cut off the low frequencies, the edges of the images got darker as well. Is this because the edge of the image is also considered as \"high frequency\"?",
+      "In terms of sampling the image, low frequencies components represent smooth areas while high frequencies components represent the edges. Is that right?",
+      "Why are all the low frequencies in the center of the spectrum? Are we ignoring the position of the frequency data?"
+    ],
+    "slide_43": [
+      "Are the mid-range frequencies useful in and of themselves? It seems like the low frequencies form a blurrier version of the image and the high frequencies detect edges."
+    ],
+    "slide_45": [
+      "Is this how edge detection is done in the context of CV?"
+    ],
+    "slide_46": [
+      "how do we determine the threshold between \"low\", \"medium\", and \"high\" frequencies? is there a standard number somewhere?",
+      "This looks really good in comparison to the other stuff...what are the advantages/disadvantages of using component breakdown methods versus sampling?",
+      "I'm assuming we're using Fourier transforms of a kind here to split the image into its components?",
+      "Is this only useful for storing the image (but not drawing the image)? If the frequency components are calculated from the samples, it doesn't really seem to help with the sampling problem.",
+      "I'm not entirely sure how this would be extended to 3d, since meshes tend to be sharp edges in 3d space - would you use polar coordinates instead?",
+      "When the signals are mixed, does Fourier analysis comes into play?"
+    ],
+    "slide_47": [
+      "Is this related to a phenomenon where you see weird patterns when you take pictures of a (computer) screen?"
+    ],
+    "slide_48": [
+      "But if we look at the rotating wheels (not from our computer screen), we also notice the aliasing effect, right?",
+      "Similar to niyqiul's question, what's the limit on how many frames our eyes can see? Even without a camera, don't we also see this effect?"
+    ],
+    "slide_49": [
+      "From the lecture I don't quite understand how to implement the sinc filter, with twice as high frequency, to decipher all the information. would you be able to show a simple example in class to demonstrate how it is done, and how it is computationally expensive so that we aren't using it in reality?"
+    ],
+    "slide_50": [
+      "Why would an image of a silhouette of the side of a face be regarded as having discontinuities?"
+    ],
+    "slide_52": [
+      "Can you elaborate on the definition of \"total\" light? Can I understand it as the sum of R,G,B(,A) values before sampling and after reconstruction need to match? Is there a metric for quantifying the level of fidelity achieved with different approaches?"
+    ],
+    "slide_54": [
+      "Is there some deterministic way to select the number of samples to use? Also, would we ever vary the number of samples across different parts of the scene, like if a scene is really detailed in one area but solid-colored elsewhere?",
+      "Does this mean adding more sample points per pixel or increasing the number of pixels?",
+      "Is a high-resolution monitor (1080p->2k->4k->8k) equal to an implicit way of supe-aliasing?",
+      "Would this ever pose an efficiency problem? If it increases the asymptotic time complexity, then it would be much slower to increase sampling frequency. But if it doesn't, then what stops us from potentially sampling very very many times per pixel? Why stop at 16 or 32 or 64? How can we determine a sufficient number?",
+      "Is there a preferred locations for the super-sampled points inside each pixel?"
+    ],
+    "slide_55": [
+      "is there any specific reason that the sample points are aligned like this?",
+      "Will add some randomization to the sampling position be better or worse?",
+      "What is the effect of further increasing the number of samples per pixel?",
+      "I thought a pixel is already the smallest unit one can represent in graphics. How do we even sample multiple samples inside the a pixel?",
+      "Why do the sample points skew like this? Is it independent of the shapes we are trying to rasterize?",
+      "Are the sampling points supposed to be off-center or is there a specific reason they are somewhat tilted?",
+      "If the case of multiple triangles (like the one mentioned before) happens, does the pixel take the average color of the supersampling points?",
+      "Are the points within the sampling points randomized within their portion of the pixel? They seem weirdly off-center",
+      "How do we decide when to stop increasing the sampling frequency?",
+      "Is there any negative effect to having all the sampled points line up uniformly on a grid?"
+    ],
+    "slide_60": [
+      "How can a pixel display 50%? Shouldn't the value of a pixel be binary only?"
+    ],
+    "slide_62": [
+      "Does supersampling always invoke a linear computational cost? (Eg. 4x computation for 2x2 supersampling)?"
+    ],
+    "slide_63": [
+      "Are there other ways to combat aliasing if we cannot increase samples?",
+      "Why I feel the right image is less clear? Is it due to super sampling? Does that mean it reduces the aliasing, but make the image less clear?"
+    ],
+    "slide_64": [
+      "If we are sampling so much more per pixel, how significant would the hit to performance be in order to display an image?",
+      "It looks like when we use multiple sampling rather than single sampling, the edges look more blurred. This doesn't look as good for the nearby tiles. Is there a way to get around this issue besides having more pixels?",
+      "When is it generally not worth it to supersample bigger boxes of pixels due to the performance cost being greater than the gain in quality?",
+      "Agree with WhaleVomit - this really looks more like a blur convolution on the right. Is this generally the case, or just my perception here?",
+      "In modern graphic applications, what is the usual size of sampling that we encounter (perhaps for a document we are viewing or a game we are playing)?",
+      "How can we measure/ quantify the effectiveness of an anti-aliasing method?"
+    ],
+    "slide_65": [
+      "Is this ever something that comes into play when designing scenes (say, for a video game)? That is, are there situations where it makes sense to intentionally choose patterns for which we know the exact coverage?",
+      "The far sphere looks like when you take a picture of a computer screen and there are waves on it. Is aliasing the reason for that phenomenon?",
+      "Is there research going on to determine if there are more shapes/figures whose exact coverage can be computed or is computing the exact coverages not practical (in terms of time) in most cases?"
+    ],
+    "slide_66": [
+      "How are we able to fill in any fraction of a pixel?"
+    ],
+    "slide_71": [
+      "There is a way to solve this with cross products, but I was wondering if it is more efficient to use matrices: assuming the triangle is nondegenerate, we can consider the basis {P1 - P0, P2 - P0} and check if the coordinates of q under this basis are positive and have sum less than 1/2.",
+      "Can i represent each edge as a vector and do some vector calculation to check if a block is in a triangle?",
+      "How often do we want to do this instead of using Barycentric coordinates?",
+      "Would this involve calculating the angle between the vector from Pi to q and the vector from Pi to Pj and checking its sign?",
+      "Is this the same method we use to sample points for interpolated color and uv coordinates?",
+      "Could we compare the sum of the area of triangles P0P1q, P0P2q, P1P2q against the area of the triangle P0P1P2? These two areas should be the same iff q is inside the triangle P0P1P2, and we can avoid repetitive calculation by saving the area of P0P1P2 inside its data structure."
+    ],
+    "slide_72": [
+      "We still have to check whether the point after increment lands inside triangle, and the \"incremental\" scheme can have log(n) checks if we double the amount of incremental difference every time. But that doubling will affects memory coherence right? What's usually the more important tradeoff here?"
+    ],
+    "slide_73": [
+      "How is the GPU's special hardware to perform point-in-triangle tests better than how a CPU would do it? Is there some hardware optimization? Or just more processors?",
+      "Recalling that we've discussed cache optimization in classes before, are there \"blocking\" techniques that could help us optimize which triangle bounding boxes to point-test first? My first guess would be points that are near each other, but I'm not sure if that's exactly correct..."
+    ],
+    "slide_75": [
+      "I know there's separating axis theorem for intersection checks, but is there any more efficient way to do this than that?",
+      "Would the way to check whether the boxes intersect be to check the four sides?",
+      "Are the sizes or the placements of these small blocks chosen with cache coherence in mind? I'm thinking it could be possible a block spans across conflicting cache lines so when we traverse a small block incrementally it may cause unnecessary evictions",
+      "Does varying the size of these blocks change efficiency?",
+      "To check if a big box is completely inside/outside a triangle, even if we check the four sides/four corners, we can still have issues. For example, if we check only the edges, a very small triangle inside the box would not have intersection with the sides of the box. So I'm wondering a better way?",
+      "How are edge cases usually considered? For example, if a point on the grid was on the edge of the triangle, and one of the coarse blocks with that as its corner was completely inside the triangle and the direct opposite one completely outside (besides the one corner), would this hybrid approach result in both of the coarse blocks having to be tested?",
+      "How do we determine if a large block is entirely in or out of a triangle? Do we just see if the 4 corners of that block is in the triangle?",
+      "What are the edge cases in this approach?",
+      "Are we always using the center of the block as the sample point? What if the center is not in the triangle but part of the block is in, do we still consider this case as having coverage?",
+      "If each edge has a corner of the box that is outside its half-plane, can we say the triangle is wholly inside the box?",
+      "What if the triangle size is less than early in block?",
+      "What would be an efficient approach to determine the optimal box size?"
+    ],
+    "slide_77": [
+      "How do we know when to stop branching? Is there a fix threshold that works the best?",
+      "This incrementally decreasing size of blocks looks like some version of gradient descent. Is there some factor that we want to decrease these block sizes by to increase efficiency?",
+      "This reminds me of a data structure I used in a previous internship called an octree, which is similar in structure except used to organize points in 3D space. I'm wondering, are there ever situations where knowing something about where an object is in 3D can help with the rasterization process of the associated triangles in 2D? Or is all the information from the previous stages of the pipeline completely irrelevant?",
+      "This looks kinda like the barnes hut algorithm to me but with some modifications. Is that the algorithm or something simpler?"
+    ],
+    "slide_78": [
+      "So is supersampling essentially limited by computing power?"
+    ]
+  }
+}

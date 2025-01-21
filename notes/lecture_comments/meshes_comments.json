@@ -1,0 +1,209 @@
+{
+  "metadata": {
+    "lecture_name": "meshes",
+    "total_slides_with_comments": 22,
+    "last_slide_number": 35,
+    "total_comments": 155
+  },
+  "comments": {
+    "slide_6": [
+      "One very nature rationale is that in R^2 we have two standard bases. For a square grid, we only need to change the value along one base to get to the nearby point.",
+      "screens in reality are squares, so if pixels are also squares, you don't need to deal with edges",
+      "another reason I can think of is it helps build an easier coordinate system. if everything is a square, we can locate every square's exact location easily by knowing it's lower-left corner, while triangles or hexagons are more complicated.",
+      "Are there any grids in which the pixels don't line up, like if we tried to use circles instead?",
+      "Could it be due to the reason that square grid makes it easier to express points in 2D coordinates and calculate the Euclidean distance between points?"
+    ],
+    "slide_7": [
+      "Isn't familiarity the main reason we like regular grids? I think other grids can have all these properties, but we are simply not used to working with them.",
+      "Is ease of learning also related to this idea of simplicity? Or is it just easy to learn because we're familiar, because it's become entrenched?",
+      "I think hexagons probably work well too?\nBut squares are just easier to think about or (maybe) to manufacture.",
+      "another good reason is probably for convolution in image processing, if they are squares it's easy to know the 8 neighbors of a square pixel",
+      "Isn't hexagons also generalizable? I think we can encode basically any image given enough pixels of any shape i.e. by increasing resolution.",
+      "Why didn't we use a regular grid of 4 triangles composing our typical pixels?",
+      "What is anisotropy and why regular grids cause it?"
+    ],
+    "slide_10": [
+      "sin(1/x), discussed before in class, is not a manifold.",
+      "How do we define the center of a shape?",
+      "Is there some broad use case for using non-manifold shapes in computer graphics (beyond drawing non-manifold objects directly)? Specifically, is there some object/class of objects in the real world that is best represented by non-manifold geometry?",
+      "Can every non-manifold shape be represented by multiple manifold shapes?",
+      "How does one in the general check if something is a manifold in a more precise way? In the lecture it was mentioned that a formal definition of manifold is not super relevant in computer graphics, but I am wondering if given some explicit representation of a structure, if there is some sort of straightforward algorithm that could work with some level of accuracy.",
+      "What about the edges at the top and bottom? I can see how we can parameterize it in one dimension (just around the edge) but how does the second dimension work? Can we go over the edge and end up on the inside of the surface?",
+      "So this check also means that every point on the polygon must satisfy the condition for it to be considered manifold?",
+      "EVen though there is no 2D grid at the center, is there not a way to approximate this using limits or some other method?",
+      "Can we also think about manifolds in terms of if we can unwrap the shape and lay it flat as a piece of paper?",
+      "Can we have a formal definition of manifolds, instead of the attribute?"
+    ],
+    "slide_11": [
+      "Is a Mobius strip a manifold? It\u2019s possible to draw a 2D grid anywhere along its surface, but not along the side edge and it\u2019s also not possible to define a normal vector",
+      "Can we approximate nonmanifold geometry with manifold geometry? After all, the two nonmanifold structures on this slide can be split into manifolds.",
+      "Are manifold geometry closed by definition? Then no matter what we do we can't transform approximate an open geometry to a manifold geometry?",
+      "Why is the top right geometry non-manifold? I feel like we could zoom in on the joint and get a 2D coordinate grid. We can define the coordinate plane over a regular plane and then just bend it into this shape. If it is non-manifold, is a tetrahedron non-manifold as well because zooming in on one point yields the same tetrahedron shape and doesn't reduce to 2D?",
+      "If we give the surface some \"thickness\" instead of just being a flat plane, can we turn every nonmanifold shape into a manifold one? For example, we could think of any face as two faces that are stacked on top of each other (being very informal about the connectivity).",
+      "A double cone is not manifold, but is a cone manifold? If you zoom in enough on the point, you can never get a 2d grid.",
+      "How do people handle meshes that are not manifold?",
+      "Can we segment the non-manifolds to be a set of manifolds?",
+      "How to tell the difference between curve and manifold?",
+      "Is a plane manifold? On the top right, if I\u2019m understanding correctly, the shape is not manifold because it folds in on itself. If it didn\u2019t have that intersection, would it be manifold?",
+      "What makes a cube a manifold? It seems like both cubes and the weird shape on the top right have sharp edges, but one is ok while the other is not."
+    ],
+    "slide_12": [
+      "In this slide, the manifold polygons could just be drawn in 2D, but the non manifold polygons were drawn in 3D. Is this generally the case? If we were to draw the surface connectivity in 2D and notice bad behavior like edges crossing, is that generally a sign of a non-manifold polygon?",
+      "Do the manifolds have to be able to be represented in 2D?",
+      "I do not understand why the last shape is not manifold, but the first one is manifold. For the first shape, the left most edge is only contained by one polygon instead of two right? For the last one, I think I simply do not understand how you define a \"fan\"."
+    ],
+    "slide_13": [
+      "I am a bit confused about what exactly is being pictured and referred to in the boundary. Is the right edge of the boundary mesh actually the bottom edge of the surface?",
+      "How do we check if an edge is a boundary mathematically? Can we say that an edge is a boundary if it is adjacent to only one face?",
+      "I'm still not sure what we mean by boundary vertices should look like pacman? Does this mean they should have a \"fan\" of polygons coming out of them on one side, while the other side is empty?",
+      "What does it mean by locally and globally?",
+      "What does it mean for boundary to \"look like a half disk locally\"?",
+      "I\u2019m really confused as to how to visualize this\u2026 could an animation of somebody zooming into a boundary like this be provided? (I feel like it would help my and other\u2019s understanding of this concept.)",
+      "If our meshes are the empty shell and nothing inside, then if there is a boundary that allows us to look inside...what do we see? I.e., how does the inside of the pants look?",
+      "What is a boundary vertex?",
+      "What is the difference between locally and globally, how does it look like a half disk vs. pacman in these two cases?",
+      "Could the boundary look like a disk instead of a half disk locally?",
+      "What exactly was the boundary on the pants? I'm a little confused about the difference between a strip and a loop.",
+      "Why does the polygon mesh look like a pacman on the boundary?",
+      "Do boundaries exist on closed surfaces? In the example, the pants is assumed to have no thickness, but do boundaries only exist on surfaces that doesn\u2019t have a notion of thickness?",
+      "Do polygon meshes normally have boundaries? I generally thought that they would be closed loops to give the shape some sort of thickness.",
+      "What is boundary? I'm very confused",
+      "will the boundary in the back of the texture same as the one in the front?",
+      "Does globally refer to the entire edge of the pantleg? Is that why it forms a loop?"
+    ],
+    "slide_14": [
+      "Is the idea of having a locally Euclidean grid at any point another advantage of manifolds? It seems like this could be helpful for, say, texture mapping."
+    ],
+    "slide_18": [
+      "How would you store a mesh should that you want to eliminate redundant data? Is this necessary?",
+      "When analyzing this mesh, would we have to keep calculating connectivity information? Would it not be easier to store this information in the first place?"
+    ],
+    "slide_19": [
+      "I don't actually understand how this data structure make a difference to the previous one. It is still storing all triangles' corresponding vertices. It just gives a \"name\" (0, 1, 2, 3) and store its position somewhere else, while in the previous case the vertices x,y,z are stored directly -- it still stores duplicate vertices' names.",
+      "I am hoping to know if there is any structure that can handle data loss, like when some values are missing it won't just crash and will still represent part of the shape",
+      "Why would the ability to insert values in the middle of a list, as opposed to the end of a list, be essential for storing coordinates of a mesh? Why do we want to use a linked list given the drawbacks?",
+      "Why is the time complexity O(1)? I think going through one column should take O(E)?",
+      "Why do we care about neighboring polygons?"
+    ],
+    "slide_20": [
+      "Are there operations that are slow with this implementation? If space wasn't an issue (which it will be), I could see this being very practical.",
+      "I guess finding neighbors here is conditioned on a particular implementation of the sparse matrices, right? For example, if we just map each row to a linked list (like in a hashmap), then we wouldn't be able to perform queries of the form \"for column j, which rows i satisfy A[i][j] = 1\" quickly, which I think is necessary for figuring out neighbors?",
+      "How would you create the mapping from the vertex values to their enumeration? It seems that in this representation you are missing the actual location information, and would need an additional structure or method to encode this.",
+      "What dp the v, vn and f stand for in a typical .obj file? Are they related to implementation in incidence matrices?"
+    ],
+    "slide_21": [
+      "Why do we store cumulative # entries instead of just # entries? I know we can easily go from one to another, but it seems like the unintuitive way to store the cumulative # entries. Is there a reason we would want this value?",
+      "Are array of linked lists and compressed column format easy to do matrix operations? I do not see that they are easy. Can you give some examples?",
+      "Is the conversion to a sparse matrix relatively simple/fast? I feel like constantly having to convert in between the two forms may be a lot of wasted time/space.",
+      "I am a little bit confused why we don't use vector in C++",
+      "Can we turn associative array into a hash map to increase its efficiency?",
+      "Why compressed column format gives fast matrix operations?",
+      "Do we ever use some \"density threshold\" to convert from this sparse format to a dense one if a mesh gets sufficiently fine?",
+      "What's the industry standard for storing sparse matrixes?"
+    ],
+    "slide_22": [
+      "How do you determine which halfedge goes which way?",
+      "At one vertex, there could be multiple half edges that start from that vertex. Is the tie-breaking arbitrary or is there a practice for it?",
+      "It seems to be that halfedge data structure does not include information about the actual positions of points. How do we know where to draw our polygons with just halfedge pointers?",
+      "Which halfedge does a vertex pick if it is on a strip or loop of polygons? I feel like in the end it doesn't matter since you can just traverse the halfedges to find out every polygon around it, so is it just arbitrary?",
+      "Nothing in this definition seems to be specific to triangles, since halfedges don't know how many edges are on their face, only where the next edge is. But we've already talked about how triangles are useful as a basic building block shape for graphics. How would we enforce strictly triangular faces in a halfedge data structure?",
+      "Which of the two half edges does the edge struct store?",
+      "How do you define the next edge that current halfedge points to?",
+      "In the struct, does vertex has the sequence/order?",
+      "How is all half-edges ordered in this data structure? Is the order determined at the preprocessing stage?",
+      "Is vertex stored as a compact list in this setting, Edge only referencing the index?",
+      "If a halfedge has no twin, is it a boundary?",
+      "Are halfedges directed, and does it matter if we're defining a loop of polygons clockwise or ccw?",
+      "Will it be a double linked-list?",
+      "Since each vertex/face/edge only chooses one half-edge, is there a specific one that takes priority or is it entirely up to the person implementing it.",
+      "Is there any motivation behind storing the vertex we are coming from other than arbitrary convention?",
+      "Twins should be the same between halfedges right? It looks like there's only one \"next\" so is it still possible to traverse around a mesh in a reasonable time?",
+      "How would halfedge based meshes be exported and imported? Do they use their own spec or are they typically algorithmically converted to other more universal file formats like .obj and .ply and is this where we would want to make use of other other mesh data structures?",
+      "Will it be possible that there are no twins? Plus, how can I make sure it is all counter-clockwise or clockwise?",
+      "Is the main reason we usually don't use this structure it's memory footprint? It seems like we have to store so many pointers, and probably not having good access proximity in memory.",
+      "Would a halfedge data structure still work if we chose, say, a square mesh instead of a triangle mesh?",
+      "Is there a preference to the orientation?"
+    ],
+    "slide_23": [
+      "Does the twin next traversal work for vertices that are on the boundary?",
+      "What would happen if mesh is not manifold?",
+      "How does one make sure h->twin->next does not lead to infinite loop? Do we have to force some halfedge direction rules?",
+      "Where does twin->next lead to if the twin is a boundary edge?",
+      "How would we used a list of set of half edges to algorithmically draw something? How would you efficiently iterate through the half edges to ensure the same edge being drawn repeatedly is minimized (is it even possible to avoid drawing all edges more than once)?"
+    ],
+    "slide_24": [
+      "\"Keep following next->twin and you'll get vertices\"",
+      "Is there a way to represent non manifolds with halfedges or halfedge-like data structure? Or do we have to store a non manifold shape with a different data structure? If so, how do graphics programmers differentiate the different data structures?",
+      "Is there any requirement on the ordering of the \"next\" pointers? Based on this list, it seems like they could jump around the mesh arbitrarily as long as the pointers form a closed loop. Is it also required that the next half edge starts where the current half edge ends?",
+      "I thought twin->twin is just itself? how do we get all the edges by following that.",
+      "So HalfEdge describes manifolds if and only if with very strict programming constraint? Will incur many strange bugs if pointers not handled properly.",
+      "For the first red non-manifold shape, can we add some small deltas to the center edge to make it manifold? (essentially creating 5 separate edges.) If the delta is small enough, the visuals are probably going to look the same.",
+      "By how much is halfedge being more efficient?",
+      "what are some data structures used to represent non-manifold shapes, is tianez's solution one that's used in practice?",
+      "On such diagram from second to left, what would calling an half edge from a vertex pointer would return? (if vertex is connected to multiple half edges)",
+      "Would we need to encode any other data in the struct?"
+    ],
+    "slide_25": [
+      "IS \"bad\" geometry completely unusable, or does it ever become useful to have this capability to represent \"bad\" geometry?",
+      "The previous slide mentions that halfedge connectivity is always manifold, but the examples in this slides seem to suggest that halfedge can also be used to encode \"bad\" shapes that are not manifold. Can we just encode any non-manifold shape using halfedge by manipulating vertex positions?",
+      "What makes a geometry good or bad? Is there some characteristic of bad geometries that we can check for in a manifold to avoid?",
+      "How do we enforce good geometry then?",
+      "Is there a way to check for bad geometries or work around them?",
+      "I assume that the \"same connectivity, random vertex positions\" figure is representative of bad geometry, but what would be the biggest problem if it was used to 'shortcut' a more complex shape? i.e. the actual shape is the same, but there are vertices at every intersection of the connection with a face and the connectivities are otherwise broken up appropriately instead of going through the solid parts - would that cause problems with rendering or something similar?",
+      "How do we test for geometry being \"bad\"?",
+      "Does that mean that the two conditions above (for polygons) don't correspond exactly to the mathematical definition of a manifold (something something locally homeomorphic to R^n...)? Is \"manifold connectivity\" weaker than actually being manifold?",
+      "If a polygon has edges on every faces intersections, is the polygon good?",
+      "How do we ensure that the geometry is good then, is there some way to check for this in code or is it just something we can see with our eye?",
+      "Are the cases where using manifold mesh gives good geometry but bad connectivity?",
+      "Is bad geometry just tested visually?",
+      "How can I check it is good? By eyes? The users may do wrong things.",
+      "What is \"good\" geometry? If the connectivity is fine and the user is the one manipulating the geometry through editing subdivisions, then does it matter?",
+      "How often do we end up having to worry about this bad geometry if we mainly rely on non-intersecting triangle meshes? Do we enforce some strict constraint on the turning angles at each edge or the angles within the triangles?",
+      "What's the consequences of bad geometry?",
+      "Is there any methods to improve the bad geometry?"
+    ],
+    "slide_26": [
+      "When collapsing edges, it seems like we also introduce new edges on top of just deleting edges and triangles, such as the top two triangles that used to only connect at a point but now share an edge. In general is there a way to tell when such things would happen?",
+      "Why is it called an \"atomic\" operation?",
+      "What was the dominant reason for choosing this half-edge representation for our coding project? Was it the ease of implementation?",
+      "What are some examples of when we need to use these operations?",
+      "How do you choose which half-edge to start from when looping through half-edges to make a change?",
+      "Could you use halfedge-collapse uniformly over a mesh to generate lower poly / \"resolution\" versions of a mesh? If so, is this how mesh decimation would be performed in practice?",
+      "How would you preserve manifoldness in a half edge edit? Would you somehow have to check if the new mesh is manifold and then reject the edit if not, or is there an easier way of determining whether or not an operation is valid?",
+      "What are some real uses for these operations?"
+    ],
+    "slide_27": [
+      "Are we having to implement flips within non-triangle structures during A2? I think a demo had an edge kind of flipping around a hexagon or something along those lines."
+    ],
+    "slide_29": [
+      "For edge collapse, what happens during edge cases? what happens if we want to collapse, say, an edge that would cause a mesh to become just one shape, or just a line? Should there be preconditions for edge collapse in this manner?",
+      "Do we have to assign a new vertex pointer m for this or can we reuse C or D?"
+    ],
+    "slide_30": [
+      "It seems like halfedges are unsuitable for GPU since linked list traversal is inherently sequential. Is it possible to combine halfedge and matrix representations, perhaps by encoding small local mesh patches into compact matrix representations that are connected by linked lists, to better support parallelism on a GPU?",
+      "If I'm understanding correctly, half edges seem to have the problem of incoherent memory access, similar to linked list related structures. Are there any approaches to mitigate this, like fixed-size buffers or different storage approaches? Or is this an accepted cost because of the other benefits of half edges?",
+      "Similar to the previous question, I would think that the memory regions for half edges could be allocated near one another to improve locality. Is this something that is done? If the number of half-edges is small, then all of the hash edges could fit into a cache, but if they are very large I suppose it's hard to guarantee this. I think benchmarks for various techniques with varying sizes would be very interesting!"
+    ],
+    "slide_31": [
+      "Do graphics packages usually have options between the 3 (or more) representations? Will there ever be a need to convert between the representations?",
+      "I'm not sure I understand how the matrix gives constant time lookups for the neighborhood. We can of course get the row/column in constant time, but then we have a bit vector, not a list of vertices/edges. Why do we not have to iterate over that bit vector?",
+      "If the initial purpose of the application is unknown, how do we decide which representation to default to? Like if we don't know whether it will be a relatively static application or application with frequently changing geometry",
+      "What would be a reason to use an adjacency list over an incidence matrix? Based on the comparison table, the latter looks strictly better. Would it take up less space, or be better if there were less elements?",
+      "Have there been instances of selecting a data structure that is sub optimal and having that choice matter?",
+      "How difficult and common is it to convert between representations?",
+      "In practice, how often do we need to use a data structure that enables us to encode nonmanifold geometry. It seems as though this would occur quite often in real life? Are any of the alternatives to half-edge you described on a previous slide allow for it?",
+      "I guess there should be some declarative graphics language support for automatically selecting a correct representation, e.g. ones that are good for parallel processing. Is OpenGL one of them? Do we often need programmer annotations of the certain properties of the shapes? I guess if the programmer declare a shape with explicit definition, the language can easily perform the bevels, edge collapse or other operations for them. Saving lots of manual troubles.",
+      "Would we ever choose to use an adjacency matrix? I don't see any advantage over incidence matrices.",
+      "In practice, how often do we see adjacency list or incidence matrix being applied to draw geometry?"
+    ],
+    "slide_34": [
+      "Many models and meshes for animations / games have hundreds of thousands of polygons contained within themselves. Are these large-polygon-count meshes generated through something like subdivision modeling, or does subdivision modeling simply refer to how the model is eventually rendered?",
+      "Can we do this the other way to generate low poly variants of complex models?",
+      "Is the leftmost picture representative of anything that ever gets actually showed when creating a model? Do modelers start by making something that looks like that? It seems difficult to model a character like that because it doesn't look much like what you want it to look like.",
+      "Does subdivision here provide some functionalities like interpolation or smooth?"
+    ],
+    "slide_35": [
+      "Is there a good way of checking if local operations will break the manifoldness of the geometry? Seems like things such as collapsing could be dangerous on 3D objects."
+    ]
+  }
+}

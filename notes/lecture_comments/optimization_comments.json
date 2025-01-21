@@ -1,0 +1,187 @@
+{
+  "metadata": {
+    "lecture_name": "optimization",
+    "total_slides_with_comments": 21,
+    "last_slide_number": 31,
+    "total_comments": 135
+  },
+  "comments": {
+    "slide_4": [
+      "At this slide, the sound from the video overlaps with your voice. Is it possible to explain it again?",
+      "I agree with bobzhangyc, it is a bit hard to hear your voice over the video."
+    ],
+    "slide_7": [
+      "In the recording it was a little hard to hear what was going on, do we need to know anything about this slide other than this is an example of an optimization problem?"
+    ],
+    "slide_8": [
+      "In general, are continuous or discrete problems easier to solve, or does it just depend on the problem too much?",
+      "How frequent are discrete optimization problems in computer graphics? It seems that lots of situations we encounter are in terms of continuous objectives, so I'm curious of some discrete examples",
+      "what does \"best\" mean? Like fastest? Not overcoocked or undercooked? most tasty? according to whom?",
+      "Since discrete problems can be transferred into a continuous version with additional constraints, should we put more emphasis on the continuous problem solution?",
+      "Is there any problem that only has a discrete version but not a continuous one?",
+      "Is it possible to convert some discrete optimization problems into a continuous equivalent problem. I was thinking about things similar to generating discrete random values through CDF.",
+      "which is the most common type of optimization problem in graphics?",
+      "What\u2019s the chances we counter continuous/discrete optimization problem in cg?",
+      "If we can convert a discrete problem to a continuous version, which version would be better to use? Is discrete optimization generally easier because of the restricted domain?",
+      "What discrete optimization problems do we encounter in computer graphics?",
+      "Do we encounter one of these more often in Computer Graphics? Also, although its logical that we can transform a discrete problem into a continuous problem by adding additional constraints (i.e branch and bound), but is this always desired since it adds additional complexity?",
+      "Are there any clever strategies for continuous problems?",
+      "What is the implication of NP-hard here?",
+      "What other major classes of 'easy' problems exist besides convex ones for the continuous domain? Would they all be some sort of subset of convex classes?",
+      "Is it possible to make a discrete problem into a continuous problem?",
+      "When given a continuous problem, do we attempt to solve it by approximately it discretely? Can we assume that there are corresponding discrete/continuous problems?",
+      "Does converting continuous problems into discrete problems make them easier to solve?",
+      "Are more problems we deal with in computer graphics discrete or continuous? Is it better to leave a discrete problem as is or is converting it into a continuous problem better?"
+    ],
+    "slide_9": [
+      "Do we necessarily need constraints? Or can we just try to find a solution that minimizes f_0 for all possible x?",
+      "Confused about the equality constraints. Should it be g(x) <= c and -g(x) <= -c?",
+      "As noted above, I think it shoukd be -g(x) leq -c so that g(x) geq c and by antisymmetry g(x) = c.",
+      "Does this problem has a dual as in the case of linear programming?",
+      "Agreed that it should be -g(x) <= -c; I came here to ask the same thing.",
+      "What are some choices for formulating discrete optimization problems?",
+      "What does \"optimization\" really mean? Minimize the cost of certain functions? What benefits does cost minimization brings to us? Faster computation? Nicer graphics quality?",
+      "This looks like linear programming, just with the function not having to be linear. What are the tradeoffs of this? I assume it's slower, but can more problems be represented? More accurate solutions?",
+      "Why would we want equality as opposed to optimizing the it?",
+      "Why do we use two inequalities in order to represent equality conditions? Is it because most solvers only accept feasibilities/constraints in terms of inequalities (if they do, it seems somewhat inefficient for me...)?",
+      "Is it supposed to say that \"g(x) >= -c\" instead of what it currently says?",
+      "Is there any benefit to considering equality constraints in their own right? For example, maybe using two inequality constraints could be fragile with floating point math.",
+      "In practice, do we need to add a small epsilon for the equality constraints if we want to solve an optimization problem on a computer?"
+    ],
+    "slide_10": [
+      "Where can we read more about protein folding as an optimization problem?",
+      "In graphics is the local minimum usually preferred to improve performance or are there any circumstance where we must use the global minimum",
+      "^ I also feel like it doesn't make sense to look for local minimum in graphics, because in the worst case it could cause a lot of extra computation. But then, would we have to balance how much computation a bad local minimum could cause, versus the amount of extra computation it would take to ensure our minimum is global?",
+      "Does finding a local minimum translate to algorithms for findign global minima? In other words, is there some sort of algorithmic process that can \"hop\" between local minima in a meaningful sort of way, or would one have to repeat something like gradient descent?"
+    ],
+    "slide_12": [
+      "Could we achieve a more general optimizer by allowing it to have answers along the lines of \"arbitrarily small\"?",
+      "How does min/maximization work for monotonic/asymptotic functions that would be min/maximized at infinity? Do we just take a \"good enough\" x?",
+      "Even if not all objectives are bounded from below or bounded from above, is it still possible to reason about the existence of a greatest lower bound or a least upper bound? For example, for y=e^-x the greatest lower bound would be y=0 which really captures what we mean when we say \"the minimum of e^-x\""
+    ],
+    "slide_13": [
+      "Why would we appreciate unsolvable problems?",
+      "If an optimization problem doesn't have a solution, does that mean optimization to that degree (i.e. such lowest/highest value) is impossible and we simply do not consider such cases?",
+      "These examples are extremely reminiscent of linear programming. Is there any place where an LP solver can be used in graphics, or are the functions always nonlinear?",
+      "How does a general-purpose solver determine whether a problem has a solution?",
+      "Is there an efficient method to determine whether such a solution exists?",
+      "If so many \"simple\" constraints are infeasible, how are we able to do much more complicated optimizations? Do they just happen to work out?",
+      "How would we deal with unsolvable problems?"
+    ],
+    "slide_15": [
+      "Do we really need coercivity to have minimizers/maximizers? Looks like extreme value theorem should be sufficient.",
+      "By \"two sufficient conditions\" do you mean they are both sufficient, so either one being true will guarantee a minimum, or are they both required? Because I'm pretty sure continuity over a compact domain by itself is enough, but coercivity by itself is not (considering x^2 with the zero removed).",
+      "How do we define coercivity mathematically? An objective function f such that for every c there exists some x such that |x'| > x implies f(x') > c?",
+      "Why is coercivity relevant in this case? I don't think it affects existence of minimizers.",
+      "Why does the objective function going to +- infinity give us the existence of a minimizer? Couldn't we have that the function e.g. becomes 1 after a certain x coordinate (so the limit still exists but isn't infinite) \u2013 wouldn't that allow us to still find a minimizer? And if 1 is the minimum value, we could prioritize the first x-coordinate that gives us this value.",
+      "Is it realistic to necessitate continuity for graphics problems? I feel that many problems such as measuring velocity (with sudden changes) would be difficult to do so.",
+      "Do we need to formulate optimization problems under these conditions? Or is it also ok to form them under other conditions that make them feasible or even under conditions that do not ensure feasibility?"
+    ],
+    "slide_17": [
+      "How might we deal with functions that we can't easily compute an analytic derivative for? Do we enter sampling land again?",
+      "What if the second derivates don't exist or we can't derive the function?",
+      "Building on the last two questions, what if the function is not differentiable at all? Can we make any guarantees about the existence of a minimum in this case?"
+    ],
+    "slide_18": [
+      "In reality, the easiest way to check whether a symmetric matrix is PSD is to evaluate its eigenvalues and determine whether they are all nonnegative. Won't this be a relative hard problem to solve? Is there an easier way to check positive semi-definiteness?",
+      "How \"efficient\" is this method?"
+    ],
+    "slide_19": [
+      "The lambda terms remind me of Lagrange multipliers. Do the Karush-Kuhn-Tucker conditions relate to that technique at all?",
+      "KKT conditions generalize Lagrange multipliers to allow inequality constraints.",
+      "What is the idea behind complementary slackness?"
+    ],
+    "slide_20": [
+      "What kinds of complexity cause inefficiency for solving convex optimization problems?",
+      "These constraints are for guaranteeing that we can find global minima? What if we actually preferred to find a local minima (like in the example of protein folding on slide 10)? Are the constraints on the types of domains/objectives more or less strict than these, or are they different altogether?",
+      "Is determining convexity always efficient(can be done in polynomial time)?",
+      "What is an example of convex problem that is not quite efficient? Is the positive semidefinite or indefinite case (on the next slide) an example?",
+      "How would we check if something is convex without knowing exactly what function it follows.",
+      "What is the application of convex optimizations?",
+      "When you say that convex optimization doesn't depend on initialization, I assume you mean that you will eventually get a correct answer no matter which starting point you choose. But is the choice of initialization still important to help you converge to the minimum faster, or does this not really matter?",
+      "Could you give some examples that needs convex optimization in the graphics domain?",
+      "What is weak convexity?",
+      "Can we always treat non convex problems in cg as multiple convex problems? What are some examples that this might fail to work?",
+      "Is it possible to transform, apply constraints, or use other methods to make the convexity of a domain stronger?",
+      "Is gradient descent the main method in which convex optimization problems are solved, or are there other feasible approaches?",
+      "How to transform nonconvex objective/domains to convex ones?",
+      "Is there any way to limit the domain x of a nonconvex objective so that only a convex objective subsegment is considered?",
+      "How about complex plane? Is this still hold in the complex plane?",
+      "If one has a convex function but a non-convex domain, are there ways to restrict the problem to convex subsets to get approximate solutions?",
+      "When are complex problems not efficient in graphics?",
+      "What is the difference between strong and weak convexity and how does that affect how we can solve the problem?"
+    ],
+    "slide_21": [
+      "In a situation where we might have infinitely many optimal values for x, could we potentially add another constraint(s) that would guide us towards a unique x?",
+      "For the picture of the positive semidefinite case, is the value of the objective at the bottom of the cylinder all the same value? I kinda see it as slanting downwards on the right so it seems like we can continue going towards the right to get a better optimum.",
+      "What will be an example that satisfies this convex quadratic objective in real life?"
+    ],
+    "slide_24": [
+      "Are there any other applications in Computer Graphics using GD besides the IK algorithm?",
+      "Can we sample to initialize the parameters in different places such that we can find the global minimum with a high probability?",
+      "I remember from high school calculus that to find a global minima/maxima you just need to find all the local max/mins and calculate the boundaries. From all of these points, whichever one is the largest/smallest is the global min/max. Can a similar logic be applied here or is this too simplified to even consider.",
+      "What is the best way to check for global vs local min/max?",
+      "Is there a similar way to approach the problem when we need to find the global min/max instead of a local one? Is it practical to run this algorithm a bunch of times and take the min or max of all the local min/maxs found?",
+      "how to look for local/global min and max in this situation"
+    ],
+    "slide_25": [
+      "What is the result of using other stepping methods (backwards Euler etc)?",
+      "How would we make it more likely to arrive at a global minimum instead of a local minimum?",
+      "How should we determine how small the tau value should be, since smaller the tau value the more steps to take, which means longer run time?",
+      "Is there an algorithm that optimally sets a variable step size?",
+      "What is the most efficient way to choose a step size?"
+    ],
+    "slide_26": [
+      "Slightly confused on what's going on in the diagram - why is the solution oscillating? Isn't the gradient pointing to the center?",
+      "Is it possible to vary the tao value?",
+      "Are we saying that the results oscillate around the actual solution and eventually converge to it? Or is it that the change in how much closer it gets to the solution oscillates, but it's always on one side of the solution and doesn't overshoot?",
+      "I'm confused as to when oscillation occurs. Wouldn't it just occur around a minimum?",
+      "Is it ever possible to solve the differential equation itself, or is it unsolvable?",
+      "Can we detect such oscillation in GD and smooth out our descent?",
+      "If it was on the end of the ellipse, would it then be able to travel in a straight line that we would expect?"
+    ],
+    "slide_27": [
+      "How is Newton's method equation mapped to a disc?",
+      "How does applying the inverse of the hessian add a quadratic term of optimization?",
+      "Are methods involving higher-order momentums better suited for non-convex problems?",
+      "For nonconvex problems, can we do gradient descent with random restarts?",
+      "Are algorithms from machine learning applied here (random starts, random walking with k walkers, etc)?",
+      "In the lecture, you mentioned that the sign of Hessian flips as we move from x_k to to x*. I didn't quite get why is that the case? Shouldn't it be always positive as it positive semi-definite?",
+      "In the video, you said we use the inverse of the Hessian as it would be part of the 2nd order Taylor approximation of f. Would using a higher order derivative than the Hessian further help create that \"bowl-like\" structure? And if so, what kind of tradeoffs are there? Specifically, does it help save time?",
+      "Is it practical to use 3rd degree or above order descents?",
+      "How costly would it be to use 3 or above order descents? Is it worth it?"
+    ],
+    "slide_28": [
+      "Is it also necessary to optimize the positions of the joints, in addition to the IK we did in A4?"
+    ],
+    "slide_29": [
+      "What's the ideal approach for a system to model an object where the joints or limbs act differently? Like maybe you'd want to emulate them as different material or different weight of limbs so one would move slower than another. Would this best be implemented via constraints during IK?",
+      "What's the definition of the word \"configuration\" here?",
+      "How would this data structure work if, like A3 we need to delete edges, we now need to delete one component?",
+      "How do you optimize for joints on a rig? Isn't this based on what the artist want the model to do, and should reflect the intended physical limitations of the model?"
+    ],
+    "slide_30": [
+      "Are there any instances where the joint angle of each joint is expressed in world frame rather than with respect to the previous joint?",
+      "How practical is it to compute gradient descent every time someone is reaching for something for example? Are there quicker estimation algorithms?",
+      "Will FK and IK be in conflict with each other/form a cycle for one joint?",
+      "Can we view the calculation of p2 as a sequence of linear transformation, where (u0 + theta1 u1) is rotated as a whole by theta0?"
+    ],
+    "slide_31": [
+      "How would we actually limit joint angles? Gradient descent seems to only involve the objective so how would we add constraints for gradient descent?",
+      "When gradient descent does not converge, what will the behavior of IK look like? Is there a way to avoid this?",
+      "If we reach joint angle limits during gradient descent, is it possible to boost the efficiency of calculation by fixing an axis as that limit and just considering the remaining axis? Or will all axis still have to be considered together?",
+      "I'm curious to see how natural/unnatural the motion produced by this type of gradient descent would be. I am imagining that if you took a human rig and did this technique without constraining the angles, the result would be very weird.",
+      "I am still not sure how the descent gradient is working, why we could not just compute the angle between the target and current joint and then move it?",
+      "Why wouldn't we constrain the angles? So much of this part of the course has been physics-based, so I figure we'd want to be as accurate as possible here.",
+      "Conceptually, how would running gradient descent on all other joints fit into IK? It makes sense to me that we would want to have a whole body movement for something to be physically possible but how does this make sure that non-specified joints also move correctly.",
+      "Why don't we make the objective function just the distance between points?",
+      "Does this gradient descent effect only the joint, or all joints in the joint to root chain?",
+      "How should we interpret and/or handle cases of non-convergence for IK?",
+      "If there are intermediate points without constraints between the target and the final points, how do we formulate the problem to 'make sense'? I think this might be a similar question to derk's.",
+      "In the example of a person, we have many points. Can you provide an example of how they all fit into an objective function?",
+      "How do we arrive at a final result if there are many different joint angles? And how specifically do we limit joint angles to achieve a good result?",
+      "How do we choose how to limit joint angles (and how many/which ones)?",
+      "How can we infer the convergence?"
+    ]
+  }
+}

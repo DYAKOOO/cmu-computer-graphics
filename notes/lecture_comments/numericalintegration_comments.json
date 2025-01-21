@@ -1,0 +1,191 @@
+{
+  "metadata": {
+    "lecture_name": "numericalintegration",
+    "total_slides_with_comments": 23,
+    "last_slide_number": 38,
+    "total_comments": 135
+  },
+  "comments": {
+    "slide_3": [
+      "Almost afraid to ask, but shouldn't that integral be 1/9, not 1?",
+      "By weighted sum, are the weights determined by the interval h?",
+      "If the number is finite, why not just add them together?",
+      "Just to clarify, the weighted sum that we use to approximate the integral is the sum over all sample points: (length of interval)*(sample value)?",
+      "Is this similar conceptually to doing Riemann sums or trapezoidal estimations of the area under a curve?",
+      "If polynomials are so easy to integrate, then could we just use a polynomial approximation (like the Taylor series) to a given curve to get an estimate? How does this compare to other numerical integration methods?"
+    ],
+    "slide_6": [
+      "But how do we define mean(f) in this case? \nIf the data is discrete, looks like there's no need to find the integration -- we just add the discrete parts together.\nBut in the continuous case, it feels like we need the integral to find mean(f), which makes the argument \"circular\" here."
+    ],
+    "slide_9": [
+      "I still don't get why only one sample is sufficient. We assume we don't know c and d right?",
+      "I think the \"only one sample\" refers to the sample at the middle point of a and b. Then we could use the function value there to evaluate the integral.",
+      "The one sample here refers to the middle point, but in general I think, as long as the function is continuous along the integral domain, there is always a point on the curve that represents the average?"
+    ],
+    "slide_10": [
+      "Idea: print the integral on piece of uniform thickness cardboard to scale and cut it out, put it in a water bath to determine the volume of the cardboard piece based on water displaced and calculate the area from the volume."
+    ],
+    "slide_11": [
+      "Are there similar approaches of using sampling to compute the exact integral for non-polynomial functions?",
+      "Would Gaussian Quadrature give us a better approximation than the trapezoid rule if we use less than n points or don't know the structure of f(x) beforehand?",
+      "Is the \"special\" set of points just some points before/after each of the critical points? or inflection points? Or something else?",
+      "How to determine these special set of points and their weights?",
+      "Is gauss quadrature also useful when we want to interpolate points?",
+      "If it's a polynomial of order n, and we can take n points, why can't we just solve for the coefficients and do the integral as polynomial integral is super trivial to implement?",
+      "How do we determine the set of points and their weights? Is that something we just play around with?",
+      "Earlier in the video you mentioned that a lot of the functions/data sets we'll be working with are difficult to integrate, and I'm assuming if we're just given a data set then it may be difficult to represent using a function. Is the Gauss Quadrature useful when dealing with non polynomial data sets?",
+      "Are these points easy to determine with a computer (or at least easier than trying to integrate the original function)?",
+      "How general is the sampling rule here? Like for any n degree of polynomials, any coefficient in each term? And does the domain have to be symmetric to y axis?",
+      "How difficult is it to compute these points and weights, and how do we know that such points always exist?",
+      "How can we determine which points to sample in code? It's very intuitive when we are manually selecting points, but how can we write a program that \"looks\" and \"finds\" these determining points?",
+      "While this sounds nice and seems like it would make things a lot easier, I\u2019m not fully understanding how exactly we obtain these special weights. Is there a special formula or heuristic that enables this?",
+      "Is this any specialized data structure or hardware to do such kind of tests?",
+      "How would you determine the special set of points?",
+      "If these special weights are expensive to compute (for example if you need to compute square roots and division operations), might it be more computationally efficient to use a larger number of inexact sampling points that are easier to compute",
+      "Can we apply this or a similar idea to functions of another type? i.e log, fractional powers, etc.",
+      "I am also confused as to how we would obtain these special set of points/weights? Isn't this a huge abstraction, it seems much more complicated than what's shown.",
+      "How do we determine these special points and weights? Is there a specific formula per degree or is it based on coefficients or etc.?",
+      "Is this something we can use as long as we assume the data follows some polynomial curve that we can fit to (if we wanted a good approximate integral of a wonky curve)?",
+      "If these special weights are expensive to compute (for example if you need to compute square roots and division operations), might it be more computationally efficient to use a larger number of inexact sampling points that are easier to compute"
+    ],
+    "slide_12": [
+      "I do not get the meaning of f(xi)+f(xi+1) in this equation. I understand that xi+1 - xi is to find the width of the interval, and the later part is trying to find the height. However, the sum of heights between the start x and end x will make the area even larger, how this helps us to find the area bounded by two x?"
+    ],
+    "slide_13": [
+      "This slide seems a bit lonely :("
+    ],
+    "slide_14": [
+      "Should this only be the case for approximating integral of polynomials?",
+      "Are we doing this for the sake of sampling?"
+    ],
+    "slide_16": [
+      "Aliasing would still occur using this approximation right?",
+      "Are these points intended to be spaced equally apart?",
+      "What happens if the points are not equally spaced apart? Is there any advantages to doing it that way?",
+      "Why stop at affine? What about using piecewise polynomial curves that are easy to integrate as the approximation?",
+      "Does nyquist sampling rate still apply?",
+      "Why do we use affine functions? We would be able to get something similar if we use rectangles to approximate it"
+    ],
+    "slide_17": [
+      "Why 1/n^2?",
+      "When computing exact integrals, we have an infinite number of intervals and h is infinitely small (very close to 0), so if h is the length of the intervals, why wouldn't the error be O(h) or O(h*#number of intervals)?",
+      "O(1/n^2) is a big-O expression I've never really seen before - how does it match up to other big-O expressions in terms of \"speed\"?",
+      "I wonder if there are pathological examples that are continuous, but perhaps not even differentiable, where the trapezoidal rule can be made to be arbitrarily bad? What would these look like?"
+    ],
+    "slide_19": [
+      "Are there methods specifically for multidimensional integrals other than applying a 1D method multiple times?",
+      "It seems there's a tradeoff between runtime and error bound. From a graphics point of view, what is the consequence of larger error?"
+    ],
+    "slide_20": [
+      "What other common algorithms are afflicted by the curse of dimensionality?",
+      "Backward propagation",
+      "Is the trapezoid rule used in 2d functions even if it doesn't scale? The amount of work to improve error rate seems pretty good...",
+      "I also heard that in high dimensions, the euclidean distance also fails. Is this true?",
+      "Up until what dimension is using the trapezoid rule usually acceptable? Does it depend on the n at all, or is the k the primary determining factor?",
+      "Can we use a combination of the trapezoid rule and other approximation techniques in higher dimensions?",
+      "Why is k so large in some rendering problems? What do all those dimensions represent?",
+      "Can you apply methods like dimensionality reduction here to make it more efficient?",
+      "What is the reason for all the hundreds of thousands of dimensions for rendering? Why would it not just be proportional to the number of dimensions you are modeling?"
+    ],
+    "slide_22": [
+      "Are there ever cases in graphics where the trapezoidal method is preferred over Monte Carlo?",
+      "^ I'd imagine the slow execution for higher than 1 (or maybe 2) dimensions means that the trapezoid method is rarely preferred over Monte Carlo",
+      "Do we generally assume that \"bad\" functions don't ever really occur in practice because we're using this to render objects and most of what we see in the real world are generous/practical shapes?",
+      "I think the sampling points impact the monte-carlo results a lot, what would be a good strategy to sample good points as initialization?",
+      "If it only gives the correct value on average, should we run the algorithm multiple times to get a nice result? It doesn't seem very efficient if we have to repeat it.",
+      "How do we determine how many samples to use?",
+      "How do we determine which points to sample?",
+      "But since the samples chosen are random, shouldn't the error estimate be an expectation value? If I chose n really bad samples, like all n samples are close to each other, I suppose that the error would be possibly very large?",
+      "Are there different methods of integration that also use random sampling? Are there any algorithms that work well for integration in higher dimensions which do not use random sampling?",
+      "Is there an intelligent way to randomly place samples? Or is a uniform distribution commonly used in practice?",
+      "For this being correct on average, is there something that determines how many times the algorithm should be run to achieve an acceptable result? I'm sure error goes down each time you combine previous results with new results, but how much does it go down each time?",
+      "How do we determine the weights/ranges to bias each sample by? seems like you could choose these in multiple ways which would affect the result.",
+      "Are there functions that are hard to evaluate at a point but easy to integrate? If so, that would make Monte Carlo inefficient.",
+      "To what extent will Monte Carlo Integration introduce some unwanted artifacts? Will this impairs integration quality greatly?",
+      "I still don't understand why we would like to use Monte Carlo Integration over something like the trapezoidal rule or sampling evenly across some interval. Does it have to do with the structure of the functions we try to integrate over? I can imagine Monte Carlo (as it is random) could be bad in certain situations because unlucky integrations could lead to a bad picture.",
+      "If we are dealing with the average effect of sampling values, does that mean we will have to take more samples than using the Traoezid rule?"
+    ],
+    "slide_27": [
+      "Does it matter that the random variable is only pseudorandom in a computer?"
+    ],
+    "slide_29": [
+      "Are there numerical integration methods we can use to approximate the integral of p(x) and its inverse, rather than solving it exactly?",
+      "What if some part of the CDF is flat, i.e. the inversion function is not injective?",
+      "To avoid the situation that the inverse function does not exist, should we only evaluate it in the domains where the PDF is not zero?",
+      "You mentioned that P is invertible because it is monotonically nondecreasing. Isn't this insufficient? For instance, a constant function is monotonically nondecreasing, but it is not invertible.",
+      "Why can't we draw samples from the range of x instead of the range of \\psi?",
+      "What is if the inversion doesn't exist/p(x) isn't invertible?",
+      "Could we not execute a kind of binary search via sampling by starting in the center instead of inverting the function? We would stop once we reach a certain distance from the actual value.",
+      "is inversion method not viable if the inverse is not defined?",
+      "CDF of any distribution is Uniform([0,1]).",
+      "I wonder if Monte Carlo can still perform correctly if you do not know the expression of PDF?",
+      "What happens when the function is not invertible?",
+      "How do we ensure the inverse gets easier?",
+      "How do we get those quantities/what happens if we don't know/cannot invert it? Doesn't inverting it mean knowing which value of the random variable the CDF's value corresponds to?"
+    ],
+    "slide_30": [
+      "In order to do this, we need to know the integral already, right? In that case, how does this help us with numerical integration? Is there an approach we can use to get a random sample (possibly maybe not exactly according to the distribution) without knowing the integral?"
+    ],
+    "slide_31": [
+      "Slightly unrelated, but how would you sample a random chord in the circle?"
+    ],
+    "slide_33": [
+      "How to formally prove this?",
+      "What do the xi's represent?",
+      "Is there a different way to think about it or any clarifying comments? I'm still confused on why closer points are more likely, it seems like you are literally choosing a radius from all the potential radii equally.",
+      "I don't really understand why points further from the circle are less likely to be chosen. I was thinking it might depend on how precise our theta values get, where the closer ones would round to the same thing?",
+      "Why points further from the center are less likely to be chosen? Is there a reason behind this?"
+    ],
+    "slide_34": [
+      "Are there alternatives to inversion for finding these equations?",
+      "Why do we want to rewrite theta as 2 * pi * xi here? (What does xi_1 and xi_2 represent here?)",
+      "Could we sample on a square who have the same area and then convert it to the circle?",
+      "Why do we change r to be the square root of xi_2?",
+      "Are there generalizations of this for other shapes (e.g. in higher dimensions)?",
+      "Can we get the corresponding pdf from inversed Monte Carlo sampling?",
+      "Can we use it in a sphere?",
+      "I think we can use it in a sphere, by adding a dimensionality.",
+      "can this be applied to spherical objects"
+    ],
+    "slide_35": [
+      "Does it work to take samples which are not uniform and then weight each sample differently when computing the integral (such as dividing each sample by the probability of taking the sample at that point)? What advantages are there to doing this if it works?",
+      "If we care about samples being uniform, what is the downside of picking a more standard distribution? What benefits do things like circles provide?",
+      "How would one uniformly sample from a ball? I'm assuming that this would entail making use of three parameters (a radius, and two angles). One can't pick each of the three parameters uniformly at random, as that results in a similar issue, but I guess one one do something related? (e.g., using equations for the Jacobian of the transformation between a sphere and a prism).",
+      "How does taking the square root even the distribution?"
+    ],
+    "slide_36": [
+      "Typo? Then toss out any samples not in \"circle\" (easy).",
+      "This is like the bounding box construction in BVH.",
+      "Isn't the efficiency of the technique always constant since we can only define one square (of side lengths d) for a disk of diameter d?",
+      "What are the benefits of using previous complicated idea versus this simple idea?",
+      "Since you would always oversample, is rejection sampling always not as efficient as the previous technique for circles?",
+      "I'm thinking of a test for whether or not to use rejection sampling being whether or not the shape is convex/does a ray pass through it twice. Would that lead to shapes with better efficiency when rejection sampling?",
+      "We can also use this to estimate the area of the shape inside of the square, right?",
+      "Do we choose a circle because it maximizes the ratio?",
+      "Is there a better way to generalize rejection sampling to higher dimensional spheres? In 2D, pi * r^2 / (2r)^2 = pi/4 which is about 78.5% but in 3D, 4pi/3 * r^3 / (2r)^3 = pi/6 which is about 52.4% and I imagine it drops quite rapidly when you go up to 10D spheres",
+      "Why does this still result in uniform sampling over the circle if the original samples are over the square?",
+      "Does this uniform sampling technique generalize to other inner shapes given we put a square around it? Are there any other shapes that can produce similar results that can be placed on the outside other than a square?",
+      "Is there a better way to generalize rejection sampling to higher dimensional spheres? In 2D, pi * r^2 / (2r)^2 = pi/4 which is about 78.5% but in 3D, 4pi/3 * r^3 / (2r)^3 = pi/6 which is about 52.4% and I imagine it drops quite rapidly when you go up to 10D spheres"
+    ],
+    "slide_37": [
+      "Are there any approaches of converting a shape that covers a small amount of area to a different shape, rejection sampling on this new shape and mapping the results back to the original shape? I guess I'm just wondering if something like that would work in practice, or if that's what you meant by warping the random variables",
+      "What would be a good way to sample along with the spinning shape?",
+      "Can we combine rejection sampling with inversion in cases where it is hard to find the inverse of the region?",
+      "How do you find a warping function that maps the unit square to any arbitrary region?",
+      "To \"warp\" the random variable, is the general idea to apply the same function for the region on the random variable? How is it different from the approach where we take the inverse of cdf?",
+      "Is there a way we could nudge the rejected values slightly to have them land on the sample? This would be an approximation still but would improve the yield.",
+      "Could we assign certain rejected areas to still represent a point within the sample? Then there wouldn't be such a high rejection probability.",
+      "what's the best way to find a warping function?",
+      "If we're just given some probability distribution, is there a way to determine if rejection sampling is a good idea? It seems like we'd need to find out the area in the bounding box by integrating, which is what we were trying to do in the first place?",
+      "Are there any better way to do this? Just curious.",
+      "For a function like this, would it work to randomly select (all but) one of the variables, determine the range(s) of possible values for any of the missing ones, then uniformly select from those ranges?",
+      "Could we use the technique we talked about many lectures ago where we divide this square into smaller squares, do some sampling to see which squares contain part of the swirl and which probably don't, and then do more sampling on the ones that do contain part of the swirl? I might be remembering the specific technique incorrectly but this seemed like the main idea of it...",
+      "What sort of transformation would you do to achieve such a warp? Is it a linear transformation?",
+      "How do you find the warp transformation? And how do you decide what is a good enough fraction to do rejection sampling?",
+      "how to we find the warping function efficiently?"
+    ],
+    "slide_38": [
+      "I didn't have any questions for this lecture but I still want participation points :)"
+    ]
+  }
+}

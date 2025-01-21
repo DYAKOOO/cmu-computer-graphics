@@ -1,0 +1,231 @@
+{
+  "metadata": {
+    "lecture_name": "geometryprocessing",
+    "total_slides_with_comments": 31,
+    "last_slide_number": 46,
+    "total_comments": 159
+  },
+  "comments": {
+    "slide_6": [
+      "What are some examples of parameterization?"
+    ],
+    "slide_7": [
+      "How do we get normals when scanning a 3D object?"
+    ],
+    "slide_8": [
+      "I mean, how should we get the detail information for upsampling?\nLike the skins may have more detailed shaped and color in small scale, should we just subdivision it?",
+      "Could texture mapping be applied to upsampling such that when filling up the meshes we upsampled, we can use the original mesh as textures?",
+      "How can interpolation helps increase resolution when the \"true\" details have been lost?",
+      "Would bilinear filtering not be downsampling, as we are increasing the resolution and then going down to a lower one by taking averages?"
+    ],
+    "slide_10": [
+      "Do we need to sometimes sacrifice a mesh \"looking good\" to a human eye in order to have better simulation results?",
+      "Resampling via dual mesh?",
+      "Does resampling imply like an averaging of two samples somehow? Or is this just creating a completely new sampling?",
+      "I mean, why do we need to do this?\nFor using mesh to describe the shape, some complicated shapes (like eye) require more mesh, and sometimes some less complicated shapes require less mesh.\nWhy do we need resampling?",
+      "Can I know what aspects the visualization/equation-solving focuses on respectively in terms of \"quality\"?",
+      "How do we find a compromise between visualization and solving equations? To what extent do we simplify our operations to make our resample visually appealing but efficient?",
+      "In general, is it more important to preserve polygon shapes in the mesh or overall shape of the 3D surface?"
+    ],
+    "slide_12": [
+      "is it possible for you to explain some details about how lossless can preserve all the information while reducing the storage? Like is it a transformation merely between storage type, like from polygon soup/adjaceny list/indices matrix->sparse matrix?",
+      "Does lossless compression hurt things like human-readability or time to convert from the compressed representation into other representations?",
+      "Does lossless compression try to change the structure of the data, or does it try to use a shorter bitwise representation?",
+      "How is this similar to downsampling?"
+    ],
+    "slide_13": [
+      "If possible would the future lecture cover segmentation? I'm interested in how this is done in an unsupervised learning method.",
+      "I'm curious about correspondences. How can we find and match parts of meshes?",
+      "Are there purely geometric techniques used for segmentation? I've mostly heard about strategies involving neural networks being employed for this purpose -- curious what other ways there to go about it.",
+      "Can you expand on the two types of symmetry (extrinsic/intrinsic) shown? I think I see how the extrinsic one works but I'm not sure how the intrinsic one is symmetrical."
+    ],
+    "slide_16": [
+      "Large curvature => drastic change in shape?",
+      "how can we define what is a \"large\" curvature? Isn't this very subjective and arbitrary?",
+      "How is this \"contribute\" defined?",
+      "Is there a metric that can measure how close your mesh is to the original shape?",
+      "What does a large curvature imply and why it's important?",
+      "How can we measure curvature?",
+      "With an implicit representation, there are precise ways to measure curvature at any given point on a curve. However, I'm guessing that in general, for a mesh, one would have to use some sort of approximate techniques?",
+      "Can there be use of algorithms that convert the base shape representation?.(eg. Convert a triangle mesh into a quad mesh?)"
+    ],
+    "slide_17": [
+      "I don't really understand how the triangles are appearing to have normals that are angled up and down (as shown by the \"bumpy\" side view). Wouldn't the normals still be perpendicular to the face of the original cylinder?",
+      "Can we not just divide up the cylinder into strips of rectangles?",
+      "Would you please explain why this the right one detailed mesh is wrong?",
+      "Are we able to tell depth at different points on the mesh using the normals as well?",
+      "I feel like splitting the geometric mesh into rectangles would work a lot better. If they need to be in triangles, a rectangle can easily be split in half into triangles. I\u2019m not sure how exactly this would improve representation but I don\u2019t understand why that wouldn\u2019t work as well.",
+      "I'm a little confused as to why the fine mesh has such a drastic difference in surface area when compared to the original mesh. Shouldn't it be more accurate considering we're taking more sample points?",
+      "Why does the normal change in this case? Especially in the picture on the right, shouldn't all triangles have the same normal direction?"
+    ],
+    "slide_18": [
+      "Does Delaunay imply manifold?",
+      "Is delaunay an efficient metric to calculate? It looks like it contains quite a number of extra steps for each pair of triangles (although not all pairs are going to overlap). The angles check seem to be more efficient.",
+      "A followup to the previous question. Is delaunay used in real time for decision making? Or is it used to provide metrics on certain meshing scheme (online utility measurement tool that's not part of the critical path).",
+      "Wouldn't long triangles be good at approximating long smooth surfaces like that of the cylinder two slides ago?",
+      "For the given example that defines good triangles as all angles close to 60 degrees, how large would the range of acceptable values for each angle typically be (or is it just a situational thing/matter of preference)? e.g. would an isosceles right triangle (45/45/90) usually fall within an acceptable range, since visually it doesn't really fit long and skinny?",
+      "Does this rule of thumb always need to be followed? The cylinder from two slides ago (and for that matter, any curved rectangular surface) will most likely need to be drawn with long triangles like those.",
+      "Shouldn't the quality of mesh depend on specific task? If we would like to describe a needle, triangle mesh with \"good\" shape in the slides might be a worse idea than those with \"bad\" shape.",
+      "Would it be possible to break bad triangles into more smaller good triangles?",
+      "Is there a way to quantify those metrics?",
+      "Do the triangles have to be completely uniform or close in size? I\u2019m thinking that the long skinny triangles could potentially be broken into smaller triangles to prevent the existence of \u201cbad triangles\u201d",
+      "Are the \"bad\" triangles necessarily even \"bad\" if we can just create a mesh of smaller \"good\" triangles in the shape of the \"bad\" one?",
+      "Is there any case that bas triangles is necessary? What to do in this situation?",
+      "For certain meshes we may need to use \"bad\" triangles to accurately describe things, how would this be factored in / considered?",
+      "Is the Delaunay triangulation unique? It doesn't seem immediately clear how many degrees of freedom the empty circumcircles requirement leaves."
+    ],
+    "slide_19": [
+      "Does the regular vertex degree also affect how textures can be applied to polygon shapes?",
+      "Does regularity infer that the sampled faces' normal are close to the original face's normal?",
+      "How do we determine whether the subdivision is 'okay'?",
+      "Are there ever cases where we want some higher degree vertices? (Like if we might want more detail in a specific area of the mesh) Or would it be worth the extra computation to compute the mesh with larger polygons in this case",
+      "Would you please provide a more mathematics define of \"good\" and \"bad\" ...",
+      "Is there any bad degree that could also have good subdivision",
+      "Is it preferable to have meshes with a uniform vertex degree or is it typical/ok for meshes to contain varying vertex degrees?",
+      "How is subdivide performed? Why is there some wrinkles and extra lines on the picture on the right?"
+    ],
+    "slide_21": [
+      "For the last one, I am confused, am we supposed to divide the triangles into smaller Equilateral triangles?",
+      "How do we determine the \"weights\" of vertices?",
+      "What does it mean for a surface to be differentiable?",
+      "I'm also curious to what it means for a surface to be differentiable?",
+      "When would we prefer to use a quad mesh as opposed to a triangle mesh?"
+    ],
+    "slide_22": [
+      "How does step 2 find the a, b, c, d edges?",
+      "I'm also confused about step 2. It doesn't seem to guarantee that the edge coordinate is actually on the edge from a to b.",
+      "step 0 is converting polygons to quadrilaterals? but the pictures showed are triangles. I'm very confused of step 2 as well, cause from a subdivision like the picture in step 1, there is no analogy to point a and b in step 2's picture. Maybe in future lecture it would be easier to understand to make the 3 steps the same pictures.",
+      "What exactly is happening in step 2? What coordinates is it using?",
+      "Step 2 seems very confusing. Are we computing the middle vertex of all faces first and then for each edge, we compute where the edges split by looking up the middle vertices of its neighboring faces? Isn't this very taxing on space? I guess alternatively, we could recompute the middle vertex each time, but then why is this step 2 and not step 1?",
+      "Is the diagram in step 0 a possible outcome of Catmull-Clark subdivision?",
+      "Does Catmull-Clark subdivision always result in new edges from the center of a polygon to every midpoint of its boundary edges?",
+      "What do face coords and edge coords mean ?",
+      "In step 2 why wouldn't we just use the vertex positions of a and b?",
+      "Why is step 3, resetting the original vertices necessary for a nice subdivision?",
+      "I am also confused with step 2. When you keep one polygon the same but stretch the other one, the center of the other one would change. This doesn't seem to ensure the point staying on the line",
+      "In step 2, the resulting point need not lie on the segment from a to b. Is this intended? I suppose if c and d are equidistant from the line (like in this case) this will be true, but in general it seems this shouldn't hold.",
+      "This visualizations of step 2 and 3 don't make a lot of sense, why exactly are we updating like this?",
+      "What would be the value of a,b, and c, and would the weighting process being produced?",
+      "How would the weighting process be produced, won't there be negative value here?"
+    ],
+    "slide_24": [
+      "Is the determining factor here the vertex position equation? Is there a method that applies the same steps with a different vertex position equation that achieves \"good\" geometry on triangle meshes?",
+      "Although the mesh on the right now has lots of irregular vertices, it still looks visually smooth. I would expect the normals to also be fairly smooth (small change in normal from one polygon to the next). Why is it that irregular vertices cause erratic surface normals?",
+      "Is there an understandable/visual geometric reason as to why this doesn\u2019t work as nice for triangles but it does for quads?",
+      "So basically we can conclude that Catmull is not useful for triangle mesh?",
+      "How exactly are the reflections related to the normals and the fact that we're using quads versus triangles?",
+      "I noticed that in zbrush or other highly \"smooth\" sculting software the mesh is automatically triangle, and in maya or other modeling software the mesh is quad mesh by default. Why is that?"
+    ],
+    "slide_25": [
+      "here is the original paper i found:\nhttps://www.cs.jhu.edu/~cohen/Seminar/cc.pdf",
+      "What exactly are the vertex weights being used for and how do they make sense intuitively?",
+      "How can we take weights of the top and bottom vertices for the edge coordinate? If the distance from those points to the edge is not the same, then it will be pulled towards either the top vertex or bottom vertex, and it would be impossible to draw a line from the left and right vertex through that point. Also, I don't see the edge position used anywhere else?",
+      "Where do weights come from in this context and how do they relate to u above?",
+      "What exactly are vertex weights and how are they computed?",
+      "Confused on the lower left graphic. Is this introducing a new triangle, i.e. showing two triangles which we are performing subdivision on?",
+      "How did we decide these weights and what exactly are they used for to calculate?"
+    ],
+    "slide_26": [
+      "What is the advantage of splitting edges and then flipping as opposed to going through every face and creating the edges where they should go in the first place? Is it simply ease of implementation (assuming we already have the split and flip functions)?",
+      "What's the definition of the flip operation here?",
+      "Can loop subdivision via edge operations be applied to other polygon meshes?",
+      "What's the cost of this transformation?",
+      "Is this division algorithm at all affected by irregularities in the triangle sizes of the mesh or does it always converge to a relatively smooth/regular mesh?"
+    ],
+    "slide_28": [
+      "Are there any major pitfalls due to using a greedy algorithm to solve this problem? Does it not always produce a good result? If so, what other algorithms are used to avoid these problems?",
+      "Spooky",
+      "Tying this back to our discussion on \"good\" meshes, are we considering this simplification method as \"good\" because the simplified skull \"looks like\" the original one? Or do the simplified skulls have some other, quantifiable properties that make them desirable?"
+    ],
+    "slide_29": [
+      "What other error metrics are used?",
+      "What does the distance measure in the figure shown above? It is hard for me to visualize it.",
+      "What makes the Quadric Error Metric better to use for this task compared to other error techniques?"
+    ],
+    "slide_30": [
+      "I think the signed distance should be ax+by+cz-d",
+      "Why is the offset <n, p> instead of -<n, p>?",
+      "Can we also do this in non-homogeneous coordinates and say nn^T is the 3x3 matrix that encodes the distance or does this property only hold in homogeneous coordinates?",
+      "How do we use this to determine the cost of edge collapse",
+      "I'm not really clear on the relationship between points in homogeneous coordinates and planes in 3d. Is it just that a plane can be represented by 4 parameters a, b, c, and d, and a homogeneous point also happens to have 4 components? Or is there some deeper geometric meaning to it?",
+      "What does adding d to the fourth component make sense?",
+      "Should it be -d here?"
+    ],
+    "slide_31": [
+      "I'm a bit confused on the notation here. Is K_i the sum of squared distances to the triangles that contain vertex i?",
+      "What are the planes we are measuring square distances from?"
+    ],
+    "slide_33": [
+      "When taking the derivative of vectors (and with matrices), do we treat \"x^T\" as \"x\" and if so, why can we do this? Based on this page, it seems as though we simply add the transpose to make sure we have the correct dimensions for matrix multiplication, but there should be a formulaic approach so that we can implement this in code, right?"
+    ],
+    "slide_34": [
+      "Is this a similar kind of thinking as the second derivative in 2D?"
+    ],
+    "slide_35": [
+      "There are three possible x that might give the minimum error: the two original vertexes, and the x computed by optimizing the quadratic function, is that right?",
+      "I feel like I'm missing something from the question, is B a matrix of constants kind of like A on the last slide? Then, how could we know if it's positive definite if we don't know what the constants are? Maybe I'm completely misunderstanding this haha",
+      "Why are we calling the bottom right element of the matrix \"d^2\"? What is the meaning of d?",
+      "I'm a bit confused here on how we went from the last part to this one. What's the difference between this calculation and the last one? Did we just add a homogeneous coordinate?",
+      "Since the matrix K is obtained from (vv^T), it is going to be always positive-definite.",
+      "Let y = [a b c], then B = y^Ty. For any nonzero vector z in R3, we have z^TBz = z^T(y^Ty)z = ||yz||^2 > 0, hence B is always positive-definite.",
+      "I got confused about where B and w comes from."
+    ],
+    "slide_36": [
+      "Quadric Error seems to be only for triangle meshes, is there a similar algorithm for other types of meshes?",
+      "Shouldn't the cost for the optimal point x be (x^T)K_{ij}(x) instead of K_{ij}(x)?"
+    ],
+    "slide_37": [
+      "Does this check happen before the actual collapse happens with the \"best position\" for the edge? If so, are we essentially doing a theoretical calculation about what would happen if a vertex is placed in a certain position?",
+      "I'm having trouble imagining a geometry in which this would happen. It seems like a point which \"flips\" triangles would generally have a higher quadric error than one closer to the middle of the original edge. Is there an intuitive example?",
+      "Is this theoretically a problem in the general case, or just when doing Quadric Simplification? If only this case, what's different?",
+      "What are the algorithms to detect the \"flips\"?",
+      "Logically, should this be checked in the flipping local operation or the global operation of simplification?"
+    ],
+    "slide_39": [
+      "How easy is it to parallelize delaunay triangulation? It seems that you would be constrained to operating on independent sets of triangles when flipping edges to ensure correctness",
+      "Why is just flipping sufficient to get a Delaunay mesh? It does not seem intuitively true due to many adversarial cases one can think of",
+      "Do we have to flip all the edges? It seems like flipping all edges will result in a mesh that is basically the same but in a different orientation."
+    ],
+    "slide_40": [
+      "Will the edge flips to improve degree collide with edge flips that make a mesh more Delaunay? ie. Will flipping edges to make a degree approach 6 cause the mesh to be less Delaunay or vice versa?",
+      "While performing remeshing over and over again, the \"improving degree\" algorithm above can fall into the trap of flipping an edge back and forth. Do we just keep extra state to detect and stop it?",
+      "How many iterations over the mesh is good in practice? Also, is it possible to have an infinite loop if you decide to go until you don't see any you can switch for a whole iteration cycle over the edges?",
+      "How exactly does flipping an edge increase the number of elements? When you flip an edge, the number of faces and edges seem to stay the same",
+      "For this algorithm when would you know when to stop? Would it be when avg degree is within some epsilon of 6?",
+      "Why edges flips and triangle rounds can bring the better quality? Also, can a face be bended even there is not an edge across it?",
+      "Since the average degree approaches 6 an the number of elements increases, is there ever a case when it would be beneficial to increase the number of mesh elements in order to improve the average degree?",
+      "When would be a good time to stop flipping?"
+    ],
+    "slide_41": [
+      "Does this only work on flat surfaces? Or do we usually just say this is an approximation of the original?",
+      "What is the motivation behind making a triangle more round?"
+    ],
+    "slide_42": [
+      "Is there any reason why 4/3 and 4/5 in particular were chosen?",
+      "why only flipping edges for vertex degree, and not for the delauney property? And if the two properties disagree on one flip, how do we usually resolve it in reality?",
+      "Were these constants derived from somewhere, or found experimentally, or just chosen as magic numbers?",
+      "Is there a video that simulates this process?",
+      "What does it mean to center tangentially?",
+      "What happens if we change the parameters 4/3 and 4/5 here?",
+      "Wouldn't this potentially also cause edges that were just split to also be collapsed? Since 4/3/2 - 2/3, and 2/3 < 4/5",
+      "Why do we choose these specific parameters of 4/3 and 4/5?"
+    ],
+    "slide_44": [
+      "It is like we lose some information for each resample step. Without new information, we will definitely degrade image quality.",
+      "Is this how the deepfried memes are made?",
+      "Is there a different way of downsampling which tries to make the upsample of the downsample look closer to the original, rather than trying to make the downsampled version look closer to the original?",
+      "It looks as though we lose some fidelity on the high frequency parts of the images as discussed in the earlier lecture on sampling.",
+      "Is there something similar to the Laplacian image pyramid in the graphics world, where we can reconstruct a downsampled mesh without loss?",
+      "Why does it make the edges appear sharper? Is this always the case?",
+      "Does this also occur with lossless techniques?"
+    ],
+    "slide_45": [
+      "Are there any cases where we would want this behavior?",
+      "I think the last cow looks like those concept cars.\nThat's a cool behavior",
+      "After downsample and then upsample, the modified cow looks very similar to the previous one, which means that the algorithm is efficient."
+    ],
+    "slide_46": [
+      "Why can't we just return the original mesh when we upsample?"
+    ]
+  }
+}

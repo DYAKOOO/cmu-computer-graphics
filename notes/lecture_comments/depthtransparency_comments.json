@@ -1,0 +1,232 @@
+{
+  "metadata": {
+    "lecture_name": "depthtransparency",
+    "total_slides_with_comments": 36,
+    "last_slide_number": 56,
+    "total_comments": 150
+  },
+  "comments": {
+    "slide_2": [
+      "How can the customized hardware accelarate the rasterization pipeline?"
+    ],
+    "slide_5": [
+      "on the right hand side, all 3 triangles seem visible, however physically what it does is probably just simply adding thee colors on top of each other multiplied by an alpha value",
+      "In art, the primary colors are RYB but in graphics they're RGB. How does this affect how we find the right colors for transparent triangles?"
+    ],
+    "slide_6": [
+      "How do we get the depth for triangle vertices before interpolating inside the triangle?",
+      "I have the same question as cheesecake. It'd be great if we can do an example together in class!",
+      "Can we do a single set of samples to get both the depth and position, or do they have to be done separately?",
+      "Is barycentric interpolation done on demand per pixel or is it precomputed and looked up during rasterization?",
+      "If it's possible to calculate using barycentric coordinates, do we need to run through the samples in any particular order, or can we simply calculate depth given the triangle points, sample point, and whether or not the point is in the triangle?",
+      "for barycentric coordinates, does the order matter?",
+      "Does the floating point precision affects the precision of the depth \"d_i\"? Doesn't triangles closer to the camera have a higher precision than the ones further away?",
+      "Does the order matter when calculating the depth using Baycentric coordinates and also how do we know the viewing angle is it given to us?"
+    ],
+    "slide_7": [
+      "What does the closest triangle mean here?",
+      "I'm not entirely sure what is happening in this slide. Is the all depth buffer like an rgb array with \"darker\" or more saturated colors representing something closer? If so, how exactly do triangles play a role in here?",
+      "Does the depth mean the distance between the object and the camera? Or thickness of the shape? Or logical overlap order of shapes?",
+      "How can we determine the depth? Is it built into the image information or are we deciding at what intervals they should be?",
+      "Why do we call the storage of depth \"buffer\"?"
+    ],
+    "slide_8": [
+      "Is there a reason why near is represented with a darker value while far is represented with a lighter? If we were in a dark room and we shined a flashlight, wouldn't closer objects appear brighter?"
+    ],
+    "slide_10": [
+      "Are the depths just given initially like the colors? How do we know what the depths are. And why can't we just draw things based on the order it's drawn rather than the depth",
+      "I have the same question as above, about how to figure out the depth values are, especially with the RGB pictures.",
+      "Are depth values usually stored in the render_image or is it usually a seperate buffer?",
+      "Where do we store the depths? Is this separate from the color buffer?",
+      "Could we store depth for the whole triangle to save space?"
+    ],
+    "slide_15": [
+      "The order shouldn't matter: max is associative.",
+      "The order does not matter since at the end only one sample (the nearest one) gets rendered in the occlusion case.",
+      "Since order doesn't matter, does this offer an opportunity for parallelism when computing the depth buffer?",
+      "I also think the order should not matter, we will just overwrite the value in color buffer if we find there is a closer object.",
+      "I'm not sure if this makes it easy for parallel processing though. Everything needs to share the same z-buffer and will need to be constantly reading and writing from the buffer.",
+      "How does this method scale with the coverage/nummber of triangles hit at these samples? Is this a reason to cap our \"far\" value for the view frustum so that we don't have to do depth calculations for an excessive amount of scene geometry?",
+      "Is super sampling also applies to this"
+    ],
+    "slide_16": [
+      "Are we concerned about the fact that if we have two primitives at the same depth, then the order of evaluation now actually does matter?",
+      "Does blending from supersampling affect what happens when two primitives are at the same depth and order evaluation matters?",
+      "Is it because if two primitives have very similar/ same depths, floating point inaccuracies might cause inconsistent result with which primitive gets displayed?",
+      "How efficient is this method?",
+      "thinking about the implementation side of things, does this implementation assume we're only testing for depth via the z coordinate? if we're testing for depth along a vector, would we need to project the coordinates onto the vector space or something like that? or is it okay to only use the z coordinate?",
+      "When tie breaking, is there a common practice for which primitive gets rendered, or is it random?"
+    ],
+    "slide_17": [
+      "To clarify, it seems like with the z buffer method they calculate occlusion point by point rather than primitive by primitive, is this the same with semi-transparent pixels we discuss later?",
+      "Is this method efficient enough? Because it seems like it is redrawing a portion of the shape on top of each other whenever there is one with smaller depth. In the case of drawing triangles largely overlap with each other and are somehow order from the farthest to the closest, wouldn't this method be a lot slower to perform?",
+      "Would the best way to parallelize this occlusion test be to do the computation per-triangle or per-pixel? Does it come down to optimization factors (locality, locking, etc.) or is there a correctness issue with doing it one of these ways?",
+      "Wouldn't this lead to very bizarre images if the sample rate is not high enough?",
+      "What if a sample point is on the edge of interpenetration? Is it rendered with color of the shallower triangle?",
+      "This seems acceptable at a lower level, but I feel like there could be certain bugs that arise from this (inefficient from having to redraw something out in the front or potential sampling issues).",
+      "Is there a minimum number of/spread of samples that are needed to render this? e.g. how would the method know that the line segment of intersection between the triangles is at a certain point or starts and ends at certain points if there wasn't a sample on the exact segment?",
+      "What is they are at the same depth?",
+      "How many sample points are usually required for us to develop a good enough image based on the relative depth?"
+    ],
+    "slide_19": [
+      "How does the over operator handle situations like these when transparency might be involved?",
+      "Do we get the color of a pixel as the average color of the supersamples or do we factor in the depth at each supersample as well?",
+      "To add to daria's question, do we calculate a winning color? What about shadows (or are shadows instead specified by farther triangle's color manually)?",
+      "I'm curious about what will the image looks like if we do depth buffer in the original image after the supersampling of colors?",
+      "Does double counting cause a problem with the resulting color (ex. darker than it should be, or a mix of the two colors at the border?)"
+    ],
+    "slide_22": [
+      "If we have a lot of triangles next to each other, will supersampling always make it look nicer or will it sometimes make a blur that looks bad?"
+    ],
+    "slide_23": [
+      "If there are many primitive types, do we have to rasterize them one by one? Are there concurrent/parallel ways to rasterize many primitives possible? (I guess it may still get log complexity at the max operation, though)."
+    ],
+    "slide_25": [
+      "Since most of our discussions are about RGBA, I'm curious, are graphics algorithms applicable to YUV encoding or other ways of encoding color? Or do we typically convert these other encodings to RGBA to apply these algorithms and then convert back?",
+      "Does the alpha value of a pixel allow more colors to be displayed under it? (like say, photoshop and layers)?",
+      "Is it a good idea to remove the primitive from our rasterization process if its alpha value is 0?",
+      "is the transparency value's difference only applying on multiplying RGB values? If this is how I understand it, will this only be a problem when I am rendering two overlapping triangles? (or will that still be ok)"
+    ],
+    "slide_26": [
+      "Does the black color in the alpha channel images represent alpha = 0 or alpha = 1?",
+      "What algorithm is used to compute the alpha values of some object in the image, such as this koala?",
+      "As a follow up question, how do we determine the optimal alpha value for the object in the image?"
+    ],
+    "slide_27": [
+      "Are there other potential problems that come up besides fringing when color/alpha is not treated properly?",
+      "What are other methods of overlapping two images?"
+    ],
+    "slide_29": [
+      "Is this similar to the \"halo effect\" when standing in front of a green screen and pasting in a background?",
+      "How does movie industry deal with fringing? Do they use similar techniques we will learn in this class?",
+      "Could fringing be a good thing? Suppose that we want a shadow - fringing would provide that effect for us.",
+      "Is fringing ever also caused by bad green screen chroma keying? I feel that a similar thing could happen if the alpha values were not properly generated."
+    ],
+    "slide_30": [
+      "Does A over B become closer to B over A as both alpha values decrease? If this is true, are there any strategies to avoid some of the pains of semitransparent images talked about in later slides by just approximating the correct color without worrying too much about order in some cases?",
+      "Why was this \"tinted glass\" model chosen? (as opposed to maybe modeling them like paper, where the intersection would be closer to a blend of the two colors rather than something darker.)",
+      "In the case where we rasterize fine lines/objects like the hair of the koala, would supersampling actually help? I imagine there would be a lot of pixelated artifacts that get produced?"
+    ],
+    "slide_31": [
+      "Why does this result in fringing?",
+      "Why does this work and it's not the same for B over A? Is there a constant factor of alpha such that it will make it look like one is over another?",
+      "Why do we need to composite colors as well as the alpha value? Wouldn't adjusting the alpha take care of some of the compositing for us?"
+    ],
+    "slide_32": [
+      "These two methods seem unintuitive to me. Is there a physics explanation that can explain why light may act as the methods suggest?",
+      "I think I might just be missing something really obvious, but why is it that we need the \"(1-a_B)\" in the expression for C'?",
+      "I am also curious if there is an explanation from physics about why this produces what we \"expect\" to see. Do we have models of materials that absorb X% of light? In which case we want our resulting alpha value to correspond to the % of light that the two materials over each other would let through.",
+      "It seems like the results of premultiplication and non-premultiplication are only differing by 1/alpha_c = 1/(alpha_b + (1-alpha_b)*alpha_a). It makes sense that B over A is not the same as A over B, but why does incorporating this factor eliminate fringing? This gets even more confusing for the example on the next slide where alpha_a is 1, isn't this factor just 1 then?",
+      "After \"un_premultiply\" to get the final color, is the alpha value of C still equal to alpha_c?",
+      "It seems like the reason this approach works is that we keep track of the alpha values, which we don\u2019t do in the approach on the previous slide. But we could also track these values without \u201cpremultiplying\u201d, e.g. just storing (r, g, b, a) and then the r, g, b values are actually the real ones we want, and so we wouldn\u2019t need to divide by alpha in the end. Are there advantages/disadvantages of these two approaches?",
+      "Is this only a devision by alpha, mathematically? The issue never appears in project 1, since alpha is always 255 after blending...",
+      "What is the alpha of the overlap area? Is it also calculated by B' + (1-alpha)A'? Or is this formula only for calculating RGB value?",
+      "It looks like operations we use when we deal with homogenous space. Is there any mathematical connections between them?",
+      "Is this operator mathematically reasoned about rigorously? Properties such as being closed over composition aren't trivial. Even if they are, is there an intuitive geometric explanation for why the over operator with pre-multiplied alpha has such properties?",
+      "What's the mathmatical connection of this with homogenous space?",
+      "Homogeneous coordinates"
+    ],
+    "slide_33": [
+      "When we don't premultiply we blend the green background with the grey background without first considering the alpha value of the background (0), so you have the green showing up in the composite image.",
+      "Does the fringe effect only occur when up/downsampling? That is, do we avoid the fringe entirely by just doing a standard one sample/pixel, even without premultiplying?",
+      "Is it true that if we don't premultiply with alpha_a, as in the \"B over A non-premultiplied\" graph, the upsampled alpha value will have samples that are between 1 and 0 to allow some residual green color. Premultiplication eliminates the fractional alphas in this case to avoid residual greens.",
+      "Is there any difference between compositing first and upsampling first? What if we first composite with the new background and then upsample, will there be any difference?",
+      "If we don't premultiply, when we do up-sample, the object's color would blend with the background color. And when we apply it to the new background it would carry the original background color. Premultiplying is like getting rid of the background before applying the upsample, so the background color won't be carried over in this case.",
+      "I can understand why we get fringing when we don't premultiply, I'm pretty sure it's just because we're passing in the original values, some of which are green and multiplying by a_a and (1-a_b) won't dampen that as much, but I'm uncertain as to why premultiplying changes that. Is it because premultiplying somehow darkens the colors?",
+      "Is the pre-multiplication just a way to isolate the image from the background?\nFor example, if I have a picture without background, ie, the checkerboard thing on photoshop, then we don't need pre-multiply get rid of fringe right?",
+      "What are B' and A' here?",
+      "What would happen if we did (1-a)B + (a)A?"
+    ],
+    "slide_34": [
+      "Why are we filtering the color as well as the alpha values?",
+      "Is pre-multiplied filtering the correct way to sample texture rather than just add rgba up?"
+    ],
+    "slide_35": [
+      "I'm not exactly sure why the first behavior is not what we expect - if we have many translucent things overlapped on one another, shouldn't we expect the total to be darker like in the first case as each of them would block some light? At least physically this would make more sense",
+      "Does this mean that it doesn't matter what order two triangles are composited over one another in the premultiplied case if the two triangles have the same exact color?",
+      "I have a similar confusion to one of the above commenters: shouldn\u2019t it be the case that having multiple overlapping translucent images is different than having just one? It at least seems to be the case in the image shown on this slide: for example, if we look at triangles A and B, the region where they overlap is darker than either individual triangle.",
+      "Does this sort of calculation generalize to a lot of different objects? Do we essentially just directly work with all objects at the same time, or is there ever an instance when we want to break down many overlapping images and consider each pair of them separately?",
+      "For the non-premultiplied, would it be brighter if we take the average of the two alphas?",
+      "In the non-premultiplied case, do we use alpha only for multiplying and not for rendering? If we multiply alpha with color when we render like the premultiplied, wouldn't the color be lighter than we want it to be?"
+    ],
+    "slide_37": [
+      "What if two semi-transparent triangles overlap? In this case, how can we apply the \"over\" function that isn't commutative?",
+      "It wasn't explicitly mentioned in the video, but what would you actually do for the depth test? In the case where all triangles are transparent, do we still need this depth check?",
+      "Because of this assumption, is this why we can still occasionally see fringing sometimes like in games?",
+      "I'm a little confused as to why it suffice sto simply update the depth buffer with the higher depth. Is it necessarily the case that, given two sets of objects at different depths, only the higher set of objects should be rendered? This seems counterintuitive to me if we allow varying levels of opacity. Perhaps there is something I am missing?",
+      "How do we sort primitives when they intersect with different relative position in z-axis?",
+      "Why do we require back to front rendering in the triangles?"
+    ],
+    "slide_38": [
+      "Are there strategies for rendering semi-transparent surfaces in any order, or must they be sorted back to front?",
+      "What if there is no easy ordering of non-opaque objects? For example when A's corner overlaps B, B's overlaps C, and C's overlaps A.",
+      "How do modern graphics pipelines handle the intersecting and overlapping transparent triangles?",
+      "What is an easy way to sort triangles by depth order? What if they intersect? Doesn't sorting require a lot of overhead?",
+      "The ordering requirement makes it much hard to render circles in parallel. I just come across an assignment in another class, which is to write a parallel render algorithm to render a lot of circles. https://www.cs.cmu.edu/afs/cs/academic/class/15418-f21/www/assignment_writeups/asst2.pdf.",
+      "How do you composite a transparent triangle over an opaque one? Is the composited value not completely opaque?",
+      "Is the sorting based on depth done specifically at each point or are there some geometric tricks that we can use to simply the calculations / sorting?",
+      "Do we need to split up intersecting triangles in step 2?",
+      "Is there a \"under\" rather than \"over\" function?",
+      "How could you do something like the transparent triangles in parallel, when you are needing to do them in a specific order?",
+      "What if there are two things on the same layer? Are we going to combine these two image for the calculation?",
+      "If a new triangle is added to a stack of existing opaque/transparent triangles (e.g. somewhere in the middle of the depth pile), would the entire thing have to be re-rendered? or would only the space covered by the added triangle need to be recalculated in some other way that isn't necessarily back to front?",
+      "Do modern graphic pipelines do this differentiation between opaque and translucent objects?",
+      "How would we keep in track of hierarchy of the triangles work in a code?",
+      "For part 2, does that mean we first have to sort them in parallel and then render them? How is this necessarily better than sorting first and then rendering via alpha composite, exactly, if we still need to have them sorted?",
+      "Can you only handle layers in a sequential format or is there a way to use multiple processors and speed up this process?"
+    ],
+    "slide_39": [
+      "In the video, you said the rasterization is applied to each triangle one-by-one sequentially. However, when rendering semi-transparent primitives, we need to sort the triangles in some way so that the images are rendered in back to front order. If that's the case are the last 2 steps applied to all primitives collectively?"
+    ],
+    "slide_40": [
+      "Why does matrix T have four dimensions? I think when we talked about it in the previous lecture, we didn't add a fourth coordinate yet. Shouldn't it just be a 3*3 matrix representing a 3D transformation?",
+      "Are we immediately using the quaternion transformation for our input coordinates or is there another reason why the matrices are 4x4?",
+      "This assumes we have all our scene targets already described as triangles. But will we cover how to break down more complex polygons into triangles?",
+      "What does the 4th dimension represent in the transform matrix?",
+      "is the 4x4 matrix because of homogenous coordinates? do we always just use dim + 1 for these kinds of applications?",
+      "When an .obj file is opened by a text editor, it has a whole list of vertices and more. Are they equivalent to the information here?"
+    ],
+    "slide_44": [
+      "There seems to be a lot of transforming vertices, first to camera space, then coordinate space, then screen space. Are there any methods in modern hardware to do this all in one step or make it more efficient?"
+    ],
+    "slide_45": [
+      "Is there a tradeoff between memory latency and arithmetic intensity when deciding what to precompute? I can imagine if memory is expensive to access, it might be more efficient to compute some of these on the fly"
+    ],
+    "slide_47": [
+      "Why don't we compute colors after the z-buffer test?"
+    ],
+    "slide_48": [
+      "Is there a reason why we do the depth test this late in the pipeline? Do the alpha values come from the texture map and not the triangle itself?",
+      "I have the same question, but is this because the alternative would then be to divide up the shapes (as mentioned in slide 17), which should be expensive?",
+      "@tianez I think we could do this depth test before computing the colors at least, so we could save a bit of computation.",
+      "Is there any specific reason for making depth test later than other calculation?"
+    ],
+    "slide_49": [
+      "I understand what each step is doing, but I am confused why it has to be ordered this way? Why are alpha values computed at the very last before updating the buffer?"
+    ],
+    "slide_50": [
+      "What are some examples of additional steps that have been added to the pipeline?",
+      "Does this graphics pipeline change at all when rendering video or does it remain mostly the same?"
+    ],
+    "slide_53": [
+      "As GPUs become more general purpose, do you expect there to be a split between hardware specialized for graphics and GPUs used for other applications like ML, etc.?",
+      "How exactly do we design hardware for these special computations? Like, are these chips only processing the inputs in one way and doing so very quickly, then passing the vectors through?"
+    ],
+    "slide_54": [
+      "What does \"add geometry\" mean?",
+      "How much parallelism is there between different stages of the pipeline? For example, it must not be possible to rasterize an image before it has even been converted to screen coordinates, but is there parallelism between other stages of the pipeline? I would assume that one can perform clipping at the same time as rasterization, for instance (it amounts to a simple check)"
+    ],
+    "slide_55": [
+      "Is ray tracing also parallelizable, or is it just that GPU's have special hardware that is just good at doing ray tracing operations?",
+      "Does ray-tracing requires some specialized parts in GPU to be computed efficiently?",
+      "Since much modern GPU hardware is becoming more programmable/general, should we expect the ray tracing pipeline to be carried out on GPUs traditionally designed for rasterization pipelines?",
+      "What are the tradeoffs of ray tracing vs rasterization? I'm assuming that ray tracing gives more realistic results, but is slower?",
+      "What's the difference between rasterization and ray tracing?",
+      "Are there methods which interleave elements of ray tracing and rasterization, or are the methods best left as separate approaches to rendering images."
+    ],
+    "slide_56": [
+      "If you found these renders as jaw-dropping as I did, I'd recommend taking a look at a similar project by many 3D artists: https://www.youtube.com/watch?v=Oszl95YWfbs",
+      "I was under the impression that ray tracing was slower than standard rasterization, but this is real time and very impressive. Is the reason that it may be considered this way just due to lack of hardware and accessibility for it, and it is maybe slower in software?"
+    ]
+  }
+}
