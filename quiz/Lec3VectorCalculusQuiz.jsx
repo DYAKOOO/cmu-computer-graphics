@@ -1,1120 +1,803 @@
-'use client';
+'use client'
+import { useState, useEffect, useRef } from 'react'
+import { Sigma } from 'lucide-react'
 
-import { useState, useEffect, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Sigma } from 'lucide-react';
+// Lecture 3: Vector Calculus — 70 questions
 
-/**
- * CMU 15-462/662 Computer Graphics — Lecture 3
- * Vector Calculus in Computer Graphics
- *
- * Images served from /assets/ (Next.js public/assets/).
- * SVG concept diagrams generated inline for key visual concepts.
- */
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
-</style>
-
-// ─────────────────────────────────────────────────────────────
-// INLINE SVG CONCEPT DIAGRAMS
-// ─────────────────────────────────────────────────────────────
-
-const DiagramParallelogram = () => (
-  <svg viewBox="0 0 260 160" width="260" height="160" style={{ display: 'block' }}>
-    <defs>
-      <marker id="ah" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-        <polygon points="0 0, 8 3, 0 6" fill="#38bdf8" />
-      </marker>
-    </defs>
-    <polygon points="40,120 160,120 220,40 100,40" fill="#38bdf815" stroke="#38bdf8" strokeWidth="1.5" />
-    <line x1="40" y1="120" x2="158" y2="120" stroke="#4ade80" strokeWidth="2.5" markerEnd="url(#ah)" />
-    <line x1="40" y1="120" x2="98" y2="42" stroke="#f472b6" strokeWidth="2.5" markerEnd="url(#ah)" />
-    <line x1="40" y1="120" x2="40" y2="40" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4,3" />
-    <line x1="40" y1="40" x2="100" y2="40" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4,3" />
-    <text x="100" y="138" fill="#4ade80" fontSize="13" fontFamily="Rajdhani" fontWeight="600">u</text>
-    <text x="60" y="90" fill="#f472b6" fontSize="13" fontFamily="Rajdhani" fontWeight="600">v</text>
-    <text x="125" y="88" fill="#38bdf8" fontSize="12" fontFamily="Rajdhani">Area = ‖u × v‖</text>
-    <text x="155" y="50" fill="#94a3b8" fontSize="11" fontFamily="Rajdhani">h</text>
-  </svg>
-);
-
-const DiagramCrossProduct3D = () => (
-  <svg viewBox="0 0 260 180" width="260" height="180" style={{ display: 'block' }}>
-    <defs>
-      <marker id="ah2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-        <polygon points="0 0, 8 3, 0 6" fill="#38bdf8" />
-      </marker>
-      <marker id="ah3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-        <polygon points="0 0, 8 3, 0 6" fill="#4ade80" />
-      </marker>
-      <marker id="ah4" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-        <polygon points="0 0, 8 3, 0 6" fill="#f472b6" />
-      </marker>
-      <marker id="ah5" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-        <polygon points="0 0, 8 3, 0 6" fill="#fbbf24" />
-      </marker>
-    </defs>
-    {/* Origin */}
-    <circle cx="80" cy="130" r="3" fill="#e2e8f0" />
-    {/* u vector */}
-    <line x1="80" y1="130" x2="178" y2="130" stroke="#4ade80" strokeWidth="2.5" markerEnd="url(#ah3)" />
-    <text x="185" y="135" fill="#4ade80" fontSize="13" fontFamily="Rajdhani" fontWeight="600">u</text>
-    {/* v vector */}
-    <line x1="80" y1="130" x2="130" y2="60" stroke="#f472b6" strokeWidth="2.5" markerEnd="url(#ah4)" />
-    <text x="135" y="55" fill="#f472b6" fontSize="13" fontFamily="Rajdhani" fontWeight="600">v</text>
-    {/* u×v — out of plane */}
-    <line x1="80" y1="130" x2="80" y2="22" stroke="#fbbf24" strokeWidth="2.5" markerEnd="url(#ah5)" />
-    <text x="86" y="18" fill="#fbbf24" fontSize="12" fontFamily="Rajdhani" fontWeight="600">u × v</text>
-    {/* Right-angle mark */}
-    <polyline points="90,130 90,120 80,120" fill="none" stroke="#94a3b8" strokeWidth="1.2" />
-    {/* Labels */}
-    <text x="8" y="90" fill="#94a3b8" fontSize="11" fontFamily="Rajdhani">⊥ to both u, v</text>
-    <text x="8" y="165" fill="#38bdf8" fontSize="11" fontFamily="Rajdhani">Right-hand rule</text>
-  </svg>
-);
-
-const DiagramGradientField = () => (
-  <svg viewBox="0 0 260 200" width="260" height="200" style={{ display: 'block' }}>
-    <defs>
-      <radialGradient id="heatmap" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.7" />
-        <stop offset="100%" stopColor="#0a0a0f" stopOpacity="0.2" />
-      </radialGradient>
-      <marker id="gah" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
-        <polygon points="0 0, 6 2.5, 0 5" fill="#38bdf8" />
-      </marker>
-    </defs>
-    <ellipse cx="130" cy="100" rx="110" ry="85" fill="url(#heatmap)" />
-    {/* Gradient arrows pointing outward from centre */}
-    {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => {
-      const r = deg * Math.PI / 180;
-      const x1 = 130 + 35 * Math.cos(r); const y1 = 100 + 30 * Math.sin(r);
-      const x2 = 130 + 70 * Math.cos(r); const y2 = 100 + 55 * Math.sin(r);
-      return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#38bdf8" strokeWidth="1.8" markerEnd="url(#gah)" />;
-    })}
-    <circle cx="130" cy="100" r="5" fill="#fbbf24" />
-    <text x="110" y="95" fill="#fbbf24" fontSize="11" fontFamily="Rajdhani">x₀</text>
-    <text x="96" y="190" fill="#94a3b8" fontSize="11" fontFamily="Rajdhani">∇f points uphill (steepest ascent)</text>
-  </svg>
-);
-
-const DiagramDivergenceCurl = () => (
-  <svg viewBox="0 0 260 120" width="260" height="120" style={{ display: 'block' }}>
-    <defs>
-      <marker id="dah" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
-        <polygon points="0 0, 6 2.5, 0 5" fill="#f472b6" />
-      </marker>
-      <marker id="cah" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
-        <polygon points="0 0, 6 2.5, 0 5" fill="#4ade80" />
-      </marker>
-    </defs>
-    {/* Divergence — source */}
-    <text x="12" y="18" fill="#f472b6" fontSize="12" fontFamily="Rajdhani" fontWeight="600">Divergence (source)</text>
-    <circle cx="65" cy="70" r="4" fill="#f472b6" />
-    {[0, 60, 120, 180, 240, 300].map((deg, i) => {
-      const r = deg * Math.PI / 180;
-      return <line key={i} x1={65 + 8 * Math.cos(r)} y1={70 + 8 * Math.sin(r)}
-        x2={65 + 28 * Math.cos(r)} y2={70 + 28 * Math.sin(r)}
-        stroke="#f472b6" strokeWidth="1.8" markerEnd="url(#dah)" />;
-    })}
-    <text x="40" y="110" fill="#94a3b8" fontSize="10" fontFamily="Rajdhani">∇·X {'>'} 0</text>
-    {/* Curl — rotation */}
-    <text x="148" y="18" fill="#4ade80" fontSize="12" fontFamily="Rajdhani" fontWeight="600">Curl (rotation)</text>
-    <circle cx="195" cy="70" r="4" fill="#4ade80" />
-    {[0, 60, 120, 180, 240, 300].map((deg, i) => {
-      const r = deg * Math.PI / 180;
-      const tang = r + Math.PI / 2;
-      return <line key={i} x1={195 + 22 * Math.cos(r)} y1={70 + 22 * Math.sin(r)}
-        x2={195 + 22 * Math.cos(r) + 14 * Math.cos(tang)}
-        y2={70 + 22 * Math.sin(r) + 14 * Math.sin(tang)}
-        stroke="#4ade80" strokeWidth="1.8" markerEnd="url(#cah)" />;
-    })}
-    <text x="172" y="110" fill="#94a3b8" fontSize="10" fontFamily="Rajdhani">∇×X ≠ 0</text>
-  </svg>
-);
-
-const DiagramLaplacian = () => (
-  <svg viewBox="0 0 260 160" width="260" height="160" style={{ display: 'block' }}>
-    <defs>
-      <marker id="lah" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
-        <polygon points="0 0, 6 2.5, 0 5" fill="#fbbf24" />
-      </marker>
-    </defs>
-    {/* 5-point stencil */}
-    <rect x="30" y="20" width="200" height="120" rx="8" fill="#1e2a3a" />
-    {/* Centre */}
-    <circle cx="130" cy="80" r="14" fill="#fbbf2430" stroke="#fbbf24" strokeWidth="1.5" />
-    <text x="124" y="85" fill="#fbbf24" fontSize="12" fontFamily="JetBrains Mono" fontWeight="600">-4</text>
-    {/* 4 neighbours */}
-    {[[-50, 0], [50, 0], [0, -40], [0, 40]].map(([dx, dy], i) => (
-      <g key={i}>
-        <circle cx={130 + dx} cy={80 + dy} r="12" fill="#38bdf820" stroke="#38bdf8" strokeWidth="1.2" />
-        <text x={130 + dx - 5} y={80 + dy + 5} fill="#38bdf8" fontSize="12" fontFamily="JetBrains Mono">+1</text>
-        <line x1={130 + dx * 0.35} y1={80 + dy * 0.35}
-              x2={130 + dx * 0.65} y2={80 + dy * 0.65}
-              stroke="#94a3b8" strokeWidth="1.5" />
-      </g>
-    ))}
-    <text x="38" y="152" fill="#94a3b8" fontSize="10" fontFamily="Rajdhani">Δf ≈ Σneighbours − 4·centre (discrete 5-pt stencil)</text>
-  </svg>
-);
-
-const DiagramSkewSymmetric = () => (
-  <svg viewBox="0 0 260 120" width="260" height="120" style={{ display: 'block' }}>
-    <rect x="10" y="10" width="240" height="100" rx="8" fill="#1e2a3a" />
-    <text x="20" y="35" fill="#94a3b8" fontSize="12" fontFamily="JetBrains Mono">[u]ₓ =</text>
-    <text x="85" y="35" fill="#e2e8f0" fontSize="12" fontFamily="JetBrains Mono">⎡  0   -u₃   u₂ ⎤</text>
-    <text x="85" y="58" fill="#e2e8f0" fontSize="12" fontFamily="JetBrains Mono">⎢  u₃   0   -u₁ ⎥</text>
-    <text x="85" y="81" fill="#e2e8f0" fontSize="12" fontFamily="JetBrains Mono">⎣ -u₂   u₁   0  ⎦</text>
-    <text x="20" y="105" fill="#38bdf8" fontSize="11" fontFamily="Rajdhani">[u]ₓ v = u × v  •  [u]ₓ = −[u]ₓᵀ</text>
-  </svg>
-);
-
-// ─────────────────────────────────────────────────────────────
-// QUIZ DATA  (25 questions, all with real slide images)
-// ─────────────────────────────────────────────────────────────
-const quizData = [
-  // ─── NORMS & INNER PRODUCTS ─────────────────────────────
-  {
-    id: 1,
-    question: "Why is vector calculus important for computer graphics, according to the opening of the lecture?",
-    questionType: "single-choice",
-    options: [
-      "It provides the mathematical foundation for color theory",
-      "It offers a language for talking about spatial relationships, rates of change, and transformations",
-      "It is essential for GPU programming",
-      "It simplifies shader development"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "Vector calculus gives graphics a vocabulary. Without it you cannot describe how light reflects off a surface, how cloth deforms, or how a mesh smooths — all of these involve rates of change in space.",
-      reference: "[01:23] 'The basic reason is that it gives us a language for talking about spatial relationships rates of change transformations and so forth.'",
-      computation: `# Everything in graphics involves spatial rates of change:
-# • Normal vectors  →  cross product of tangent vectors
-# • Shading         →  dot product (N·L)
-# • Simulation      →  ∂u/∂t = ν∇²u  (diffusion PDE)
-# • Optimisation    →  gradient descent on energy functions`,
-      connection: "[01:48] PDE-based physically-based animation was the first application mentioned."
-    },
-    slideImages: ["image_1771911982856_0.png"],
-    diagram: null,
-  },
-  {
-    id: 2,
-    question: "What is the defining characteristic of the Euclidean norm?",
-    questionType: "single-choice",
-    options: [
-      "It always yields a positive value for non-zero vectors",
-      "It is the notion of length preserved by rigid motions — rotations, translations, and reflections",
-      "It only works correctly in 3-dimensional space",
-      "It measures the angle between two vectors"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "The Euclidean norm is defined geometrically, not algebraically. A ruler reads the same length regardless of how you orient it — that invariance under rigid motion is the definition.",
-      reference: "[02:23–03:18] 'We can say the euclidean norm is the notion of length preserved by rigid motions of space, so rotations translations and reflections.'",
-      computation: `import numpy as np
-
-u = np.array([3.0, 4.0])
-
-# Geometric definition: length invariant under rigid motion
-# Coordinate formula (orthonormal basis only):
-norm = np.sqrt(np.sum(u**2))   # 5.0
-print(norm)                     # 5.0`,
-      connection: "This coordinate-free definition motivates why orthonormal bases matter — without them, the formula √Σuᵢ² gives the wrong answer."
-    },
-    slideImages: ["image_1771912248659_0.png"],
-    diagram: null,
-  },
-  {
-    id: 3,
-    question: "When must you be careful using the coordinate formula ‖u‖ = √(u₁²+…+uₙ²)?",
-    questionType: "single-choice",
-    options: [
-      "When the vector has more than 3 components",
-      "When the vector is not normalised",
-      "Whenever the basis is not orthonormal — the formula gives geometric length only in an orthonormal basis",
-      "When performing floating-point arithmetic"
-    ],
-    answer: 2,
-    explanation: {
-      intuition: "The formula squares and sums components. This only measures true geometric length when the basis vectors are perpendicular and unit length. Skewed or stretched axes distort the result.",
-      reference: "[04:30] 'Whenever we work in coordinates we have to be careful because this expression does not give us the geometric length unless the vector u happens to be encoded in an orthonormal basis.'",
-      computation: `import numpy as np
-
-# Skewed basis B = [[1,1],[0,1]] — NOT orthonormal
-B = np.array([[1., 1.], [0., 1.]])
-coords = np.array([1., 1.])          # coordinates in skewed basis
-geometric = B @ coords               # actual vector = [2, 1]
-
-print("Coord formula:", np.linalg.norm(coords))    # √2 — WRONG
-print("True norm:    ", np.linalg.norm(geometric))  # √5 — correct`,
-      connection: "The same warning applies to the dot product formula Σuᵢvᵢ — it only equals ⟨u,v⟩ geometrically in an orthonormal basis."
-    },
-    slideImages: ["image_1771912292087_0.png", "image_1771912295116_0.png"],
-    diagram: null,
-  },
-  {
-    id: 4,
-    question: "What is the geometric definition of the Euclidean inner product for n-dimensional vectors?",
-    questionType: "single-choice",
-    options: [
-      "Σuᵢvᵢ  (sum of component-wise products)",
-      "‖u‖ · ‖v‖ · cos θ, where θ is the angle between them",
-      "The projection of u onto v scaled by ‖v‖",
-      "The reciprocal of the distance between u and v"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "The inner product measures alignment. Parallel vectors (θ=0) give maximum value; perpendicular vectors (θ=90°) give zero. This geometric view generalises to infinite dimensions.",
-      reference: "[05:41] 'For n-dimensional vectors the euclidean inner product is ‖u‖‖v‖cos θ.'",
-      computation: `import numpy as np
-u = np.array([1., 0., 0.])
-v = np.array([0., 1., 0.])
-
-print(np.dot(u, v))                         # 0.0  (90° apart)
-print(np.linalg.norm(u) * np.linalg.norm(v) * np.cos(np.pi/2))  # 0.0`,
-      connection: "The coordinate formula Σuᵢvᵢ is a consequence when using an orthonormal basis."
-    },
-    slideImages: ["image_1771912310455_0.png", "image_1771912379439_0.png"],
-    diagram: null,
-  },
-  // ─── CROSS PRODUCT ──────────────────────────────────────
-  {
-    id: 5,
-    question: "What two geometric properties fully characterise the cross product u × v?",
-    questionType: "single-choice",
-    options: [
-      "Magnitude = dot product of u and v; direction = their sum",
-      "Magnitude = area of the parallelogram formed by u and v; direction = orthogonal to both",
-      "Magnitude = product of vector lengths; direction = average of their directions",
-      "Magnitude = sum of vector lengths; direction = their difference"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "Two arrows glued at their tails span a parallelogram. The cross product is an arrow sticking straight out of that parallelogram whose length equals the parallelogram's area.",
-      reference: "[07:52] 'The magnitude is equal to the area of the parallelogram made by the two vectors and the direction of the cross product is orthogonal to both vectors.'",
-      computation: `import numpy as np
-u = np.array([1., 0., 0.])
-v = np.array([0., 1., 0.])
-c = np.cross(u, v)
-print("cross:", c)                    # [0, 0, 1]
-print("‖c‖:", np.linalg.norm(c))     # 1.0 = area of unit square
-print("c·u:", np.dot(c, u))          # 0.0 — perpendicular to u
-print("c·v:", np.dot(c, v))          # 0.0 — perpendicular to v`,
-      connection: "The area interpretation is used to compute face normals and surface area in mesh processing."
-    },
-    slideImages: ["image_1771913321064_0.png"],
-    diagram: <DiagramParallelogram />,
-  },
-  {
-    id: 6,
-    question: "Why does the cross product make sense only in three dimensions?",
-    questionType: "single-choice",
-    options: [
-      "Because in 2D there is no vector orthogonal to both u and v within the plane, and in 4D+ there are infinitely many such vectors — no unique answer",
-      "Because cross products are mathematically undefined outside 3D",
-      "Because geometric operations only make sense in our physical 3D world",
-      "Because the parallelogram area property only works in 3D"
-    ],
-    answer: 0,
-    explanation: {
-      intuition: "2D: any perpendicular vector would leave the plane, giving 3D. 4D: the null space of [u;v] has dimension 2 — infinitely many unit vectors are perpendicular to both. Only in 3D is there exactly one (up to sign).",
-      reference: "[09:25] 'In 2D there is no vector orthogonal to both u and v.' [09:45] 'In 4D we have many different vectors that could be orthogonal to both u and v.'",
-      computation: `import numpy as np
-# In 4D: any [0, 0, a, b] with a²+b²=1 is ⊥ to both [1,0,0,0] and [0,1,0,0]
-u4 = np.array([1., 0., 0., 0.])
-v4 = np.array([0., 1., 0., 0.])
-# [0,0,1,0] and [0,0,0,1] are both valid — no unique cross product`,
-      connection: "A 7D generalised cross product exists as a curiosity, but 3D is the graphics-relevant case."
-    },
-    slideImages: ["image_1771913464398_0.png", "image_1771913472308_0.png"],
-    diagram: <DiagramCrossProduct3D />,
-  },
-  // ─── MATRIX REPRESENTATIONS ─────────────────────────────
-  {
-    id: 7,
-    question: "How can the dot product u·v be expressed as a matrix operation?",
-    questionType: "single-choice",
-    options: [
-      "As det([u, v])",
-      "As trace(uvᵀ)",
-      "As uᵀv",
-      "As the eigenvalue of the outer product uvᵀ"
-    ],
-    answer: 2,
-    explanation: {
-      intuition: "uᵀ is a row vector. Multiplying a row by a column yields a scalar — the dot product. This matrix form generalises to weighted inner products uᵀAv.",
-      reference: "[16:06] 'It's often convenient to express a dot product using a matrix product: u dot v is no different from u transpose v.'",
-      computation: `import numpy as np
-u = np.array([[3.], [4.]])   # column
-v = np.array([[1.], [2.]])
-print(float(u.T @ v))        # 11.0 = 3*1 + 4*2`,
-      connection: "Generalises to general inner product ⟨u,v⟩_A = uᵀAv used in metric tensors and anisotropic smoothing."
-    },
-    slideImages: ["image_1771968934443_0.png"],
-    diagram: null,
-  },
-  {
-    id: 8,
-    question: "What structural property must the matrix A in the general inner product ⟨u,v⟩_A = uᵀAv always have?",
-    questionType: "single-choice",
-    options: [
-      "Invertible (full rank)",
-      "Symmetric (A = Aᵀ)",
-      "Diagonal",
-      "Positive definite"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "An inner product requires ⟨u,v⟩ = ⟨v,u⟩. In matrix form: uᵀAv = vᵀAu = (uᵀAv)ᵀ. This holds for all u,v only if A = Aᵀ.",
-      reference: "[19:04] 'Why is the matrix that I got symmetric? If I take the matrix A and apply its transpose I again get the same matrix.'",
-      computation: `import numpy as np
-A = np.array([[2., 1.], [1., 3.]])   # symmetric
-u, v = np.array([1., 2.]), np.array([3., 1.])
-print(u @ A @ v, v @ A @ u)   # must be equal → 14.0  14.0`,
-      connection: "Symmetric positive-definite matrices are the foundation of mass matrices, metric tensors, and Gauss–Newton optimisation."
-    },
-    slideImages: ["image_1771968987949_0.png", "image_1771969001254_0.png"],
-    diagram: null,
-  },
-  {
-    id: 9,
-    question: "How is u × v represented as a matrix-vector product?",
-    questionType: "single-choice",
-    options: [
-      "As I₃ u applied to v",
-      "As a skew-symmetric matrix [u]× constructed from the components of u, applied to v",
-      "As a symmetric matrix applied to v",
-      "As the eigendecomposition of [u, v]"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "The skew-symmetric 'hat' matrix encodes the cross product linearly. Its anti-symmetry ([u]× = −[u]×ᵀ) mirrors the anti-commutativity u×v = −v×u.",
-      reference: "[19:40] 'This matrix is anti-symmetric or skew-symmetric … it has the three components of the vector in it but half of them are negated.'",
-      computation: `import numpy as np
-def hat(u):
-    return np.array([[ 0,   -u[2],  u[1]],
-                     [ u[2],  0,   -u[0]],
-                     [-u[1],  u[0],  0  ]])
-u = np.array([1., 2., 3.])
-v = np.array([4., 5., 6.])
-print(hat(u) @ v)          # [-3,  6, -3]
-print(np.cross(u, v))      # [-3,  6, -3]  ← same`,
-      connection: "The hat operator appears in angular velocity kinematics, rotation derivatives, and the Lie algebra so(3) — fundamental to 3D animation."
-    },
-    slideImages: [],
-    diagram: <DiagramSkewSymmetric />,
-  },
-  {
-    id: 10,
-    question: "What does the sign of the determinant of a linear map represent geometrically?",
-    questionType: "single-choice",
-    options: [
-      "Whether the transformed volume is larger or smaller than before",
-      "Whether the vectors are linearly independent",
-      "Whether the map preserved or reversed orientation",
-      "Whether the map has an inverse"
-    ],
-    answer: 2,
-    explanation: {
-      intuition: "A right-handed frame (x right, y up, z towards you) flipped to left-handed by the map means orientation reversed → det < 0. Preserved handedness → det > 0.",
-      reference: "[31:21] 'The sign of the determinant tells us whether the orientation was reversed.'",
-      computation: `import numpy as np
-R = np.array([[0, -1], [1, 0]])   # 90° rotation
-F = np.array([[-1, 0], [0, 1]])   # reflection
-print("Rotation det:", np.linalg.det(R))    # +1.0
-print("Reflection det:", np.linalg.det(F))  # -1.0`,
-      connection: "Triangle winding order (front vs back face) is determined by the sign of det — used in back-face culling."
-    },
-    slideImages: ["image_1771969392356_0.png", "image_1771969197614_0.png",
-                  "image_1771969597588_0.png", "image_1771969755550_0.png"],
-    diagram: null,
-  },
-  {
-    id: 11,
-    question: "What is Lagrange's identity (BAC-CAB rule) for a triple cross product?",
-    questionType: "single-choice",
-    options: [
-      "u × (v × w) = (u × v) × w",
-      "u × (v × w) + v × (w × u) + w × (u × v) = 0",
-      "u × (v × w) = v(u·w) − w(u·v)",
-      "(u × v)·w = u·(v × w)"
-    ],
-    answer: 2,
-    explanation: {
-      intuition: "BAC-CAB linearises a double cross product into scalar-scaled vectors. It's a useful algebraic shortcut that appears when deriving curl-of-curl identities.",
-      reference: "[33:21] 'Lagrange's identity: u cross v cross w equals v times u dot w minus w times u dot v.'",
-      computation: `import numpy as np
-u = np.array([1., 2., 3.])
-v = np.array([4., 5., 6.])
-w = np.array([7., 8., 9.])
-lhs = np.cross(u, np.cross(v, w))
-rhs = v * np.dot(u, w) - w * np.dot(u, v)
-print(np.allclose(lhs, rhs))   # True`,
-      connection: "Used to derive ∇×(∇×F) = ∇(∇·F) − ∇²F, appearing in electromagnetic rendering and fluid simulation."
-    },
-    slideImages: ["image_1771969698655_0.png", "image_1771969766622_0.png"],
-    diagram: null,
-  },
-  // ─── DERIVATIVES ─────────────────────────────────────────
-  {
-    id: 12,
-    question: "What is the best mental model for the derivative, as emphasised by the lecturer?",
-    questionType: "single-choice",
-    options: [
-      "The area under the function curve up to a point",
-      "The best linear approximation of the function at a point",
-      "The second-order curvature of the function",
-      "The inverse of integration"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "Near any smooth point, f looks like a straight line. That line IS the derivative. 'Replace complicated things with simple linear models' is the engine behind gradient descent, Newton's method, and linearisation throughout graphics.",
-      reference: "[37:45] 'Another important view of the derivative is that it's the best linear approximation of the function.'",
-      computation: `import numpy as np
-x0, fp = 1.0, np.cos(1.0)         # f(x)=sin(x), f'(x₀)=cos(x₀)
-approx = lambda x: np.sin(x0) + fp*(x-x0)
-print("Error at x₀+0.01:", abs(np.sin(1.01) - approx(1.01)))  # very small`,
-      connection: "[39:22] 'Replacing complicated functions with linear or quadratic approximations is a powerful trick we'll see over and over in graphics algorithms.'"
-    },
-    slideImages: ["image_1771970359791_0.png", "image_1771970380896_0.png",
-                  "image_1771970397841_0.png", "image_1771970433285_0.png"],
-    diagram: null,
-  },
-  {
-    id: 13,
-    question: "What is the formal definition of the directional derivative of f at x₀ along direction u?",
-    questionType: "single-choice",
-    options: [
-      "The gradient ∇f(x₀) dotted with u",
-      "lim_{ε→0} [f(x₀ + εu) − f(x₀)] / ε",
-      "The Laplacian of f at x₀",
-      "The divergence of ∇f in direction u"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "Pick direction u, walk a tiny step ε, measure how much f changed, divide by ε. That is the slope of f in direction u — the directional derivative.",
-      reference: "[41:31] 'The directional derivative along direction u is the limit as ε→0 of [f(x₀+εu) − f(x₀)] / ε.'",
-      computation: `import numpy as np
-f  = lambda x: x[0]**2 + x[1]**2
-x0 = np.array([1., 1.])
-u  = np.array([1., 0.])
-eps = 1e-7
-print((f(x0 + eps*u) - f(x0)) / eps)   # ≈ 2.0  (∂f/∂x = 2x at x=1)`,
-      connection: "The gradient is then defined as the unique vector such that ⟨∇f, u⟩ = D_u f for all u."
-    },
-    slideImages: ["image_1771970503059_0.png", "image_1771987890560_0.png"],
-    diagram: null,
-  },
-  // ─── GRADIENT ────────────────────────────────────────────
-  {
-    id: 14,
-    question: "The gradient ∇f(x) is the unique vector such that, for ALL directions u:",
-    questionType: "single-choice",
-    options: [
-      "‖∇f‖ · ‖u‖ = D_u f",
-      "⟨∇f, u⟩ = D_u f  (inner product with ∇f equals the directional derivative)",
-      "∇f + u = D_u f",
-      "∇f × u = D_u f"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "The gradient encodes all directional derivatives at once. To find the slope in direction u, just take the dot product of u with ∇f.",
-      reference: "[50:39] 'At each point x the gradient is the unique vector ∇f(x) such that ⟨∇f, u⟩ = D_u f for all u.'",
-      computation: `import numpy as np
-f      = lambda x: x[0]**2 + 2*x[1]**2
-grad_f = lambda x: np.array([2*x[0], 4*x[1]])
-x0 = np.array([1., 2.])
-u  = np.array([1., 1.]) / np.sqrt(2)
-eps = 1e-7
-D_num = (f(x0+eps*u) - f(x0)) / eps
-D_grad = np.dot(grad_f(x0), u)
-print(D_num, D_grad)   # both ≈ 4.243`,
-      connection: "This coordinate-free definition also works on manifolds where global coordinates may not exist."
-    },
-    slideImages: ["image_1771987937211_0.png", "image_1771988003515_0.png",
-                  "image_1771988006149_0.png", "image_1771988089566_0.png",
-                  "image_1771988289666_0.png"],
-    diagram: <DiagramGradientField />,
-  },
-  {
-    id: 15,
-    question: "What is the first-order Taylor approximation of a multivariable function f around x₀?",
-    questionType: "single-choice",
-    options: [
-      "f(x) ≈ f(x₀)  (constant)",
-      "f(x) ≈ f(x₀) + ∇f(x₀)·(x − x₀)  (linear)",
-      "f(x) ≈ f(x₀) + ‖x − x₀‖²",
-      "f(x) ≈ ∇f(x₀)"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "The multivariable Taylor expansion replaces scalar f'(x₀)(x−x₀) with the dot product ∇f(x₀)·(x−x₀). This is the tangent hyperplane to the graph of f.",
-      reference: "[48:08] 'f(x) ≈ f(x₀) + ⟨∇f(x₀), x−x₀⟩.'",
-      computation: `import numpy as np
-f     = lambda x: x[0]**2 + x[1]**2
-grad  = lambda x: 2*x
-x0    = np.array([1., 2.])
-x     = np.array([1.1, 2.1])
-approx = f(x0) + np.dot(grad(x0), x - x0)
-print("True:", f(x), " Linear:", approx)  # 5.62  5.60`,
-      connection: "Foundation of gradient descent, linearised Euler steps in simulation, and adjoint methods in differentiable rendering."
-    },
-    slideImages: ["image_1771988120283_0.png", "image_1771988163054_0.png",
-                  "image_1771988197698_0.png", "image_1771988213030_0.png",
-                  "image_1771988229711_0.png"],
-    diagram: null,
-  },
-  {
-    id: 16,
-    question: "What is the gradient of the dot product f(u) = u·v with respect to u (v is constant)?",
-    questionType: "single-choice",
-    options: [
-      "u",
-      "v",
-      "u + v",
-      "u − v"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "In the scalar analogy, d/dx (xy) = y. The multivariable version replaces x with u, y with the vector v, and d/dx with the gradient. Result: just v.",
-      reference: "[53:46] 'The gradient with respect to u of uᵀv is equal to v.'",
-      computation: `import numpy as np
-v  = np.array([3., 5., 7.])
-u0 = np.array([1., 2., 3.])
-eps = 1e-6
-f  = lambda u: np.dot(u, v)
-grad_numerical = [(f(u0 + eps*np.eye(3)[i]) - f(u0))/eps for i in range(3)]
-print(grad_numerical)   # [3.0, 5.0, 7.0] == v`,
-      connection: "Matrix cookbook pattern: ∇_x(xᵀy) = y; ∇_x(xᵀAx) = 2Ax (symmetric A). [55:04–55:44]"
-    },
-    slideImages: ["image_1771988372388_0.png", "image_1771988432424_0.png",
-                  "image_1771988467336_0.png"],
-    diagram: null,
-  },
-  {
-    id: 17,
-    question: "The gradient of Big F[f] = ⟨f, g⟩₂ (L² inner product of functions f and g) with respect to f is:",
-    questionType: "single-choice",
-    options: [
-      "The function f",
-      "The derivative of g",
-      "The function g",
-      "The zero function"
-    ],
-    answer: 2,
-    explanation: {
-      intuition: "The inner product measures alignment. The function best aligned with g is g itself — so the gradient (direction of steepest increase) is g.",
-      reference: "[1:00:44] 'The gradient of big F is just little g. The little f falls away and we're left with just g.' Mirrors the vector pattern: ∇_u(u·v) = v.",
-      computation: `# Functional gradient — analogous to vector gradient
-# F[f] = ∫₀¹ f(x)g(x)dx
-# δF/δf = g   (same pattern as ∇_u(u·v) = v)
-
-# Gradient of ‖f‖² = ⟨f,f⟩ → 2f  [1:04:42]
-# Mirrors: ∇_u(‖u‖²) = 2u`,
-      connection: "[1:05:09] 'The way we differentiate functions of functions really doesn't look different at all from ordinary differentiation.'"
-    },
-    slideImages: ["image_1771988539060_0.png", "image_1771988651688_0.png",
-                  "image_1771988662637_0.png", "image_1771988670464_0.png",
-                  "image_1771988738747_0.png", "image_1771988786536_0.png"],
-    diagram: null,
-  },
-  // ─── VECTOR FIELDS: DIVERGENCE & CURL ───────────────────
-  {
-    id: 18,
-    question: "How many fundamental derivatives for vector fields does the lecturer identify, and what are they?",
-    questionType: "single-choice",
-    options: [
-      "One — the gradient",
-      "Two — divergence and curl",
-      "Three — gradient, divergence, and curl",
-      "Four — gradient, divergence, curl, and Laplacian"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "Scalar fields have one derivative (gradient). Vector fields have two: divergence measures expansion/contraction; curl measures rotation.",
-      reference: "[1:07:25] 'Actually there are two basic derivatives for vector fields.'",
-      computation: `# 2D vector field X: ℝ² → ℝ²
-# Divergence: ∇·X = ∂X₁/∂x₁ + ∂X₂/∂x₂   (scalar output)
-# Curl:       ∇×X = ∂X₂/∂x₁ - ∂X₁/∂x₂   (scalar in 2D, vector in 3D)`,
-      connection: "In 3D the curl is a vector; in 2D it degenerates to a scalar measuring out-of-plane rotation."
-    },
-    slideImages: ["image_1771988827100_0.png", "image_1771988874726_0.png",
-                  "image_1771988926877_0.png"],
-    diagram: null,
-  },
-  {
-    id: 19,
-    question: "What does the divergence ∇·X of a vector field X measure?",
-    questionType: "single-choice",
-    options: [
-      "The circulation or rotational swirling of the field",
-      "The average direction vectors point",
-      "How much the field acts as a source (flow outward) or sink (flow inward) — rate of expansion/contraction",
-      "The total energy density of the field"
-    ],
-    answer: 2,
-    explanation: {
-      intuition: "Imagine the vector field as water velocity. High divergence = water erupting from a source. Negative divergence = water draining into a sink. Zero divergence = incompressible flow.",
-      reference: "[1:08:01] 'The divergence measures how much the field is shrinking or expanding, how much it looks like a sink or a source.'",
-      computation: `import numpy as np
-# Radial field X = (x,y): source at origin
-# div X = ∂x/∂x + ∂y/∂y = 1 + 1 = 2  (positive everywhere)
-
-# Incompressible fluid enforces div v = 0  (pressure projection step)`,
-      connection: "Fluid simulation enforces div v = 0 at every step. Poisson equation ∇²φ = div F appears in rendering and geometry processing."
-    },
-    slideImages: ["image_1771988951848_0.png"],
-    diagram: null,
-  },
-  {
-    id: 20,
-    question: "What does the curl ∇×X of a vector field X measure?",
-    questionType: "single-choice",
-    options: [
-      "The rate of expansion or contraction",
-      "How much the vector field is spinning or rotating at each point",
-      "The magnitude of the vectors in the field",
-      "The gradient of the field's energy"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "Drop a tiny paddle wheel in a fluid. If the velocity field has nonzero curl, the wheel spins. Zero curl → irrotational flow.",
-      reference: "[1:09:03] 'What is the curl measuring about this vector field? It's kind of measuring how much this field is spinning.'",
-      computation: `# 2D curl: curl X = ∂X₂/∂x₁ - ∂X₁/∂x₂
-# Rotation field X = (-y, x):  curl = ∂(x)/∂x - ∂(-y)/∂y = 1+1 = 2
-# Gradient field X = ∇f:       curl = 0  (always irrotational)`,
-      connection: "[1:14:47] div X = curl(R₉₀ X): divergence and curl are the same operation rotated 90°."
-    },
-    slideImages: ["image_1771989024001_0.png", "image_1771989058728_0.png",
-                  "image_1771989089559_0.png"],
-    diagram: <DiagramDivergenceCurl />,
-  },
-  {
-    id: 21,
-    question: "What elegant relationship does the lecturer identify between divergence and curl in 2D?",
-    questionType: "single-choice",
-    options: [
-      "They are completely independent operations",
-      "div X = curl(R₉₀ X), where R₉₀ rotates each vector by 90° — they are the same operation up to a rotation",
-      "The curl always equals the divergence for physical fields",
-      "The sum of curl and divergence is always zero"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "Sources/sinks and vortices are the same phenomenon rotated 90°. A radially-expanding field looks like a pure vortex if you rotate every arrow 90°.",
-      reference: "[1:14:47] 'The divergence of X is the same as the curl of the 90 degree rotation of X.'",
-      computation: `import numpy as np
-def num_div(X, x, h=1e-6):
-    return ((X(x+[h,0])-X(x-[h,0]))[0] + (X(x+[0,h])-X(x-[0,h]))[1])/(2*h)
-def num_curl(X, x, h=1e-6):
-    return ((X(x+[h,0])-X(x-[h,0]))[1] - (X(x+[0,h])-X(x-[0,h]))[0])/(2*h)
-
-X   = lambda p: np.array([p[0], p[1]])           # radial
-R90 = lambda p: np.array([-p[1], p[0]])          # rotate 90°
-x = np.array([1., 2.])
-print(num_div(X, x))                              # 2.0
-print(num_curl(lambda p: R90(X(p)), x))           # 2.0  ← same!`,
-      connection: "This duality underlies Helmholtz decomposition — any field = irrotational + divergence-free — used in fluid simulation and spectral geometry."
-    },
-    slideImages: ["image_1771989199368_0.png", "image_1771989224011_0.png",
-                  "image_1771989278643_0.png"],
-    diagram: null,
-  },
-  {
-    id: 22,
-    question: "In the fluid simulation example, what simple change of variable leads to qualitatively different simulation results?",
-    questionType: "single-choice",
-    options: [
-      "Changing from 2D to 3D simulation",
-      "Switching from velocity field u to stream function ψ",
-      "Changing from laminar to turbulent flow",
-      "Switching from Eulerian to Lagrangian coordinates"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "Two descriptions of the same fluid — velocity u and stream function ψ — differ mathematically by a 90° rotation. Yet numerically, they produce strikingly different simulations because of how divergence and curl interact with discretisation.",
-      reference: "[1:16:52] 'In one case you might use the fluid velocity u, in the other the stream function ψ. Just this mathematically simple change really changes the behaviour of the simulation.'",
-      computation: `# Incompressible flow in 2D:
-# Method 1: velocity u = (u₁, u₂),   enforce div u = 0 explicitly
-# Method 2: stream function ψ,        u = R₉₀ ∇ψ  → div u = 0 automatically
-# The stream function satisfies the biharmonic equation Δ²ψ = f`,
-      connection: "This motivates careful choice of degrees of freedom in fluid and cloth simulation — the 'right' variables can encode constraints automatically."
-    },
-    slideImages: ["image_1771989335272_0.png"],
-    diagram: null,
-  },
-  // ─── LAPLACIAN & HESSIAN ─────────────────────────────────
-  {
-    id: 23,
-    question: "Why does the lecturer say the Laplacian is 'unbelievably important' for computer graphics?",
-    questionType: "single-choice",
-    options: [
-      "It only appears in specialised rendering algorithms",
-      "It appears across geometry processing, rendering, simulation, and imaging — virtually everywhere in graphics",
-      "It is only useful for color space conversions",
-      "It is the only operator computable in real time"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "The Laplacian measures how much a function differs from its local average. Smooth functions have Δf ≈ 0. This 'averaging' property makes it ideal for mesh smoothing, heat diffusion, harmonic maps, and spectral analysis.",
-      reference: "[1:17:34] 'This is unbelievably important for graphics, it shows up across geometry, across rendering, simulation, imaging, everywhere.'",
-      computation: `# Graphics applications of the Laplacian:
-# • Mesh smoothing:    Δx_i = Σ_j w_ij (x_j - x_i)
-# • Heat equation:     ∂u/∂t = κ Δu
-# • Fluid pressure:    ∇²p = div(v/Δt)
-# • Poisson editing:   Δf = div g  (image blending)
-# • Spectral geometry: eigenfunctions of Δ ↔ Fourier modes on mesh`,
-      connection: "[1:21:19] Δf = ∇·(∇f) — divergence of the gradient."
-    },
-    slideImages: ["image_1771989366312_0.png"],
-    diagram: <DiagramLaplacian />,
-  },
-  {
-    id: 24,
-    question: "How can the Laplacian Δf be written in terms of divergence and gradient?",
-    questionType: "single-choice",
-    options: [
-      "Δf = gradient of the divergence of f",
-      "Δf = curl of the gradient of f",
-      "Δf = divergence of the gradient of f: ∇·(∇f)",
-      "Δf = divergence of the curl of f"
-    ],
-    answer: 2,
-    explanation: {
-      intuition: "Gradient gives vector-valued slopes. Divergence of that vector field measures how the slopes spread. The result is the Laplacian — net curvature as a scalar.",
-      reference: "[1:21:19] 'Laplacian of f is the divergence of the gradient of f.' Δf = ∇·(∇f) = Σᵢ ∂²f/∂xᵢ².",
-      computation: `import numpy as np
-# Analytic: f(x,y) = x² + y²
-# ∇f = (2x, 2y);   div(∇f) = ∂(2x)/∂x + ∂(2y)/∂y = 2 + 2 = 4
-
-# Discrete 5-point stencil (h = grid spacing):
-def lap5(f, i, j, h):
-    return (f[i+1,j]+f[i-1,j]+f[i,j+1]+f[i,j-1] - 4*f[i,j]) / h**2`,
-      connection: "Δf = 0 defines harmonic functions — equilibrium of heat. Discrete Laplacians on meshes drive Laplacian editing, shape segmentation, and neural shape representations."
-    },
-    slideImages: ["image_1771989413169_0.png"],
-    diagram: null,
-  },
-  {
-    id: 25,
-    question: "How does the lecturer define the Hessian in terms of the gradient?",
-    questionType: "single-choice",
-    options: [
-      "The Hessian is the determinant of the gradient",
-      "The Hessian is the transpose of the gradient",
-      "The Hessian applied to direction u gives the directional derivative of the gradient along u",
-      "The Hessian is the integral of the gradient"
-    ],
-    answer: 2,
-    explanation: {
-      intuition: "The gradient is a vector field of first derivatives. The Hessian is its derivative — a matrix of second derivatives. Applying it to direction u tells you how the gradient changes as you move in direction u.",
-      reference: "[1:27:25] 'If I take the Hessian of f and apply it to the vector u, I get the directional derivative of the gradient in direction u.'",
-      computation: `import numpy as np
-# f(x,y) = x² + 2y²
-# ∇f = (2x, 4y)
-# H = [[∂²f/∂x², ∂²f/∂x∂y],    =  [[2, 0],
-#      [∂²f/∂y∂x, ∂²f/∂y²]]        [0, 4]]
-
-H = np.array([[2., 0.], [0., 4.]])
-u = np.array([1., 0.])
-# H @ u = directional derivative of ∇f along u
-print(H @ u)   # [2, 0]  ← how gradient changes in x-direction`,
-      connection: "The Hessian appears in the second-order Taylor expansion f(x) ≈ f(x₀) + ∇f·Δx + ½ ΔxᵀHΔx — used in Newton's method, L-BFGS, and curvature-aware optimisation."
-    },
-    slideImages: ["image_1771989791144_0.png"],
-    diagram: null,
-  },
-];
-
-// ─────────────────────────────────────────────────────────────
-// TIMER HOOK
-// ─────────────────────────────────────────────────────────────
-const useTimer = () => {
-  const [timeSpent, setTimeSpent] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-  useEffect(() => {
-    let iv = null;
-    if (isActive) iv = setInterval(() => setTimeSpent(t => t + 1), 1000);
-    return () => clearInterval(iv);
-  }, [isActive]);
-  return {
-    timeSpent,
-    start: () => setIsActive(true),
-    pause: () => setIsActive(false),
-    reset: () => { setTimeSpent(0); setIsActive(false); }
-  };
-};
-const fmt = (s) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
-
-// ─────────────────────────────────────────────────────────────
-// MAIN COMPONENT
-// ─────────────────────────────────────────────────────────────
-const Quiz = () => {
-  const [screen, setScreen] = useState('welcome');
-  const [qIdx, setQIdx] = useState(0);
-  const [answers, setAnswers] = useState(Array(quizData.length).fill(null));
-  const [selected, setSelected] = useState([]);
-  const [showExp, setShowExp] = useState(false);
-  const [reviewMode, setReviewMode] = useState(false);
-  const { timeSpent, start, pause, reset: resetTimer } = useTimer();
-
-  const q = quizData[qIdx];
-
-  useEffect(() => {
-    if (screen === 'quiz' && !showExp && !reviewMode) start(); else pause();
-  }, [screen, showExp, reviewMode, qIdx]);
-
-  const isCorrect = useCallback((q, ans) => ans !== null && ans === q.answer, []);
-
-  const handleSubmit = () => {
-    const newAns = [...answers];
-    newAns[qIdx] = selected[0];
-    setAnswers(newAns);
-    setShowExp(true);
-  };
-  const handleNext = () => {
-    if (qIdx < quizData.length - 1) { setQIdx(qIdx + 1); setSelected([]); setShowExp(false); }
-    else { setScreen('results'); pause(); }
-  };
-  const handlePrev = () => {
-    if (qIdx > 0) {
-      setQIdx(qIdx - 1);
-      setSelected(answers[qIdx - 1] !== null ? [answers[qIdx - 1]] : []);
-      setShowExp(answers[qIdx - 1] !== null);
-    }
-  };
-  const handleReview = () => {
-    setQIdx(0);
-    setSelected(answers[0] !== null ? [answers[0]] : []);
-    setShowExp(answers[0] !== null);
-    setReviewMode(true);
-    setScreen('quiz');
-  };
-  const handleRestart = () => {
-    setScreen('welcome'); setQIdx(0);
-    setAnswers(Array(quizData.length).fill(null));
-    setSelected([]); setShowExp(false); setReviewMode(false); resetTimer();
-  };
-
-  const score = answers.filter((a, i) => isCorrect(quizData[i], a)).length;
-  const pct   = Math.round((score / quizData.length) * 100);
-
-  // ─── Styles ────────────────────────────────────────────
-  const C = {
-    bg: '#0a0a0f', surface: '#111118', border: '#1e2a3a',
-    accent: '#38bdf8', accentHover: '#0ea5e9',
-    success: '#22c55e', error: '#ef4444', warning: '#f59e0b',
-    text: '#e2e8f0', muted: '#94a3b8', code: '#1e2a3a',
-  };
-  const base   = { minHeight: '100vh', background: `linear-gradient(135deg,${C.bg} 0%,#0a1628 100%)`, color: C.text, fontFamily: "'Rajdhani',sans-serif", padding: '2rem 1rem' };
-  const wrap   = { maxWidth: '820px', margin: '0 auto', background: C.surface, borderRadius: '16px', padding: '2rem', border: `1px solid ${C.border}` };
-  const btn    = { display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: C.accent, color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '1rem', fontFamily: "'Rajdhani',sans-serif", fontWeight: '600', transition: 'background 0.2s' };
-  const code   = { background: C.code, padding: '1rem', borderRadius: '8px', fontSize: '0.82rem', fontFamily: "'JetBrains Mono',monospace", overflowX: 'auto', whiteSpace: 'pre', color: '#93c5fd', lineHeight: '1.6' };
-
-  // ─── Slide images ───────────────────────────────────────
-  const SlideImages = ({ images }) => {
-    if (!images || images.length === 0) return null;
-    return (
-      <div style={{ marginTop: '1rem' }}>
-        <h4 style={{ fontSize: '0.9rem', color: C.accent, marginBottom: '0.5rem' }}>📸 Lecture Slides</h4>
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-          {images.map((img, i) => (
-            <img key={i} src={`/assets/${img}`} alt={`slide ${i + 1}`}
-              onError={e => { e.target.style.display = 'none'; }}
-              style={{ maxWidth: '100%', flex: '1 1 300px', borderRadius: '8px', border: `1px solid ${C.border}`, objectFit: 'contain' }}
-            />
-          ))}
-        </div>
-      </div>
-    );
-  };
-
-  // ─────────────────────────────────────────────────────────
-  // WELCOME
-  // ─────────────────────────────────────────────────────────
-  if (screen === 'welcome') return (
-    <div style={base}>
-      <div style={wrap}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <Sigma size={64} color={C.accent} />
-          <h1 style={{ fontSize: '2.5rem', fontWeight: '700', color: C.accent, margin: '1rem 0 0.5rem' }}>Lecture 3 Quiz</h1>
-          <p style={{ color: C.muted, fontSize: '1.1rem' }}>Vector Calculus in Computer Graphics</p>
-          <p style={{ color: C.muted, fontSize: '0.9rem', fontStyle: 'italic' }}>CMU 15-462 • 1:30:13 • Norms · Products · Gradient · Divergence · Curl · Laplacian</p>
-        </div>
-
-        <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
-          <h3 style={{ fontSize: '1.1rem', color: C.accent, marginBottom: '1rem' }}>Topics</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(190px,1fr))', gap: '0.6rem', fontSize: '0.95rem' }}>
-            {['Euclidean Norm & Inner Products','Cross Product & Geometry','Matrix Representations','Derivatives & Taylor','Gradient & Optimisation','Divergence & Curl','Laplacian & Hessian'].map(t => (
-              <div key={t}><span style={{ color: C.accent }}>• </span>{t}</div>
-            ))}
-          </div>
-        </div>
-
-        <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '1rem', textAlign: 'center' }}>
-            {[['25','Questions'],['40%','Easy'],['44%','Medium'],['16%','Hard']].map(([v, l]) => (
-              <div key={l}><div style={{ fontSize: '1.8rem', fontWeight: '700', color: C.accent }}>{v}</div><div style={{ fontSize: '0.85rem', color: C.muted }}>{l}</div></div>
-            ))}
-          </div>
-        </div>
-
-        <button style={{ ...btn, width: '100%', justifyContent: 'center', fontSize: '1.1rem', padding: '1rem' }}
-          onMouseEnter={e => e.target.style.background = C.accentHover}
-          onMouseLeave={e => e.target.style.background = C.accent}
-          onClick={() => { setScreen('quiz'); start(); }}>
-          <Sigma size={20} /> Start Quiz
-        </button>
-      </div>
-    </div>
-  );
-
-  // ─────────────────────────────────────────────────────────
-  // RESULTS
-  // ─────────────────────────────────────────────────────────
-  if (screen === 'results') return (
-    <div style={base}>
-      <div style={wrap}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <Trophy size={64} color={pct >= 70 ? C.success : pct >= 50 ? C.warning : C.error} />
-          <h1 style={{ fontSize: '2.5rem', fontWeight: '700', margin: '1rem 0 0.5rem' }}>Quiz Complete!</h1>
-          <p style={{ color: C.muted }}><Clock size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '0.4rem' }} />{fmt(timeSpent)}</p>
-        </div>
-        <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
-          <div style={{ fontSize: '4rem', fontWeight: '700', color: pct >= 70 ? C.success : pct >= 50 ? C.warning : C.error }}>{pct}%</div>
-          <div style={{ color: C.muted, fontSize: '1.2rem', marginBottom: '0.5rem' }}>{score} / {quizData.length} correct</div>
-          <div style={{ color: C.muted }}>{pct >= 90 ? '∇ Vector Calculus Master!' : pct >= 70 ? '∫ Strong Foundations!' : pct >= 50 ? 'Δ Keep Reviewing!' : '≠ Back to Lecture 3!'}</div>
-        </div>
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          {[['Review Answers', handleReview, BookOpen], ['Restart', handleRestart, RefreshCw]].map(([label, fn, Icon]) => (
-            <button key={label} style={{ ...btn, flex: 1, justifyContent: 'center' }}
-              onMouseEnter={e => e.target.style.background = C.accentHover}
-              onMouseLeave={e => e.target.style.background = C.accent}
-              onClick={fn}><Icon size={18} />{label}</button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  // ─────────────────────────────────────────────────────────
-  // QUIZ SCREEN
-  // ─────────────────────────────────────────────────────────
+function SlideImages({ images }) {
+  if (!images || images.length === 0) return null
   return (
-    <div style={base}>
-      <div style={wrap}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', margin: '1rem 0' }}>
+      {images.map((img, i) => (
+        <img key={i} src={`/assets/${img}`}
+          alt={`Slide ${i+1}`}
+          onError={e => { e.target.style.display = 'none' }}
+          style={{ maxWidth: '100%', borderRadius: '8px', border: '1px solid #334155' }} />
+      ))}
+    </div>
+  )
+}
+
+const quizData = [
+  {
+    num: 1,
+    timestamp: `01:05`,
+    question: `Why is vector calculus important for computer graphics according to the lecturer?`,
+    options: [`It provides the mathematical foundation for color theory`, `It offers a language for spatial relationships and rates of change`, `It's essential for GPU programming`, `It simplifies shader development`],
+    answer: 1,
+    explanation: `The lecturer explains at [01:23]: "The basic reason is that it gives us a language for talking about spatial relationships rates of change transformations and so forth."`,
+    images: ["image_1771911982856_0.png"],
+  },
+  {
+    num: 2,
+    timestamp: `01:37`,
+    question: `What specific application area in graphics does the lecturer mention that relies on partial differential equations?`,
+    options: [`File compression algorithms`, `Color grading`, `Physically based animation`, `Hardware acceleration`],
+    answer: 2,
+    explanation: `The lecturer states at [01:48]: "This lets us do all sorts of things from physically based animation and geometry processing and image processing using the language of rates of change."`,
+    images: [],
+  },
+  {
+    num: 3,
+    timestamp: `02:23`,
+    question: `What is the defining characteristic of the Euclidean norm according to the lecture?`,
+    options: [`It always yields positive values`, `It is the length preserved by rigid motions of space`, `It works only in 3D space`, `It measures angles between vectors`],
+    answer: 1,
+    explanation: `The lecturer defines at [03:18]: "We can say the euclidean norm is the notion of length preserved by rigid motions of space, so rotations translations and reflections."`,
+    images: ["image_1771912248659_0.png"],
+  },
+  {
+    num: 4,
+    timestamp: `03:53`,
+    question: `What is the coordinate formula for the Euclidean norm when using orthonormal coordinates?`,
+    options: [`The sum of the components`, `The maximum of the absolute values of the components`, `The square root of the sum of the squares of the components`, `The average of the components`],
+    answer: 2,
+    explanation: `The lecturer states at [03:53]: "If we have orthonormal coordinates then we can write the euclidean norm of a vector u as the square root of the sum of the squares of all the components."`,
+    images: ["image_1771912292087_0.png"],
+  },
+  {
+    num: 5,
+    timestamp: `04:30`,
+    question: `What important warning does the lecturer give about computing the Euclidean norm in coordinates?`,
+    options: [`It can lead to floating-point errors`, `It only works in two dimensions`, `It doesn't give the geometric length unless using an orthonormal basis`, `It's computationally expensive`],
+    answer: 2,
+    explanation: `The lecturer warns at [04:30]: "A little warning, whenever we work in coordinates we have to be careful because this expression does not give us the geometric length unless the vector u happens to be encoded in an orthonormal basis."`,
+    images: ["image_1771912295116_0.png"],
+  },
+  {
+    num: 6,
+    timestamp: `05:10`,
+    question: `How does the lecturer define the Euclidean inner product in geometric terms?`,
+    options: [`As the sum of component-wise products`, `As the norm of u times norm of v times cosine of the angle between them`, `As the projection of one vector onto another`, `As the reciprocal of the distance between vectors`],
+    answer: 1,
+    explanation: `The lecturer defines at [05:41]: "For n-dimensional vectors the euclidean inner product can be defined as inner product of uv is equal to the norm of u times the norm of v times the cosine of the angle theta between the vectors u and v."`,
+    images: ["image_1771912310455_0.png"],
+  },
+  {
+    num: 7,
+    timestamp: `06:44`,
+    question: `What condition must be met for the dot product formula to have geometric meaning?`,
+    options: [`The vectors must be normalized`, `The vectors must have the same dimension`, `The coordinates must come from an orthonormal basis`, `The vectors must be perpendicular`],
+    answer: 2,
+    explanation: `The lecturer states at [06:44]: "Again we have our warning as with the euclidean norm, this expression this sum of component-wise products has no geometric meaning unless the coordinates come from an orthonormal basis."`,
+    images: ["image_1771912379439_0.png"],
+  },
+  {
+    num: 8,
+    timestamp: `07:24`,
+    question: `What does the cross product of two vectors produce, according to the lecture?`,
+    options: [`A scalar value`, `A vector`, `A matrix`, `A tensor`],
+    answer: 1,
+    explanation: `The lecturer states at [07:32]: "The inner product took two vectors and produced a scalar. The cross product is going to do something a little different. It's going to take two vectors and produce a vector as output."`,
+    images: [],
+  },
+  {
+    num: 9,
+    timestamp: `07:52`,
+    question: `What two properties define the cross product geometrically?`,
+    options: [`Its magnitude is the dot product of the vectors and its direction is along their sum`, `Its magnitude is the area of the parallelogram and its direction is orthogonal to both vectors`, `Its magnitude is the product of vector lengths and its direction is the average of their directions`, `Its magnitude is the sum of the vectors and its direction is their difference`],
+    answer: 1,
+    explanation: `The lecturer explains at [07:52]: "I can say that the magnitude is equal to the area of the parallelogram made by the two vectors and I can say that the direction of the cross product is orthogonal to both vectors."`,
+    images: ["image_1771913321064_0.png"],
+  },
+  {
+    num: 10,
+    timestamp: `08:34`,
+    question: `Why does the cross product make sense only in three dimensions?`,
+    options: [`Because in 2D there is no vector orthogonal to both vectors within the plane, and in 4D+ there are too many possible orthogonal vectors`, `Because cross products are only defined for 3D space mathematically`, `Because geometric operations only make sense in our physical 3D world`, `Because the parallelogram area property only works in 3D`],
+    answer: 0,
+    explanation: `The lecturer explains at [09:25]: "I have two vectors u v in the plane and I'm looking for a vector that's orthogonal to both of them. Well unless those vectors are parallel there is no vector in 2D that is orthogonal to both u and v." And at [09:45]: "When we go into 4D or any higher dimension we're going to actually have many different vectors that could be orthogonal to both u and v and have the desired magnitude." The 4D+ Problem: In four dimensions or higher, there are actually too many directions that are perpendicular to both u and v, so the cross product wouldn't give you a unique, single answer.`,
+    images: ["image_1771913464398_0.png"],
+  },
+  {
+    num: 11,
+    timestamp: `10:19`,
+    question: `What is the "abusive notation" the lecturer mentions for the 2D cross product?`,
+    options: [`Using quaternions instead of vectors`, `Reporting just the signed area of the parallelogram`, `Ignoring the cross product entirely for 2D`, `Using complex numbers instead of vectors`],
+    answer: 1,
+    explanation: `The lecturer mentions at [10:19]: "A word of warning. Sometimes I and other people will use the cross product in 2D to just refer to this signed area of this parallelogram. So the area of the parallelogram and make it positive if it's sort of pointing out of the plane and negative if it's pointing into the plane."`,
+    images: ["image_1771913472308_0.png"],
+  },
+  {
+    num: 12,
+    timestamp: `11:46`,
+    question: `What is the precise mathematical definition of the cross product using determinants?`,
+    options: [`It is the vector that makes the determinant of the three vectors equal to zero`, `It is the unique vector that makes the determinant of the matrix with columns u, v, and u×v equal to the product of their norms times sine of the angle`, `It is the vector that makes the determinant of the matrix equal to one`, `It is the unique vector that makes the determinant of the matrix negative`],
+    answer: 1,
+    explanation: `The lecturer defines at [11:46]: "The cross product is the unique vector u cross v that satisfies this relationship that says the square root of the determinant of the matrix with columns u v and u cross v is equal to the norm of u times the norm of v times sine theta."`,
+    images: ["image_1771968532356_0.png"],
+  },
+  {
+    num: 13,
+    timestamp: `13:48`,
+    question: `What geometric interpretation of the cross product does the lecturer describe as "really useful"?`,
+    options: [`That it represents the normal vector to the plane containing both vectors`, `That it gives the volume of the parallelepiped formed by three vectors`, `That a cross product with a unit normal vector is equivalent to a quarter rotation in the plane`, `That it represents the projection of one vector onto another`],
+    answer: 2,
+    explanation: `The lecturer states at [14:00]: "A simple but useful observation is that a cross product with a unit normal vector n is equivalent to a quarter rotation in the plane with normal n." {:height 547, :width 658}`,
+    images: ["image_1771968664365_0.png"],
+  },
+  {
+    num: 14,
+    timestamp: `14:30`,
+    question: `What is the result of n cross (n cross u) according to the lecture?`,
+    options: [`u`, `-u`, `n`, `A vector perpendicular to both n and u`],
+    answer: 1,
+    explanation: `The lecturer explains at [14:46]: "Hopefully not too hard you see that n cross n cross u is another 90 degree rotation which means it's a 180 degree rotation of the original vector u which means it's actually equal to minus u."`,
+    images: ["image_1771968737924_0.png"],
+  },
+  {
+    num: 15,
+    timestamp: `15:47`,
+    question: `How can the dot product be expressed using matrix operations?`,
+    options: [`As the determinant of a matrix containing both vectors`, `As the trace of the matrix formed by the vectors`, `As u transpose times v`, `As the eigenvalue of the vectors' outer product`],
+    answer: 2,
+    explanation: `The lecturer states at [16:06]: "It's often convenient for instance to express a dot product using a matrix product so if I wanted to represent u dot v that's no different from saying I write u transpose v."`,
+    images: ["image_1771968934443_0.png"],
+  },
+  {
+    num: 16,
+    timestamp: `17:17`,
+    question: `How does the lecturer represent a general inner product with coefficients using matrices?`,
+    options: [`By constructing a matrix of coefficients and using u^T A v`, `By using the trace of a coefficient matrix`, `By constructing a diagonal matrix of coefficients`, `By using the determinant of a coefficient matrix`],
+    answer: 0,
+    explanation: `The lecturer explains at [17:56]: "What I'm going to do is build a little in this case two by two matrix because we're in two dimensions that has encoded in it all the constants all the coefficients in my expression for the inner product... And then I'm going to do something that looks just like what I did before u transpose v but I'm going to stick this matrix a in the middle. So I'm going to do u transpose a v."`,
+    images: ["image_1771968987949_0.png"],
+  },
+  {
+    num: 17,
+    timestamp: `19:04`,
+    question: `What important property does the matrix representing a general inner product have?`,
+    options: [`It must be invertible`, `It must be symmetric`, `It must be diagonal`, `It must be positive definite`],
+    answer: 1,
+    explanation: `The lecturer points out at [19:04]: "Question why is the matrix that I got symmetric if I take the matrix a and apply its transpose I again get 2 1 1 3." - What`,
+    images: ["image_1771969001254_0.png"],
+  },
+  {
+    num: 18,
+    timestamp: `19:21`,
+    question: `How can the cross product be represented using a matrix?`,
+    options: [`As a 3×3 identity matrix multiplied by the vector`, `As a skew-symmetric matrix constructed from the vector components`, `As a symmetric matrix multiplied by the vector`, `As the eigenvalues of the vector's components`],
+    answer: 1,
+    explanation: `The lecturer explains at [19:40]: "This matrix has an interesting structure. It has the three components of the vector in it but half of them are negated... And you notice that this matrix now instead of being symmetric it's anti-symmetric or skew-symmetric."`,
+    images: [],
+  },
+  {
+    num: 19,
+    timestamp: `21:11`,
+    question: `What happens when you swap the order of vectors in a cross product?`,
+    options: [`The result is the same`, `The result is the negative of the original cross product`, `The result is orthogonal to the original cross product`, `The result is rotated by 90 degrees`],
+    answer: 1,
+    explanation: `The lecturer states at [21:11]: "It's useful to notice here that v cross u is minus u cross v. So the cross product is kind of a anti-symmetric operation if I exchange the order of the operands I get minus the result."`,
+    images: ["image_1771969154783_0.png"],
+  },
+  {
+    num: 20,
+    timestamp: `23:54`,
+    question: `What geometric interpretation does the lecturer give for the determinant of three vectors?`,
+    options: [`The angle between the vectors`, `The projection of one vector onto another`, `The volume of the parallelepiped formed by the vectors`, `The sum of the vector magnitudes`],
+    answer: 2,
+    explanation: `The lecturer explains at [23:54]: "The determinant of three vectors u v and w gives me the volume of a little parallel pipet, a little box with edges u v and w." **signed volume**`,
+    images: ["image_1771969392356_0.png", "image_1771969197614_0.png"],
+  },
+  {
+    num: 21,
+    timestamp: `24:56`,
+    question: `How does the lecturer geometrically calculate the volume of the parallelepiped formed by three vectors?`,
+    options: [`By computing the triple integral of the vectors`, `By taking the dot product of one vector with the cross product of the other two`, `By summing the magnitudes of all three vectors`, `By calculating the eigenvalues of the matrix formed by the vectors`],
+    answer: 1,
+    explanation: `The lecturer states at [24:56]: "So now if I take the dot product of u cross v with w, what am I measuring? I'm measuring the height of the box times the area of the base and guess what that gives me the volume of this box." - it recovers original mapping.`,
+    images: ["image_1771969487599_0.png"],
+  },
+  {
+    num: 22,
+    timestamp: `27:01`,
+    question: `What does the sign of the determinant represent geometrically?`,
+    options: [`Whether the volume is positive or negative`, `Whether the vectors are linearly independent`, `Whether the orientation was preserved or reversed`, `Whether the vectors are orthogonal`],
+    answer: 2,
+    explanation: `The lecturer explains at [31:21]: "What does the sign of the determinant tell us in this case? Well, it's basically telling us whether the orientation was reversed."`,
+    images: ["image_1771969597588_0.png"],
+  },
+  {
+    num: 23,
+    timestamp: `28:08`,
+    question: `What is the relationship between a linear map and its matrix representation?`,
+    options: [`The matrix columns are the images of the standard basis vectors`, `The matrix rows are the images of the standard basis vectors`, `The matrix diagonal contains the eigenvalues of the linear map`, `The matrix determinant equals the linear map's trace`],
+    answer: 0,
+    explanation: `The lecturer states at [28:48]: "This is pretty easy, the a vectors become the columns of the matrix. Right I put a 1 x a 1 y a 1 z down the first column and so forth."{:height 621, :width 748}`,
+    images: ["image_1771969732773_0.png"],
+  },
+  {
+    num: 24,
+    timestamp: `29:29`,
+    question: `According to the lecturer, what's a good mental model for matrix-vector multiplication?`,
+    options: [`Rotating and scaling the vector`, `Performing a sequence of dot products`, `Taking linear combinations of the columns using the vector components as coefficients`, `Transforming the coordinate system`],
+    answer: 2,
+    explanation: `The lecturer states at [29:29]: "So I can think of matrix vector multiplication again as taking linear combinations of the columns using the components of the vector I'm multiplying by as the coefficients."`,
+    images: ["image_1771969739386_0.png"],
+  },
+  {
+    num: 25,
+    timestamp: `30:11`,
+    question: `What geometric interpretation does the lecturer give for the determinant of a linear map?`,
+    options: [`The angle of rotation caused by the map`, `The multiplicative change in volume caused by the map`, `The change in distance between points`, `The sum of the eigenvalues of the map`],
+    answer: 1,
+    explanation: `The lecturer explains at [30:48]: "Because the determinant of the matrix gives us the volume of the parallel pipette, the determinant of the linear map is telling us the change in volume. We had something that had unit volume one times one times one and we got something that has some other volume... so determinant is always telling you about the multiplicative change in volume." - QUESTIONS (continued):`,
+    images: ["image_1771969755550_0.png"],
+  },
+  {
+    num: 26,
+    timestamp: `32:39`,
+    question: `What is the Jacobi identity for cross products?`,
+    options: [`u × (v × w) = (u × v) × w`, `u × (v × w) + v × (w × u) + w × (u × v) = 0`, `u × (v × w) = v(u·w) - w(u·v)`, `u × v = -v × u`],
+    answer: 1,
+    explanation: `The lecturer states at [32:39]: "There's something called the Jacobi identity which just involves the cross product and that says something similar but different. It says that u cross v cross w plus v cross w cross u plus w cross u cross v is equal to zero."{:height 556, :width 669}`,
+    images: ["image_1771969698655_0.png"],
+  },
+  {
+    num: 27,
+    timestamp: `33:21`,
+    question: `What is Lagrange's identity for cross products?`,
+    options: [`u × (v × w) = (u × v) × w`, `u × (v × w) + v × (w × u) + w × (u × v) = 0`, `u × (v × w) = v(u·w) - w(u·v)`, `(u × v)·w = u·(v × w)`],
+    answer: 2,
+    explanation: `The lecturer explains at [33:21]: "Another triple product is something called Lagrange's identity which says that u cross v cross w is equal to v times u dot w minus w times u dot v, meaning you take the dot product and then you just use that scalar to multiply the vector."`,
+    images: ["image_1771969766622_0.png"],
+  },
+  {
+    num: 28,
+    timestamp: `34:05`,
+    question: `What are differential operators according to the lecture?`,
+    options: [`Operators that calculate differences between vectors`, `Operators that represent integration of functions`, `Derivatives that act on vector fields`, `Operators that perform discrete approximations`],
+    answer: 2,
+    explanation: `The lecturer defines at [34:05]: "Differential operators are basically derivatives that act on vector fields."`,
+    images: ["image_1771970129032_0.png"],
+  },
+  {
+    num: 29,
+    timestamp: `34:37`,
+    question: `What application of differential operators in graphics does the lecture mention?`,
+    options: [`Texture compression`, `User interface design`, `Numerical optimization by following gradients`, `Memory management`],
+    answer: 2,
+    explanation: `The lecturer explains at [34:37]: "These tools, differential operators, also provide the foundations for numerical optimization. So something that shows up a lot in computer graphics is that you want to find the best solution, you want to minimize cost by for instance following the gradient of some objective or energy function."`,
+    images: ["image_1771970183463_0.png"],
+  },
+  {
+    num: 30,
+    timestamp: `35:30`,
+    question: `What is the most basic definition of a derivative according to the lecture?`,
+    options: [`The second-order approximation of a function`, `The change in a function with respect to time`, `The slope or rise over run of a function`, `The limit of a difference quotient`],
+    answer: 2,
+    explanation: `The lecturer states at [35:30]: "Perhaps the most basic definition, one that you might have learned first, is that it gives the slope. It gives the rise over run of the function for a short distance."`,
+    images: ["image_1771970280186_0.png"],
+  },
+  {
+    num: 31,
+    timestamp: `35:41`,
+    question: `What is the formal definition of the derivative?`,
+    options: [`The integral of the function's rate of change`, `The limit as epsilon goes to zero of [f(x₀+ε)-f(x₀)]/ε`, `The second derivative of the function`, `The area under the function's curve`],
+    answer: 1,
+    explanation: `The lecturer gives the definition at [35:41]: "We look at how much the function is changing over a little distance epsilon. So we start at some point x naught, move over to x naught plus epsilon, evaluate the function, take the difference from the function value at x naught, divide by epsilon and then take the limit as epsilon goes to 0."`,
+    images: ["image_1771970353123_0.png"],
+  },
+  {
+    num: 32,
+    timestamp: `37:03`,
+    question: `When is a function not differentiable at a point?`,
+    options: [`When its value at that point is zero`, `When the left and right limits of the derivative don't agree`, `When the function is constant around that point`, `When the function has a local maximum at that point`],
+    answer: 1,
+    explanation: `The lecturer explains at [37:03]: "In this case we say the function is not differentiable at x naught, or that it is differentiable if f plus is the same as f minus."`,
+    images: ["image_1771970359791_0.png"],
+  },
+  {
+    num: 33,
+    timestamp: `37:45`,
+    question: `What alternative interpretation of the derivative does the lecturer provide?`,
+    options: [`As the area under the curve`, `As the best linear approximation of the function`, `As the second-order derivative`, `As the inverse of integration`],
+    answer: 1,
+    explanation: `The lecturer states at [37:45]: "Another important view of the derivative is that it's sort of the best linear approximation of the function."`,
+    images: ["image_1771970380896_0.png", "image_1772585164993_0.png"],
+  },
+  {
+    num: 34,
+    timestamp: `38:58`,
+    question: `In terms of a Taylor series, how is a function approximated beyond the constant and linear terms?`,
+    options: [`By adding logarithmic terms`, `By adding exponential terms`, `By adding higher degree terms like quadratic, cubic, etc.`, `By adding periodic functions`],
+    answer: 2,
+    explanation: `The lecturer explains at [38:58]: "I've done constant, I've done linear, what can I do next? Well just keep going up in degree. I do a quadratic term so I say what is the parabola that's the best fit at this point."`,
+    images: ["image_1771970397841_0.png"],
+  },
+  {
+    num: 35,
+    timestamp: `39:22`,
+    question: `Why does the lecturer say approximating functions with linear or quadratic terms is useful in graphics?`,
+    options: [`Because it creates more realistic visualizations`, `Because it reduces memory usage`, `Because it makes computation easier`, `Because it improves color accuracy`],
+    answer: 2,
+    explanation: `The lecturer states at [39:22]: "In general replacing complicated functions with a linear or sometimes quadratic approximation is a powerful trick that we'll see over and over again in graphics algorithms because it makes computation easier."`,
+    images: ["image_1771970433285_0.png"],
+  },
+  {
+    num: 36,
+    timestamp: `40:19`,
+    question: `What is the directional derivative?`,
+    options: [`A vector pointing in the direction of steepest ascent`, `The derivative of a multivariable function along a specific direction`, `The change in direction of a vector field`, `The curl of a function at a point`],
+    answer: 1,
+    explanation: `The lecturer describes at [40:19]: "Perhaps the most basic starting point is to think about the directional derivative because we'll be able to easily connect it to the usual one-dimensional derivative."`,
+    images: ["image_1771970503059_0.png"],
+  },
+  {
+    num: 37,
+    timestamp: `41:31`,
+    question: `How is the directional derivative formally defined?`,
+    options: [`As the gradient dotted with the direction vector`, `As the limit of [f(x₀+εu)-f(x₀)]/ε as ε→0`, `As the Laplacian of the function in the given direction`, `As the divergence of the function's gradient`],
+    answer: 1,
+    explanation: `The lecturer states at [41:31]: "The directional derivative along the direction u of the function f is just the usual derivative... the limit as epsilon goes to zero of f of x naught plus epsilon u minus f of x naught divided by epsilon."`,
+    images: ["image_1771987890560_0.png"],
+  },
+  {
+    num: 38,
+    timestamp: `42:54`,
+    question: `What does the gradient tell us about a function?`,
+    options: [`The total volume of the function`, `The second-order approximation of the function`, `The directional derivative in all possible directions`, `The boundary conditions of the function`],
+    answer: 2,
+    explanation: `The lecturer explains at [42:54]: "Before getting into the details, the gradient is basically something that tells us the directional derivative in all possible directions if we use it the right way." -`,
+    images: ["image_1771987937211_0.png", "image_1772584782720_0.png"],
+  },
+  {
+    num: 39,
+    timestamp: `43:40`,
+    question: `What does the lecturer say the gradient visually represents on a function?`,
+    options: [`Arrows pointing in random directions`, `Vectors pointing in the direction of quickest increase (uphill)`, `The level sets of the function`, `The boundary of the function's domain`],
+    answer: 1,
+    explanation: `The lecturer describes at [43:40]: "Just by looking at this picture you get the sense that the gradient kind of points in the direction of quickest increase if we think of the dark blue colors as being small values in the function and the light blue or white colors being large values in the function, then the arrows are kind of pointing uphill."`,
+    images: ["image_1771988006149_0.png"],
+  },
+  {
+    num: 40,
+    timestamp: `44:02`,
+    question: `What is the proper name of the symbol ∇ used for the gradient?`,
+    options: [`Del`, `Nabla`, `Gradient`, `Laplacian`],
+    answer: 1,
+    explanation: `The lecturer mentions at [44:02]: "By the way just as a piece of language this symbol that we use for the gradient is not really called grad it's actually got its own name it's called nabla."`,
+    images: ["image_1771988003515_0.png"],
+  },
+  {
+    num: 41,
+    timestamp: `44:30`,
+    question: `How is the gradient defined in terms of partial derivatives?`,
+    options: [`The sum of all partial derivatives`, `The list of all partial derivatives along coordinate directions`, `The product of all partial derivatives`, `The maximum of all partial derivatives`],
+    answer: 1,
+    explanation: `The lecturer states at [44:56]: "I think a lot simpler way to think about this is hey, we already understand the directional derivative right? The directional derivative gives us the one dimensional derivative in some direction. So what is the gradient? It's just the list of the directional derivatives along all the coordinate axes x1, x2, x3, and so on."`,
+    images: ["image_1771988089566_0.png"],
+  },
+  {
+    num: 42,
+    timestamp: `46:31`,
+    question: `What is the gradient of the function f(x₁,x₂) = x₁² + x₂²?`,
+    options: [`(x₁, x₂)`, `(2x₁, 2x₂)`, `(1, 1)`, `2(x₁ + x₂)`],
+    answer: 1,
+    explanation: `The lecturer calculates at [47:14]: "We combine these to get our gradient grad f of x is equal to 2x1 2x2 which we could also just write as 2 times bold x."`,
+    images: ["image_1771988120283_0.png"],
+  },
+  {
+    num: 43,
+    timestamp: `48:08`,
+    question: `What is the first-order Taylor approximation of a function f around a point x₀?`,
+    options: [`f(x) ≈ f(x₀)`, `f(x) ≈ f(x₀) + ∇f(x₀)·(x-x₀)`, `f(x) ≈ f(x₀) + (x-x₀)²`, `f(x) ≈ ∇f(x₀)`],
+    answer: 1,
+    explanation: `The lecturer gives the formula at [48:08]: "We can write this as f of x is approximately f of x naught plus the inner product of the gradient of f at x naught with the vector x minus x naught."`,
+    images: ["image_1771988163054_0.png"],
+  },
+  {
+    num: 44,
+    timestamp: `48:26`,
+    question: `What happens to the function value when moving in the direction of the gradient?`,
+    options: [`It decreases`, `It remains constant`, `It increases`, `It oscillates`],
+    answer: 2,
+    explanation: `The lecturer explains at [48:26]: "Starting at x naught we can see pretty easily that this term gets bigger if we move in the direction of the gradient right? Let's say that x minus x naught is equal to grad f, so we're moving uphill as quickly as possible."`,
+    images: ["image_1771988197698_0.png"],
+  },
+  {
+    num: 45,
+    timestamp: `49:18`,
+    question: `What does the gradient represent geometrically, according to the lecturer?`,
+    options: [`The level curves of the function`, `The direction of steepest ascent`, `The second derivative of the function`, `The boundary of the function`],
+    answer: 1,
+    explanation: `The lecturer states at [49:18]: "This is our third important picture of the gradient, is that it's giving us the direction of steepest ascent. Meaning if we're standing at some point on the map, what direction should we travel to increase our altitude or increase the value of our function as quickly as possible."`,
+    images: ["image_1771988213030_0.png"],
+  },
+  {
+    num: 46,
+    timestamp: `49:46`,
+    question: `What optimization algorithm does the lecturer describe that uses the gradient?`,
+    options: [`Simulated annealing`, `Genetic algorithms`, `Dynamic programming`, `Gradient descent`],
+    answer: 3,
+    explanation: `The lecturer describes at [50:01]: "What do we do? We start at some initial guess x naught, we evaluate the gradient at that point, we take a little step in the gradient direction and repeat, evaluate the gradient again, take a step again and so forth." This is gradient descent (or ascent depending on whether minimizing or maximizing).`,
+    images: ["image_1771988229711_0.png"],
+  },
+  {
+    num: 47,
+    timestamp: `50:39`,
+    question: `How is the gradient related to the directional derivative?`,
+    options: [`They provide the same information in different forms`, `The directional derivative is the magnitude of the gradient`, `The inner product of the gradient with direction u equals the directional derivative along u`, `The gradient is the sum of all directional derivatives`],
+    answer: 2,
+    explanation: `The lecturer defines at [50:39]: "We can say that at each point x the gradient is the unique vector nabla f of x such that the inner product of nabla f with u is equal to the directional derivative of f along the direction u for all u."`,
+    images: ["image_1771988289666_0.png"],
+  },
+  {
+    num: 48,
+    timestamp: `52:23`,
+    question: `What is the gradient of the dot product u·v with respect to u?`,
+    options: [`u`, `v`, `u + v`, `u - v`],
+    answer: 1,
+    explanation: `The lecturer concludes at [53:46]: "So the gradient with respect to u is just the list of all the v components. But at this point I think oh that's interesting, I could have written that a lot more simply. I could have just written the gradient of u transpose v with respect to u is equal to v."`,
+    images: ["image_1771988372388_0.png"],
+  },
+  {
+    num: 49,
+    timestamp: `54:50`,
+    question: `What pattern does the lecturer identify for the gradient of xᵀy with respect to x?`,
+    options: [`It equals x`, `It equals y`, `It equals the transpose of y`, `It equals x + y`],
+    answer: 1,
+    explanation: `The lecturer states at [54:50]: "For instance if I have two vectors x and y in rn and I have a symmetric matrix a then the derivative of x transpose y with respect to x is equal to y as we've just seen."`,
+    images: ["image_1771988432424_0.png"],
+  },
+  {
+    num: 50,
+    timestamp: `55:04`,
+    question: `What does the gradient of xᵀAx with respect to x equal?`,
+    options: [`x`, `Ax`, `2Ax`, `A`],
+    answer: 2,
+    explanation: `The lecturer states at [55:04]: "If I have the gradient of x transpose a x with respect to x I get 2ax." - QUESTIONS (continued):`,
+    images: ["image_1771988467336_0.png"],
+  },
+  {
+    num: 51,
+    timestamp: `55:44`,
+    question: `What resource does the lecturer recommend for matrix derivatives?`,
+    options: [`The professor's lecture notes`, `The Matrix Cookbook`, `Linear Algebra Done Right`, `Matrix Calculus for Machine Learning`],
+    answer: 1,
+    explanation: `The lecturer mentions at [55:44]: "Beyond this little list here, there's an excellent resource the matrix cookbook that gives all sorts of nice matrix derivatives."`,
+    images: [],
+  },
+  {
+    num: 52,
+    timestamp: `56:50`,
+    question: `What complex mathematical object is the lecturer taking the gradient of in the advanced example?`,
+    options: [`A tensor field`, `A quaternion`, `A function of another function`, `A complex-valued function`],
+    answer: 2,
+    explanation: `The lecturer states at [56:50]: "Let's try taking the gradient of a function of another function. What does that mean? So you could imagine for instance that little f is a function on the real line like sine or cosine or whatever you like, and big f is a function that takes any function little f and assigns it a score or a value."`,
+    images: ["image_1771988539060_0.png"],
+  },
+  {
+    num: 53,
+    timestamp: `59:40`,
+    question: `In the advanced example, what is the function Big F of little f?`,
+    options: [`The maximum value of little f`, `The L2 inner product of little f and little g`, `The derivative of little f`, `The integral of little f squared`],
+    answer: 1,
+    explanation: `The lecturer defines at [59:40]: "Let's consider a concrete function big f of little f which is equal to the l2 inner product of little f and little g for functions little f and little g on the unit interval."`,
+    images: ["image_1771988651688_0.png"],
+  },
+  {
+    num: 54,
+    timestamp: `1:00:44`,
+    question: `What does the lecturer claim is the gradient of Big F(little f) = ⟨little f, little g⟩₂?`,
+    options: [`The function little f`, `The derivative of little g`, `The function little g`, `The zero function`],
+    answer: 2,
+    explanation: `The lecturer states at [1:00:44]: "So likewise this time I'm going to claim the gradient of big f is just little g. If we take the gradient of big f with respect to little f, the little f falls away and we're left with just little g."`,
+    images: ["image_1771988662637_0.png"],
+  },
+  {
+    num: 55,
+    timestamp: `1:01:26`,
+    question: `What intuition does the lecturer use to explain why the gradient of the L2 inner product is the function little g?`,
+    options: [`That the derivative of a product is the sum of derivatives`, `That the inner product measures alignment, and the function best aligned with g is g itself`, `That the derivative of the inner product is always zero`, `That any function can be represented as an inner product`],
+    answer: 1,
+    explanation: `The lecturer explains at [1:01:26]: "Well okay now we really draw on our intuition about the inner product from thinking about little arrows right? The inner product measures how well two little arrows are aligned or how well two functions are aligned. So what is the function that is best aligned with little g? Well it's just little g."`,
+    images: ["image_1771988670464_0.png"],
+  },
+  {
+    num: 56,
+    timestamp: `1:04:42`,
+    question: `What is the gradient of the squared L2 norm of f with respect to f?`,
+    options: [`f`, `2f`, `The norm of f`, `The square of f`],
+    answer: 1,
+    explanation: `The lecturer concludes at [1:04:42]: "The only solution to this equation, the only way for this to hold for all functions u is if nabla f is equal to 2 little f naught."`,
+    images: ["image_1771988738747_0.png"],
+  },
+  {
+    num: 57,
+    timestamp: `1:05:09`,
+    question: `What pattern does the lecturer highlight about differentiating functions of functions?`,
+    options: [`It's always more complex than regular differentiation`, `It follows different rules than regular differentiation`, `It follows similar patterns to ordinary differentiation`, `It requires complex transform techniques`],
+    answer: 2,
+    explanation: `The lecturer observes at [1:05:09]: "The way we differentiate functions of functions really doesn't look different at all from the way we just differentiate ordinary variables. The derivative of x squared with respect to x is 2x, the derivative of norm of f squared with respect to f is just 2f."`,
+    images: ["image_1771988786536_0.png"],
+  },
+  {
+    num: 58,
+    timestamp: `1:06:32`,
+    question: `How does the lecturer define a vector field?`,
+    options: [`A collection of vectors in space`, `A mapping from points in space to vectors`, `A derivative of a scalar field`, `A matrix that transforms vectors`],
+    answer: 1,
+    explanation: `The lecturer defines at [1:06:32]: "For instance we could think of a vector field on the plane as a map from r2 to r2. For each point in r2 we get a vector in r2."`,
+    images: ["image_1771988827100_0.png"],
+  },
+  {
+    num: 59,
+    timestamp: `1:07:25`,
+    question: `How many basic derivatives for vector fields does the lecturer identify?`,
+    options: [`One - the gradient`, `Two - the divergence and curl`, `Three - the gradient, divergence, and curl`, `Four - the gradient, divergence, curl, and Laplacian`],
+    answer: 1,
+    explanation: `The lecturer states at [1:07:25]: "Acturally there are multiple answers. There are two basic derivatives for vector fields."{:height 531, :width 658}`,
+    images: ["image_1771988874726_0.png", "image_1771988926877_0.png"],
+  },
+  {
+    num: 60,
+    timestamp: `1:08:01`,
+    question: `What does the divergence measure about a vector field?`,
+    options: [`The circulation or rotational behavior`, `The average vector direction`, `The rate of expansion or contraction (source/sink behavior)`, `The total energy of the field`],
+    answer: 2,
+    explanation: `The lecturer explains at [1:08:01]: "The divergence measures basically how much the field is shrinking or expanding, how much it looks like a sink or a source where water is flowing out or flowing in."`,
+    images: ["image_1771988951848_0.png"],
+  },
+  {
+    num: 61,
+    timestamp: `1:09:03`,
+    question: `What does the curl measure about a vector field?`,
+    options: [`The rate of expansion or contraction`, `How much the field is spinning (rotational behavior)`, `The magnitude of the vectors`, `The gradient of the field's energy`],
+    answer: 1,
+    explanation: `The lecturer states at [1:09:03]: "What is the curl measuring about this vector field? Hopefully it's not too hard to see that it's kind of measuring how much this field is spinning."`,
+    images: ["image_1771989024001_0.png"],
+  },
+  {
+    num: 62,
+    timestamp: `1:09:41`,
+    question: `How is the divergence written in notation?`,
+    options: [`div X`, `∇ × X`, `∇ · X`, `∇² X`],
+    answer: 2,
+    explanation: `The lecturer notes at [1:09:41]: "We often write the divergence as nabla dot x."`,
+    images: ["image_1771989058728_0.png"],
+  },
+  {
+    num: 63,
+    timestamp: `1:10:18`,
+    question: `What is the coordinate formula for the divergence of a vector field?`,
+    options: [`The determinant of the vector field's Jacobian`, `The sum of the partial derivatives of each component with respect to its corresponding coordinate`, `The trace of the vector field's gradient`, `The cross product of the gradient with the vector field`],
+    answer: 1,
+    explanation: `The lecturer describes at [1:10:18]: "We sum over all the coordinates each partial derivative being applied to each coordinate function. We take the derivative of the first coordinate function along the first direction, add that to the derivative of the second coordinate function along the second direction, and so on."`,
+    images: ["image_1771989089559_0.png"],
+  },
+  {
+    num: 64,
+    timestamp: `1:12:22`,
+    question: `How is the curl written in notation?`,
+    options: [`curl X`, `∇ × X`, `∇ · X`, `∇² X`],
+    answer: 1,
+    explanation: `The lecturer states at [1:12:22]: "We can write curl also with nabla. We can write it as nabla cross x with a cross product."`,
+    images: ["image_1771989199368_0.png"],
+  },
+  {
+    num: 65,
+    timestamp: `1:13:27`,
+    question: `What is the 2D curl formula?`,
+    options: [`The determinant of the 2×2 Jacobian matrix`, `∂x₂/∂x₁ - ∂x₁/∂x₂`, `∂x₁/∂x₁ + ∂x₂/∂x₂`, `The divergence of the 2D vector field`],
+    answer: 1,
+    explanation: `The lecturer gives the formula at [1:13:27]: "The curl of x is equal to the partial derivative of the second coordinate function along the first coordinate direction minus the partial derivative of the first coordinate function along the second coordinate direction."`,
+    images: ["image_1771989224011_0.png", "image_1772584933293_0.png", "image_1772584943241_0.png", "image_1772585074709_0.png"],
+  },
+  {
+    num: 66,
+    timestamp: `1:14:47`,
+    question: `What relationship does the lecturer identify between curl and divergence?`,
+    options: [`They are completely independent operations`, `The divergence of X equals the curl of the 90° rotation of X`, `The curl is always perpendicular to the divergence`, `The sum of curl and divergence always equals zero`],
+    answer: 1,
+    explanation: `The lecturer observes at [1:14:47]: "Do you notice anything about the relationship between curl and divergence? Hopefully you do! Hopefully what you are kind of picking up on is that the divergence of x is the same as the curl of the 90 degree rotation of x."`,
+    images: ["image_1771989278643_0.png"],
+  },
+  {
+    num: 67,
+    timestamp: `1:16:38`,
+    question: `In the fluid simulation example, what change in variables leads to different simulation results?`,
+    options: [`Changing from 2D to 3D simulation`, `Changing from velocity field to stream function`, `Changing from laminar to turbulent flow`, `Changing from Eulerian to Lagrangian coordinates`],
+    answer: 1,
+    explanation: `The lecturer explains at [1:16:52]: "So in one case you might use the fluid velocity u, in the other case you use the so-called stream function psi. And you can see that just this mathematically fairly simple change really changes the behavior of the simulation."`,
+    images: ["image_1771989335272_0.png"],
+  },
+  {
+    num: 68,
+    timestamp: `1:17:34`,
+    question: `Why does the lecturer say the Laplacian is important for graphics?`,
+    options: [`It only appears in specialized applications`, `It appears across many domains including geometry, rendering, simulation, and imaging`, `It's only important for color processing`, `It's only useful for physics simulations`],
+    answer: 1,
+    explanation: `The lecturer emphasizes at [1:17:34]: "This is unbelievably important for graphics, it shows up across geometry, across rendering, simulation, imaging, everywhere."`,
+    images: ["image_1771989366312_0.png"],
+  },
+  {
+    num: 69,
+    timestamp: `1:21:19`,
+    question: `How can the Laplacian be written in terms of other differential operators?`,
+    options: [`As the gradient of the divergence`, `As the curl of the gradient`, `As the divergence of the gradient`, `As the divergence of the curl`],
+    answer: 2,
+    explanation: `The lecturer states at [1:21:19]: "We can write it using the operators we just talked about: divergence and gradient. So Laplacian of f is the divergence of the gradient of f." ]`,
+    images: ["image_1771989413169_0.png"],
+  },
+  {
+    num: 70,
+    timestamp: `1:27:25`,
+    question: `How does the lecturer define the Hessian in terms of the gradient?`,
+    options: [`The Hessian is the determinant of the gradient`, `The Hessian is the transpose of the gradient`, `The Hessian gives the directional derivative of the gradient`, `The Hessian is the integral of the gradient`],
+    answer: 2,
+    explanation: `The lecturer defines at [1:27:25]: "More precisely what I mean by that is if I take the Hessian of the function f and apply it to the vector or direction u, then I get the directional derivative of the gradient in the direction u." -`,
+    images: ["image_1771989791144_0.png"],
+  },
+]
+
+function useTimer() {
+  const [elapsed, setElapsed] = useState(0)
+  const ref = useRef(null)
+  const start = () => { ref.current = setInterval(() => setElapsed(e => e + 1), 1000) }
+  const stop = () => clearInterval(ref.current)
+  const reset = () => { clearInterval(ref.current); setElapsed(0) }
+  const fmt = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`
+  return { elapsed, fmt, start, stop, reset }
+}
+
+export default function SigmaQuiz() {
+  const [screen, setScreen] = useState('welcome')
+  const [idx, setIdx] = useState(0)
+  const [selected, setSelected] = useState(null)
+  const [revealed, setRevealed] = useState(false)
+  const [score, setScore] = useState(0)
+  const [answers, setAnswers] = useState([])
+  const timer = useTimer()
+  const q = quizData[idx]
+  const ACCENT = '#38bdf8'
+
+  const card = { background: '#1e293b', borderRadius: '12px', padding: '1.5rem', marginBottom: '1rem', border: '1px solid #334155' }
+
+  if (screen === 'welcome') return (
+    <div style={{ minHeight: '100vh', background: '#0f172a', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', fontFamily: 'system-ui,sans-serif' }}>
+      <Sigma size={48} color={ACCENT} style={{ marginBottom: '1.5rem' }} />
+      <h1 style={{ color: '#f1f5f9', fontSize: '1.75rem', fontWeight: 700, textAlign: 'center', marginBottom: '0.5rem' }}>Lecture 3: Vector Calculus</h1>
+      <p style={{ color: '#94a3b8', marginBottom: '0.5rem' }}>Gradient, Divergence, Curl, Laplacian, Hessian</p>
+      <p style={{ color: ACCENT, fontWeight: 600, marginBottom: '2rem' }}>70 questions</p>
+      <button onClick={() => { setScreen('quiz'); timer.start() }}
+        style={{ background: ACCENT, color: '#0f172a', fontWeight: 700, padding: '0.75rem 2.5rem', borderRadius: '8px', border: 'none', cursor: 'pointer', fontSize: '1rem' }}>
+        Start Quiz
+      </button>
+      <a href='/' style={{ marginTop: '1.5rem', color: '#64748b', fontSize: '0.875rem' }}>← Back to index</a>
+    </div>
+  )
+
+  if (screen === 'results') {
+    const pct = Math.round(score / quizData.length * 100)
+    return (
+      <div style={{ minHeight: '100vh', background: '#0f172a', padding: '2rem', fontFamily: 'system-ui,sans-serif', color: '#f1f5f9' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <h1 style={{ color: ACCENT, fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>Lecture 3: Vector Calculus — Results</h1>
+          <p style={{ color: '#94a3b8', marginBottom: '2rem' }}>Time: {timer.fmt(timer.elapsed)}</p>
+          <div style={{ ...card, textAlign: 'center', marginBottom: '2rem' }}>
+            <div style={{ fontSize: '3rem', fontWeight: 800, color: ACCENT }}>{pct}%</div>
+            <div style={{ color: '#94a3b8', marginTop: '0.5rem' }}>{score} / {quizData.length} correct</div>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {answers.map((a, i) => {
+              const qq = quizData[i]
+              const correct = a === qq.answer
+              return (
+                <div key={i} style={{ ...card, borderColor: correct ? '#22c55e44' : '#ef444444' }}>
+                  <div style={{ color: '#94a3b8', fontSize: '0.8rem', marginBottom: '0.25rem' }}>Q{qq.num} [{qq.timestamp}]</div>
+                  <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>{qq.question}</div>
+                  <div style={{ color: correct ? '#22c55e' : '#ef4444', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+                    Your answer: {qq.options[a]} {correct ? '✓' : '✗'}
+                  </div>
+                  {!correct && <div style={{ color: '#22c55e', fontSize: '0.9rem', marginBottom: '0.5rem' }}>Correct: {qq.options[qq.answer]}</div>}
+                  {qq.explanation && <div style={{ color: '#94a3b8', fontSize: '0.875rem', borderTop: '1px solid #334155', paddingTop: '0.5rem', marginTop: '0.5rem' }}>{qq.explanation}</div>}
+                  <SlideImages images={qq.images} />
+                </div>
+              )
+            })}
+          </div>
+          <button onClick={() => { setScreen('welcome'); setIdx(0); setScore(0); setAnswers([]); timer.reset() }}
+            style={{ marginTop: '2rem', background: ACCENT, color: '#0f172a', fontWeight: 700, padding: '0.75rem 2rem', borderRadius: '8px', border: 'none', cursor: 'pointer' }}>
+            Restart
+          </button>
+          <a href='/' style={{ display: 'block', marginTop: '1rem', color: '#64748b', fontSize: '0.875rem' }}>← Back to index</a>
+        </div>
+      </div>
+    )
+  }
+
+  const handleSelect = (i) => { if (!revealed) setSelected(i) }
+  const handleReveal = () => {
+    if (selected === null) return
+    setRevealed(true)
+    if (selected === q.answer) setScore(s => s + 1)
+  }
+  const handleNext = () => {
+    setAnswers(a => [...a, selected])
+    if (idx + 1 >= quizData.length) { timer.stop(); setScreen('results') }
+    else { setIdx(i => i + 1); setSelected(null); setRevealed(false) }
+  }
+
+  return (
+    <div style={{ minHeight: '100vh', background: '#0f172a', padding: '1.5rem', fontFamily: 'system-ui,sans-serif', color: '#f1f5f9' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Sigma size={20} color={ACCENT} /><span style={{ color: ACCENT, fontWeight: 600 }}>Lecture 3: Vector Calculus</span></div>
+          <div style={{ display: 'flex', gap: '1.5rem', color: '#94a3b8', fontSize: '0.875rem' }}>
+            <span>{timer.fmt(timer.elapsed)}</span>
+            <span>{idx+1} / 70</span>
+            <span style={{ color: ACCENT }}>Score: {score}</span>
+          </div>
+        </div>
+
         {/* Progress */}
-        <div style={{ marginBottom: '2rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', fontSize: '0.9rem', color: C.muted }}>
-            <span>Question {qIdx + 1} of {quizData.length}</span>
-            <span><Clock size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '0.3rem' }} />{fmt(timeSpent)}</span>
-          </div>
-          <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${((qIdx + 1) / quizData.length) * 100}%`, background: C.accent, transition: 'width 0.3s' }} />
-          </div>
+        <div style={{ background: '#1e293b', borderRadius: '99px', height: '6px', marginBottom: '1.5rem' }}>
+          <div style={{ background: ACCENT, height: '100%', borderRadius: '99px', width: `${((idx+1)/70)*100}%`, transition: 'width 0.3s' }} />
         </div>
 
-        {/* Tags */}
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
-          {[q.difficulty, (q.section || '').split('[')[0].trim(), q.topic].filter(Boolean).map(t => (
-            <span key={t} style={{ padding: '0.2rem 0.65rem', borderRadius: '5px', background: `${C.accent}20`, color: C.accent, fontSize: '0.82rem', fontWeight: '600' }}>{t}</span>
-          ))}
-        </div>
-
-        {/* Question */}
-        <h2 style={{ fontSize: '1.35rem', fontWeight: '600', lineHeight: '1.5', marginBottom: '1.5rem' }}>{q.question}</h2>
-
-        {/* Options */}
-        <div style={{ marginBottom: '2rem' }}>
-          {q.options.map((opt, i) => (
-            <div key={i} onClick={() => !showExp && !reviewMode && setSelected([i])}
-              style={{
-                padding: '0.9rem 1rem', borderRadius: '8px', marginBottom: '0.6rem', cursor: showExp || reviewMode ? 'default' : 'pointer', transition: 'all 0.2s',
-                border: `2px solid ${showExp || reviewMode ? i === q.answer ? C.success : selected[0] === i ? C.error : C.border : selected[0] === i ? C.accent : C.border}`,
-                background: showExp || reviewMode ? i === q.answer ? `${C.success}15` : selected[0] === i ? `${C.error}15` : C.surface : selected[0] === i ? `${C.accent}15` : C.surface,
-              }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                {(showExp || reviewMode) && (i === q.answer ? <CheckCircle size={18} color={C.success} /> : selected[0] === i ? <XCircle size={18} color={C.error} /> : null)}
-                <span>{opt}</span>
-              </div>
-            </div>
-          ))}
+        {/* Question card */}
+        <div style={card}>
+          <div style={{ color: '#64748b', fontSize: '0.8rem', marginBottom: '0.5rem' }}>Q{q.num} · [{q.timestamp}]</div>
+          <div style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '1.25rem', lineHeight: 1.6 }}>{q.question}</div>
+          <SlideImages images={q.images} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+            {q.options.map((opt, i) => {
+              let bg = '#0f172a', border = '#334155', color = '#cbd5e1'
+              if (selected === i && !revealed) { bg = `${ACCENT}22`; border = ACCENT; color = '#f1f5f9' }
+              if (revealed && i === q.answer) { bg = '#22c55e22'; border = '#22c55e'; color = '#22c55e' }
+              if (revealed && selected === i && i !== q.answer) { bg = '#ef444422'; border = '#ef4444'; color = '#ef4444' }
+              return (
+                <button key={i} onClick={() => handleSelect(i)}
+                  style={{ background: bg, border: `1px solid ${border}`, color, padding: '0.75rem 1rem', borderRadius: '8px', textAlign: 'left', cursor: revealed ? 'default' : 'pointer', fontSize: '0.95rem', transition: 'all 0.15s' }}>
+                  <span style={{ fontWeight: 700, marginRight: '0.5rem' }}>{['A','B','C','D'][i]}.</span>{opt}
+                </button>
+              )
+            })}
+          </div>
         </div>
 
         {/* Explanation */}
-        {showExp && q.explanation && (
-          <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
-            <h3 style={{ color: C.accent, fontSize: '1.1rem', marginBottom: '1rem' }}>Explanation</h3>
-
-            <div style={{ marginBottom: '1rem' }}>
-              <h4 style={{ color: C.accent, fontSize: '0.95rem', marginBottom: '0.4rem' }}>💡 Intuition</h4>
-              <p style={{ color: C.muted, lineHeight: '1.6' }}>{q.explanation.intuition}</p>
-            </div>
-
-            <div style={{ marginBottom: '1rem' }}>
-              <h4 style={{ color: C.accent, fontSize: '0.95rem', marginBottom: '0.4rem' }}>📖 Lecture Reference</h4>
-              <p style={{ color: C.muted, lineHeight: '1.6' }}>{q.explanation.reference}</p>
-            </div>
-
-            {/* Slide images from Logseq */}
-            {q.slideImages && q.slideImages.length > 0 && (
-              <SlideImages images={q.slideImages} />
-            )}
-
-            {/* Inline diagram if any */}
-            {q.diagram && (
-              <div style={{ margin: '1rem 0' }}>
-                <h4 style={{ color: C.accent, fontSize: '0.95rem', marginBottom: '0.5rem' }}>📊 Visual</h4>
-                <div style={{ background: '#0a0a14', padding: '1rem', borderRadius: '8px', border: `1px solid ${C.border}`, display: 'inline-block' }}>
-                  {q.diagram}
-                </div>
-              </div>
-            )}
-
-            <div style={{ marginBottom: '1rem', marginTop: '1rem' }}>
-              <h4 style={{ color: C.accent, fontSize: '0.95rem', marginBottom: '0.4rem' }}>💻 Code</h4>
-              <pre style={code}>{q.explanation.computation}</pre>
-            </div>
-
-            <div>
-              <h4 style={{ color: C.accent, fontSize: '0.95rem', marginBottom: '0.4rem' }}>🔗 Connection</h4>
-              <p style={{ color: C.muted, lineHeight: '1.6' }}>{q.explanation.connection}</p>
-            </div>
+        {revealed && q.explanation && (
+          <div style={{ ...card, borderColor: `${ACCENT}44` }}>
+            <div style={{ color: ACCENT, fontWeight: 700, marginBottom: '0.5rem' }}>Explanation</div>
+            <div style={{ color: '#cbd5e1', lineHeight: 1.7 }}>{q.explanation}</div>
           </div>
         )}
 
-        {/* Navigation */}
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <button onClick={handlePrev} disabled={qIdx === 0}
-            style={{ ...btn, background: C.border, opacity: qIdx === 0 ? 0.5 : 1, cursor: qIdx === 0 ? 'not-allowed' : 'pointer' }}
-            onMouseEnter={e => qIdx !== 0 && (e.target.style.background = '#2a3a4a')}
-            onMouseLeave={e => qIdx !== 0 && (e.target.style.background = C.border)}>
-            <ChevronLeft size={18} /> Prev
-          </button>
-
-          {!showExp && !reviewMode && (
-            <button onClick={handleSubmit} disabled={selected.length === 0}
-              style={{ ...btn, flex: 1, justifyContent: 'center', opacity: selected.length === 0 ? 0.5 : 1 }}
-              onMouseEnter={e => selected.length > 0 && (e.target.style.background = C.accentHover)}
-              onMouseLeave={e => selected.length > 0 && (e.target.style.background = C.accent)}>
-              Submit Answer
-            </button>
-          )}
-
-          {(showExp || reviewMode) && (
-            <button onClick={handleNext}
-              style={{ ...btn, flex: 1, justifyContent: 'center' }}
-              onMouseEnter={e => e.target.style.background = C.accentHover}
-              onMouseLeave={e => e.target.style.background = C.accent}>
-              {qIdx < quizData.length - 1 ? <><span>Next</span><ChevronRight size={18} /></> : <><span>Results</span><Trophy size={18} /></>}
-            </button>
-          )}
+        {/* Buttons */}
+        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+          {!revealed && <button onClick={handleReveal} disabled={selected === null}
+            style={{ background: selected !== null ? ACCENT : '#334155', color: selected !== null ? '#0f172a' : '#64748b', fontWeight: 700, padding: '0.75rem 2rem', borderRadius: '8px', border: 'none', cursor: selected !== null ? 'pointer' : 'not-allowed' }}>
+            Check Answer
+          </button>}
+          {revealed && <button onClick={handleNext}
+            style={{ background: ACCENT, color: '#0f172a', fontWeight: 700, padding: '0.75rem 2rem', borderRadius: '8px', border: 'none', cursor: 'pointer' }}>
+            {idx + 1 >= 70 ? 'See Results' : 'Next Question →'}
+          </button>}
         </div>
       </div>
     </div>
-  );
-};
-
-export default Quiz;
+  )
+}

@@ -1,918 +1,749 @@
-'use client';
+'use client'
+import { useState, useEffect, useRef } from 'react'
+import { Monitor } from 'lucide-react'
 
-import { useState, useEffect, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Monitor } from 'lucide-react';
+// Lecture 4: Rasterization & Sampling — 64 questions
 
-/**
- * CMU 15-462/662 Computer Graphics — Lecture 4
- * Drawing a Triangle and an Intro to Sampling
- * Topics: Rasterization, Graphics Pipeline, Triangle Primitives,
- *         Coverage, Sampling Theory, Aliasing, Anti-Aliasing (SSAA)
- */
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
-</style>
-
-// ─── SVG Diagrams ─────────────────────────────────────────────
-
-const DiagramRasterVsRay = () => (
-  <svg viewBox="0 0 260 140" width="260" height="140">
-    <rect x="5" y="5" width="120" height="130" rx="6" fill="#1e2a3a"/>
-    <rect x="135" y="5" width="120" height="130" rx="6" fill="#1e2a3a"/>
-    <text x="45" y="22" fill="#4ade80" fontSize="11" fontFamily="Rajdhani" fontWeight="700" textAnchor="middle">RASTERIZATION</text>
-    <text x="195" y="22" fill="#f472b6" fontSize="11" fontFamily="Rajdhani" fontWeight="700" textAnchor="middle">RAY TRACING</text>
-    {/* Rasterization: for each triangle → pixels */}
-    <polygon points="20,50 80,35 90,90" fill="#4ade8020" stroke="#4ade80" strokeWidth="1.5"/>
-    <text x="55" y="75" fill="#4ade80" fontSize="9" fontFamily="Rajdhani" textAnchor="middle">triangle</text>
-    {[35,55,75].map((y,i)=>[40,60,80,100].map((x,j)=>(
-      <rect key={`${i}${j}`} x={x-7} y={y-7} width="12" height="12" rx="2"
-        fill={(i===1&&j===1)||(i===1&&j===2)||(i===2&&j===1)?'#4ade8040':'none'} stroke="#4ade8030" strokeWidth="0.5"/>
-    )))}
-    <text x="65" y="118" fill="#94a3b8" fontSize="9" fontFamily="Rajdhani" textAnchor="middle">for each tri → pixels</text>
-    {/* Ray tracing: for each pixel → triangles */}
-    {[35,55,75,95].map((y,i)=>[148,168,188,208].map((x,j)=>(
-      <rect key={`r${i}${j}`} x={x-7} y={y-7} width="12" height="12" rx="2" fill="none" stroke="#f472b630" strokeWidth="0.5"/>
-    )))}
-    <line x1="168" y1="28" x2="220" y2="75" stroke="#f472b6" strokeWidth="1.5" strokeDasharray="4,2"/>
-    <polygon points="215,55 235,90 225,95" fill="#f472b620" stroke="#f472b6" strokeWidth="1"/>
-    <text x="195" y="118" fill="#94a3b8" fontSize="9" fontFamily="Rajdhani" textAnchor="middle">for each pixel → tris</text>
-  </svg>
-);
-
-const DiagramCoverage = () => (
-  <svg viewBox="0 0 240 160" width="240" height="160">
-    <defs>
-      <marker id="cv1" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
-        <polygon points="0 0,6 2.5,0 5" fill="#fbbf24"/>
-      </marker>
-    </defs>
-    {/* Pixel grid */}
-    {[0,1,2,3].map(row=>[0,1,2,3].map(col=>{
-      const x=20+col*50, y=20+row*35;
-      const inside=(row===1&&col>=1)||(row===2&&col>=0&&col<=2);
-      return <rect key={`${row}${col}`} x={x} y={y} width="48" height="33" rx="3"
-        fill={inside?'#22c55e20':'#1e2a3a'} stroke={inside?'#22c55e':'#2a3a4a'} strokeWidth={inside?1.5:0.8}/>;
-    }))}
-    {/* Triangle overlay */}
-    <polygon points="65,25 195,25 115,130" fill="none" stroke="#fbbf24" strokeWidth="2" strokeDasharray="5,3"/>
-    {/* Sample points */}
-    {[0,1,2,3].map(row=>[0,1,2,3].map(col=>{
-      const cx=44+col*50, cy=37+row*35;
-      const inside=(row===1&&col>=1)||(row===2&&col>=0&&col<=2);
-      return <circle key={`p${row}${col}`} cx={cx} cy={cy} r="3" fill={inside?'#22c55e':'#94a3b8'}/>;
-    }))}
-    <text x="10" y="150" fill="#94a3b8" fontSize="10" fontFamily="Rajdhani">coverage(p) = 1 inside triangle, 0 outside</text>
-  </svg>
-);
-
-const DiagramAliasing = () => (
-  <svg viewBox="0 0 260 130" width="260" height="130">
-    <rect x="5" y="5" width="250" height="120" rx="6" fill="#1e2a3a"/>
-    <text x="130" y="22" fill="#ef4444" fontSize="11" fontFamily="Rajdhani" fontWeight="700" textAnchor="middle">Aliasing — High Freq Masquerades as Low Freq</text>
-    {/* Original high-freq signal */}
-    {Array.from({length:100},(_,i)=>{
-      const x=15+i*2.3, y=60-18*Math.sin(i*0.6);
-      return i===0?`M${x},${y}`:`L${x},${y}`;
-    }).join(' ')}
-    <path d={Array.from({length:100},(_,i)=>{const x=15+i*2.3,y=60-18*Math.sin(i*0.6);return i===0?`M${x},${y}`:`L${x},${y}`;}).join(' ')} fill="none" stroke="#4ade80" strokeWidth="1.5"/>
-    {/* Sample points (sparse) */}
-    {Array.from({length:10},(_,i)=>{
-      const x=25+i*23, y=60-18*Math.sin(i*6);
-      return <circle key={i} cx={x} cy={y} r="3.5" fill="#fbbf24" stroke="#0a0a0f" strokeWidth="1"/>;
-    })}
-    {/* Reconstructed low-freq alias */}
-    <path d={Array.from({length:100},(_,i)=>{const x=15+i*2.3,y=60-18*Math.sin(i*0.06);return i===0?`M${x},${y}`:`L${x},${y}`;}).join(' ')} fill="none" stroke="#ef4444" strokeWidth="2" strokeDasharray="5,3"/>
-    <text x="15" y="118" fill="#4ade80" fontSize="9" fontFamily="Rajdhani">original signal</text>
-    <text x="100" y="118" fill="#fbbf24" fontSize="9" fontFamily="Rajdhani">samples</text>
-    <text x="175" y="118" fill="#ef4444" fontSize="9" fontFamily="Rajdhani">alias (reconstructed)</text>
-  </svg>
-);
-
-const DiagramSSAA = () => (
-  <svg viewBox="0 0 260 130" width="260" height="130">
-    <rect x="5" y="5" width="120" height="120" rx="6" fill="#1e2a3a"/>
-    <rect x="135" y="5" width="120" height="120" rx="6" fill="#1e2a3a"/>
-    <text x="65" y="20" fill="#94a3b8" fontSize="10" fontFamily="Rajdhani" textAnchor="middle">1 sample/pixel</text>
-    <text x="195" y="20" fill="#38bdf8" fontSize="10" fontFamily="Rajdhani" textAnchor="middle">4×4 = 16 samples/pixel</text>
-    {/* Left: 1 sample — jagged edge */}
-    {[0,1,2,3].map(row=>[0,1,2,3].map(col=>{
-      const x=15+col*25, y=25+row*25, inside=col+row>=4;
-      return <rect key={`l${row}${col}`} x={x} y={y} width="23" height="23" rx="1"
-        fill={inside?'#4ade8060':'none'} stroke="#2a3a4a" strokeWidth="0.8"/>;
-    }))}
-    {/* Right: 16 samples — smooth */}
-    {[0,1,2,3].map(row=>[0,1,2,3].map(col=>{
-      const x=145+col*25, y=25+row*25;
-      const frac = Math.max(0,Math.min(1,(col+row-3.5)*0.4));
-      return <rect key={`r${row}${col}`} x={x} y={y} width="23" height="23" rx="1"
-        fill={`rgba(74,222,128,${frac*0.7})`} stroke="#2a3a4a" strokeWidth="0.8"/>;
-    }))}
-    <text x="65" y="118" fill="#94a3b8" fontSize="9" fontFamily="Rajdhani" textAnchor="middle">binary — jaggies</text>
-    <text x="195" y="118" fill="#38bdf8" fontSize="9" fontFamily="Rajdhani" textAnchor="middle">averaged — smooth</text>
-  </svg>
-);
-
-const DiagramPointInTriangle = () => (
-  <svg viewBox="0 0 260 160" width="260" height="160">
-    <defs>
-      {['h1','h2','h3'].map((id,i)=>(
-        <marker key={id} id={id} markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
-          <polygon points="0 0,6 2.5,0 5" fill={['#4ade80','#f472b6','#fbbf24'][i]}/>
-        </marker>
+function SlideImages({ images }) {
+  if (!images || images.length === 0) return null
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', margin: '1rem 0' }}>
+      {images.map((img, i) => (
+        <img key={i} src={`/assets/${img}`}
+          alt={`Slide ${i+1}`}
+          onError={e => { e.target.style.display = 'none' }}
+          style={{ maxWidth: '100%', borderRadius: '8px', border: '1px solid #334155' }} />
       ))}
-    </defs>
-    <polygon points="50,130 210,130 130,20" fill="#38bdf810" stroke="#38bdf8" strokeWidth="2"/>
-    {/* Half-plane normals */}
-    <line x1="130" y1="130" x2="130" y2="100" stroke="#4ade80" strokeWidth="1.8" markerEnd="url(#h1)"/>
-    <line x1="175" y1="80" x2="155" y2="90" stroke="#f472b6" strokeWidth="1.8" markerEnd="url(#h2)"/>
-    <line x1="85" y1="80" x2="100" y2="90" stroke="#fbbf24" strokeWidth="1.8" markerEnd="url(#h3)"/>
-    {/* Test point inside */}
-    <circle cx="128" cy="95" r="5" fill="#22c55e"/>
-    <text x="134" y="93" fill="#22c55e" fontSize="10" fontFamily="Rajdhani">inside ✓</text>
-    {/* Test point outside */}
-    <circle cx="30" cy="80" r="5" fill="#ef4444"/>
-    <text x="38" y="78" fill="#ef4444" fontSize="10" fontFamily="Rajdhani">outside ✗</text>
-    <text x="10" y="152" fill="#94a3b8" fontSize="10" fontFamily="Rajdhani">Point inside ↔ on correct side of ALL 3 edges</text>
-  </svg>
-);
+    </div>
+  )
+}
 
-// ─── Quiz Data ─────────────────────────────────────────────────
 const quizData = [
-  // ─── RASTERIZATION BASICS ────────────────────────────────
   {
-    id: 1,
-    question: "What is the core principle of rasterization?",
-    questionType: "single-choice",
-    options: [
-      "For each pixel, determine which primitives are visible through it",
-      "For each primitive, determine which pixels it covers",
-      "For each triangle, compute its barycentric coordinates first",
-      "For each frame, sort all primitives by depth"
-    ],
+    num: 1,
+    timestamp: `00:35`,
+    question: `What is the basic principle of rasterization according to the lecture?`,
+    options: [`For each pixel, determine which primitive it contains`, `For each primitive, determine which pixels it covers`, `For each triangle, compute its barycentric coordinates`, `For each image, determine the viewing frustum`],
     answer: 1,
-    explanation: {
-      intuition: "Rasterization is primitive-centric: grab a triangle, ask 'which pixels does this triangle light up?' — then move to the next triangle. Ray tracing is the opposite: grab a pixel, ask which triangle it sees.",
-      reference: "[00:35] 'Rasterization basically says for each primitive we want to draw — each triangle, line segment, or point — which pixels of the image should get lit up.'",
-      computation: `# Rasterization loop (conceptual)
-for triangle in scene:
-    for pixel in bounding_box(triangle):
-        if point_in_triangle(pixel.center, triangle):
-            framebuffer[pixel] = shade(triangle, pixel)`,
-      connection: "[01:35] Ray tracing asks 'for each pixel which primitive is seen' — the dual question. Rasterization wins on speed; ray tracing wins on global lighting."
-    },
-    section: "Rasterization [00:35]", topic: "RASTERIZATION", difficulty: "Easy",
-    slideImages: ["image_1771995310239_0.png","image_1771995625008_0.png"],
-    diagram: <DiagramRasterVsRay />,
+    explanation: `At [00:35], the lecturer states: "Rasterization basically says for each primitive we want to draw each triangle or line segment or point which pixels of the image should get lit up."`,
+    images: ["image_1771995310239_0.png"],
   },
   {
-    id: 2,
-    question: "What is the key speed advantage of rasterization over ray tracing?",
-    questionType: "single-choice",
-    options: [
-      "It produces more photorealistic images",
-      "It handles transparency better",
-      "Modern GPUs can rasterise billions of triangles per second vs minutes/hours per frame for ray tracing",
-      "It requires no projection step"
-    ],
+    num: 2,
+    timestamp: `00:42`,
+    question: `According to the lecture, what is a key advantage of rasterization?`,
+    options: [`It produces more photorealistic images`, `It works well with curved surfaces`, `It can be made extremely fast`, `It handles transparency better`],
     answer: 2,
-    explanation: {
-      intuition: "Rasterization has highly regular, predictable memory access patterns that GPUs are optimised for. Ray tracing shoots rays in arbitrary directions, causing cache misses and irregular computation.",
-      reference: "[00:42] 'This technique is extremely popular because it can be made extremely fast — billions of triangles per second on modern graphics hardware.' [01:58] 'Ray tracing might take minutes or even hours per image.'",
-      computation: `# Typical throughput (2024 hardware):
-# GPU rasterisation: ~10 billion triangles/second
-# Path tracing (offline): ~0.1–1 frame/second at 4K
-# Hardware ray tracing (RTX): 1–120 fps (scene dependent)`,
-      connection: "[06:59] 'Real rasterization is performed by a GPU — a physical chip different from your CPU with specialised rasterization circuitry.'"
-    },
-    section: "Rasterization [00:42]", topic: "RASTERIZATION", difficulty: "Easy",
-    slideImages: ["image_1771995779127_0.png","image_1771995781860_0.png"],
-    diagram: null,
+    explanation: `At [00:42], the lecturer explains: "This technique is extremely popular extremely valuable because it can be made extremely fast. We can get billions of triangles on the screen every second if we're using modern graphics hardware."`,
+    images: ["image_1771995625008_0.png"],
   },
   {
-    id: 3,
-    question: "What are the two main stages the graphics pipeline performs, according to the lecture?",
-    questionType: "single-choice",
-    options: [
-      "Lighting and shading",
-      "Coverage (which pixels a triangle covers) and occlusion (which triangle is visible when multiple cover a pixel)",
-      "Projection and clipping",
-      "Vertex transformation and texture mapping"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "Every rasteriser must answer two questions: (1) Which pixels does this triangle touch? (coverage) and (2) When two triangles touch the same pixel, which one wins? (occlusion / visibility).",
-      reference: "[13:44] 'For a given triangle, what pixels does it overlap? That's the basic question of rasterization — coverage.' [14:01] 'Which one is closer to the camera, which color do we finally see? That's the question of occlusion — the visibility problem.'",
-      computation: `# Z-buffer solves occlusion:
-for triangle in scene:
-    for pixel in covered_pixels(triangle):
-        depth = triangle.depth_at(pixel)
-        if depth < z_buffer[pixel]:      # closer?
-            z_buffer[pixel]     = depth
-            framebuffer[pixel]  = shade(triangle, pixel)`,
-      connection: "[14:15] 'This second question is called the visibility problem' — solved by the depth (Z) buffer, a key piece of GPU hardware."
-    },
-    section: "Pipeline [13:44]", topic: "PIPELINE", difficulty: "Easy",
-    slideImages: ["image_1771996856893_0.png","image_1771996867247_0.png","image_1771997069120_0.png","image_1771997084252_0.png"],
-    diagram: null,
-  },
-  // ─── WHY TRIANGLES ───────────────────────────────────────
-  {
-    id: 4,
-    question: "Why are triangles chosen as the fundamental primitive in the graphics pipeline?",
-    questionType: "multi-select",
-    options: [
-      "Triangles are always planar — three points uniquely define a plane",
-      "Triangles can represent curved surfaces perfectly",
-      "Data at vertices (color, normals, UVs) interpolates smoothly across the triangle",
-      "Triangles are the fastest primitive for ray tracing"
-    ],
-    answers: [0, 2],
-    explanation: {
-      intuition: "Any three points define exactly one plane (never ambiguous like a quad). Barycentric interpolation over a triangle is simple and GPU-hardware-accelerated. Every other polygon can be split into triangles.",
-      reference: "[09:16] 'Triangles are always planar — a well-defined plane passes through the three vertices.' [09:56] 'It'll be very easy to interpolate data at corners — three color values blend smoothly across the triangle.'",
-      computation: `# Barycentric interpolation across a triangle:
-def lerp_triangle(p, p0, p1, p2, v0, v1, v2):
-    # weights (λ0, λ1, λ2) with λ0+λ1+λ2=1
-    w = barycentric(p, p0, p1, p2)
-    return w[0]*v0 + w[1]*v1 + w[2]*v2  # any vertex attribute`,
-      connection: "[09:42] 'For shading I need the normal direction — for a triangle the normal is always well-defined, unlike a curved quad.'"
-    },
-    section: "Triangles [07:39]", topic: "PRIMITIVES", difficulty: "Medium",
-    slideImages: ["image_1771995996932_0.png","image_1771996003755_0.png","image_1771996850703_0.png"],
-    diagram: null,
-  },
-  // ─── COVERAGE ────────────────────────────────────────────
-  {
-    id: 5,
-    question: "How is the coverage function defined mathematically?",
-    questionType: "single-choice",
-    options: [
-      "It returns the depth of the nearest triangle at each point",
-      "A binary function equal to 1 if a point is inside the triangle, 0 otherwise — defined at every point in the plane",
-      "A function that returns the triangle's color at each pixel",
-      "A function that returns the fraction of a pixel covered by all triangles"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "The coverage function is a mathematical 0/1 map defined everywhere, not just at pixel centres. Sampling it at pixel centres gives a binary yes/no per pixel. Sampling at multiple sub-pixel locations gives anti-aliased estimates.",
-      reference: "[28:14] 'The coverage function is defined at every single point in the plane — equal to 1 if that point is inside the triangle, 0 otherwise.'",
-      computation: `def coverage(point, triangle):
-    """Returns 1 inside triangle, 0 outside."""
-    return 1 if point_in_triangle(point, triangle) else 0
-
-# Sample at pixel centre (1 sample):
-c = coverage(pixel_centre, tri)   # binary
-
-# Sample at 4 sub-pixel locations (SSAA 2×2):
-c = sum(coverage(s, tri) for s in subsamples) / 4  # 0, 0.25, 0.5, 0.75, or 1`,
-      connection: "[20:22] 'We're going to test a collection of sample points and say for each sample point which triangle do we see.' This connects coverage to the general sampling framework."
-    },
-    section: "Coverage [28:14]", topic: "COVERAGE", difficulty: "Medium",
-    slideImages: ["image_1771997254170_0.png","image_1771997491695_0.png"],
-    diagram: <DiagramCoverage />,
-  },
-  {
-    id: 6,
-    question: "When a triangle edge passes exactly through a sample point, what is a standard rule for resolving the ambiguity?",
-    questionType: "single-choice",
-    options: [
-      "Always count the point as covered by both triangles",
-      "Always ignore points on edges",
-      "Classify the sample as inside the triangle only if the edge is a top edge or a left edge (top-left rule)",
-      "Move the sample point slightly away from the edge"
-    ],
+    num: 3,
+    timestamp: `01:35`,
+    question: `What is the main difference between rasterization and ray tracing described in the lecture?`,
+    options: [`Ray tracing is more common in video games`, `Rasterization takes longer to compute`, `Ray tracing is pixel-centric while rasterization is primitive-centric`, `Rasterization can handle curved surfaces better`],
     answer: 2,
-    explanation: {
-      intuition: "When two triangles share an edge and a sample point falls exactly on it, we need a consistent rule so each pixel is counted exactly once. The top-left rule does this — edges pointing left or upward 'claim' the sample point.",
-      reference: "[29:53] 'If an edge falls directly on a screen sample point you could say the sample is classified within the triangle if the edge is a top edge or a left edge.'",
-      computation: `def is_top_or_left(edge_start, edge_end):
-    """Returns True if edge is top (horizontal, going left) or left (going down)."""
-    dx = edge_end[0] - edge_start[0]
-    dy = edge_end[1] - edge_start[1]
-    return (dy == 0 and dx < 0) or (dy < 0)   # top or left`,
-      connection: "[29:06] 'Two triangles meeting at an edge — that edge passes exactly through a sample point. Is it covered by triangle 1, 2, or both?' The top-left rule ensures no double-counting and no gaps."
-    },
-    section: "Coverage [29:06]", topic: "COVERAGE", difficulty: "Hard",
-    slideImages: ["image_1771997713972_0.png","image_1771997762595_0.png","image_1771997770145_0.png","image_1771997805702_0.png"],
-    diagram: null,
+    explanation: `At [01:35], the lecturer explains that ray tracing asks "for each pixel which primitives are seen through that pixel," contrasting with rasterization which asks "for each primitive which pixels it covers."`,
+    images: ["image_1771995779127_0.png"],
   },
-  // ─── SAMPLING THEORY ─────────────────────────────────────
   {
-    id: 7,
-    question: "What is the basic definition of sampling?",
-    questionType: "single-choice",
-    options: [
-      "Converting analog signals to digital values by measuring at specific points",
-      "Picking specific x values and asking what the value of a function is at those points",
-      "Reducing the resolution of an image",
-      "Removing high-frequency components from a signal"
-    ],
+    num: 4,
+    timestamp: `01:58`,
+    question: `What is a significant limitation of ray tracing according to the lecture?`,
+    options: [`It cannot handle transparent surfaces`, `It is much slower than rasterization`, `It requires specialized hardware`, `It cannot produce photorealistic images`],
     answer: 1,
-    explanation: {
-      intuition: "Sampling is simply evaluation: choose some inputs, evaluate the function there, record the outputs. The function is continuous; you make it discrete by sampling.",
-      reference: "[21:09] 'Sampling all that means is I pick some values x₀, x₁, x₂, x₃ and I ask what is the value of the function at those points.'",
-      computation: `import numpy as np
-# Continuous function (we can only sample it)
-f  = lambda x: np.sin(2*np.pi*x) + 0.5*np.sin(6*np.pi*x)
-# Sampling: pick locations and evaluate
-x_samples = np.linspace(0, 1, 44100)   # 44100 Hz audio
-y_samples  = f(x_samples)              # the samples`,
-      connection: "[21:33] Audio: 44,100 samples/second for music. Rasterization: one (or more) coverage sample per pixel. Same concept, different domain."
-    },
-    section: "Sampling [21:09]", topic: "SAMPLING", difficulty: "Easy",
-    slideImages: ["image_1771997323964_0.png","image_1771997334974_0.png","image_1771997342659_0.png"],
-    diagram: null,
+    explanation: `At [01:58], the lecturer states: "Ray tracing is a lot slower we might have to wait minutes or even hours to generate one image rather than drawing billions of triangles per second or having hundreds of frames per second on the gpu."`,
+    images: ["image_1771995781860_0.png"],
   },
   {
-    id: 8,
-    question: "What is the reconstruction problem in signal processing?",
-    questionType: "single-choice",
-    options: [
-      "Finding the original signal from a noisy degraded version",
-      "Creating a continuous function from a finite set of discrete samples",
-      "Converting a continuous signal to a digital format",
-      "Removing aliasing from an existing image"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "You sampled a song at 44,100 points per second. Now the speaker needs a continuous voltage waveform. How do you go from the discrete numbers back to a continuous signal? That's reconstruction.",
-      reference: "[22:33] 'How do you turn those numbers back into a continuous signal that you can listen to — that's reconstruction. Given a set of samples, how can we cook up some continuous function?'",
-      computation: `# Simplest reconstruction: nearest-neighbour (piecewise constant)
-def reconstruct_constant(x_samples, y_samples, x_query):
-    idx = np.argmin(np.abs(x_samples - x_query))
-    return y_samples[idx]
-
-# Better: linear interpolation
-def reconstruct_linear(x_samples, y_samples, x_query):
-    return np.interp(x_query, x_samples, y_samples)`,
-      connection: "[24:27] Piecewise linear reconstruction can 'miss significant features between sample points' — the motivation for sampling more densely."
-    },
-    section: "Reconstruction [22:33]", topic: "SAMPLING", difficulty: "Easy",
-    slideImages: ["image_1771997354506_0.png","image_1771997377787_0.png","image_1771997414620_0.png"],
-    diagram: null,
-  },
-  {
-    id: 9,
-    question: "What is aliasing in the context of sampling?",
-    questionType: "single-choice",
-    options: [
-      "When one triangle is rendered on top of another",
-      "High-frequency content in the original signal masquerading as low-frequency content after undersampling and reconstruction",
-      "When colors look different on different displays",
-      "When triangles are too small to be individually visible"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "Sample too infrequently, and a fast wiggle looks like a slow wiggle after reconstruction. The high-frequency signal 'pretends' to be low-frequency — its true identity is hidden by undersampling.",
-      reference: "[40:22] 'High frequencies in the original signal — quickly oscillating waves — masquerade as low frequencies after reconstruction because we've undersampled.'",
-      computation: `import numpy as np
-# High-frequency signal: 10 cycles
-f_high = lambda t: np.sin(2*np.pi*10*t)
-# Sample at only 12 points (undersampled)
-t = np.linspace(0, 1, 12, endpoint=False)
-samples = f_high(t)
-# Reconstruct → appears as low-frequency alias!
-# The aliased frequency = |10 - 12| = 2 cycles`,
-      connection: "[45:32] Real-world example: spinning wagon wheels appearing to rotate backward at certain speeds — temporal aliasing."
-    },
-    section: "Aliasing [40:22]", topic: "ALIASING", difficulty: "Medium",
-    slideImages: ["image_1771998130102_0.png","image_1771998135778_0.png","image_1771998452042_0.png","image_1771998474964_0.png"],
-    diagram: <DiagramAliasing />,
-  },
-  {
-    id: 10,
-    question: "What does the Nyquist-Shannon theorem guarantee?",
-    questionType: "single-choice",
-    options: [
-      "Any signal can be perfectly reconstructed from any set of samples",
-      "A band-limited signal can be perfectly reconstructed if sampled at least twice the highest frequency it contains",
-      "Aliasing can be completely eliminated with enough samples",
-      "The minimum number of samples equals the number of frequencies in the signal"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "If your signal has nothing above frequency f_max, you only need 2·f_max samples per second to capture it perfectly. Sample faster and you're wasting data; sample slower and aliasing appears.",
-      reference: "[47:36] 'If your signal happens to be band-limited, it can be perfectly reconstructed as long as you take samples at a rate at least twice as frequent as the highest frequency in the signal.'",
-      computation: `# Nyquist rate = 2 * highest_frequency
-f_max = 20000   # Hz (human hearing limit)
-nyquist_rate = 2 * f_max   # 40,000 Hz minimum
-cd_rate      = 44100       # standard — safely above Nyquist
-
-# Reconstruction kernel: sinc filter
-import numpy as np
-sinc = lambda t: np.sinc(t)   # = sin(πt)/(πt)`,
-      connection: "[47:56] 'Once you have those samples you can reconstruct exactly the original signal by using a sinc filter.' This is the theoretical ideal."
-    },
-    section: "Nyquist-Shannon [46:41]", topic: "SAMPLING_THEORY", difficulty: "Medium",
-    slideImages: ["image_1771998665800_0.png","image_1771998802412_0.png"],
-    diagram: null,
-  },
-  {
-    id: 11,
-    question: "Why can't most graphics signals be perfectly reconstructed using the Nyquist approach?",
-    questionType: "single-choice",
-    options: [
-      "GPUs cannot implement the sinc filter",
-      "The sampling rate of a display is always too low",
-      "Graphics signals like triangle edges have infinite bandwidth — hard edges require an infinite sum of sinusoids to represent",
-      "The Nyquist theorem only applies to 1D audio, not 2D images"
-    ],
+    num: 5,
+    timestamp: `02:26`,
+    question: `What is a key characteristic of stages in a graphics pipeline?`,
+    options: [`They operate independently from each other`, `They all run in parallel`, `They have highly structured input and output data`, `They are programmed in hardware`],
     answer: 2,
-    explanation: {
-      intuition: "A perfectly sharp edge jumps from 0 to 1 instantly. To represent that jump as a sum of smooth sinusoids, you need infinitely many high-frequency terms — the signal is not band-limited.",
-      reference: "[48:57] 'How do I express a hard edge as a sum of sinusoids? I have to add an infinite series of higher and higher frequencies until I can approximate a piecewise constant function.'",
-      computation: `import numpy as np
-# Fourier series of a step function (Gibbs phenomenon)
-x = np.linspace(-np.pi, np.pi, 1000)
-approx = sum(np.sin(k*x)/k for k in range(1, 101, 2)) * 4/np.pi
-# Even with 50 terms, ringing (Gibbs) appears at the edge`,
-      connection: "[50:39] 'Very common artifact: jaggies on a line segment.' These are the visual consequence of undersampling an infinite-bandwidth signal."
-    },
-    section: "Aliasing [48:38]", topic: "ALIASING", difficulty: "Hard",
-    slideImages: ["image_1771998941026_0.png","image_1771998975218_0.png"],
-    diagram: null,
-  },
-  // ─── ANTI-ALIASING ───────────────────────────────────────
-  {
-    id: 12,
-    question: "What is the ideal goal of anti-aliasing for pixel coverage?",
-    questionType: "single-choice",
-    options: [
-      "Remove all high frequencies from the scene before rasterising",
-      "Match each pixel's emitted light to the integral of the original signal over the pixel area",
-      "Use the minimum number of samples possible for performance",
-      "Randomise the sampling pattern to avoid visible patterns"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "Think of a pixel as a tiny light bulb. Its brightness should equal the average light it would receive from the scene — i.e., ∫f(x,y)dA over the pixel. Integration = averaging = anti-aliasing.",
-      reference: "[51:39] 'What we want is that the total light emitted from that pixel should be the same as the total light in the original continuous signal — we want to integrate the input signal over the pixel.'",
-      computation: `# Ideal: integrate coverage over pixel area
-def ideal_coverage(pixel, triangle):
-    # = area of (pixel ∩ triangle) / pixel_area
-    intersection_area = clip_triangle_to_pixel(triangle, pixel).area
-    return intersection_area / pixel.area   # [0,1]
-
-# Super-sampling approximates this integral`,
-      connection: "[53:02] 'We're going to use super-sampling — rather than one sample per pixel, we take several and average them.' The average approximates the integral."
-    },
-    section: "Anti-Aliasing [51:39]", topic: "ANTI_ALIASING", difficulty: "Medium",
-    slideImages: ["image_1771999074308_0.png","image_1771999129670_0.png"],
-    diagram: null,
+    explanation: `At [02:38], the lecturer explains that "each one of these stages is going to request data as input in a very structured way, some really simple regular description of the input data, and likewise it's going to have some simple regular structure for the output data."`,
+    images: ["image_1771995841829_0.png"],
   },
   {
-    id: 13,
-    question: "How does super-sampling anti-aliasing (SSAA) work?",
-    questionType: "single-choice",
-    options: [
-      "It selects the brightest of multiple samples",
-      "It takes multiple sub-pixel samples and averages them to estimate fractional pixel coverage",
-      "It blurs the final image with a Gaussian filter",
-      "It uses the median of multiple samples"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "Instead of one coin-flip (inside/outside) per pixel, take 16 sub-pixel coin-flips and count how many land inside. If 12 out of 16 are inside, coverage = 75%. More samples → better approximation of the integral.",
-      reference: "[53:54] 'If some fraction of the samples are covered, we say that fraction of the pixel is covered — we use the fraction of sample values that are covered to approximate the fraction of the pixel covered.'",
-      computation: `def ssaa_coverage(pixel, triangle, n=4):
-    """n×n super-sampling."""
-    count = 0
-    for i in range(n):
-        for j in range(n):
-            sx = pixel.x + (i + 0.5) / n * pixel.width
-            sy = pixel.y + (j + 0.5) / n * pixel.height
-            count += point_in_triangle((sx, sy), triangle)
-    return count / (n * n)   # fractional coverage`,
-      connection: "[55:16] '16 samples per pixel — things get smoother, but still not perfect.' [55:30] 'Even 1024 samples per pixel isn't perfect for infinite-bandwidth signals.'"
-    },
-    section: "SSAA [53:02]", topic: "ANTI_ALIASING", difficulty: "Medium",
-    slideImages: ["image_1771999227390_0.png","image_1771999256302_0.png","image_1771999301034_0.png"],
-    diagram: <DiagramSSAA />,
-  },
-  // ─── POINT-IN-TRIANGLE ────────────────────────────────────
-  {
-    id: 14,
-    question: "How is the point-in-triangle test implemented efficiently?",
-    questionType: "single-choice",
-    options: [
-      "By computing barycentric coordinates and checking all three are positive",
-      "By testing if the point lies on the correct side of all three half-planes defined by the triangle edges",
-      "By computing the distance from the point to each edge",
-      "By checking if the sum of distances to vertices equals the perimeter"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "A triangle is the intersection of three half-planes (one per edge). If a point is on the 'inside' of all three edges simultaneously, it must be inside the triangle.",
-      reference: "[58:12] 'If the point is inside the half-plane made by the bottom edge AND the right edge AND the left edge, then it must be inside the triangle.'",
-      computation: `import numpy as np
-
-def edge_function(a, b, p):
-    """Positive if p is to the left of edge a→b."""
-    return (b[0]-a[0])*(p[1]-a[1]) - (b[1]-a[1])*(p[0]-a[0])
-
-def point_in_triangle(p, v0, v1, v2):
-    d0 = edge_function(v0, v1, p)
-    d1 = edge_function(v1, v2, p)
-    d2 = edge_function(v2, v0, p)
-    return (d0>=0 and d1>=0 and d2>=0) or (d0<=0 and d1<=0 and d2<=0)`,
-      connection: "[59:36] 'I can make this faster by noticing the half-plane check looks very similar for nearby pixels — marching along rows and incrementally updating saves arithmetic.'"
-    },
-    section: "Point-in-Triangle [57:10]", topic: "ALGORITHM", difficulty: "Medium",
-    slideImages: ["image_1771999356654_0.png","image_1771999387129_0.png","image_1771999404785_0.png"],
-    diagram: <DiagramPointInTriangle />,
+    num: 6,
+    timestamp: `02:57`,
+    question: `Why is having highly structured data in the graphics pipeline valuable?`,
+    options: [`It makes debugging easier`, `It allows for standardized protocols`, `It enables simplified and optimized computation`, `It ensures compatibility with hardware`],
+    answer: 2,
+    explanation: `At [02:57], the lecturer states: "Because this data is highly structured and highly predictable you can really go to town and simplify and optimize the computation within that stage."`,
+    images: ["image_1771995932491_0.png"],
   },
   {
-    id: 15,
-    question: "What is the bottleneck in modern GPU triangle rasterisation, and what optimisation addresses it?",
-    questionType: "single-choice",
-    options: [
-      "Arithmetic is the bottleneck; reduce the number of multiply operations",
-      "Memory access is the bottleneck; test all samples in the triangle's bounding box in parallel to maximise cache coherence",
-      "Power consumption is the bottleneck; use fixed-point arithmetic",
-      "Triangle submission rate is the bottleneck; batch triangles before sending to GPU"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "GPUs have massive arithmetic throughput. The slow part is fetching and writing data from memory. Testing a bounding box's samples in parallel keeps everything in cache and hides memory latency.",
-      reference: "[1:00:04] 'In real modern hardware the bottleneck is typically not doing arithmetic — it's reading or writing to memory.' [1:00:46] 'We test all the samples in the bounding box in parallel.'",
-      computation: `# Modern rasterization strategy:
-# 1. Compute axis-aligned bounding box (AABB) of triangle
-# 2. Subdivide AABB into 8×8 or 16×16 tiles
-# 3. Test all sample points in a tile simultaneously (SIMD)
-# 4. Memory accesses within a tile are contiguous → cache-friendly
-
-# Problem: long skinny triangles waste work (large bbox, few covered pixels)
-# Solution: hierarchical tile testing (see next question)`,
-      connection: "[1:02:09] 'A long skinny triangle stretching across the screen — testing all bbox points wastes time since almost none are covered.'"
-    },
-    section: "Hardware [1:00:04]", topic: "HARDWARE", difficulty: "Medium",
-    slideImages: ["image_1771999436931_0.png","image_1771999512661_0.png","image_1771999527981_0.png"],
-    diagram: null,
+    num: 7,
+    timestamp: `04:24`,
+    question: `What were the two main components used to represent a 3D shape in the first lecture example?`,
+    options: [`Vertices and colors`, `Triangles and textures`, `Vertices and edges`, `Points and normals`],
+    answer: 2,
+    explanation: `At [04:24], the lecturer recalls: "We said we could represent the cube or any other kind of three-dimensional shape as two things: a collection of vertices, vertex locations in space, and a collection of edges saying which of those vertices get connected together to make line segments."`,
+    images: ["image_1771995940681_0.png"],
   },
   {
-    id: 16,
-    question: "What is the hierarchical rasterisation strategy, and why isn't it used in practice?",
-    questionType: "single-choice",
-    options: [
-      "Test large blocks before individual pixels — skip blocks that don't intersect the triangle; not used because it produces visual artifacts",
-      "Test large blocks first; if the block doesn't touch the triangle skip it entirely — not used because hierarchical traversal overhead outweighs savings vs. a single coarse level",
-      "Sort triangles by size and rasterise largest first; not used because sorting is expensive",
-      "Subdivide the triangle recursively; not used because recursion is slow on GPUs"
-    ],
+    num: 8,
+    timestamp: `06:59`,
+    question: `What specialized hardware is typically used to perform rasterization?`,
+    options: [`CPU (Central Processing Unit)`, `GPU (Graphics Processing Unit)`, `APU (Accelerated Processing Unit)`, `FPGA (Field-Programmable Gate Array)`],
     answer: 1,
-    explanation: {
-      intuition: "A recursive quadtree: test a big tile, if it misses the triangle skip everything inside it. Elegant, but the traversal itself has overhead. One level of coarse tiles is a 'sweet spot' in practice.",
-      reference: "[1:02:33] 'I can first ask if large blocks of pixels intersect the triangle.' [1:04:49] 'This leads to an important idea in all of graphics: take a hierarchical strategy.' [1:06:16] 'Not what happens in real hardware because there's quite a bit of overhead to hierarchical traversal.'",
-      computation: `# One-level block test (practical sweet spot):
-for tile in tiles_in_bbox(triangle):
-    if triangle_intersects_tile(triangle, tile):
-        for pixel in tile:
-            if point_in_triangle(pixel.center, triangle):
-                framebuffer[pixel] = shade(...)
-    # else: skip entire tile — early out`,
-      connection: "[1:04:49] The hierarchical strategy is a key recurring idea in graphics: bounding volume hierarchies (BVH), mip-maps, and octrees all use the same principle."
-    },
-    section: "Hardware [1:02:33]", topic: "HARDWARE", difficulty: "Hard",
-    slideImages: ["image_1771999609505_0.png","image_1771999662712_0.png"],
-    diagram: null,
-  },
-  // ─── SIGNAL PROCESSING ───────────────────────────────────
-  {
-    id: 17,
-    question: "A signal is expressed as a superposition of sinusoids. Why is this useful for understanding aliasing?",
-    questionType: "single-choice",
-    options: [
-      "Because sinusoids are the only signals GPUs can process",
-      "Because aliasing affects each frequency independently — you can analyse which frequencies are correctly captured and which are aliased",
-      "Because sinusoids are band-limited by definition",
-      "Because the Fourier transform is faster than spatial-domain analysis"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "Once you decompose a signal into frequencies, aliasing analysis is simple: any frequency above the Nyquist limit folds back and appears as a lower frequency. You can pinpoint exactly which frequencies cause problems.",
-      reference: "[35:34] 'A 1D signal like audio can be expressed as a superposition of different frequencies.' Understanding aliasing then becomes: which frequencies survive sampling intact?",
-      computation: `import numpy as np
-fs = 100       # sampling rate (Hz)
-nyquist = fs/2 # = 50 Hz
-
-# Frequency 30 Hz: below Nyquist → correctly sampled ✓
-# Frequency 70 Hz: above Nyquist → aliases to |70-100|=30 Hz ✗
-# Both appear as 30 Hz in the sampled signal — indistinguishable!`,
-      connection: "[38:50] The pitch-rising audio experiment: the signal rose above Nyquist, aliased back down, producing the eerie up-down cycling pitch effect."
-    },
-    section: "Frequencies [35:34]", topic: "SIGNAL_THEORY", difficulty: "Medium",
-    slideImages: ["image_1771998186382_0.png","image_1771998301424_0.png","image_1771998501567_0.png"],
-    diagram: null,
+    explanation: `At [06:59], the lecturer explains: "Real rasterization is typically performed by what's called a graphics processing unit or a GPU. So this is a real physical piece of hardware that sits inside your computer and it has a chip on it that's different from your CPU."`,
+    images: ["image_1771995973214_0.png"],
   },
   {
-    id: 18,
-    question: "What is the primary framework the lecturer says underpins many computer graphics problems?",
-    questionType: "single-choice",
-    options: [
-      "Object-oriented design",
-      "Sampling and reconstruction",
-      "Recursive ray tracing",
-      "Linear algebra and matrix operations"
-    ],
+    num: 9,
+    timestamp: `08:31`,
+    question: `What is one of the key advantages of using triangles for rasterization?`,
+    options: [`They require less memory than other primitives`, `They are always planar (have a well-defined plane)`, `They can represent curved surfaces perfectly`, `They are faster to process than points or lines`],
     answer: 1,
-    explanation: {
-      intuition: "Rasterization, texturing, image filtering, audio, animation — all are instances of sample a signal, then reconstruct it. The quality of a graphics system is often determined by how well it handles this sampling–reconstruction cycle.",
-      reference: "[1:07:20] 'Overall today we saw that we can frame a lot of problems in computer graphics in terms of sampling and reconstruction.'",
-      computation: `# Sampling and reconstruction across graphics:
-# Rasterisation:  sample coverage at pixel centres → display pixels
-# Texturing:      sample texture at UV coords → filter/reconstruct
-# Shadow maps:    sample depth at light → reconstruct shadow test
-# Animation:      sample keyframes at time t → interpolated pose
-# Image resize:   sample at new grid → reconstruct at new resolution`,
-      connection: "[1:08:57] 'Triangle rasterisation is the basic building block for the graphics pipeline.' [1:08:27] 'Our basic anti-aliasing strategy for rasterisation was super-sampling.'"
-    },
-    section: "Summary [1:07:20]", topic: "FRAMEWORK", difficulty: "Easy",
-    slideImages: [],
-    diagram: null,
-  },
-  // ─── DISPLAY & PIXELS ────────────────────────────────────
-  {
-    id: 19,
-    question: "What does the word 'pixel' stand for and how is it physically displayed?",
-    questionType: "single-choice",
-    options: [
-      "Picture kernel — a weighted region of the screen",
-      "Picture element — each image sample is converted into a small square of light on the display",
-      "Pixel index location — the (x,y) address of a screen position",
-      "Pixelated image — the result of downsampling"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "A pixel is a tiny physical light source on your screen. Its colour is set by the image sample value you computed. It glows uniformly over its small square area — that's why you see the grid of squares when you zoom in on a low-resolution image.",
-      reference: "[31:46] 'Each image sample sent to the display is converted into roughly speaking a little square of light.' [31:57] 'Pixel is just an abbreviation for picture element.'",
-      computation: `# What a GPU pipeline produces:
-# framebuffer[x, y] = (R, G, B) value  ← this is the "sample"
-# Display hardware converts that sample to a physical square of light
-# at position (x,y) on the screen with the specified RGB colour.`,
-      connection: "[33:47] This is why aliasing is visible as jagged staircase patterns — each pixel is a square, and squares are axis-aligned. Diagonal edges can only be approximated in a square grid."
-    },
-    section: "Display [31:46]", topic: "DISPLAY", difficulty: "Easy",
-    slideImages: ["image_1771997934002_0.png","image_1771998071836_0.png"],
-    diagram: null,
+    explanation: `At [09:16], the lecturer states: "Another thing that's good about triangles is that they're always planar they always have a well-defined plane passing through the three vertices."`,
+    images: ["image_1771995996932_0.png"],
   },
   {
-    id: 20,
-    question: "What does sin(x² + y²) illustrate about aliasing in 2D images?",
-    questionType: "single-choice",
-    options: [
-      "It shows that all 2D functions can be perfectly sampled",
-      "It demonstrates how a function with increasing spatial frequency naturally aliases near its centre, showing concentric ring aliasing artifacts",
-      "It shows that aliasing only affects diagonal edges",
-      "It demonstrates that anti-aliasing is only needed for audio signals"
-    ],
-    answer: 1,
-    explanation: {
-      intuition: "sin(x²+y²) creates concentric rings that get tighter and tighter as you move outward. Near the centre the frequency is low (resolved fine); further out the frequency exceeds Nyquist (aliased into fake low-frequency rings).",
-      reference: "[44:10] 'We're going to build a function intentionally that has crazy high frequencies — sin(x²+y²) — and sample it on a 2D grid to see aliasing.'",
-      computation: `import numpy as np, matplotlib.pyplot as plt
-x = np.linspace(-10, 10, 200)
-X, Y = np.meshgrid(x, x)
-Z = np.sin(X**2 + Y**2)
-# Near centre: rings are wide (low freq) → sampled correctly
-# Far from centre: rings are dense (high freq) → aliased
-plt.imshow(Z, cmap='gray'); plt.title('sin(x²+y²) aliasing'); plt.show()`,
-      connection: "[44:10] This function's frequency grows as r = √(x²+y²), so aliasing radius can be predicted from Nyquist: rings start aliasing where 2r > sampling_rate."
-    },
-    section: "Aliasing Example [44:10]", topic: "ALIASING", difficulty: "Hard",
-    slideImages: ["image_1771998552981_0.png","image_1771998614239_0.png"],
-    diagram: null,
+    num: 10,
+    timestamp: `09:42`,
+    question: `Why is the planarity of triangles particularly important for shading?`,
+    options: [`It makes texturing easier`, `It allows for faster processing`, `It ensures a well-defined normal direction`, `It simplifies memory storage`],
+    answer: 2,
+    explanation: `At [09:42], the lecturer explains: "It's extremely important for shading. So if I want to shade a surface I often need to know what is the normal direction what is the direction orthogonal to the surface and so for a triangle that normal is always well defined."`,
+    images: ["image_1771996003755_0.png"],
   },
-];
+  {
+    num: 11,
+    timestamp: `09:56`,
+    question: `What advantage of triangles related to data at vertices is mentioned in the lecture?`,
+    options: [`They allow for automatic level-of-detail`, `They enable easy interpolation of data across the triangle`, `They provide better compression of vertex data`, `They support complex texturing operations`],
+    answer: 1,
+    explanation: `At [09:56], the lecturer states: "It'll also turn out to be very easy to interpolate data at corners so if I have three color values at the corners of a triangle and I want to smoothly blend those color values across the rest of the triangle, it's going to be really really simple and efficient."`,
+    images: ["image_1771996850703_0.png"],
+  },
+  {
+    num: 12,
+    timestamp: `11:28`,
+    question: `What is the first stage in the rasterization pipeline described in the lecture?`,
+    options: [`Projection onto the 2D screen`, `Sampling triangle coverage`, `Transformation and positioning in the world`, `Interpolating attributes at vertices`],
+    answer: 2,
+    explanation: `At [11:28], the lecturer states: "The first thing we're going to do once we have our list of triangles is we're going to transform and position these things in the world in the scene where we want them to be."`,
+    images: ["image_1771996856893_0.png"],
+  },
+  {
+    num: 13,
+    timestamp: `13:44`,
+    question: `What is the basic question of rasterization according to the lecture?`,
+    options: [`For each pixel, which triangle is closest to the camera?`, `For each triangle, which pixels are covered by it?`, `For each vertex, which pixels should be affected?`, `For each image, how many triangles are visible?`],
+    answer: 1,
+    explanation: `At [13:44], the lecturer directly states: "For a given triangle for this red triangle here what pixels does the triangle overlap that's the basic question of rasterization the question of coverage."`,
+    images: ["image_1771996867247_0.png"],
+  },
+  {
+    num: 14,
+    timestamp: `14:01`,
+    question: `What is meant by the "occlusion question" in the lecture?`,
+    options: [`Which triangles are too small to be visible?`, `Which triangles are outside the viewing frustum?`, `Which triangles should be culled?`, `When multiple triangles cover a pixel, which one is visible?`],
+    answer: 3,
+    explanation: `At [14:01], the lecturer explains: "We know that the red triangle covers this pixel we might know that another triangle the blue triangle covers this pixel which one is closer to the camera which color value do we finally see and that's the question of occlusion."`,
+    images: ["image_1771997084252_0.png"],
+  },
+  {
+    num: 15,
+    timestamp: `14:15`,
+    question: `What is another name for the occlusion problem mentioned in the lecture?`,
+    options: [`The culling problem`, `The hidden surface problem`, `The visibility problem`, `The z-buffer problem`],
+    answer: 2,
+    explanation: `At [14:15], the lecturer states: "This second question this question is called the visibility problem."`,
+    images: ["image_1771997069120_0.png"],
+  },
+  {
+    num: 16,
+    timestamp: `16:32`,
+    question: `When defining what it means for a pixel to be covered by a triangle, which case is straightforward according to the lecture?`,
+    options: [`When the triangle partially covers the pixel`, `When the triangle's edge passes through the pixel`, `When the triangle completely covers the pixel`, `When the triangle's vertex is inside the pixel`],
+    answer: 2,
+    explanation: `At [17:03], the lecturer explains: "Triangle four is also pretty easy, four covers the entire pixel so it's really easy to say yeah for sure the pixel is covered by triangle four."`,
+    images: ["image_1771997185693_0.png"],
+  },
+  {
+    num: 17,
+    timestamp: `17:50`,
+    question: `What approach does the lecturer suggest for handling partial pixel coverage?`,
+    options: [`Always treat partially covered pixels as fully covered`, `Record the fraction of the pixel area covered by the triangle`, `Never count partially covered pixels`, `Randomly decide whether to count partial coverage`],
+    answer: 1,
+    explanation: `At [17:50], the lecturer states: "Instead of just recording a binary value yes or no maybe one option is to say really what we want to know is the fraction of the pixel area covered by the triangle."`,
+    images: ["image_1771997211546_0.png"],
+  },
+  {
+    num: 18,
+    timestamp: `18:52`,
+    question: `Why is it difficult to compute the exact coverage fraction when multiple triangles are involved?`,
+    options: [`Triangles might have different colors`, `The math is too complex to compute in real-time`, `Complex regions of overlap can form non-convex shapes`, `Triangles might have different depths`],
+    answer: 2,
+    explanation: `At [18:57], the lecturer explains the challenge: "We might have non-convex regions where they overlap and so forth."`,
+    images: ["image_1771997219796_0.png"],
+  },
+  {
+    num: 19,
+    timestamp: `20:22`,
+    question: `What is the sampling approach to determining coverage?`,
+    options: [`Calculate the area of triangle-pixel overlap analytically`, `Test several sample points and use statistics to estimate coverage`, `Use a lookup table for predetermined coverage patterns`, `Approximate the triangle with smaller primitives`],
+    answer: 1,
+    explanation: `At [20:22], the lecturer explains: "We're not going to compute the exact or analytical answer but instead we're going to test a collection of sample points right and we're just going to say for each sample point which triangle do we see."`,
+    images: ["image_1771997254170_0.png"],
+  },
+  {
+    num: 20,
+    timestamp: `21:09`,
+    question: `What is the basic definition of sampling given in the lecture?`,
+    options: [`Converting analog signals to digital values`, `Selecting values of a function at specific points`, `Reducing the resolution of an image`, `Removing high-frequency components from a signal`],
+    answer: 1,
+    explanation: `At [21:09], the lecturer states: "Sampling all that means is I pick some values x naught x1 x2 x3 and so on and I ask what is the value of the function at those points."`,
+    images: ["image_1771997323964_0.png"],
+  },
+  {
+    num: 21,
+    timestamp: `21:33`,
+    question: `What example of a common sampled signal is given in the lecture?`,
+    options: [`Digital photographs`, `Audio files`, `Vector graphics`, `3D models`],
+    answer: 1,
+    explanation: `At [21:33], the lecturer gives this example: "A great example of this would be an audio file so an audio file that you use to listen to music stores samples of a one-dimensional signal what is that signal it's the amplitude."`,
+    images: ["image_1771997334974_0.png"],
+  },
+  {
+    num: 22,
+    timestamp: `21:52`,
+    question: `According to the lecture, at what rate is most consumer audio sampled?`,
+    options: [`22,000 times per second`, `32,000 times per second`, `44,000 times per second`, `48,000 times per second`],
+    answer: 2,
+    explanation: `At [21:52], the lecturer states: "In fact most consumer audio is sampled 44,000 times a second to get a realistic reproduction of sound."`,
+    images: ["image_1771997342659_0.png"],
+  },
+  {
+    num: 23,
+    timestamp: `22:33`,
+    question: `What is the reconstruction problem in signal processing?`,
+    options: [`Finding the original signal from a degraded version`, `Converting a digital signal back to analog form`, `Creating a continuous function from discrete samples`, `Removing noise from a sampled signal`],
+    answer: 2,
+    explanation: `At [22:33], the lecturer defines the problem: "How do you turn those numbers back into a continuous signal that you can listen to and that's the problem of reconstruction... given a set of samples how can we cook up some continuous function some function where we know the value at every point in time rather than just at the sample times."`,
+    images: ["image_1771997354506_0.png"],
+  },
+  {
+    num: 24,
+    timestamp: `23:21`,
+    question: `What is the most basic reconstruction approach described in the lecture?`,
+    options: [`Linear interpolation`, `Piecewise constant approximation`, `Cubic splines`, `Sine wave interpolation`],
+    answer: 1,
+    explanation: `At [23:21], the lecturer explains: "One really basic idea would be to use a piecewise constant approximation. I don't know what the function is equal to for every value of x so what I'm going to do is just say okay find the closest value of x where I do know the function value and just use that one."`,
+    images: ["image_1771997377787_0.png"],
+  },
+  {
+    num: 25,
+    timestamp: `24:27`,
+    question: `What issue with piecewise linear reconstruction is highlighted in the lecture?`,
+    options: [`It requires too much computation`, `It can miss significant features between sample points`, `It creates artificial high frequencies`, `It uses too much memory`],
+    answer: 1,
+    explanation: `At [24:27], the lecturer points out: "I've completely missed some of these big bumps in the function especially near the end I have these two huge bumps between x2 and x3 that don't show up at all in my piecewise linear approximation."`,
+    images: ["image_1771997414620_0.png"],
+  },
+  {
+    num: 26,
+    timestamp: `24:56`,
+    question: `What is the most basic solution to improve reconstruction quality?`,
+    options: [`Use a more sophisticated interpolation method`, `Apply a smoothing filter`, `Increase the sampling rate`, `Use frequency domain techniques`],
+    answer: 2,
+    explanation: `At [24:56], the lecturer explains: "The most basic thing we could do is we could just say how about we sample the signal more densely how about we just take more sample points if we missed certain features then we should just sample more frequently and we'll capture those features." The next question skips this sldie`,
+    images: ["image_1771997426297_0.png", "image_1771997568372_0.png"],
+  },
+  {
+    num: 27,
+    timestamp: `28:14`,
+    question: `How does the lecture define the coverage function for rasterization?`,
+    options: [`A function that returns the depth of each pixel`, `A binary function that indicates whether a point is inside a triangle (1) or not (0)`, `A function that determines pixel color based on triangle properties`, `A function that calculates triangle area`],
+    answer: 1,
+    explanation: `At [28:14], the lecturer explains: "The coverage function is a function defined at every single point in the entire plane... and it's equal to one if that point is contained inside the triangle and it's equal to zero otherwise."`,
+    images: ["image_1771997491695_0.png"],
+  },
+  {
+    num: 28,
+    timestamp: `29:06`,
+    question: `What challenge arises when an edge passes directly through a sample point?`,
+    options: [`The computation becomes too slow`, `It's ambiguous which triangle covers the pixel`, `The pixel appears darker than it should`, `The algorithm fails completely`],
+    answer: 1,
+    explanation: `At [29:06], the lecturer asks: "I have two triangles meeting at an edge and that edge passes exactly through my sample point. So what do I do? Is this sample point covered by triangle one or is it covered by triangle two or is it in some sense covered by both of them?"`,
+    images: ["image_1771997713972_0.png", "image_1771997770145_0.png", "image_1771997762595_0.png"],
+  },
+  {
+    num: 29,
+    timestamp: `29:53`,
+    question: `What is one approach mentioned for handling edge cases when a sample point falls exactly on a triangle edge?`,
+    options: [`Always count both triangles sharing the edge`, `Never count points exactly on edges`, `Classify based on whether it's a top edge or left edge`, `Move the sample point slightly`],
+    answer: 2,
+    explanation: `At [29:53], the lecturer explains: "If an edge falls directly on a screen sample point for instance you could say the sample is classified within the triangle if the edge is a top edge or a left edge."`,
+    images: ["image_1771997805702_0.png"],
+  },
+  {
+    num: 30,
+    timestamp: `31:46`,
+    question: `In the context of displaying sampled image values, what does a pixel represent according to the lecture?`,
+    options: [`A mathematical point with no area`, `A square of light with uniform color`, `A triangular region on screen`, `A weighted average of surrounding points`],
+    answer: 1,
+    explanation: `At [31:46], the lecturer states: "Each image sample sent to the display is converted into roughly speaking a little square of light and maybe you get to specify the color of that light."`,
+    images: ["image_1771997934002_0.png"],
+  },
+  {
+    num: 31,
+    timestamp: `31:57`,
+    question: `According to the lecture, what does the term "pixel" stand for?`,
+    options: [`Picture cell`, `Picture element`, `Pixelated image`, `Point index location`],
+    answer: 1,
+    explanation: `At [31:57], the lecturer explains: "The word pixel is just an abbreviation for picture element right you have a picture it's your entire screen one little element of that is a pixel."`,
+    images: ["image_1771998071836_0.png"],
+  },
+  {
+    num: 32,
+    timestamp: `33:47`,
+    question: `What is aliasing in the context of computer graphics?`,
+    options: [`When one triangle is rendered on top of another`, `When a mismatch occurs between sampling and reconstruction`, `When colors look different on different displays`, `When triangles are too small to be visible`],
+    answer: 1,
+    explanation: `At [33:47], the lecturer introduces: "This leads us into a discussion of something that's really core to computer graphics which is the phenomenon of aliasing," and throughout the lecture explains it as a mismatch between sampling and reconstruction causing misrepresentation of the original signal.`,
+    images: ["image_1771998130102_0.png", "image_1771998135778_0.png"],
+  },
+  {
+    num: 33,
+    timestamp: `35:34`,
+    question: `How does the lecture suggest we can understand signals like audio?`,
+    options: [`As a sequence of amplitudes over time`, `As a superposition or sum of different frequencies`, `As a set of discrete events`, `As a series of waveforms`],
+    answer: 1,
+    explanation: `At [35:34], the lecturer states: "A 1D signal like audio can be expressed as a superposition or a sum of different frequencies."`,
+    images: ["image_1771998186382_0.png"],
+  },
+  {
+    num: 34,
+    timestamp: `38:30`,
+    question: `In the pitch-rising experiment, what unexpected phenomenon was observed?`,
+    options: [`The audio became distorted`, `The frequency remained constant`, `The pitch appeared to rise and fall repeatedly`, `The sound became inaudible`],
+    answer: 2,
+    explanation: `At [38:30], the lecturer describes: "Rather than just going from low to high and higher and higher and higher it went from low to high back down to low back up to high back down to low what is going on there?"`,
+    images: ["image_1771998301424_0.png"],
+  },
+  {
+    num: 35,
+    timestamp: `38:50`,
+    question: `What explains the unexpected result in the pitch experiment?`,
+    options: [`A bug in the audio playback system`, `Interference between multiple sound waves`, `Undersampling of the high-frequency signal`, `Incorrect frequency generation`],
+    answer: 2,
+    explanation: `At [38:50], the lecturer explains: "If we under sample if we have too few points to capture all of the little wiggles in that sound wave then we're going to get aliasing we're going to get a sound that doesn't actually represent the original continuous signal."`,
+    images: ["image_1771998474964_0.png"],
+  },
+  {
+    num: 36,
+    timestamp: `40:22`,
+    question: `How does the lecturer define aliasing in the audio example?`,
+    options: [`When audio frequencies exceed human hearing range`, `When high frequencies masquerade as low frequencies after reconstruction`, `When digital audio cannot reproduce analog sounds`, `When sound becomes too distorted to recognize`],
+    answer: 1,
+    explanation: `At [40:22], the lecturer states: "In this case this is what we mean by aliasing high frequencies in the original signal quickly oscillating waves masquerade as low frequencies after we perform the reconstruction because we've under sampled.""`,
+    images: ["image_1771998452042_0.png"],
+  },
+  {
+    num: 37,
+    timestamp: `41:44`,
+    question: `In the image frequency domain representation shown in the lecture, where are the low frequencies located?`,
+    options: [`At the edges of the representation`, `At the dead center`, `Uniformly distributed throughout`, `At the corners only`],
+    answer: 1,
+    explanation: `At [41:44], the lecturer explains: "This image that we see on the right is kind of like the analyzer the spectral analyzer for the image that we see on the left except this time all the low frequencies are dead center and as we go out in any direction... we're looking at higher and higher frequencies."`,
+    images: ["image_1771998501567_0.png"],
+  },
+  {
+    num: 38,
+    timestamp: `44:10`,
+    question: `What function was used to create the synthetic aliasing example in the lecture?`,
+    options: [`sin(x) + sin(y)`, `sin(x² + y²)`, `sin(x) * sin(y)`, `cos(x² - y²)`],
+    answer: 1,
+    explanation: `At [44:10], the lecturer describes: "We're going to build a function intentionally that has crazy high frequencies in it and that function is sine of x squared plus y squared."`,
+    images: ["image_1771998552981_0.png"],
+  },
+  {
+    num: 39,
+    timestamp: `45:32`,
+    question: `What real-world example of temporal aliasing is described in the lecture?`,
+    options: [`Motion blur in photographs`, `Spinning wagon wheels appearing to rotate backwards`, `Lens flare effects`, `Image pixelation when zooming`],
+    answer: 1,
+    explanation: `At [45:32], the lecturer explains: "If it's ever been nighttime you're looking out the car window at a car next to you and you stare at the hubcaps you'll see an effect like this. Maybe as the car leaves through the stop light the wheels start spinning faster and faster and rather than looking like they're spinning forward they start spinning backward."`,
+    images: ["image_1771998614239_0.png"],
+  },
+  {
+    num: 40,
+    timestamp: `46:41`,
+    question: `What theorem establishes when a signal can be perfectly reconstructed from samples?`,
+    options: [`The Fourier Transform Theorem`, `The Sampling Law`, `The Nyquist-Shannon Theorem`, `The Signal Processing Theorem`],
+    answer: 2,
+    explanation: `At [46:41], the lecturer states: "So how can we be precise about when this phenomenon occurs this is something called the nyquist shannon theorem okay really important theorem in signal processing."`,
+    images: [],
+  },
+  {
+    num: 41,
+    timestamp: `47:36`,
+    question: `According to the Nyquist-Shannon theorem, what condition allows perfect signal reconstruction?`,
+    options: [`The signal must be continuous`, `The signal must be sampled at least twice as frequently as its highest frequency`, `The signal must have limited amplitude`, `The signal must be perfectly periodic`],
+    answer: 1,
+    explanation: `At [47:36], the lecturer explains: "If your signal happens to be band limited then it can be perfectly reconstructed as long as you take samples at a rate that's twice as frequent as the highest frequency in the signal."`,
+    images: ["image_1771998665800_0.png"],
+  },
+  {
+    num: 42,
+    timestamp: `47:56`,
+    question: `What filter is used for perfect reconstruction according to the Nyquist-Shannon theorem?`,
+    options: [`Gaussian filter`, `Box filter`, `Sync filter`, `Triangle filter`],
+    answer: 2,
+    explanation: `At [47:56], the lecturer states: "Once you have those samples you can reconstruct exactly the original signal by using something called a sync filter."`,
+    images: ["image_1771998802412_0.png"],
+  },
+  {
+    num: 43,
+    timestamp: `48:38`,
+    question: `Why can't most graphics signals be perfectly reconstructed using the Nyquist-Shannon approach?`,
+    options: [`The sampling rate is too low`, `The signals aren't band-limited due to features like hard edges`, `The reconstruction filters are too complex`, `There's too much noise in the signals`],
+    answer: 1,
+    explanation: `At [48:57], the lecturer explains: "Here's our triangle our coverage function how do I express something like a hard edge as a sum of sinusoids? Well actually it turns out that what I have to do is add an infinite series of higher and higher and higher frequencies until I can eventually approximate something like a piecewise constant function."`,
+    images: ["image_1771998941026_0.png"],
+  },
+  {
+    num: 44,
+    timestamp: `50:39`,
+    question: `What common aliasing artifact appears in static images with straight lines?`,
+    options: [`Moire patterns`, `Jaggies (jagged edges)`, `Banding`, `Pixel bleeding`],
+    answer: 1,
+    explanation: `At [50:39], the lecturer describes: "Really really common artifacts in graphics or you have let's say jaggies in a in a static image if I draw a line segment it has these jagged edges."`,
+    images: ["image_1771998975218_0.png"],
+  },
+  {
+    num: 45,
+    timestamp: `51:39`,
+    question: `What is the ideal goal when trying to reduce aliasing in pixel coverage?`,
+    options: [`To remove all high frequencies from the scene`, `To match the total light in a pixel with the total light in the original signal`, `To use the minimum number of samples possible`, `To randomize the sampling pattern`],
+    answer: 1,
+    explanation: `At [51:39], the lecturer explains: "If we think of a pixel as a little square of light then what we want is that the total light emitted from that pixel to be the same as the total light that we had in our original continuous signal in other words we want to integrate the input signal over the pixel to get the sample value."`,
+    images: ["image_1771999074308_0.png"],
+  },
+  {
+    num: 46,
+    timestamp: `53:02`,
+    question: `What anti-aliasing technique is described in the lecture?`,
+    options: [`Adaptive sampling`, `Super sampling`, `Anisotropic filtering`, `Gaussian blur`],
+    answer: 1,
+    explanation: `At [53:02], the lecturer explains: "So what we're really going to do is use a technique called super sampling rather than just taking one sample of the signal the coverage signal at each pixel we're going to take several samples."`,
+    images: ["image_1771999129670_0.png"],
+  },
+  {
+    num: 47,
+    timestamp: `53:54`,
+    question: `How are the multiple samples used in super sampling anti-aliasing?`,
+    options: [`The brightest sample is selected`, `The samples are averaged to determine the pixel's coverage`, `The median value is used`, `The samples are combined using a weighted formula`],
+    answer: 1,
+    explanation: `At [53:54], the lecturer explains: "If some fraction of the samples are covered let's say half of them are covered well then we say okay 50% of that pixel is covered right so we just use the fraction of sample values that are covered to get an approximation of the fraction of the pixel that's covered."`,
+    images: ["image_1771999227390_0.png"],
+  },
+  {
+    num: 48,
+    timestamp: `55:16`,
+    question: `What improvement was observed when increasing from 4 samples per pixel to 16 samples per pixel?`,
+    options: [`The image became perfectly aliasing-free`, `There was no visible difference`, `The image became smoother but still had some artifacts`, `The image became darker`],
+    answer: 2,
+    explanation: `At [55:16], the lecturer observes: "So now in each pixel we have 4x4 or 16 samples things get a little bit smoother okay still not perfect."`,
+    images: ["image_1771999256302_0.png"],
+  },
+  {
+    num: 49,
+    timestamp: `55:42`,
+    question: `Even with 1024 samples per pixel, what was observed about the anti-aliasing result?`,
+    options: [`It became perfect with no visible artifacts`, `It still wasn't perfect`, `It became too blurry`, `It introduced new artifacts`],
+    answer: 1,
+    explanation: `At [55:30], the lecturer states: "So now we do 32 by 32 we have 1024 samples taken for every single pixel and we average them back down so even though this looks a lot better you notice it's still not perfect."`,
+    images: [],
+  },
+  {
+    num: 50,
+    timestamp: `55:54`,
+    question: `What special case for perfect anti-aliasing is mentioned in the lecture?`,
+    options: [`Straight line segments`, `Checkerboard patterns`, `Circular shapes`, `Uniform color regions`],
+    answer: 1,
+    explanation: `At [55:54], the lecturer notes: "In this very very special case of the checkerboard there happens to be an exact solution you can analytically integrate the checkerboard over a pixel and get this beautifully smooth image."`,
+    images: ["image_1771999301034_0.png"],
+  },
+  {
+    num: 51,
+    timestamp: `57:10`,
+    question: `What is the most basic operation needed for triangle rasterization?`,
+    options: [`Computing triangle area`, `Testing if a point is inside a triangle`, `Finding the closest point on a triangle`, `Calculating triangle perimeter`],
+    answer: 1,
+    explanation: `At [57:10], the lecturer explains: "The most basic thing that we need to do is say okay we have this triangle we have this pixel grid we want to know which pixels are covered by the triangle we can just break this down into an atomic query which is how do we check if a given point q is inside a triangle with vertices p0 p1 p2."`,
+    images: ["image_1771999356654_0.png"],
+  },
+  {
+    num: 52,
+    timestamp: `58:12`,
+    question: `How is the point-in-triangle test typically implemented?`,
+    options: [`Using barycentric coordinates`, `Computing distance to each edge`, `Testing if the point is inside the three half-planes defined by the edges`, `Calculating angle sums`],
+    answer: 2,
+    explanation: `At [58:12], the lecturer explains: "How do you test if a point's inside of a triangle? Well I know that if it's contained in the half plane made by the bottom edge and the right edge and the left edge then it must be inside the triangle."`,
+    images: ["image_1771999387129_0.png"],
+  },
+  {
+    num: 53,
+    timestamp: `59:36`,
+    question: `What optimization is mentioned for incremental point-in-triangle testing?`,
+    options: [`Using graphics hardware acceleration`, `Reusing calculations between adjacent pixels`, `Pre-computing lookup tables`, `Approximating triangles with rectangles`],
+    answer: 1,
+    explanation: `At [59:36], the lecturer describes: "I can make this a little bit faster by noticing that the half plane check looks very similar for nearby points so I can save myself some arithmetic by not going through these points in a random order but by marching let's say along rows of the triangle and incrementally updating my calculations."`,
+    images: ["image_1771999404785_0.png"],
+  },
+  {
+    num: 54,
+    timestamp: `1:00:04`,
+    question: `What does the lecturer identify as the primary bottleneck in modern hardware?`,
+    options: [`Arithmetic computations`, `Memory access`, `Cache size`, `Power consumption`],
+    answer: 1,
+    explanation: `At [1:00:04], the lecturer states: "In real modern hardware the bottleneck is typically not doing arithmetic doing math but the bottleneck is reading or writing to memory."`,
+    images: ["image_1771999436931_0.png"],
+  },
+  {
+    num: 55,
+    timestamp: `1:00:46`,
+    question: `What approach does modern hardware take to triangle rasterization?`,
+    options: [`Sequential processing of each pixel`, `Testing all samples in the triangle's bounding box in parallel`, `Using a lookup table for common triangle shapes`, `Processing one scan line at a time`],
+    answer: 1,
+    explanation: `At [1:00:46], the lecturer explains: "What we're going to do instead is just test all the samples in the bounding box around the triangles so it's kind of the tightest fitting box around the triangle we're going to test all those samples in parallel."`,
+    images: ["image_1771999512661_0.png"],
+  },
+  {
+    num: 56,
+    timestamp: `1:02:09`,
+    question: `What shape of triangle was identified as problematic for the parallel bounding box approach?`,
+    options: [`Very small triangles`, `Triangles with obtuse angles`, `Long, skinny triangles`, `Triangles with curved edges`],
+    answer: 2,
+    explanation: `At [1:02:09], the lecturer describes: "You can imagine for instance that I had just one long skinny triangle that stretched all the way across the screen right and so now if I'm testing all the points in the bounding box almost none of them are going to be covered I'm wasting a lot of time."`,
+    images: ["image_1771999527981_0.png"],
+  },
+  {
+    num: 57,
+    timestamp: `1:02:40`,
+    question: `What optimization technique tests larger blocks before individual pixels?`,
+    options: [`Hierarchical decomposition`, `Scan conversion`, `Block-based optimization`, `Stochastic sampling`],
+    answer: 2,
+    explanation: `At [1:02:33], the lecturer introduces: "I can take kind of a hybrid or course define approach and first ask if large blocks of pixels intersect the triangle so before testing any individual pixel I draw some kind of medium size square."`,
+    images: ["image_1771999609505_0.png"],
+  },
+  {
+    num: 58,
+    timestamp: `1:03:00`,
+    question: `What is the benefit of the early-out test with blocks?`,
+    options: [`It improves cache coherence`, `It allows hardware acceleration`, `It avoids unnecessary work on pixels not covered by the triangle`, `It simplifies the triangle intersection test`],
+    answer: 2,
+    explanation: `At [1:03:00], the lecturer explains: "If I know that this gray box in the upper left doesn't intersect the triangle at all then I don't need to do any more work none of those none of those pixels are covered."`,
+    images: [],
+  },
+  {
+    num: 59,
+    timestamp: `1:04:49`,
+    question: `What important graphics concept is introduced with the recursive block testing approach?`,
+    options: [`Dynamic programming`, `Hierarchical strategy`, `Backtracking`, `Divide and conquer`],
+    answer: 1,
+    explanation: `At [1:04:49], the lecturer states: "This leads to another really really important idea in all of computer graphics which is to take a hierarchical strategy."`,
+    images: ["image_1771999662712_0.png"],
+  },
+  {
+    num: 60,
+    timestamp: `1:06:16`,
+    question: `Why isn't hierarchical rasterization commonly used in real graphics hardware?`,
+    options: [`It produces visual artifacts`, `It requires too much memory`, `The overhead of traversal is too high`, `It's patented and requires licensing`],
+    answer: 2,
+    explanation: `At [1:06:16], the lecturer explains: "This is actually not what happens in real graphics hardware because there's still quite a bit of overhead to doing this hierarchical traversal so having just one course to find level is kind of a nice sweet spot."`,
+    images: [],
+  },
+  {
+    num: 61,
+    timestamp: `1:07:20`,
+    question: `What is one of the key frameworks mentioned in the summary for understanding graphics problems?`,
+    options: [`Object-oriented programming`, `Sampling and reconstruction`, `Linear algebra`, `Calculus of variations`],
+    answer: 1,
+    explanation: `At [1:07:20], the lecturer summarizes: "Overall today what we saw is that we can frame a lot of problems in computer graphics in terms of sampling and reconstruction."`,
+    images: [],
+  },
+  {
+    num: 62,
+    timestamp: `1:08:27`,
+    question: `What does the lecturer describe as the basic strategy for reducing aliasing in rasterization?`,
+    options: [`Blurring the image`, `Using super sampling`, `Decreasing the resolution`, `Using different primitive shapes`],
+    answer: 1,
+    explanation: `At [1:08:27], the lecturer concludes: "Our basic strategy for reducing aliasing at least for rasterization was to use super sampling."`,
+    images: [],
+  },
+  {
+    num: 63,
+    timestamp: `1:08:57`,
+    question: `According to the summary, what is the "basic building block" for the graphics pipeline?`,
+    options: [`Pixel shading`, `Vertex transformation`, `Triangle rasterization`, `Texture mapping`],
+    answer: 2,
+    explanation: `At [1:08:57], the lecturer states: "From a more system point of view we saw that triangle rasterization is the basic building block for the graphics pipeline."`,
+    images: [],
+  },
+  {
+    num: 64,
+    timestamp: `1:09:51`,
+    question: `What topic will be covered in the next lecture according to the professor?`,
+    options: [`Texture mapping`, `Animation`, `3D transformations`, `Lighting models`],
+    answer: 2,
+    explanation: `At [1:09:51], the lecturer concludes: "Next time we're going to talk about another important stage of the pipeline was how we actually do these 3D transformations." -`,
+    images: [],
+  },
+]
 
-// ─── Timer ───────────────────────────────────────────────────
-const useTimer = () => {
-  const [timeSpent, setTimeSpent] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-  useEffect(() => {
-    let iv = null;
-    if (isActive) iv = setInterval(()=>setTimeSpent(t=>t+1),1000);
-    return ()=>clearInterval(iv);
-  },[isActive]);
-  return { timeSpent, start:()=>setIsActive(true), pause:()=>setIsActive(false), reset:()=>{setTimeSpent(0);setIsActive(false);} };
-};
-const fmt = s => `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;
+function useTimer() {
+  const [elapsed, setElapsed] = useState(0)
+  const ref = useRef(null)
+  const start = () => { ref.current = setInterval(() => setElapsed(e => e + 1), 1000) }
+  const stop = () => clearInterval(ref.current)
+  const reset = () => { clearInterval(ref.current); setElapsed(0) }
+  const fmt = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`
+  return { elapsed, fmt, start, stop, reset }
+}
 
-// ─── Main Component ───────────────────────────────────────────
-const Quiz = () => {
-  const [screen, setScreen]       = useState('welcome');
-  const [qIdx, setQIdx]           = useState(0);
-  const [answers, setAnswers]     = useState(Array(quizData.length).fill(null));
-  const [selected, setSelected]   = useState([]);
-  const [showExp, setShowExp]     = useState(false);
-  const [reviewMode, setReviewMode] = useState(false);
-  const { timeSpent, start, pause, reset: resetTimer } = useTimer();
+export default function MonitorQuiz() {
+  const [screen, setScreen] = useState('welcome')
+  const [idx, setIdx] = useState(0)
+  const [selected, setSelected] = useState(null)
+  const [revealed, setRevealed] = useState(false)
+  const [score, setScore] = useState(0)
+  const [answers, setAnswers] = useState([])
+  const timer = useTimer()
+  const q = quizData[idx]
+  const ACCENT = '#34d399'
 
-  const q = quizData[qIdx];
-  useEffect(()=>{if(screen==='quiz'&&!showExp&&!reviewMode)start();else pause();},[screen,showExp,reviewMode,qIdx]);
+  const card = { background: '#1e293b', borderRadius: '12px', padding: '1.5rem', marginBottom: '1rem', border: '1px solid #334155' }
 
-  const isCorrect = useCallback((q, a) => {
-    if (a === null) return false;
-    if (q.questionType === 'multi-select') return JSON.stringify([...(a||[])].sort()) === JSON.stringify([...q.answers].sort());
-    return a === q.answer;
-  }, []);
+  if (screen === 'welcome') return (
+    <div style={{ minHeight: '100vh', background: '#0f172a', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', fontFamily: 'system-ui,sans-serif' }}>
+      <Monitor size={48} color={ACCENT} style={{ marginBottom: '1.5rem' }} />
+      <h1 style={{ color: '#f1f5f9', fontSize: '1.75rem', fontWeight: 700, textAlign: 'center', marginBottom: '0.5rem' }}>Lecture 4: Rasterization & Sampling</h1>
+      <p style={{ color: '#94a3b8', marginBottom: '0.5rem' }}>Pipeline, Coverage, Aliasing, SSAA, Nyquist</p>
+      <p style={{ color: ACCENT, fontWeight: 600, marginBottom: '2rem' }}>64 questions</p>
+      <button onClick={() => { setScreen('quiz'); timer.start() }}
+        style={{ background: ACCENT, color: '#0f172a', fontWeight: 700, padding: '0.75rem 2.5rem', borderRadius: '8px', border: 'none', cursor: 'pointer', fontSize: '1rem' }}>
+        Start Quiz
+      </button>
+      <a href='/' style={{ marginTop: '1.5rem', color: '#64748b', fontSize: '0.875rem' }}>← Back to index</a>
+    </div>
+  )
 
-  const handleSubmit = () => {
-    const a=[...answers];
-    a[qIdx] = q.questionType==='multi-select' ? selected : selected[0];
-    setAnswers(a); setShowExp(true);
-  };
-  const handleNext    = () => { if(qIdx<quizData.length-1){setQIdx(qIdx+1);setSelected([]);setShowExp(false);}else{setScreen('results');pause();} };
-  const handlePrev    = () => { if(qIdx>0){setQIdx(qIdx-1);setSelected(answers[qIdx-1]!==null?(Array.isArray(answers[qIdx-1])?answers[qIdx-1]:[answers[qIdx-1]]):[]);setShowExp(answers[qIdx-1]!==null);} };
-  const handleReview  = () => { setQIdx(0);setSelected([]);setShowExp(false);setReviewMode(true);setScreen('quiz'); };
-  const handleRestart = () => { setScreen('welcome');setQIdx(0);setAnswers(Array(quizData.length).fill(null));setSelected([]);setShowExp(false);setReviewMode(false);resetTimer(); };
-
-  const score = answers.filter((a,i)=>isCorrect(quizData[i],a)).length;
-  const pct   = Math.round(score/quizData.length*100);
-
-  const C = { bg:'#0a0a0f', surface:'#111118', border:'#1a2a1a', accent:'#34d399', accentHover:'#10b981', success:'#22c55e', error:'#ef4444', warning:'#f59e0b', text:'#e2e8f0', muted:'#94a3b8', code:'#0d1f0d' };
-  const base = { minHeight:'100vh', background:`linear-gradient(135deg,${C.bg} 0%,#061206 100%)`, color:C.text, fontFamily:"'Rajdhani',sans-serif", padding:'2rem 1rem' };
-  const wrap = { maxWidth:'820px', margin:'0 auto', background:C.surface, borderRadius:'16px', padding:'2rem', border:`1px solid ${C.border}` };
-  const btn  = { display:'flex', alignItems:'center', gap:'0.5rem', padding:'0.75rem 1.5rem', background:C.accent, color:'#fff', border:'none', borderRadius:'8px', cursor:'pointer', fontSize:'1rem', fontFamily:"'Rajdhani',sans-serif", fontWeight:'600', transition:'background 0.2s' };
-  const code = { background:C.code, padding:'1rem', borderRadius:'8px', fontSize:'0.82rem', fontFamily:"'JetBrains Mono',monospace", overflowX:'auto', whiteSpace:'pre', color:'#6ee7b7', lineHeight:'1.6' };
-
-  const SlideImages = ({images}) => {
-    if(!images||images.length===0) return null;
+  if (screen === 'results') {
+    const pct = Math.round(score / quizData.length * 100)
     return (
-      <div style={{marginTop:'1rem'}}>
-        <h4 style={{color:C.accent,fontSize:'0.9rem',marginBottom:'0.5rem'}}>📸 Lecture Slides</h4>
-        <div style={{display:'flex',gap:'0.75rem',flexWrap:'wrap'}}>
-          {images.map((img,i)=>(
-            <img key={i} src={`/assets/${img}`} alt={`slide ${i+1}`}
-              onError={e=>{e.target.style.display='none';}}
-              style={{maxWidth:'100%',flex:'1 1 300px',borderRadius:'8px',border:`1px solid ${C.border}`,objectFit:'contain'}}/>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
-  if(screen==='welcome') return (
-    <div style={base}><div style={wrap}>
-      <div style={{textAlign:'center',marginBottom:'2rem'}}>
-        <Monitor size={64} color={C.accent}/>
-        <h1 style={{fontSize:'2.5rem',fontWeight:'700',color:C.accent,margin:'1rem 0 0.5rem'}}>Lecture 4 Quiz</h1>
-        <p style={{color:C.muted,fontSize:'1.1rem'}}>Drawing a Triangle & Intro to Sampling</p>
-        <p style={{color:C.muted,fontSize:'0.9rem',fontStyle:'italic'}}>CMU 15-462 • 1:08:59 • Rasterization · Coverage · Sampling · Aliasing · Anti-Aliasing</p>
-      </div>
-      <div style={{background:'#0d0d12',padding:'1.5rem',borderRadius:'12px',marginBottom:'2rem',border:`1px solid ${C.border}`}}>
-        <h3 style={{fontSize:'1.1rem',color:C.accent,marginBottom:'1rem'}}>Topics</h3>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(190px,1fr))',gap:'0.6rem',fontSize:'0.95rem'}}>
-          {['Rasterization vs Ray Tracing','Graphics Pipeline','Why Triangles','Coverage Function','Sampling Theory','Aliasing & Nyquist','Super-Sampling Anti-Aliasing','Point-in-Triangle'].map(t=>(
-            <div key={t}><span style={{color:C.accent}}>• </span>{t}</div>
-          ))}
-        </div>
-      </div>
-      <div style={{background:'#0d0d12',padding:'1.5rem',borderRadius:'12px',marginBottom:'2rem',border:`1px solid ${C.border}`}}>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1rem',textAlign:'center'}}>
-          {[['20','Questions'],['40%','Easy'],['45%','Medium'],['15%','Hard']].map(([v,l])=>(
-            <div key={l}><div style={{fontSize:'1.8rem',fontWeight:'700',color:C.accent}}>{v}</div><div style={{fontSize:'0.85rem',color:C.muted}}>{l}</div></div>
-          ))}
-        </div>
-      </div>
-      <button style={{...btn,width:'100%',justifyContent:'center',fontSize:'1.1rem',padding:'1rem'}}
-        onMouseEnter={e=>e.target.style.background=C.accentHover} onMouseLeave={e=>e.target.style.background=C.accent}
-        onClick={()=>{setScreen('quiz');start();}}><Monitor size={20}/> Start Quiz</button>
-    </div></div>
-  );
-
-  if(screen==='results') return (
-    <div style={base}><div style={wrap}>
-      <div style={{textAlign:'center',marginBottom:'2rem'}}>
-        <Trophy size={64} color={pct>=70?C.success:pct>=50?C.warning:C.error}/>
-        <h1 style={{fontSize:'2.5rem',fontWeight:'700',margin:'1rem 0 0.5rem'}}>Quiz Complete!</h1>
-        <p style={{color:C.muted}}><Clock size={16} style={{display:'inline',verticalAlign:'middle',marginRight:'0.4rem'}}/>{fmt(timeSpent)}</p>
-      </div>
-      <div style={{background:'#0d0d12',padding:'2rem',borderRadius:'12px',marginBottom:'2rem',textAlign:'center',border:`1px solid ${C.border}`}}>
-        <div style={{fontSize:'4rem',fontWeight:'700',color:pct>=70?C.success:pct>=50?C.warning:C.error}}>{pct}%</div>
-        <div style={{color:C.muted,fontSize:'1.2rem',marginBottom:'0.5rem'}}>{score} / {quizData.length} correct</div>
-        <div style={{color:C.muted}}>{pct>=90?'GPU Rasterisation Master!':pct>=70?'Strong Pipeline Knowledge!':pct>=50?'Keep Reviewing!':'Back to Lecture 4!'}</div>
-      </div>
-      <div style={{display:'flex',gap:'1rem'}}>
-        {[['Review',handleReview,BookOpen],['Restart',handleRestart,RefreshCw]].map(([l,fn,Icon])=>(
-          <button key={l} style={{...btn,flex:1,justifyContent:'center'}}
-            onMouseEnter={e=>e.target.style.background=C.accentHover} onMouseLeave={e=>e.target.style.background=C.accent}
-            onClick={fn}><Icon size={18}/>{l}</button>
-        ))}
-      </div>
-    </div></div>
-  );
-
-  const renderOptions = () => {
-    if(q.questionType==='multi-select') {
-      return q.options.map((opt,i)=>{
-        const isSelected=selected.includes(i);
-        const isAnswer=(q.answers||[]).includes(i);
-        return (
-          <div key={i} onClick={()=>!showExp&&!reviewMode&&setSelected(prev=>prev.includes(i)?prev.filter(x=>x!==i):[...prev,i])}
-            style={{padding:'0.9rem 1rem',borderRadius:'8px',marginBottom:'0.6rem',cursor:showExp||reviewMode?'default':'pointer',transition:'all 0.2s',
-              border:`2px solid ${showExp||reviewMode?isAnswer?C.success:isSelected?C.error:C.border:isSelected?C.accent:C.border}`,
-              background:showExp||reviewMode?isAnswer?`${C.success}15`:isSelected?`${C.error}15`:C.surface:isSelected?`${C.accent}15`:C.surface}}>
-            <div style={{display:'flex',alignItems:'center',gap:'0.75rem'}}>
-              <input type="checkbox" readOnly checked={isSelected} style={{width:'16px',height:'16px'}}/>
-              {(showExp||reviewMode)&&(isAnswer?<CheckCircle size={18} color={C.success}/>:isSelected?<XCircle size={18} color={C.error}/>:null)}
-              <span>{opt}</span>
-            </div>
+      <div style={{ minHeight: '100vh', background: '#0f172a', padding: '2rem', fontFamily: 'system-ui,sans-serif', color: '#f1f5f9' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <h1 style={{ color: ACCENT, fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>Lecture 4: Rasterization & Sampling — Results</h1>
+          <p style={{ color: '#94a3b8', marginBottom: '2rem' }}>Time: {timer.fmt(timer.elapsed)}</p>
+          <div style={{ ...card, textAlign: 'center', marginBottom: '2rem' }}>
+            <div style={{ fontSize: '3rem', fontWeight: 800, color: ACCENT }}>{pct}%</div>
+            <div style={{ color: '#94a3b8', marginTop: '0.5rem' }}>{score} / {quizData.length} correct</div>
           </div>
-        );
-      });
-    }
-    return q.options.map((opt,i)=>(
-      <div key={i} onClick={()=>!showExp&&!reviewMode&&setSelected([i])}
-        style={{padding:'0.9rem 1rem',borderRadius:'8px',marginBottom:'0.6rem',cursor:showExp||reviewMode?'default':'pointer',transition:'all 0.2s',
-          border:`2px solid ${showExp||reviewMode?i===q.answer?C.success:selected[0]===i?C.error:C.border:selected[0]===i?C.accent:C.border}`,
-          background:showExp||reviewMode?i===q.answer?`${C.success}15`:selected[0]===i?`${C.error}15`:C.surface:selected[0]===i?`${C.accent}15`:C.surface}}>
-        <div style={{display:'flex',alignItems:'center',gap:'0.75rem'}}>
-          {(showExp||reviewMode)&&(i===q.answer?<CheckCircle size={18} color={C.success}/>:selected[0]===i?<XCircle size={18} color={C.error}/>:null)}
-          <span>{opt}</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {answers.map((a, i) => {
+              const qq = quizData[i]
+              const correct = a === qq.answer
+              return (
+                <div key={i} style={{ ...card, borderColor: correct ? '#22c55e44' : '#ef444444' }}>
+                  <div style={{ color: '#94a3b8', fontSize: '0.8rem', marginBottom: '0.25rem' }}>Q{qq.num} [{qq.timestamp}]</div>
+                  <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>{qq.question}</div>
+                  <div style={{ color: correct ? '#22c55e' : '#ef4444', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+                    Your answer: {qq.options[a]} {correct ? '✓' : '✗'}
+                  </div>
+                  {!correct && <div style={{ color: '#22c55e', fontSize: '0.9rem', marginBottom: '0.5rem' }}>Correct: {qq.options[qq.answer]}</div>}
+                  {qq.explanation && <div style={{ color: '#94a3b8', fontSize: '0.875rem', borderTop: '1px solid #334155', paddingTop: '0.5rem', marginTop: '0.5rem' }}>{qq.explanation}</div>}
+                  <SlideImages images={qq.images} />
+                </div>
+              )
+            })}
+          </div>
+          <button onClick={() => { setScreen('welcome'); setIdx(0); setScore(0); setAnswers([]); timer.reset() }}
+            style={{ marginTop: '2rem', background: ACCENT, color: '#0f172a', fontWeight: 700, padding: '0.75rem 2rem', borderRadius: '8px', border: 'none', cursor: 'pointer' }}>
+            Restart
+          </button>
+          <a href='/' style={{ display: 'block', marginTop: '1rem', color: '#64748b', fontSize: '0.875rem' }}>← Back to index</a>
         </div>
       </div>
-    ));
-  };
+    )
+  }
 
-  const canSubmit = q.questionType==='multi-select' ? selected.length>0 : selected.length>0;
+  const handleSelect = (i) => { if (!revealed) setSelected(i) }
+  const handleReveal = () => {
+    if (selected === null) return
+    setRevealed(true)
+    if (selected === q.answer) setScore(s => s + 1)
+  }
+  const handleNext = () => {
+    setAnswers(a => [...a, selected])
+    if (idx + 1 >= quizData.length) { timer.stop(); setScreen('results') }
+    else { setIdx(i => i + 1); setSelected(null); setRevealed(false) }
+  }
 
   return (
-    <div style={base}><div style={wrap}>
-      <div style={{marginBottom:'2rem'}}>
-        <div style={{display:'flex',justifyContent:'space-between',marginBottom:'0.75rem',fontSize:'0.9rem',color:C.muted}}>
-          <span>Question {qIdx+1} of {quizData.length}</span>
-          <span><Clock size={14} style={{display:'inline',verticalAlign:'middle',marginRight:'0.3rem'}}/>{fmt(timeSpent)}</span>
-        </div>
-        <div style={{height:'5px',background:C.border,borderRadius:'3px',overflow:'hidden'}}>
-          <div style={{height:'100%',width:`${((qIdx+1)/quizData.length)*100}%`,background:C.accent,transition:'width 0.3s'}}/>
-        </div>
-      </div>
-
-      <div style={{display:'flex',gap:'0.5rem',flexWrap:'wrap',marginBottom:'1rem'}}>
-        {[q.difficulty,(q.section||'').split('[')[0].trim(),q.questionType==='multi-select'?'multi-select':null,q.topic].filter(Boolean).map(t=>(
-          <span key={t} style={{padding:'0.2rem 0.65rem',borderRadius:'5px',background:`${C.accent}20`,color:C.accent,fontSize:'0.82rem',fontWeight:'600'}}>{t}</span>
-        ))}
-      </div>
-
-      <h2 style={{fontSize:'1.35rem',fontWeight:'600',lineHeight:'1.5',marginBottom:'1.5rem'}}>{q.question}</h2>
-      {q.questionType==='multi-select'&&!showExp&&!reviewMode&&(
-        <p style={{fontSize:'0.85rem',color:C.muted,marginBottom:'1rem',fontStyle:'italic'}}>Select all that apply</p>
-      )}
-
-      <div style={{marginBottom:'2rem'}}>{renderOptions()}</div>
-
-      {showExp&&q.explanation&&(
-        <div style={{background:'#0d0d12',padding:'1.5rem',borderRadius:'12px',marginBottom:'2rem',border:`1px solid ${C.border}`}}>
-          <h3 style={{color:C.accent,fontSize:'1.1rem',marginBottom:'1rem'}}>Explanation</h3>
-          <div style={{marginBottom:'1rem'}}>
-            <h4 style={{color:C.accent,fontSize:'0.95rem',marginBottom:'0.4rem'}}>💡 Intuition</h4>
-            <p style={{color:C.muted,lineHeight:'1.6'}}>{q.explanation.intuition}</p>
-          </div>
-          <div style={{marginBottom:'1rem'}}>
-            <h4 style={{color:C.accent,fontSize:'0.95rem',marginBottom:'0.4rem'}}>📖 Lecture Reference</h4>
-            <p style={{color:C.muted,lineHeight:'1.6'}}>{q.explanation.reference}</p>
-          </div>
-          <SlideImages images={q.slideImages}/>
-          {q.diagram&&(
-            <div style={{margin:'1rem 0'}}>
-              <h4 style={{color:C.accent,fontSize:'0.95rem',marginBottom:'0.5rem'}}>📊 Visual</h4>
-              <div style={{background:'#0a0a14',padding:'1rem',borderRadius:'8px',border:`1px solid ${C.border}`,display:'inline-block'}}>{q.diagram}</div>
-            </div>
-          )}
-          <div style={{marginBottom:'1rem',marginTop:'1rem'}}>
-            <h4 style={{color:C.accent,fontSize:'0.95rem',marginBottom:'0.4rem'}}>💻 Code</h4>
-            <pre style={code}>{q.explanation.computation}</pre>
-          </div>
-          <div>
-            <h4 style={{color:C.accent,fontSize:'0.95rem',marginBottom:'0.4rem'}}>🔗 Connection</h4>
-            <p style={{color:C.muted,lineHeight:'1.6'}}>{q.explanation.connection}</p>
+    <div style={{ minHeight: '100vh', background: '#0f172a', padding: '1.5rem', fontFamily: 'system-ui,sans-serif', color: '#f1f5f9' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Monitor size={20} color={ACCENT} /><span style={{ color: ACCENT, fontWeight: 600 }}>Lecture 4: Rasterization & Sampling</span></div>
+          <div style={{ display: 'flex', gap: '1.5rem', color: '#94a3b8', fontSize: '0.875rem' }}>
+            <span>{timer.fmt(timer.elapsed)}</span>
+            <span>{idx+1} / 64</span>
+            <span style={{ color: ACCENT }}>Score: {score}</span>
           </div>
         </div>
-      )}
 
-      <div style={{display:'flex',gap:'1rem'}}>
-        <button onClick={handlePrev} disabled={qIdx===0}
-          style={{...btn,background:C.border,opacity:qIdx===0?0.5:1,cursor:qIdx===0?'not-allowed':'pointer'}}
-          onMouseEnter={e=>qIdx!==0&&(e.target.style.background='#2a3a2a')} onMouseLeave={e=>qIdx!==0&&(e.target.style.background=C.border)}>
-          <ChevronLeft size={18}/>Prev
-        </button>
-        {!showExp&&!reviewMode&&(
-          <button onClick={handleSubmit} disabled={!canSubmit}
-            style={{...btn,flex:1,justifyContent:'center',opacity:canSubmit?1:0.5}}
-            onMouseEnter={e=>canSubmit&&(e.target.style.background=C.accentHover)} onMouseLeave={e=>canSubmit&&(e.target.style.background=C.accent)}>
-            Submit Answer
-          </button>
+        {/* Progress */}
+        <div style={{ background: '#1e293b', borderRadius: '99px', height: '6px', marginBottom: '1.5rem' }}>
+          <div style={{ background: ACCENT, height: '100%', borderRadius: '99px', width: `${((idx+1)/64)*100}%`, transition: 'width 0.3s' }} />
+        </div>
+
+        {/* Question card */}
+        <div style={card}>
+          <div style={{ color: '#64748b', fontSize: '0.8rem', marginBottom: '0.5rem' }}>Q{q.num} · [{q.timestamp}]</div>
+          <div style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '1.25rem', lineHeight: 1.6 }}>{q.question}</div>
+          <SlideImages images={q.images} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+            {q.options.map((opt, i) => {
+              let bg = '#0f172a', border = '#334155', color = '#cbd5e1'
+              if (selected === i && !revealed) { bg = `${ACCENT}22`; border = ACCENT; color = '#f1f5f9' }
+              if (revealed && i === q.answer) { bg = '#22c55e22'; border = '#22c55e'; color = '#22c55e' }
+              if (revealed && selected === i && i !== q.answer) { bg = '#ef444422'; border = '#ef4444'; color = '#ef4444' }
+              return (
+                <button key={i} onClick={() => handleSelect(i)}
+                  style={{ background: bg, border: `1px solid ${border}`, color, padding: '0.75rem 1rem', borderRadius: '8px', textAlign: 'left', cursor: revealed ? 'default' : 'pointer', fontSize: '0.95rem', transition: 'all 0.15s' }}>
+                  <span style={{ fontWeight: 700, marginRight: '0.5rem' }}>{['A','B','C','D'][i]}.</span>{opt}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Explanation */}
+        {revealed && q.explanation && (
+          <div style={{ ...card, borderColor: `${ACCENT}44` }}>
+            <div style={{ color: ACCENT, fontWeight: 700, marginBottom: '0.5rem' }}>Explanation</div>
+            <div style={{ color: '#cbd5e1', lineHeight: 1.7 }}>{q.explanation}</div>
+          </div>
         )}
-        {(showExp||reviewMode)&&(
-          <button onClick={handleNext} style={{...btn,flex:1,justifyContent:'center'}}
-            onMouseEnter={e=>e.target.style.background=C.accentHover} onMouseLeave={e=>e.target.style.background=C.accent}>
-            {qIdx<quizData.length-1?<><span>Next</span><ChevronRight size={18}/></>:<><span>Results</span><Trophy size={18}/></>}
-          </button>
-        )}
-      </div>
-    </div></div>
-  );
-};
 
-export default Quiz;
+        {/* Buttons */}
+        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+          {!revealed && <button onClick={handleReveal} disabled={selected === null}
+            style={{ background: selected !== null ? ACCENT : '#334155', color: selected !== null ? '#0f172a' : '#64748b', fontWeight: 700, padding: '0.75rem 2rem', borderRadius: '8px', border: 'none', cursor: selected !== null ? 'pointer' : 'not-allowed' }}>
+            Check Answer
+          </button>}
+          {revealed && <button onClick={handleNext}
+            style={{ background: ACCENT, color: '#0f172a', fontWeight: 700, padding: '0.75rem 2rem', borderRadius: '8px', border: 'none', cursor: 'pointer' }}>
+            {idx + 1 >= 64 ? 'See Results' : 'Next Question →'}
+          </button>}
+        </div>
+      </div>
+    </div>
+  )
+}
