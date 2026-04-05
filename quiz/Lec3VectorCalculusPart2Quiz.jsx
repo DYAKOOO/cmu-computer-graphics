@@ -1,27 +1,14 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
-import { Sigma } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
+import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Sigma } from 'lucide-react'
 
-// Source: lectures/cg-03-lecture-quiz.md  (symlinked from Logseq pages)
-// Lecture 3: Vector Calculus — Part 2 — Q33–Q64 (32 questions)
-// Re-generate: python3 scripts/gen_quiz.py lectures/cg-03-lecture-quiz.md 3
-
-function SlideImages({ images }) {
-  if (!images || images.length === 0) return null
-  return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', margin: '0.75rem 0' }}>
-      {images.map((img, i) => (
-        <img key={i} src={`/assets/${img}`} alt={`slide-${i+1}`}
-          onError={e => { e.target.style.display = 'none' }}
-          style={{ maxWidth: '100%', borderRadius: '8px', border: '1px solid #334155', display: 'block' }} />
-      ))}
-    </div>
-  )
-}
+// Source: lectures/cg-03-lecture-quiz.md  (symlinked → Logseq pages)
+// Lecture 3: Vector Calculus — Part 2 · Q33–Q64 · 32 questions
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-03-lecture-quiz.md 3
 
 const quizData = [
   {
-    num: 33,
+    id: 33,
     timestamp: `37:45`,
     question: `What alternative interpretation of the derivative does the lecturer provide?`,
     options: [`As the area under the curve`, `As the best linear approximation of the function`, `As the second-order derivative`, `As the inverse of integration`],
@@ -32,7 +19,7 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 34,
+    id: 34,
     timestamp: `38:58`,
     question: `In terms of a Taylor series, how is a function approximated beyond the constant and linear terms?`,
     options: [`By adding logarithmic terms`, `By adding exponential terms`, `By adding higher degree terms like quadratic, cubic, etc.`, `By adding periodic functions`],
@@ -43,7 +30,7 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 35,
+    id: 35,
     timestamp: `39:22`,
     question: `Why does the lecturer say approximating functions with linear or quadratic terms is useful in graphics?`,
     options: [`Because it creates more realistic visualizations`, `Because it reduces memory usage`, `Because it makes computation easier`, `Because it improves color accuracy`],
@@ -54,29 +41,29 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 36,
+    id: 36,
     timestamp: `40:19`,
     question: `What is the directional derivative?`,
     options: [`A vector pointing in the direction of steepest ascent`, `The derivative of a multivariable function along a specific direction`, `The change in direction of a vector field`, `The curl of a function at a point`],
     answer: 1,
     explanation: `The lecturer describes at [40:19]: "Perhaps the most basic starting point is to think about the directional derivative because we'll be able to easily connect it to the usual one-dimensional derivative."`,
     images: ["image_1771970503059_0.png"],
-    tags: [],
+    tags: ["DirectionalDerivative"],
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 37,
+    id: 37,
     timestamp: `41:31`,
     question: `How is the directional derivative formally defined?`,
     options: [`As the gradient dotted with the direction vector`, `As the limit of [f(x₀+εu)-f(x₀)]/ε as ε→0`, `As the Laplacian of the function in the given direction`, `As the divergence of the function's gradient`],
     answer: 1,
     explanation: `The lecturer states at [41:31]: "The directional derivative along the direction u of the function f is just the usual derivative... the limit as epsilon goes to zero of f of x naught plus epsilon u minus f of x naught divided by epsilon."`,
     images: ["image_1771987890560_0.png"],
-    tags: [],
+    tags: ["Derivation"],
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 38,
+    id: 38,
     timestamp: `42:54`,
     question: `What does the gradient tell us about a function?`,
     options: [`The total volume of the function`, `The second-order approximation of the function`, `The directional derivative in all possible directions`, `The boundary conditions of the function`],
@@ -85,22 +72,22 @@ const quizData = [
 
 -`,
     images: ["image_1771987937211_0.png", "image_1772584782720_0.png"],
-    tags: [],
+    tags: ["Gradient"],
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 39,
+    id: 39,
     timestamp: `43:40`,
     question: `What does the lecturer say the gradient visually represents on a function?`,
     options: [`Arrows pointing in random directions`, `Vectors pointing in the direction of quickest increase (uphill)`, `The level sets of the function`, `The boundary of the function's domain`],
     answer: 1,
     explanation: `The lecturer describes at [43:40]: "Just by looking at this picture you get the sense that the gradient kind of points in the direction of quickest increase if we think of the dark blue colors as being small values in the function and the light blue or white colors being large values in the function, then the arrows are kind of pointing uphill."`,
     images: ["image_1771988006149_0.png"],
-    tags: [],
+    tags: ["Coordinate"],
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 40,
+    id: 40,
     timestamp: `44:02`,
     question: `What is the proper name of the symbol ∇ used for the gradient?`,
     options: [`Del`, `Nabla`, `Gradient`, `Laplacian`],
@@ -111,18 +98,18 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 41,
+    id: 41,
     timestamp: `44:30`,
     question: `How is the gradient defined in terms of partial derivatives?`,
     options: [`The sum of all partial derivatives`, `The list of all partial derivatives along coordinate directions`, `The product of all partial derivatives`, `The maximum of all partial derivatives`],
     answer: 1,
     explanation: `The lecturer states at [44:56]: "I think a lot simpler way to think about this is hey, we already understand the directional derivative right? The directional derivative gives us the one dimensional derivative in some direction. So what is the gradient? It's just the list of the directional derivatives along all the coordinate axes x1, x2, x3, and so on."`,
     images: ["image_1771988089566_0.png"],
-    tags: [],
+    tags: ["PartialDerivative", "Coordinate"],
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 42,
+    id: 42,
     timestamp: `46:31`,
     question: `What is the gradient of the function f(x₁,x₂) = x₁² + x₂²?`,
     options: [`(x₁, x₂)`, `(2x₁, 2x₂)`, `(1, 1)`, `2(x₁ + x₂)`],
@@ -133,18 +120,18 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 43,
+    id: 43,
     timestamp: `48:08`,
     question: `What is the first-order Taylor approximation of a function f around a point x₀?`,
     options: [`f(x) ≈ f(x₀)`, `f(x) ≈ f(x₀) + ∇f(x₀)·(x-x₀)`, `f(x) ≈ f(x₀) + (x-x₀)²`, `f(x) ≈ ∇f(x₀)`],
     answer: 1,
     explanation: `The lecturer gives the formula at [48:08]: "We can write this as f of x is approximately f of x naught plus the inner product of the gradient of f at x naught with the vector x minus x naught."`,
     images: ["image_1771988163054_0.png"],
-    tags: [],
+    tags: ["Approximation"],
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 44,
+    id: 44,
     timestamp: `48:26`,
     question: `What happens to the function value when moving in the direction of the gradient?`,
     options: [`It decreases`, `It remains constant`, `It increases`, `It oscillates`],
@@ -155,7 +142,7 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 45,
+    id: 45,
     timestamp: `49:18`,
     question: `What does the gradient represent geometrically, according to the lecturer?`,
     options: [`The level curves of the function`, `The direction of steepest ascent`, `The second derivative of the function`, `The boundary of the function`],
@@ -166,7 +153,7 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 46,
+    id: 46,
     timestamp: `49:46`,
     question: `What optimization algorithm does the lecturer describe that uses the gradient?`,
     options: [`Simulated annealing`, `Genetic algorithms`, `Dynamic programming`, `Gradient descent`],
@@ -177,18 +164,18 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 47,
+    id: 47,
     timestamp: `50:39`,
     question: `How is the gradient related to the directional derivative?`,
     options: [`They provide the same information in different forms`, `The directional derivative is the magnitude of the gradient`, `The inner product of the gradient with direction u equals the directional derivative along u`, `The gradient is the sum of all directional derivatives`],
     answer: 2,
     explanation: `The lecturer defines at [50:39]: "We can say that at each point x the gradient is the unique vector nabla f of x such that the inner product of nabla f with u is equal to the directional derivative of f along the direction u for all u."`,
     images: ["image_1771988289666_0.png"],
-    tags: [],
+    tags: ["Relationship"],
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 48,
+    id: 48,
     timestamp: `52:23`,
     question: `What is the gradient of the dot product u·v with respect to u?`,
     options: [`u`, `v`, `u + v`, `u - v`],
@@ -199,7 +186,7 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 49,
+    id: 49,
     timestamp: `54:50`,
     question: `What pattern does the lecturer identify for the gradient of xᵀy with respect to x?`,
     options: [`It equals x`, `It equals y`, `It equals the transpose of y`, `It equals x + y`],
@@ -210,7 +197,7 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 50,
+    id: 50,
     timestamp: `55:04`,
     question: `What does the gradient of xᵀAx with respect to x equal?`,
     options: [`x`, `Ax`, `2Ax`, `A`],
@@ -223,18 +210,18 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 51,
+    id: 51,
     timestamp: `55:44`,
     question: `What resource does the lecturer recommend for matrix derivatives?`,
     options: [`The professor's lecture notes`, `The Matrix Cookbook`, `Linear Algebra Done Right`, `Matrix Calculus for Machine Learning`],
     answer: 1,
     explanation: `The lecturer mentions at [55:44]: "Beyond this little list here, there's an excellent resource the matrix cookbook that gives all sorts of nice matrix derivatives."`,
     images: [],
-    tags: [],
+    tags: ["MatrixCookbook"],
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 52,
+    id: 52,
     timestamp: `56:50`,
     question: `What complex mathematical object is the lecturer taking the gradient of in the advanced example?`,
     options: [`A tensor field`, `A quaternion`, `A function of another function`, `A complex-valued function`],
@@ -245,7 +232,7 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 53,
+    id: 53,
     timestamp: `59:40`,
     question: `In the advanced example, what is the function Big F of little f?`,
     options: [`The maximum value of little f`, `The L2 inner product of little f and little g`, `The derivative of little f`, `The integral of little f squared`],
@@ -256,7 +243,7 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 54,
+    id: 54,
     timestamp: `1:00:44`,
     question: `What does the lecturer claim is the gradient of Big F(little f) = ⟨little f, little g⟩₂?`,
     options: [`The function little f`, `The derivative of little g`, `The function little g`, `The zero function`],
@@ -267,18 +254,18 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 55,
+    id: 55,
     timestamp: `1:01:26`,
     question: `What intuition does the lecturer use to explain why the gradient of the L2 inner product is the function little g?`,
     options: [`That the derivative of a product is the sum of derivatives`, `That the inner product measures alignment, and the function best aligned with g is g itself`, `That the derivative of the inner product is always zero`, `That any function can be represented as an inner product`],
     answer: 1,
     explanation: `The lecturer explains at [1:01:26]: "Well okay now we really draw on our intuition about the inner product from thinking about little arrows right? The inner product measures how well two little arrows are aligned or how well two functions are aligned. So what is the function that is best aligned with little g? Well it's just little g."`,
     images: ["image_1771988670464_0.png"],
-    tags: [],
+    tags: ["CG-Lecture-Question", "Intution"],
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 56,
+    id: 56,
     timestamp: `1:04:42`,
     question: `What is the gradient of the squared L2 norm of f with respect to f?`,
     options: [`f`, `2f`, `The norm of f`, `The square of f`],
@@ -289,7 +276,7 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 57,
+    id: 57,
     timestamp: `1:05:09`,
     question: `What pattern does the lecturer highlight about differentiating functions of functions?`,
     options: [`It's always more complex than regular differentiation`, `It follows different rules than regular differentiation`, `It follows similar patterns to ordinary differentiation`, `It requires complex transform techniques`],
@@ -300,7 +287,7 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 58,
+    id: 58,
     timestamp: `1:06:32`,
     question: `How does the lecturer define a vector field?`,
     options: [`A collection of vectors in space`, `A mapping from points in space to vectors`, `A derivative of a scalar field`, `A matrix that transforms vectors`],
@@ -311,19 +298,19 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 59,
+    id: 59,
     timestamp: `1:07:25`,
     question: `How many basic derivatives for vector fields does the lecturer identify?`,
     options: [`One - the gradient`, `Two - the divergence and curl`, `Three - the gradient, divergence, and curl`, `Four - the gradient, divergence, curl, and Laplacian`],
     answer: 1,
     explanation: `The lecturer states at [1:07:25]: "Acturally there are multiple answers. There are two basic derivatives for vector fields."
 {:height 531, :width 658}`,
-    images: ["image_1771988874726_0.png", "image_1771988926877_0.png"],
-    tags: [],
+    images: ["image_1771988926877_0.png"],
+    tags: ["Property", "Derivation"],
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 60,
+    id: 60,
     timestamp: `1:08:01`,
     question: `What does the divergence measure about a vector field?`,
     options: [`The circulation or rotational behavior`, `The average vector direction`, `The rate of expansion or contraction (source/sink behavior)`, `The total energy of the field`],
@@ -334,7 +321,7 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 61,
+    id: 61,
     timestamp: `1:09:03`,
     question: `What does the curl measure about a vector field?`,
     options: [`The rate of expansion or contraction`, `How much the field is spinning (rotational behavior)`, `The magnitude of the vectors`, `The gradient of the field's energy`],
@@ -345,7 +332,7 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 62,
+    id: 62,
     timestamp: `1:09:41`,
     question: `How is the divergence written in notation?`,
     options: [`div X`, `∇ × X`, `∇ · X`, `∇² X`],
@@ -356,18 +343,18 @@ const quizData = [
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 63,
+    id: 63,
     timestamp: `1:10:18`,
     question: `What is the coordinate formula for the divergence of a vector field?`,
     options: [`The determinant of the vector field's Jacobian`, `The sum of the partial derivatives of each component with respect to its corresponding coordinate`, `The trace of the vector field's gradient`, `The cross product of the gradient with the vector field`],
     answer: 1,
     explanation: `The lecturer describes at [1:10:18]: "We sum over all the coordinates each partial derivative being applied to each coordinate function. We take the derivative of the first coordinate function along the first direction, add that to the derivative of the second coordinate function along the second direction, and so on."`,
     images: ["image_1771989089559_0.png"],
-    tags: [],
+    tags: ["Divergence"],
     source: `lectures/cg-03-lecture-quiz.md`,
   },
   {
-    num: 64,
+    id: 64,
     timestamp: `1:12:22`,
     question: `How is the curl written in notation?`,
     options: [`curl X`, `∇ × X`, `∇ · X`, `∇² X`],
@@ -379,183 +366,253 @@ const quizData = [
   },
 ]
 
-function useTimer() {
-  const [elapsed, setElapsed] = useState(0)
-  const ref = useRef(null)
-  const start = () => { ref.current = setInterval(() => setElapsed(e => e + 1), 1000) }
-  const stop = () => clearInterval(ref.current)
-  const reset = () => { clearInterval(ref.current); setElapsed(0) }
-  const fmt = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`
-  return { elapsed, fmt, start, stop, reset }
+const formatTime = (s) => `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`
+
+const useTimer = () => {
+  const [t, setT] = useState(0)
+  const [active, setActive] = useState(false)
+  useEffect(() => {
+    if (!active) return
+    const id = setInterval(() => setT(x => x+1), 1000)
+    return () => clearInterval(id)
+  }, [active])
+  return { t, start: () => setActive(true), pause: () => setActive(false), reset: () => { setT(0); setActive(false) } }
+}
+
+function SlideImages({ images }) {
+  if (!images || !images.length) return null
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '0.75rem' }}>
+      {images.map((img, i) => (
+        <img key={i} src={`/assets/${img}`} alt={`slide-${i+1}`}
+          onError={e => { e.target.style.display='none' }}
+          style={{ maxWidth: '100%', borderRadius: '8px', border: '1px solid #2a2a3a', display: 'block' }} />
+      ))}
+    </div>
+  )
 }
 
 export default function Lec3Part2Quiz() {
   const [screen, setScreen] = useState('welcome')
-  const [idx, setIdx] = useState(0)
+  const [qIdx, setQIdx] = useState(0)
+  const [answers, setAnswers] = useState(Array(quizData.length).fill(null))
   const [selected, setSelected] = useState(null)
-  const [revealed, setRevealed] = useState(false)
-  const [score, setScore] = useState(0)
-  const [history, setHistory] = useState([])
-  const timer = useTimer()
-  const q = quizData[idx]
-  const ACCENT = '#38bdf8'
-  const card = { background: '#1e293b', borderRadius: '12px', padding: '1.5rem', marginBottom: '1rem', border: '1px solid #334155' }
+  const [showExp, setShowExp] = useState(false)
+  const [reviewMode, setReviewMode] = useState(false)
+  const [expTab, setExpTab] = useState('explanation')
+  const { t, start, pause, reset: resetTimer } = useTimer()
+  const q = quizData[qIdx]
+
+  const C = {
+    bg: '#0a0a0f',
+    surface: '#111118',
+    border: '#2a2a3a',
+    accent: '#38bdf8',
+    text: '#e2e8f0',
+    muted: '#94a3b8',
+    ok: '#10b981',
+    err: '#ef4444',
+    warn: '#f59e0b',
+  }
+
+  const base = { fontFamily: 'system-ui,sans-serif', margin: 0, padding: 0, minHeight: '100vh',
+    background: `linear-gradient(135deg, ${C.bg} 0%, #0f0f1a 100%)`, color: C.text,
+    display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }
+  const box = { maxWidth: '900px', width: '100%', background: C.surface, borderRadius: '16px',
+    border: `1px solid ${C.border}`, padding: '2.5rem', boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }
+  const btn = (extra={}) => ({ padding: '0.75rem 1.5rem', borderRadius: '8px', border: 'none',
+    background: C.accent, color: C.text, fontSize: '1rem', fontWeight: '600', cursor: 'pointer',
+    display: 'inline-flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.2s', ...extra })
+  const tag = (color=C.accent) => ({ padding: '0.25rem 0.75rem', borderRadius: '6px',
+    background: `${color}22`, color, fontSize: '0.8rem', fontWeight: '600' })
+
+  useEffect(() => { if (screen==='quiz' && !showExp && !reviewMode) start(); else pause() }, [screen,showExp,reviewMode,qIdx])
+
+  const isCorrect = useCallback((question, ans) => {
+    if (ans === null || ans === undefined) return false
+    return ans === question.answer
+  }, [])
+
+  const handleSubmit = () => {
+    const a = [...answers]; a[qIdx] = selected; setAnswers(a); setShowExp(true); setExpTab('explanation')
+  }
+  const handleNext = () => {
+    if (qIdx < quizData.length - 1) { setQIdx(q => q+1); setSelected(null); setShowExp(false) }
+    else { setScreen('results'); pause() }
+  }
+  const handlePrev = () => {
+    if (qIdx > 0) { setQIdx(q => q-1); setSelected(null); setShowExp(false) }
+  }
+  const handleRestart = () => {
+    setScreen('welcome'); setQIdx(0); setAnswers(Array(quizData.length).fill(null))
+    setSelected(null); setShowExp(false); setReviewMode(false); resetTimer()
+  }
+  const handleReview = () => { setScreen('quiz'); setQIdx(0); setShowExp(false); setReviewMode(true) }
+
+  const score = answers.filter((a,i) => isCorrect(quizData[i],a)).length
+  const pct = Math.round(score / quizData.length * 100)
 
   if (screen === 'welcome') return (
-    <div style={{ minHeight: '100vh', background: '#0f172a', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', fontFamily: 'system-ui,sans-serif' }}>
-      <Sigma size={48} color={ACCENT} style={{ marginBottom: '1.5rem' }} />
-      <h1 style={{ color: '#f1f5f9', fontSize: '1.75rem', fontWeight: 700, textAlign: 'center', marginBottom: '0.5rem' }}>Lecture 3: Vector Calculus — Part 2</h1>
-      <p style={{ color: '#94a3b8', marginBottom: '0.25rem' }}>Gradient, Divergence, Curl, Laplacian, Hessian</p>
-      <p style={{ color: '#64748b', fontSize: '0.8rem', marginBottom: '0.25rem' }}>Q33–Q64 · 32 questions</p>
-      <p style={{ color: '#64748b', fontSize: '0.8rem', marginBottom: '1.5rem' }}>
-        <a href="/lec3/1" style={{ color: "#64748b" }}>Part 1</a> · <a href="/lec3/2" style={{ color: ACCENT }}>Part 2</a> · <a href="/lec3/3" style={{ color: "#64748b" }}>Part 3</a>
-      </p>
-      <p style={{ color: ACCENT, fontWeight: 600, fontSize: '0.85rem', marginBottom: '2rem', fontFamily: 'monospace' }}>lectures/cg-03-lecture-quiz.md</p>
-      <button onClick={() => { setScreen('quiz'); timer.start() }}
-        style={{ background: ACCENT, color: '#0f172a', fontWeight: 700, padding: '0.75rem 2.5rem', borderRadius: '8px', border: 'none', cursor: 'pointer', fontSize: '1rem', marginBottom: '1rem' }}>
-        Start Quiz
-      </button>
-      <a href='/' style={{ color: '#64748b', fontSize: '0.875rem' }}>← All quizzes</a>
+    <div style={base}>
+      <div style={box}>
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <Sigma size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 3: Vector Calculus — Part 2</h1>
+          <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Gradient, Divergence, Curl, Laplacian, Hessian</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-03-lecture-quiz.md</p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
+            <a key={1} href="/lec3/1" style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
+          <a key={2} href="/lec3/2" style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
+          <a key={3} href="/lec3/3" style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
+          </div>
+          <p style={{ color: C.accent, fontWeight: 600 }}>Q33–Q64 · 32 questions</p>
+        </div>
+
+        <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Questions</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Parts</div></div>
+          </div>
+        </div>
+
+        <button style={btn({ width: '100%', justifyContent: 'center', fontSize: '1.1rem', padding: '1rem' })}
+          onClick={() => { setScreen('quiz'); start() }}>
+          <Sigma size={20} /> Start Quiz
+        </button>
+        <a href='/' style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
+      </div>
     </div>
   )
 
-  if (screen === 'results') {
-    const pct = Math.round(score / quizData.length * 100)
-    return (
-      <div style={{ minHeight: '100vh', background: '#0f172a', padding: '2rem', fontFamily: 'system-ui,sans-serif', color: '#f1f5f9' }}>
-        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}><Sigma size={20} color={ACCENT} /><h1 style={{ color: ACCENT, fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>Lecture 3: Vector Calculus — Part 2 — Results</h1></div>
-          <p style={{ color: '#64748b', fontSize: '0.8rem', marginBottom: '1.5rem' }}>Time: {timer.fmt(timer.elapsed)}</p>
-          <div style={{ ...card, textAlign: 'center', marginBottom: '2rem' }}>
-            <div style={{ fontSize: '3rem', fontWeight: 800, color: ACCENT }}>{pct}%</div>
-            <div style={{ color: '#94a3b8', marginTop: '0.5rem' }}>{score} / {quizData.length} correct</div>
-          </div>
-          {history.map((chosen, i) => {
-            const qq = quizData[i]
-            const ok = chosen === qq.answer
-            return (
-              <div key={i} style={{ ...card, borderColor: ok ? '#22c55e55' : '#ef444455', marginBottom: '1.25rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
-                  <span style={{ color: '#64748b', fontSize: '0.78rem', fontFamily: 'monospace' }}>Q{qq.num} [{qq.timestamp}] · {qq.source}</span>
-                  <span style={{ color: ok ? '#22c55e' : '#ef4444', fontSize: '1.1rem' }}>{ok ? '✓' : '✗'}</span>
-                </div>
-                <div style={{ fontWeight: 600, marginBottom: '0.75rem', lineHeight: 1.5 }}>{qq.question}</div>
-                <div style={{ color: ok ? '#22c55e' : '#ef4444', fontSize: '0.9rem' }}>
-                  Your answer: {qq.options[chosen]}
-                </div>
-                {!ok && <div style={{ color: '#22c55e', fontSize: '0.9rem', marginTop: '0.25rem' }}>Correct: {qq.options[qq.answer]}</div>}
-                {qq.explanation ? (
-                  <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid #334155' }}>
-                    <div style={{ color: ACCENT, fontSize: '0.78rem', fontWeight: 700, marginBottom: '0.4rem' }}>EXPLANATION</div>
-                    <div style={{ color: '#cbd5e1', fontSize: '0.9rem', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>{qq.explanation}</div>
-                  </div>
-                ) : null}
-                <SlideImages images={qq.images} />
-                {qq.tags.length > 0 && <div style={{ marginTop: '0.5rem', display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                  {qq.tags.map((t, ti) => <span key={ti} style={{ background: `${ACCENT}22`, color: ACCENT, fontSize: '0.7rem', padding: '0.15rem 0.5rem', borderRadius: '99px' }}>{t}</span>)}
-                </div>}
-              </div>
-            )
-          })}
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1.5rem' }}>
-            <button onClick={() => { setScreen('welcome'); setIdx(0); setScore(0); setHistory([]); timer.reset() }}
-              style={{ background: ACCENT, color: '#0f172a', fontWeight: 700, padding: '0.75rem 2rem', borderRadius: '8px', border: 'none', cursor: 'pointer' }}>
-              Restart
-            </button>
-            <a href='/' style={{ display: 'flex', alignItems: 'center', color: '#64748b', fontSize: '0.875rem' }}>← All quizzes</a>
-          </div>
+  if (screen === 'results') return (
+    <div style={base}>
+      <div style={box}>
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <Trophy size={64} color={pct >= 70 ? C.ok : pct >= 50 ? C.warn : C.err} />
+          <h1 style={{ fontSize: '2rem', fontWeight: 700, marginTop: '1rem', marginBottom: '0.5rem' }}>Quiz Complete!</h1>
+          <p style={{ color: C.muted }}><Clock size={16} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.4rem' }} />Time: {formatTime(t)}</p>
         </div>
+        <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
+          <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / {quizData.length} correct</div>
+          <div style={{ color: C.muted }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
+        </div>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button style={btn({ flex: 1, justifyContent: 'center' })} onClick={handleReview}>
+            <BookOpen size={20} /> Review Answers
+          </button>
+          <button style={btn({ flex: 1, justifyContent: 'center' })} onClick={handleRestart}>
+            <RefreshCw size={20} /> Restart
+          </button>
+        </div>
+        <a href='/' style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
       </div>
-    )
-  }
-
-  const handleSelect = (i) => { if (!revealed) setSelected(i) }
-  const handleReveal = () => { if (selected !== null) { setRevealed(true); if (selected === q.answer) setScore(s => s + 1) } }
-  const handleNext = () => {
-    setHistory(h => [...h, selected])
-    if (idx + 1 >= quizData.length) { timer.stop(); setScreen('results') }
-    else { setIdx(i => i + 1); setSelected(null); setRevealed(false) }
-  }
+    </div>
+  )
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f172a', padding: '1.5rem', fontFamily: 'system-ui,sans-serif', color: '#f1f5f9' }}>
-      <div style={{ maxWidth: '860px', margin: '0 auto' }}>
+    <div style={base}>
+      <div style={box}>
 
         {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Sigma size={18} color={ACCENT} /><span style={{ color: ACCENT, fontWeight: 600, fontSize: '0.95rem' }}>Lecture 3: Vector Calculus — Part 2</span></div>
-          <div style={{ display: 'flex', gap: '1.25rem', color: '#94a3b8', fontSize: '0.85rem' }}>
-            <span>{timer.fmt(timer.elapsed)}</span>
-            <span>{idx+1}/32</span>
-            <span style={{ color: ACCENT }}>✓ {score}</span>
+        <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Sigma size={18} color={C.accent} />
+              <span style={{ color: C.accent, fontWeight: 600 }}>Lecture 3: Vector Calculus — Part 2</span>
+            </div>
+            <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
+              <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
+              <span>{qIdx+1}/32</span>
+              <span style={{ color: C.accent }}>✓ {score}</span>
+            </div>
           </div>
-        </div>
-
-        {/* Progress bar */}
-        <div style={{ background: '#1e293b', borderRadius: '99px', height: '5px', marginBottom: '1.25rem' }}>
-          <div style={{ background: ACCENT, height: '100%', borderRadius: '99px', width: `${Math.round((idx+1)/32*100)}%`, transition: 'width 0.3s' }} />
+          <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/32*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+          </div>
         </div>
 
         {/* Question */}
-        <div style={card}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-            <span style={{ color: '#64748b', fontSize: '0.78rem', fontFamily: 'monospace' }}>Q{q.num} · [{q.timestamp}]</span>
-            <span style={{ color: '#475569', fontSize: '0.72rem', fontFamily: 'monospace' }}>lectures/cg-03-lecture-quiz.md</span>
+        <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem', alignItems: 'center' }}>
+            <span style={tag()}>Q{q.id}</span>
+            <span style={tag()}>[{q.timestamp}]</span>
+            <span style={{ color: '#475569', fontSize: '0.72rem', fontFamily: 'monospace', marginLeft: 'auto' }}>{q.source}</span>
           </div>
-          <div style={{ fontSize: '1.05rem', fontWeight: 600, lineHeight: 1.65, marginBottom: '1.25rem' }}>{q.question}</div>
-
-          {/* Slide images shown before answering if present */}
-          {!revealed && <SlideImages images={q.images} />}
-
-          {/* Options */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-            {q.options.map((opt, i) => {
-              let bg = '#0f172a', border = '#334155', color = '#cbd5e1'
-              if (selected === i && !revealed) { bg = `${ACCENT}22`; border = ACCENT; color = '#f1f5f9' }
-              if (revealed && i === q.answer) { bg = '#22c55e1a'; border = '#22c55e'; color = '#22c55e' }
-              if (revealed && selected === i && i !== q.answer) { bg = '#ef44441a'; border = '#ef4444'; color = '#ef4444' }
-              return (
-                <button key={i} onClick={() => handleSelect(i)} style={{ background: bg, border: `1px solid ${border}`, color, padding: '0.75rem 1rem', borderRadius: '8px', textAlign: 'left', cursor: revealed ? 'default' : 'pointer', fontSize: '0.95rem', lineHeight: 1.5, transition: 'all 0.15s' }}>
-                  <span style={{ fontWeight: 700, marginRight: '0.5rem' }}>{['A','B','C','D'][i]}.</span>{opt}
-                </button>
-              )
-            })}
-          </div>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 600, lineHeight: 1.55, marginBottom: '1.25rem' }}>{q.question}</h2>
         </div>
 
-        {/* Explanation card (flip side) */}
-        {revealed && (
-          <div style={{ ...card, borderColor: `${ACCENT}44` }}>
-            <div style={{ color: ACCENT, fontWeight: 700, fontSize: '0.8rem', marginBottom: '0.75rem', letterSpacing: '0.05em' }}>EXPLANATION</div>
-            {q.explanation ? (
-              <div style={{ color: '#cbd5e1', lineHeight: 1.75, whiteSpace: 'pre-wrap', marginBottom: '0.75rem' }}>{q.explanation}</div>
-            ) : <div style={{ color: '#475569', fontSize: '0.875rem' }}>No explanation provided.</div>}
-            <SlideImages images={q.images} />
-            {q.tags.length > 0 && (
-              <div style={{ marginTop: '0.75rem', display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                {q.tags.map((t, ti) => (
-                  <span key={ti} style={{ background: `${ACCENT}22`, color: ACCENT, fontSize: '0.7rem', padding: '0.15rem 0.5rem', borderRadius: '99px' }}>{t}</span>
-                ))}
+        {/* Options */}
+        <div style={{ marginBottom: '1.5rem' }}>
+          {q.options.map((opt, i) => {
+            let borderColor = C.border, bgColor = C.surface
+            if (showExp || reviewMode) {
+              if (i === q.answer) { borderColor = C.ok; bgColor = `${C.ok}15` }
+              else if (selected === i) { borderColor = C.err; bgColor = `${C.err}15` }
+            } else if (selected === i) {
+              borderColor = C.accent; bgColor = `${C.accent}15`
+            }
+            return (
+              <div key={i} onClick={() => !(showExp||reviewMode) && setSelected(i)}
+                style={{ padding: '1rem', borderRadius: '8px', border: `2px solid ${borderColor}`,
+                  background: bgColor, cursor: (showExp||reviewMode)?'default':'pointer',
+                  transition: 'all 0.2s', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                {(showExp||reviewMode) && i===q.answer && <CheckCircle size={18} color={C.ok} />}
+                {(showExp||reviewMode) && selected===i && i!==q.answer && <XCircle size={18} color={C.err} />}
+                <span style={{ fontWeight: 700, color: C.accent, minWidth: '1.2rem' }}>{['A','B','C','D'][i]}.</span>
+                <span>{opt}</span>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Explanation (shown after submit) */}
+        {(showExp || reviewMode) && (
+          <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '1.5rem', border: `1px solid ${C.border}` }}>
+            {/* Tab switcher */}
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+              {['explanation','images','tags'].map(tab => (
+                <button key={tab} onClick={() => setExpTab(tab)}
+                  style={{ padding: '0.3rem 0.8rem', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600,
+                    background: expTab===tab ? C.accent : C.border, color: expTab===tab ? '#0a0a0f' : C.muted }}>
+                  {tab === 'explanation' ? '💡 Explanation' : tab === 'images' ? '🖼 Slides' : '🔗 Tags'}
+                </button>
+              ))}
+            </div>
+            {expTab === 'explanation' && (
+              q.explanation
+                ? <p style={{ lineHeight: 1.75, color: C.muted, whiteSpace: 'pre-wrap', margin: 0 }}>{q.explanation}</p>
+                : <p style={{ color: '#475569', margin: 0 }}>No explanation provided.</p>
+            )}
+            {expTab === 'images' && <SlideImages images={q.images} />}
+            {expTab === 'tags' && (
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                {q.tags.length > 0
+                  ? q.tags.map((t,i) => <span key={i} style={tag()}>{t}</span>)
+                  : <span style={{ color: '#475569' }}>No tags.</span>}
               </div>
             )}
           </div>
         )}
 
-        {/* Action buttons */}
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          {!revealed && (
-            <button onClick={handleReveal} disabled={selected === null}
-              style={{ background: selected !== null ? ACCENT : '#1e293b', color: selected !== null ? '#0f172a' : '#475569', fontWeight: 700, padding: '0.75rem 2rem', borderRadius: '8px', border: `1px solid ${selected !== null ? ACCENT : '#334155'}`, cursor: selected !== null ? 'pointer' : 'not-allowed', transition: 'all 0.15s' }}>
-              Check Answer
+        {/* Navigation */}
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button onClick={handlePrev} disabled={qIdx===0}
+            style={btn({ background: C.border, opacity: qIdx===0?0.4:1, cursor: qIdx===0?'not-allowed':'pointer' })}>
+            <ChevronLeft size={20} /> Prev
+          </button>
+          {!(showExp||reviewMode) && (
+            <button onClick={handleSubmit} disabled={selected===null}
+              style={btn({ flex:1, justifyContent:'center', opacity: selected===null?0.4:1, cursor: selected===null?'not-allowed':'pointer' })}>
+              Submit Answer
             </button>
           )}
-          {revealed && (
-            <button onClick={handleNext}
-              style={{ background: ACCENT, color: '#0f172a', fontWeight: 700, padding: '0.75rem 2rem', borderRadius: '8px', border: 'none', cursor: 'pointer' }}>
-              {idx + 1 >= 32 ? 'See Results →' : 'Next →'}
+          {(showExp||reviewMode) && (
+            <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
+              {qIdx < 32-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
-          <a href='/' style={{ display: 'flex', alignItems: 'center', color: '#475569', fontSize: '0.875rem' }}>← All quizzes</a>
         </div>
       </div>
     </div>

@@ -1,38 +1,25 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
-import { Monitor } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
+import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Monitor } from 'lucide-react'
 
-// Source: lectures/cg-04-lecture-quiz.md  (symlinked from Logseq pages)
-// Lecture 4: Rasterization & Sampling — Part 2 — Q33–Q64 (32 questions)
-// Re-generate: python3 scripts/gen_quiz.py lectures/cg-04-lecture-quiz.md 4
-
-function SlideImages({ images }) {
-  if (!images || images.length === 0) return null
-  return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', margin: '0.75rem 0' }}>
-      {images.map((img, i) => (
-        <img key={i} src={`/assets/${img}`} alt={`slide-${i+1}`}
-          onError={e => { e.target.style.display = 'none' }}
-          style={{ maxWidth: '100%', borderRadius: '8px', border: '1px solid #334155', display: 'block' }} />
-      ))}
-    </div>
-  )
-}
+// Source: lectures/cg-04-lecture-quiz.md  (symlinked → Logseq pages)
+// Lecture 4: Rasterization & Sampling — Part 2 · Q33–Q64 · 32 questions
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-04-lecture-quiz.md 4
 
 const quizData = [
   {
-    num: 33,
+    id: 33,
     timestamp: `35:34`,
     question: `How does the lecture suggest we can understand signals like audio?`,
     options: [`As a sequence of amplitudes over time`, `As a superposition or sum of different frequencies`, `As a set of discrete events`, `As a series of waveforms`],
     answer: 1,
     explanation: `At [35:34], the lecturer states: "A 1D signal like audio can be expressed as a superposition or a sum of different frequencies."`,
     images: ["image_1771998186382_0.png"],
-    tags: [],
+    tags: ["Reconstruction"],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 34,
+    id: 34,
     timestamp: `38:30`,
     question: `In the pitch-rising experiment, what unexpected phenomenon was observed?`,
     options: [`The audio became distorted`, `The frequency remained constant`, `The pitch appeared to rise and fall repeatedly`, `The sound became inaudible`],
@@ -43,7 +30,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 35,
+    id: 35,
     timestamp: `38:50`,
     question: `What explains the unexpected result in the pitch experiment?`,
     options: [`A bug in the audio playback system`, `Interference between multiple sound waves`, `Undersampling of the high-frequency signal`, `Incorrect frequency generation`],
@@ -54,7 +41,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 36,
+    id: 36,
     timestamp: `40:22`,
     question: `How does the lecturer define aliasing in the audio example?`,
     options: [`When audio frequencies exceed human hearing range`, `When high frequencies masquerade as low frequencies after reconstruction`, `When digital audio cannot reproduce analog sounds`, `When sound becomes too distorted to recognize`],
@@ -65,7 +52,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 37,
+    id: 37,
     timestamp: `41:44`,
     question: `In the image frequency domain representation shown in the lecture, where are the low frequencies located?`,
     options: [`At the edges of the representation`, `At the dead center`, `Uniformly distributed throughout`, `At the corners only`],
@@ -76,7 +63,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 38,
+    id: 38,
     timestamp: `44:10`,
     question: `What function was used to create the synthetic aliasing example in the lecture?`,
     options: [`sin(x) + sin(y)`, `sin(x² + y²)`, `sin(x) * sin(y)`, `cos(x² - y²)`],
@@ -87,7 +74,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 39,
+    id: 39,
     timestamp: `45:32`,
     question: `What real-world example of temporal aliasing is described in the lecture?`,
     options: [`Motion blur in photographs`, `Spinning wagon wheels appearing to rotate backwards`, `Lens flare effects`, `Image pixelation when zooming`],
@@ -98,7 +85,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 40,
+    id: 40,
     timestamp: `46:41`,
     question: `What theorem establishes when a signal can be perfectly reconstructed from samples?`,
     options: [`The Fourier Transform Theorem`, `The Sampling Law`, `The Nyquist-Shannon Theorem`, `The Signal Processing Theorem`],
@@ -109,73 +96,73 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 41,
+    id: 41,
     timestamp: `47:36`,
     question: `According to the Nyquist-Shannon theorem, what condition allows perfect signal reconstruction?`,
     options: [`The signal must be continuous`, `The signal must be sampled at least twice as frequently as its highest frequency`, `The signal must have limited amplitude`, `The signal must be perfectly periodic`],
     answer: 1,
     explanation: `At [47:36], the lecturer explains: "If your signal happens to be band limited then it can be perfectly reconstructed as long as you take samples at a rate that's twice as frequent as the highest frequency in the signal."`,
     images: ["image_1771998665800_0.png"],
-    tags: [],
+    tags: ["Nyquist"],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 42,
+    id: 42,
     timestamp: `47:56`,
     question: `What filter is used for perfect reconstruction according to the Nyquist-Shannon theorem?`,
     options: [`Gaussian filter`, `Box filter`, `Sync filter`, `Triangle filter`],
     answer: 2,
     explanation: `At [47:56], the lecturer states: "Once you have those samples you can reconstruct exactly the original signal by using something called a sync filter."`,
     images: ["image_1771998802412_0.png"],
-    tags: [],
+    tags: ["Filter"],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 43,
+    id: 43,
     timestamp: `48:38`,
     question: `Why can't most graphics signals be perfectly reconstructed using the Nyquist-Shannon approach?`,
     options: [`The sampling rate is too low`, `The signals aren't band-limited due to features like hard edges`, `The reconstruction filters are too complex`, `There's too much noise in the signals`],
     answer: 1,
     explanation: `At [48:57], the lecturer explains: "Here's our triangle our coverage function how do I express something like a hard edge as a sum of sinusoids? Well actually it turns out that what I have to do is add an infinite series of higher and higher and higher frequencies until I can eventually approximate something like a piecewise constant function."`,
     images: ["image_1771998941026_0.png"],
-    tags: [],
+    tags: ["Limitation"],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 44,
+    id: 44,
     timestamp: `50:39`,
     question: `What common aliasing artifact appears in static images with straight lines?`,
     options: [`Moire patterns`, `Jaggies (jagged edges)`, `Banding`, `Pixel bleeding`],
     answer: 1,
     explanation: `At [50:39], the lecturer describes: "Really really common artifacts in graphics or you have let's say jaggies in a in a static image if I draw a line segment it has these jagged edges."`,
     images: ["image_1771998975218_0.png"],
-    tags: [],
+    tags: ["Aliasing"],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 45,
+    id: 45,
     timestamp: `51:39`,
     question: `What is the ideal goal when trying to reduce aliasing in pixel coverage?`,
     options: [`To remove all high frequencies from the scene`, `To match the total light in a pixel with the total light in the original signal`, `To use the minimum number of samples possible`, `To randomize the sampling pattern`],
     answer: 1,
     explanation: `At [51:39], the lecturer explains: "If we think of a pixel as a little square of light then what we want is that the total light emitted from that pixel to be the same as the total light that we had in our original continuous signal in other words we want to integrate the input signal over the pixel to get the sample value."`,
     images: ["image_1771999074308_0.png"],
-    tags: [],
+    tags: ["Light"],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 46,
+    id: 46,
     timestamp: `53:02`,
     question: `What anti-aliasing technique is described in the lecture?`,
     options: [`Adaptive sampling`, `Super sampling`, `Anisotropic filtering`, `Gaussian blur`],
     answer: 1,
     explanation: `At [53:02], the lecturer explains: "So what we're really going to do is use a technique called super sampling rather than just taking one sample of the signal the coverage signal at each pixel we're going to take several samples."`,
     images: ["image_1771999129670_0.png"],
-    tags: [],
+    tags: ["AntiAliasing", "Supersampling"],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 47,
+    id: 47,
     timestamp: `53:54`,
     question: `How are the multiple samples used in super sampling anti-aliasing?`,
     options: [`The brightest sample is selected`, `The samples are averaged to determine the pixel's coverage`, `The median value is used`, `The samples are combined using a weighted formula`],
@@ -186,7 +173,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 48,
+    id: 48,
     timestamp: `55:16`,
     question: `What improvement was observed when increasing from 4 samples per pixel to 16 samples per pixel?`,
     options: [`The image became perfectly aliasing-free`, `There was no visible difference`, `The image became smoother but still had some artifacts`, `The image became darker`],
@@ -197,7 +184,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 49,
+    id: 49,
     timestamp: `55:42`,
     question: `Even with 1024 samples per pixel, what was observed about the anti-aliasing result?`,
     options: [`It became perfect with no visible artifacts`, `It still wasn't perfect`, `It became too blurry`, `It introduced new artifacts`],
@@ -210,29 +197,29 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 50,
+    id: 50,
     timestamp: `55:54`,
     question: `What special case for perfect anti-aliasing is mentioned in the lecture?`,
     options: [`Straight line segments`, `Checkerboard patterns`, `Circular shapes`, `Uniform color regions`],
     answer: 1,
     explanation: `At [55:54], the lecturer notes: "In this very very special case of the checkerboard there happens to be an exact solution you can analytically integrate the checkerboard over a pixel and get this beautifully smooth image."`,
     images: ["image_1771999301034_0.png"],
-    tags: [],
+    tags: ["Analysis", "Integration"],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 51,
+    id: 51,
     timestamp: `57:10`,
     question: `What is the most basic operation needed for triangle rasterization?`,
     options: [`Computing triangle area`, `Testing if a point is inside a triangle`, `Finding the closest point on a triangle`, `Calculating triangle perimeter`],
     answer: 1,
     explanation: `At [57:10], the lecturer explains: "The most basic thing that we need to do is say okay we have this triangle we have this pixel grid we want to know which pixels are covered by the triangle we can just break this down into an atomic query which is how do we check if a given point q is inside a triangle with vertices p0 p1 p2."`,
     images: ["image_1771999356654_0.png"],
-    tags: [],
+    tags: ["Algorithm"],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 52,
+    id: 52,
     timestamp: `58:12`,
     question: `How is the point-in-triangle test typically implemented?`,
     options: [`Using barycentric coordinates`, `Computing distance to each edge`, `Testing if the point is inside the three half-planes defined by the edges`, `Calculating angle sums`],
@@ -243,29 +230,29 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 53,
+    id: 53,
     timestamp: `59:36`,
     question: `What optimization is mentioned for incremental point-in-triangle testing?`,
     options: [`Using graphics hardware acceleration`, `Reusing calculations between adjacent pixels`, `Pre-computing lookup tables`, `Approximating triangles with rectangles`],
     answer: 1,
     explanation: `At [59:36], the lecturer describes: "I can make this a little bit faster by noticing that the half plane check looks very similar for nearby points so I can save myself some arithmetic by not going through these points in a random order but by marching let's say along rows of the triangle and incrementally updating my calculations."`,
     images: ["image_1771999404785_0.png"],
-    tags: [],
+    tags: ["optimization"],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 54,
+    id: 54,
     timestamp: `1:00:04`,
     question: `What does the lecturer identify as the primary bottleneck in modern hardware?`,
     options: [`Arithmetic computations`, `Memory access`, `Cache size`, `Power consumption`],
     answer: 1,
     explanation: `At [1:00:04], the lecturer states: "In real modern hardware the bottleneck is typically not doing arithmetic doing math but the bottleneck is reading or writing to memory."`,
     images: ["image_1771999436931_0.png"],
-    tags: [],
+    tags: ["BottleNeck"],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 55,
+    id: 55,
     timestamp: `1:00:46`,
     question: `What approach does modern hardware take to triangle rasterization?`,
     options: [`Sequential processing of each pixel`, `Testing all samples in the triangle's bounding box in parallel`, `Using a lookup table for common triangle shapes`, `Processing one scan line at a time`],
@@ -276,7 +263,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 56,
+    id: 56,
     timestamp: `1:02:09`,
     question: `What shape of triangle was identified as problematic for the parallel bounding box approach?`,
     options: [`Very small triangles`, `Triangles with obtuse angles`, `Long, skinny triangles`, `Triangles with curved edges`],
@@ -287,18 +274,18 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 57,
+    id: 57,
     timestamp: `1:02:40`,
     question: `What optimization technique tests larger blocks before individual pixels?`,
     options: [`Hierarchical decomposition`, `Scan conversion`, `Block-based optimization`, `Stochastic sampling`],
     answer: 2,
     explanation: `At [1:02:33], the lecturer introduces: "I can take kind of a hybrid or course define approach and first ask if large blocks of pixels intersect the triangle so before testing any individual pixel I draw some kind of medium size square."`,
     images: ["image_1771999609505_0.png"],
-    tags: [],
+    tags: ["CG-Lecture-Question", "optimization"],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 58,
+    id: 58,
     timestamp: `1:03:00`,
     question: `What is the benefit of the early-out test with blocks?`,
     options: [`It improves cache coherence`, `It allows hardware acceleration`, `It avoids unnecessary work on pixels not covered by the triangle`, `It simplifies the triangle intersection test`],
@@ -309,7 +296,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 59,
+    id: 59,
     timestamp: `1:04:49`,
     question: `What important graphics concept is introduced with the recursive block testing approach?`,
     options: [`Dynamic programming`, `Hierarchical strategy`, `Backtracking`, `Divide and conquer`],
@@ -320,7 +307,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 60,
+    id: 60,
     timestamp: `1:06:16`,
     question: `Why isn't hierarchical rasterization commonly used in real graphics hardware?`,
     options: [`It produces visual artifacts`, `It requires too much memory`, `The overhead of traversal is too high`, `It's patented and requires licensing`],
@@ -331,7 +318,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 61,
+    id: 61,
     timestamp: `1:07:20`,
     question: `What is one of the key frameworks mentioned in the summary for understanding graphics problems?`,
     options: [`Object-oriented programming`, `Sampling and reconstruction`, `Linear algebra`, `Calculus of variations`],
@@ -342,7 +329,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 62,
+    id: 62,
     timestamp: `1:08:27`,
     question: `What does the lecturer describe as the basic strategy for reducing aliasing in rasterization?`,
     options: [`Blurring the image`, `Using super sampling`, `Decreasing the resolution`, `Using different primitive shapes`],
@@ -353,7 +340,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 63,
+    id: 63,
     timestamp: `1:08:57`,
     question: `According to the summary, what is the "basic building block" for the graphics pipeline?`,
     options: [`Pixel shading`, `Vertex transformation`, `Triangle rasterization`, `Texture mapping`],
@@ -364,7 +351,7 @@ const quizData = [
     source: `lectures/cg-04-lecture-quiz.md`,
   },
   {
-    num: 64,
+    id: 64,
     timestamp: `1:09:51`,
     question: `What topic will be covered in the next lecture according to the professor?`,
     options: [`Texture mapping`, `Animation`, `3D transformations`, `Lighting models`],
@@ -379,183 +366,252 @@ const quizData = [
   },
 ]
 
-function useTimer() {
-  const [elapsed, setElapsed] = useState(0)
-  const ref = useRef(null)
-  const start = () => { ref.current = setInterval(() => setElapsed(e => e + 1), 1000) }
-  const stop = () => clearInterval(ref.current)
-  const reset = () => { clearInterval(ref.current); setElapsed(0) }
-  const fmt = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`
-  return { elapsed, fmt, start, stop, reset }
+const formatTime = (s) => `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`
+
+const useTimer = () => {
+  const [t, setT] = useState(0)
+  const [active, setActive] = useState(false)
+  useEffect(() => {
+    if (!active) return
+    const id = setInterval(() => setT(x => x+1), 1000)
+    return () => clearInterval(id)
+  }, [active])
+  return { t, start: () => setActive(true), pause: () => setActive(false), reset: () => { setT(0); setActive(false) } }
+}
+
+function SlideImages({ images }) {
+  if (!images || !images.length) return null
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '0.75rem' }}>
+      {images.map((img, i) => (
+        <img key={i} src={`/assets/${img}`} alt={`slide-${i+1}`}
+          onError={e => { e.target.style.display='none' }}
+          style={{ maxWidth: '100%', borderRadius: '8px', border: '1px solid #2a2a3a', display: 'block' }} />
+      ))}
+    </div>
+  )
 }
 
 export default function Lec4Part2Quiz() {
   const [screen, setScreen] = useState('welcome')
-  const [idx, setIdx] = useState(0)
+  const [qIdx, setQIdx] = useState(0)
+  const [answers, setAnswers] = useState(Array(quizData.length).fill(null))
   const [selected, setSelected] = useState(null)
-  const [revealed, setRevealed] = useState(false)
-  const [score, setScore] = useState(0)
-  const [history, setHistory] = useState([])
-  const timer = useTimer()
-  const q = quizData[idx]
-  const ACCENT = '#34d399'
-  const card = { background: '#1e293b', borderRadius: '12px', padding: '1.5rem', marginBottom: '1rem', border: '1px solid #334155' }
+  const [showExp, setShowExp] = useState(false)
+  const [reviewMode, setReviewMode] = useState(false)
+  const [expTab, setExpTab] = useState('explanation')
+  const { t, start, pause, reset: resetTimer } = useTimer()
+  const q = quizData[qIdx]
+
+  const C = {
+    bg: '#0a0a0f',
+    surface: '#111118',
+    border: '#2a2a3a',
+    accent: '#34d399',
+    text: '#e2e8f0',
+    muted: '#94a3b8',
+    ok: '#10b981',
+    err: '#ef4444',
+    warn: '#f59e0b',
+  }
+
+  const base = { fontFamily: 'system-ui,sans-serif', margin: 0, padding: 0, minHeight: '100vh',
+    background: `linear-gradient(135deg, ${C.bg} 0%, #0f0f1a 100%)`, color: C.text,
+    display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }
+  const box = { maxWidth: '900px', width: '100%', background: C.surface, borderRadius: '16px',
+    border: `1px solid ${C.border}`, padding: '2.5rem', boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }
+  const btn = (extra={}) => ({ padding: '0.75rem 1.5rem', borderRadius: '8px', border: 'none',
+    background: C.accent, color: C.text, fontSize: '1rem', fontWeight: '600', cursor: 'pointer',
+    display: 'inline-flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.2s', ...extra })
+  const tag = (color=C.accent) => ({ padding: '0.25rem 0.75rem', borderRadius: '6px',
+    background: `${color}22`, color, fontSize: '0.8rem', fontWeight: '600' })
+
+  useEffect(() => { if (screen==='quiz' && !showExp && !reviewMode) start(); else pause() }, [screen,showExp,reviewMode,qIdx])
+
+  const isCorrect = useCallback((question, ans) => {
+    if (ans === null || ans === undefined) return false
+    return ans === question.answer
+  }, [])
+
+  const handleSubmit = () => {
+    const a = [...answers]; a[qIdx] = selected; setAnswers(a); setShowExp(true); setExpTab('explanation')
+  }
+  const handleNext = () => {
+    if (qIdx < quizData.length - 1) { setQIdx(q => q+1); setSelected(null); setShowExp(false) }
+    else { setScreen('results'); pause() }
+  }
+  const handlePrev = () => {
+    if (qIdx > 0) { setQIdx(q => q-1); setSelected(null); setShowExp(false) }
+  }
+  const handleRestart = () => {
+    setScreen('welcome'); setQIdx(0); setAnswers(Array(quizData.length).fill(null))
+    setSelected(null); setShowExp(false); setReviewMode(false); resetTimer()
+  }
+  const handleReview = () => { setScreen('quiz'); setQIdx(0); setShowExp(false); setReviewMode(true) }
+
+  const score = answers.filter((a,i) => isCorrect(quizData[i],a)).length
+  const pct = Math.round(score / quizData.length * 100)
 
   if (screen === 'welcome') return (
-    <div style={{ minHeight: '100vh', background: '#0f172a', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', fontFamily: 'system-ui,sans-serif' }}>
-      <Monitor size={48} color={ACCENT} style={{ marginBottom: '1.5rem' }} />
-      <h1 style={{ color: '#f1f5f9', fontSize: '1.75rem', fontWeight: 700, textAlign: 'center', marginBottom: '0.5rem' }}>Lecture 4: Rasterization & Sampling — Part 2</h1>
-      <p style={{ color: '#94a3b8', marginBottom: '0.25rem' }}>Pipeline, Coverage, Aliasing, SSAA, Nyquist</p>
-      <p style={{ color: '#64748b', fontSize: '0.8rem', marginBottom: '0.25rem' }}>Q33–Q64 · 32 questions</p>
-      <p style={{ color: '#64748b', fontSize: '0.8rem', marginBottom: '1.5rem' }}>
-        <a href="/lec4/1" style={{ color: "#64748b" }}>Part 1</a> · <a href="/lec4/2" style={{ color: ACCENT }}>Part 2</a>
-      </p>
-      <p style={{ color: ACCENT, fontWeight: 600, fontSize: '0.85rem', marginBottom: '2rem', fontFamily: 'monospace' }}>lectures/cg-04-lecture-quiz.md</p>
-      <button onClick={() => { setScreen('quiz'); timer.start() }}
-        style={{ background: ACCENT, color: '#0f172a', fontWeight: 700, padding: '0.75rem 2.5rem', borderRadius: '8px', border: 'none', cursor: 'pointer', fontSize: '1rem', marginBottom: '1rem' }}>
-        Start Quiz
-      </button>
-      <a href='/' style={{ color: '#64748b', fontSize: '0.875rem' }}>← All quizzes</a>
+    <div style={base}>
+      <div style={box}>
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <Monitor size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 4: Rasterization & Sampling — Part 2</h1>
+          <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Pipeline, Coverage, Aliasing, SSAA, Nyquist</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-04-lecture-quiz.md</p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
+            <a key={1} href="/lec4/1" style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
+          <a key={2} href="/lec4/2" style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
+          </div>
+          <p style={{ color: C.accent, fontWeight: 600 }}>Q33–Q64 · 32 questions</p>
+        </div>
+
+        <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Questions</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>2</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Parts</div></div>
+          </div>
+        </div>
+
+        <button style={btn({ width: '100%', justifyContent: 'center', fontSize: '1.1rem', padding: '1rem' })}
+          onClick={() => { setScreen('quiz'); start() }}>
+          <Monitor size={20} /> Start Quiz
+        </button>
+        <a href='/' style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
+      </div>
     </div>
   )
 
-  if (screen === 'results') {
-    const pct = Math.round(score / quizData.length * 100)
-    return (
-      <div style={{ minHeight: '100vh', background: '#0f172a', padding: '2rem', fontFamily: 'system-ui,sans-serif', color: '#f1f5f9' }}>
-        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}><Monitor size={20} color={ACCENT} /><h1 style={{ color: ACCENT, fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>Lecture 4: Rasterization & Sampling — Part 2 — Results</h1></div>
-          <p style={{ color: '#64748b', fontSize: '0.8rem', marginBottom: '1.5rem' }}>Time: {timer.fmt(timer.elapsed)}</p>
-          <div style={{ ...card, textAlign: 'center', marginBottom: '2rem' }}>
-            <div style={{ fontSize: '3rem', fontWeight: 800, color: ACCENT }}>{pct}%</div>
-            <div style={{ color: '#94a3b8', marginTop: '0.5rem' }}>{score} / {quizData.length} correct</div>
-          </div>
-          {history.map((chosen, i) => {
-            const qq = quizData[i]
-            const ok = chosen === qq.answer
-            return (
-              <div key={i} style={{ ...card, borderColor: ok ? '#22c55e55' : '#ef444455', marginBottom: '1.25rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
-                  <span style={{ color: '#64748b', fontSize: '0.78rem', fontFamily: 'monospace' }}>Q{qq.num} [{qq.timestamp}] · {qq.source}</span>
-                  <span style={{ color: ok ? '#22c55e' : '#ef4444', fontSize: '1.1rem' }}>{ok ? '✓' : '✗'}</span>
-                </div>
-                <div style={{ fontWeight: 600, marginBottom: '0.75rem', lineHeight: 1.5 }}>{qq.question}</div>
-                <div style={{ color: ok ? '#22c55e' : '#ef4444', fontSize: '0.9rem' }}>
-                  Your answer: {qq.options[chosen]}
-                </div>
-                {!ok && <div style={{ color: '#22c55e', fontSize: '0.9rem', marginTop: '0.25rem' }}>Correct: {qq.options[qq.answer]}</div>}
-                {qq.explanation ? (
-                  <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid #334155' }}>
-                    <div style={{ color: ACCENT, fontSize: '0.78rem', fontWeight: 700, marginBottom: '0.4rem' }}>EXPLANATION</div>
-                    <div style={{ color: '#cbd5e1', fontSize: '0.9rem', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>{qq.explanation}</div>
-                  </div>
-                ) : null}
-                <SlideImages images={qq.images} />
-                {qq.tags.length > 0 && <div style={{ marginTop: '0.5rem', display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                  {qq.tags.map((t, ti) => <span key={ti} style={{ background: `${ACCENT}22`, color: ACCENT, fontSize: '0.7rem', padding: '0.15rem 0.5rem', borderRadius: '99px' }}>{t}</span>)}
-                </div>}
-              </div>
-            )
-          })}
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1.5rem' }}>
-            <button onClick={() => { setScreen('welcome'); setIdx(0); setScore(0); setHistory([]); timer.reset() }}
-              style={{ background: ACCENT, color: '#0f172a', fontWeight: 700, padding: '0.75rem 2rem', borderRadius: '8px', border: 'none', cursor: 'pointer' }}>
-              Restart
-            </button>
-            <a href='/' style={{ display: 'flex', alignItems: 'center', color: '#64748b', fontSize: '0.875rem' }}>← All quizzes</a>
-          </div>
+  if (screen === 'results') return (
+    <div style={base}>
+      <div style={box}>
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <Trophy size={64} color={pct >= 70 ? C.ok : pct >= 50 ? C.warn : C.err} />
+          <h1 style={{ fontSize: '2rem', fontWeight: 700, marginTop: '1rem', marginBottom: '0.5rem' }}>Quiz Complete!</h1>
+          <p style={{ color: C.muted }}><Clock size={16} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.4rem' }} />Time: {formatTime(t)}</p>
         </div>
+        <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
+          <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / {quizData.length} correct</div>
+          <div style={{ color: C.muted }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
+        </div>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button style={btn({ flex: 1, justifyContent: 'center' })} onClick={handleReview}>
+            <BookOpen size={20} /> Review Answers
+          </button>
+          <button style={btn({ flex: 1, justifyContent: 'center' })} onClick={handleRestart}>
+            <RefreshCw size={20} /> Restart
+          </button>
+        </div>
+        <a href='/' style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
       </div>
-    )
-  }
-
-  const handleSelect = (i) => { if (!revealed) setSelected(i) }
-  const handleReveal = () => { if (selected !== null) { setRevealed(true); if (selected === q.answer) setScore(s => s + 1) } }
-  const handleNext = () => {
-    setHistory(h => [...h, selected])
-    if (idx + 1 >= quizData.length) { timer.stop(); setScreen('results') }
-    else { setIdx(i => i + 1); setSelected(null); setRevealed(false) }
-  }
+    </div>
+  )
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f172a', padding: '1.5rem', fontFamily: 'system-ui,sans-serif', color: '#f1f5f9' }}>
-      <div style={{ maxWidth: '860px', margin: '0 auto' }}>
+    <div style={base}>
+      <div style={box}>
 
         {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Monitor size={18} color={ACCENT} /><span style={{ color: ACCENT, fontWeight: 600, fontSize: '0.95rem' }}>Lecture 4: Rasterization & Sampling — Part 2</span></div>
-          <div style={{ display: 'flex', gap: '1.25rem', color: '#94a3b8', fontSize: '0.85rem' }}>
-            <span>{timer.fmt(timer.elapsed)}</span>
-            <span>{idx+1}/32</span>
-            <span style={{ color: ACCENT }}>✓ {score}</span>
+        <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Monitor size={18} color={C.accent} />
+              <span style={{ color: C.accent, fontWeight: 600 }}>Lecture 4: Rasterization & Sampling — Part 2</span>
+            </div>
+            <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
+              <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
+              <span>{qIdx+1}/32</span>
+              <span style={{ color: C.accent }}>✓ {score}</span>
+            </div>
           </div>
-        </div>
-
-        {/* Progress bar */}
-        <div style={{ background: '#1e293b', borderRadius: '99px', height: '5px', marginBottom: '1.25rem' }}>
-          <div style={{ background: ACCENT, height: '100%', borderRadius: '99px', width: `${Math.round((idx+1)/32*100)}%`, transition: 'width 0.3s' }} />
+          <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/32*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+          </div>
         </div>
 
         {/* Question */}
-        <div style={card}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-            <span style={{ color: '#64748b', fontSize: '0.78rem', fontFamily: 'monospace' }}>Q{q.num} · [{q.timestamp}]</span>
-            <span style={{ color: '#475569', fontSize: '0.72rem', fontFamily: 'monospace' }}>lectures/cg-04-lecture-quiz.md</span>
+        <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem', alignItems: 'center' }}>
+            <span style={tag()}>Q{q.id}</span>
+            <span style={tag()}>[{q.timestamp}]</span>
+            <span style={{ color: '#475569', fontSize: '0.72rem', fontFamily: 'monospace', marginLeft: 'auto' }}>{q.source}</span>
           </div>
-          <div style={{ fontSize: '1.05rem', fontWeight: 600, lineHeight: 1.65, marginBottom: '1.25rem' }}>{q.question}</div>
-
-          {/* Slide images shown before answering if present */}
-          {!revealed && <SlideImages images={q.images} />}
-
-          {/* Options */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-            {q.options.map((opt, i) => {
-              let bg = '#0f172a', border = '#334155', color = '#cbd5e1'
-              if (selected === i && !revealed) { bg = `${ACCENT}22`; border = ACCENT; color = '#f1f5f9' }
-              if (revealed && i === q.answer) { bg = '#22c55e1a'; border = '#22c55e'; color = '#22c55e' }
-              if (revealed && selected === i && i !== q.answer) { bg = '#ef44441a'; border = '#ef4444'; color = '#ef4444' }
-              return (
-                <button key={i} onClick={() => handleSelect(i)} style={{ background: bg, border: `1px solid ${border}`, color, padding: '0.75rem 1rem', borderRadius: '8px', textAlign: 'left', cursor: revealed ? 'default' : 'pointer', fontSize: '0.95rem', lineHeight: 1.5, transition: 'all 0.15s' }}>
-                  <span style={{ fontWeight: 700, marginRight: '0.5rem' }}>{['A','B','C','D'][i]}.</span>{opt}
-                </button>
-              )
-            })}
-          </div>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 600, lineHeight: 1.55, marginBottom: '1.25rem' }}>{q.question}</h2>
         </div>
 
-        {/* Explanation card (flip side) */}
-        {revealed && (
-          <div style={{ ...card, borderColor: `${ACCENT}44` }}>
-            <div style={{ color: ACCENT, fontWeight: 700, fontSize: '0.8rem', marginBottom: '0.75rem', letterSpacing: '0.05em' }}>EXPLANATION</div>
-            {q.explanation ? (
-              <div style={{ color: '#cbd5e1', lineHeight: 1.75, whiteSpace: 'pre-wrap', marginBottom: '0.75rem' }}>{q.explanation}</div>
-            ) : <div style={{ color: '#475569', fontSize: '0.875rem' }}>No explanation provided.</div>}
-            <SlideImages images={q.images} />
-            {q.tags.length > 0 && (
-              <div style={{ marginTop: '0.75rem', display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                {q.tags.map((t, ti) => (
-                  <span key={ti} style={{ background: `${ACCENT}22`, color: ACCENT, fontSize: '0.7rem', padding: '0.15rem 0.5rem', borderRadius: '99px' }}>{t}</span>
-                ))}
+        {/* Options */}
+        <div style={{ marginBottom: '1.5rem' }}>
+          {q.options.map((opt, i) => {
+            let borderColor = C.border, bgColor = C.surface
+            if (showExp || reviewMode) {
+              if (i === q.answer) { borderColor = C.ok; bgColor = `${C.ok}15` }
+              else if (selected === i) { borderColor = C.err; bgColor = `${C.err}15` }
+            } else if (selected === i) {
+              borderColor = C.accent; bgColor = `${C.accent}15`
+            }
+            return (
+              <div key={i} onClick={() => !(showExp||reviewMode) && setSelected(i)}
+                style={{ padding: '1rem', borderRadius: '8px', border: `2px solid ${borderColor}`,
+                  background: bgColor, cursor: (showExp||reviewMode)?'default':'pointer',
+                  transition: 'all 0.2s', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                {(showExp||reviewMode) && i===q.answer && <CheckCircle size={18} color={C.ok} />}
+                {(showExp||reviewMode) && selected===i && i!==q.answer && <XCircle size={18} color={C.err} />}
+                <span style={{ fontWeight: 700, color: C.accent, minWidth: '1.2rem' }}>{['A','B','C','D'][i]}.</span>
+                <span>{opt}</span>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Explanation (shown after submit) */}
+        {(showExp || reviewMode) && (
+          <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '1.5rem', border: `1px solid ${C.border}` }}>
+            {/* Tab switcher */}
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+              {['explanation','images','tags'].map(tab => (
+                <button key={tab} onClick={() => setExpTab(tab)}
+                  style={{ padding: '0.3rem 0.8rem', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600,
+                    background: expTab===tab ? C.accent : C.border, color: expTab===tab ? '#0a0a0f' : C.muted }}>
+                  {tab === 'explanation' ? '💡 Explanation' : tab === 'images' ? '🖼 Slides' : '🔗 Tags'}
+                </button>
+              ))}
+            </div>
+            {expTab === 'explanation' && (
+              q.explanation
+                ? <p style={{ lineHeight: 1.75, color: C.muted, whiteSpace: 'pre-wrap', margin: 0 }}>{q.explanation}</p>
+                : <p style={{ color: '#475569', margin: 0 }}>No explanation provided.</p>
+            )}
+            {expTab === 'images' && <SlideImages images={q.images} />}
+            {expTab === 'tags' && (
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                {q.tags.length > 0
+                  ? q.tags.map((t,i) => <span key={i} style={tag()}>{t}</span>)
+                  : <span style={{ color: '#475569' }}>No tags.</span>}
               </div>
             )}
           </div>
         )}
 
-        {/* Action buttons */}
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          {!revealed && (
-            <button onClick={handleReveal} disabled={selected === null}
-              style={{ background: selected !== null ? ACCENT : '#1e293b', color: selected !== null ? '#0f172a' : '#475569', fontWeight: 700, padding: '0.75rem 2rem', borderRadius: '8px', border: `1px solid ${selected !== null ? ACCENT : '#334155'}`, cursor: selected !== null ? 'pointer' : 'not-allowed', transition: 'all 0.15s' }}>
-              Check Answer
+        {/* Navigation */}
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button onClick={handlePrev} disabled={qIdx===0}
+            style={btn({ background: C.border, opacity: qIdx===0?0.4:1, cursor: qIdx===0?'not-allowed':'pointer' })}>
+            <ChevronLeft size={20} /> Prev
+          </button>
+          {!(showExp||reviewMode) && (
+            <button onClick={handleSubmit} disabled={selected===null}
+              style={btn({ flex:1, justifyContent:'center', opacity: selected===null?0.4:1, cursor: selected===null?'not-allowed':'pointer' })}>
+              Submit Answer
             </button>
           )}
-          {revealed && (
-            <button onClick={handleNext}
-              style={{ background: ACCENT, color: '#0f172a', fontWeight: 700, padding: '0.75rem 2rem', borderRadius: '8px', border: 'none', cursor: 'pointer' }}>
-              {idx + 1 >= 32 ? 'See Results →' : 'Next →'}
+          {(showExp||reviewMode) && (
+            <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
+              {qIdx < 32-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
-          <a href='/' style={{ display: 'flex', alignItems: 'center', color: '#475569', fontSize: '0.875rem' }}>← All quizzes</a>
         </div>
       </div>
     </div>
