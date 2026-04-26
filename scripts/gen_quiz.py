@@ -53,12 +53,21 @@ def parse_questions(md_path):
         ans_m = re.search(r'- ANSWER:\s*([A-D])', block)
         answer = ans_m.group(1) if ans_m else 'A'
 
+        # Explicit intuition block (user-written first-principles understanding)
+        int_m = re.search(r'- INTUITION:\s*([\s\S]*?)(?=\n\s*- (?:EXPLANATION|ANSWER|CODE):|\n- #card|\Z)', block)
+        intuition_text = ''
+        if int_m:
+            raw_int = int_m.group(1)
+            raw_int = re.sub(r'\[\[.*?\]\]', '', raw_int)
+            raw_int = re.sub(r'\s*collapsed::\s*(true|false)', '', raw_int)
+            int_lines = [l.strip() for l in raw_int.strip().splitlines()]
+            intuition_text = '\n'.join(l for l in int_lines if l).strip()
+
         # Full explanation block (stops at - CODE: or next card)
         exp_m = re.search(r'- EXPLANATION:\s*([\s\S]*?)(?=\n\s*- CODE:|\n- #card|\Z)', block)
         explanation_text = ''
         images = []
 
-        intuition_text = ''
         if exp_m:
             raw = exp_m.group(1)
             images = re.findall(r'!\[image\.png\]\(\.\./assets/(image_[^)]+)\)', raw)
@@ -74,16 +83,6 @@ def parse_questions(md_path):
                 if l or (clean and clean[-1]):
                     clean.append(l)
             explanation_text = '\n'.join(clean).strip()
-
-            # Intuition: extract the quoted lecturer statement(s) — the "..." parts
-            quotes = re.findall(r'"([^"]{15,})"', explanation_text)
-            if quotes:
-                # Use the longest quote as the key insight
-                intuition_text = max(quotes, key=len).strip()
-            else:
-                # Fallback: first sentence of explanation
-                first = explanation_text.split('.')[0].strip()
-                intuition_text = first if len(first) > 20 else explanation_text[:200]
 
         # Optional code block: - CODE:\n  ```python\n  ...\n  ```
         code_text = ''
@@ -429,11 +428,11 @@ def gen_jsx(questions, part_num, total_parts, cfg, source_file):
     w("              q.intuition")
     w("                ? (")
     w("                  <div style={{ borderLeft: `3px solid ${C.accent}`, paddingLeft: '1rem' }}>")
-    w("                    <p style={{ margin: '0 0 0.25rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>KEY INSIGHT FROM LECTURE</p>")
-    w("                    <p style={{ margin: 0, lineHeight: 1.75, color: C.text, fontSize: '1rem', fontStyle: 'italic' }}>\"{q.intuition}\"</p>")
+    w("                    <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>")
+    w("                    <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>")
     w("                  </div>")
     w("                )")
-    w("                : <p style={{ color: '#475569', margin: 0 }}>No intuition extracted.</p>")
+    w(f"                : <p style={{{{ color: '#475569', margin: 0, fontSize: '0.875rem' }}}}>No intuition written yet. Add a <code style={{{{ color: C.accent }}}}>- INTUITION:</code> block under this question in <code style={{{{ color: C.accent }}}}>lectures/{source_basename}</code>.</p>")
     w("            )}")
     w("            {expTab === 'explanation' && (")
     w("              q.explanation")

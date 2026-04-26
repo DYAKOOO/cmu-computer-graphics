@@ -13,7 +13,7 @@ const quizData = [
     question: `What learning approach does Professor Crane encourage when he deliberately makes an error about the "pentagon inequality"?`,
     options: [`Memorizing all definitions precisely`, `Questioning what is said and not blindly accepting statements from authorities`, `Ignoring minor terminology errors`, `Working only with the most essential concepts`],
     answer: 1,
-    intuition: `The reason for saying this is i really really want people to ask questions in this class if you're watching a video and you find that something really strange was said then please leave a comment on the slides or put it on piazza or communicate to it to us in office hours hey you said something crazy i didn't agree with that and then we can talk about it again.`,
+    intuition: ``,
     explanation: `The lecturer explains at [1:42:12]: "The reason for saying this is i really really want people to ask questions in this class if you're watching a video and you find that something really strange was said then please leave a comment on the slides or put it on piazza or communicate to it to us in office hours hey you said something crazy i didn't agree with that and then we can talk about it again."
 
 -
@@ -248,11 +248,11 @@ export default function Lec2Part3Quiz() {
               q.intuition
                 ? (
                   <div style={{ borderLeft: `3px solid ${C.accent}`, paddingLeft: '1rem' }}>
-                    <p style={{ margin: '0 0 0.25rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>KEY INSIGHT FROM LECTURE</p>
-                    <p style={{ margin: 0, lineHeight: 1.75, color: C.text, fontSize: '1rem', fontStyle: 'italic' }}>"{q.intuition}"</p>
+                    <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
+                    <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
                 )
-                : <p style={{ color: '#475569', margin: 0 }}>No intuition extracted.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition written yet. Add a <code style={{ color: C.accent }}>- INTUITION:</code> block under this question in <code style={{ color: C.accent }}>lectures/cg-02-lecture-quiz.md</code>.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

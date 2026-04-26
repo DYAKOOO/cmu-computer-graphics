@@ -13,7 +13,7 @@ const quizData = [
     question: `What is the 2D curl formula?`,
     options: [`The determinant of the 2×2 Jacobian matrix`, `∂x₂/∂x₁ - ∂x₁/∂x₂`, `∂x₁/∂x₁ + ∂x₂/∂x₂`, `The divergence of the 2D vector field`],
     answer: 1,
-    intuition: `The curl of x is equal to the partial derivative of the second coordinate function along the first coordinate direction minus the partial derivative of the first coordinate function along the second coordinate direction.`,
+    intuition: ``,
     explanation: `The lecturer gives the formula at [1:13:27]: "The curl of x is equal to the partial derivative of the second coordinate function along the first coordinate direction minus the partial derivative of the first coordinate function along the second coordinate direction."`,
     code: ``,
     images: ["image_1771989224011_0.png", "image_1772584933293_0.png", "image_1772584943241_0.png", "image_1772585074709_0.png"],
@@ -26,7 +26,7 @@ const quizData = [
     question: `What relationship does the lecturer identify between curl and divergence?`,
     options: [`They are completely independent operations`, `The divergence of X equals the curl of the 90° rotation of X`, `The curl is always perpendicular to the divergence`, `The sum of curl and divergence always equals zero`],
     answer: 1,
-    intuition: `Do you notice anything about the relationship between curl and divergence? Hopefully you do! Hopefully what you are kind of picking up on is that the divergence of x is the same as the curl of the 90 degree rotation of x.`,
+    intuition: ``,
     explanation: `The lecturer observes at [1:14:47]: "Do you notice anything about the relationship between curl and divergence? Hopefully you do! Hopefully what you are kind of picking up on is that the divergence of x is the same as the curl of the 90 degree rotation of x."`,
     code: ``,
     images: ["image_1771989278643_0.png"],
@@ -39,7 +39,7 @@ const quizData = [
     question: `In the fluid simulation example, what change in variables leads to different simulation results?`,
     options: [`Changing from 2D to 3D simulation`, `Changing from velocity field to stream function`, `Changing from laminar to turbulent flow`, `Changing from Eulerian to Lagrangian coordinates`],
     answer: 1,
-    intuition: `So in one case you might use the fluid velocity u, in the other case you use the so-called stream function psi. And you can see that just this mathematically fairly simple change really changes the behavior of the simulation.`,
+    intuition: ``,
     explanation: `The lecturer explains at [1:16:52]: "So in one case you might use the fluid velocity u, in the other case you use the so-called stream function psi. And you can see that just this mathematically fairly simple change really changes the behavior of the simulation."`,
     code: ``,
     images: ["image_1771989335272_0.png"],
@@ -52,7 +52,7 @@ const quizData = [
     question: `Why does the lecturer say the Laplacian is important for graphics?`,
     options: [`It only appears in specialized applications`, `It appears across many domains including geometry, rendering, simulation, and imaging`, `It's only important for color processing`, `It's only useful for physics simulations`],
     answer: 1,
-    intuition: `This is unbelievably important for graphics, it shows up across geometry, across rendering, simulation, imaging, everywhere.`,
+    intuition: ``,
     explanation: `The lecturer emphasizes at [1:17:34]: "This is unbelievably important for graphics, it shows up across geometry, across rendering, simulation, imaging, everywhere."`,
     code: ``,
     images: ["image_1771989366312_0.png"],
@@ -65,7 +65,7 @@ const quizData = [
     question: `How can the Laplacian be written in terms of other differential operators?`,
     options: [`As the gradient of the divergence`, `As the curl of the gradient`, `As the divergence of the gradient`, `As the divergence of the curl`],
     answer: 2,
-    intuition: `We can write it using the operators we just talked about: divergence and gradient. So Laplacian of f is the divergence of the gradient of f.`,
+    intuition: ``,
     explanation: `The lecturer states at [1:21:19]: "We can write it using the operators we just talked about: divergence and gradient. So Laplacian of f is the divergence of the gradient of f."  ]`,
     code: ``,
     images: ["image_1771989413169_0.png"],
@@ -78,7 +78,7 @@ const quizData = [
     question: `How does the lecturer define the Hessian in terms of the gradient?`,
     options: [`The Hessian is the determinant of the gradient`, `The Hessian is the transpose of the gradient`, `The Hessian gives the directional derivative of the gradient`, `The Hessian is the integral of the gradient`],
     answer: 2,
-    intuition: `More precisely what I mean by that is if I take the Hessian of the function f and apply it to the vector or direction u, then I get the directional derivative of the gradient in the direction u.`,
+    intuition: ``,
     explanation: `The lecturer defines at [1:27:25]: "More precisely what I mean by that is if I take the Hessian of the function f and apply it to the vector or direction u, then I get the directional derivative of the gradient in the direction u."
 
 -`,
@@ -312,11 +312,11 @@ export default function Lec3Part3Quiz() {
               q.intuition
                 ? (
                   <div style={{ borderLeft: `3px solid ${C.accent}`, paddingLeft: '1rem' }}>
-                    <p style={{ margin: '0 0 0.25rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>KEY INSIGHT FROM LECTURE</p>
-                    <p style={{ margin: 0, lineHeight: 1.75, color: C.text, fontSize: '1rem', fontStyle: 'italic' }}>"{q.intuition}"</p>
+                    <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
+                    <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
                 )
-                : <p style={{ color: '#475569', margin: 0 }}>No intuition extracted.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition written yet. Add a <code style={{ color: C.accent }}>- INTUITION:</code> block under this question in <code style={{ color: C.accent }}>lectures/cg-03-lecture-quiz.md</code>.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

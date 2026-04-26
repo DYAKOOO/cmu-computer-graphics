@@ -13,7 +13,7 @@ const quizData = [
     question: `Can we satisfy the 2D Laplace equation with Neumann boundary conditions?`,
     options: [`No, the 2D Neumann problem never has a solution`, `Yes — because what goes in must come out (the net flux through the boundary must be zero)`, `Only if all Dirichlet values are also specified simultaneously`, `Only if boundary values are identically zero everywhere`],
     answer: 1,
-    intuition: `Short answer yes, because of what goes in must come out — the net flux through the boundary must be zero`,
+    intuition: ``,
     explanation: `Short answer yes, because of what goes in must come out — the net flux through the boundary must be zero. Important: after solving Ax=b, always verify by computing ||b-Ax||, since numerical libraries won't tell you if you made a mistake. #Verification`,
     code: ``,
     images: ["image_1777212731913_0.png"],
@@ -26,7 +26,7 @@ const quizData = [
     question: `What is the standard numerical approach for solving the heat equation?`,
     options: [`Solve analytically using Fourier transforms only`, `March forward in time: at each step update u by adding timestep times Laplacian(u)`, `Apply boundary conditions only at the final timestep`, `Solve it as an elliptic (Laplace) equation ignoring time`],
     answer: 1,
-    intuition: `The heat equation (du/dt = Laplacian(u)) is solved numerically by marching forward in time: at each step update u by adding a small timestep times the Laplacian of u (the difference between a point and the average of its neighbors)`,
+    intuition: ``,
     explanation: `The heat equation (du/dt = Laplacian(u)) is solved numerically by marching forward in time: at each step update u by adding a small timestep times the Laplacian of u (the difference between a point and the average of its neighbors).`,
     code: ``,
     images: ["image_1777212918312_0.png"],
@@ -39,7 +39,7 @@ const quizData = [
     question: `What is the standard numerical approach for solving the wave equation?`,
     options: [`Treat it as a parabolic equation with only one time derivative`, `Track height u and velocity v at each grid point, update both each timestep using second-order time integration`, `Use only Dirichlet boundary conditions and solve once`, `Compute the Fourier transform of the initial conditions and propagate analytically`],
     answer: 1,
-    intuition: `The wave equation (d2u/dt2 = Laplacian(u)) is solved by tracking height u and velocity v at each grid point, then using second-order time integration (e`,
+    intuition: ``,
     explanation: `The wave equation (d2u/dt2 = Laplacian(u)) is solved by tracking height u and velocity v at each grid point, then using second-order time integration (e.g., leapfrog/Verlet) to update both each timestep.`,
     code: ``,
     images: ["image_1777212992447_0.png"],
@@ -52,7 +52,7 @@ const quizData = [
     question: `What is a powerful mindset for developing algorithms in computer graphics and simulation?`,
     options: [`Always start with discrete data structures (grids or graphs) and optimize later`, `Formulate problems as PDEs on continuous domains first — this makes it easy to port algorithms across different representations`, `Use machine learning to learn algorithms from example data rather than deriving them`, `Implement algorithms for one specific geometry type only and do not generalize`],
     answer: 1,
-    intuition: `If you can formulate your graphics and simulation problems as PDEs rather than in terms of discrete data, it is easier to port those algorithms to different contexts`,
+    intuition: `Think of PDEs as the "coordinate-free" version of your algorithm. A smooth Laplace equation on a continuous domain can be discretized onto a grid (finite differences), a triangle mesh (cotan formula), or a point cloud (graph Laplacian) — same math, different data structures. If you start by writing an algorithm for grids specifically, you'll have to rethink everything when switching to meshes. Work at the mathematical level first, then choose your discretization.`,
     explanation: `If you can formulate your graphics and simulation problems as PDEs rather than in terms of discrete data, it is easier to port those algorithms to different contexts. If you start by thinking in terms of graphs or grids, it will not be clear how to convert from one domain to another. #AlgorithmDesignTechnique`,
     code: ``,
     images: [],
@@ -283,11 +283,11 @@ export default function Lec23Part2Quiz() {
               q.intuition
                 ? (
                   <div style={{ borderLeft: `3px solid ${C.accent}`, paddingLeft: '1rem' }}>
-                    <p style={{ margin: '0 0 0.25rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>KEY INSIGHT FROM LECTURE</p>
-                    <p style={{ margin: 0, lineHeight: 1.75, color: C.text, fontSize: '1rem', fontStyle: 'italic' }}>"{q.intuition}"</p>
+                    <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
+                    <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
                 )
-                : <p style={{ color: '#475569', margin: 0 }}>No intuition extracted.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition written yet. Add a <code style={{ color: C.accent }}>- INTUITION:</code> block under this question in <code style={{ color: C.accent }}>lectures/cg-23-lecture-quiz.md</code>.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
