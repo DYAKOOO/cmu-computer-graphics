@@ -23,6 +23,13 @@ const quizzes = [
     color: '#34d399',
     href: '/lec4',
   },
+  {
+    id: 'lec23',
+    title: 'Lecture 23: PDEs & Physical Animation',
+    description: 'Elliptic/Parabolic/Hyperbolic PDEs, Laplacian, Wave/Heat equations',
+    color: '#f87171',
+    href: '/lec23',
+  },
 ]
 
 export default function Home() {
