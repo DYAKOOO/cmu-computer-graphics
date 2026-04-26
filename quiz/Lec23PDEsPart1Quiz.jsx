@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Waves } from 'lucide-react'
 
 // Source: lectures/cg-23-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 23: PDEs & Physical Animation · Q1–Q24 · 24 questions
+// Lecture 23: PDEs & Physical Animation — Part 1 · Q1–Q32 · 32 questions
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-23-lecture-quiz.md 23
 
 const quizData = [
@@ -248,21 +248,10 @@ const quizData = [
     options: [`Because it requires more memory`, `Because numerical errors propagate along the wave for a long time`, `Because it always has complex-valued solutions`, `Because it can only be solved with quantum computers`],
     answer: 1,
     intuition: `Why might this equation be a little bit harder to solve well one thing you notice even from looking at this this movie of a real swimming pool is that little bumps in the surface kind of get carried along the wave for a long long time and so what that means is if you make any kind of numerical error when you're solving the wave equation those errors also will be propagated in kind of a nasty way forward through time.`,
-    explanation: `At [22:24], the lecturer explains: "Why might this equation be a little bit harder to solve well one thing you notice even from looking at this this movie of a real swimming pool is that little bumps in the surface kind of get carried along the wave for a long long time and so what that means is if you make any kind of numerical error when you're solving the wave equation those errors also will be propagated in kind of a nasty way forward through time."
-
--  what are the difference between the two ? #card
-- for eulerian , you are like a bear waiting for salmon to come to you whereas in langrangian you are a control freak keeping track of every particle. langragian is #pointcloud .
-
--  how to pick the right tool for the job? can you mix the two?  #card
-- you can mix it.
-
-Another angle is how to formulate the #PDEs in the first.
-
-- What is the strategy on solving #PDEs ? #strategy #card
--`,
+    explanation: `At [22:24], the lecturer explains: "Why might this equation be a little bit harder to solve well one thing you notice even from looking at this this movie of a real swimming pool is that little bumps in the surface kind of get carried along the wave for a long long time and so what that means is if you make any kind of numerical error when you're solving the wave equation those errors also will be propagated in kind of a nasty way forward through time."`,
     code: ``,
-    images: ["image_1777202890474_0.png", "image_1777203645522_0.png", "image_1777203756379_0.png", "image_1777203884392_0.png", "image_1777203938182_0.png", "image_1777204000145_0.png"],
-    tags: ["Equation/Wave", "vs/langrangianvsEulerian"],
+    images: ["image_1777202890474_0.png"],
+    tags: ["Equation/Wave"],
     source: `lectures/cg-23-lecture-quiz.md`,
   },
   {
@@ -330,36 +319,119 @@ Another angle is how to formulate the #PDEs in the first.
     explanation: `At [44:01], the lecturer explains: "What we want to do generally is turn a PD like this turn the system of equations into some matrix equation that we can hand off to a linear solver."
 
 - what are two "basic" boundary condition for discrete laplace ? #Laplace #BoundaryConditions
--  #Dirichlet #neumann , there is also robin.
-- what does  tell you? #card
--  it just means prescribe values.
-- what does  tell you? #card
--
-- satisfying boundary conditions are no big matter , what's important is to satisfy every value in the interior. can we always satisfy 1D laplace given Dirichlet coundary conditions? #card
-- {:height 578, :width 716} - The answer is yes becauase it's easy to do it for a point
-- satisfying boundary conditions are no big matter , what's important is to satisfy every value in the interior. can we always satisfy laplace given Neumann coundary conditions? #card
-- No because second derviative is a rate of change of first derivative . if first derivative is not changing , than second derivative is not working.
-
-- 2D #Laplace #BoundaryConditions
-- can we satisfy 2d laplace w/ Dirichet bc ? #card
--
-- can we satisfy 2d laplace w/ Neumann bc ? #card
-- short answer yes because of what goes in must come out.
-
-#Verification is important because numerlcal libraries won't tell you if you have made a mistake, after solving AX=b  , compute ||b-AX||.
-- how to solve the heat equation?  #card
--
-- Solving the wave equation ?  #card
--
-- what's a powerway of developing algorithms? #AlgorithmDesignTechnique #Algorithm  #card
-- if you can formulate your graphic , simulation problems as PDES rather in terms of discrete data , it's easier to port those algorithms to different context. If you start by thinking in terms of graphs  or grid , it won't be clear to convert from one domain to another.`,
+-  #Dirichlet #neumann , there is also robin.`,
     code: ``,
-    images: ["image_1777211476986_0.png", "image_1777211651120_0.png", "image_1777211776507_0.png", "image_1777211852618_0.png", "image_1777212043598_0.png", "image_1777212242234_0.png", "image_1777212531236_0.png", "image_1777212731913_0.png", "image_1777212918312_0.png", "image_1777212992447_0.png"],
-    tags: ["BoundaryConditions/Dirichlet", "BoundaryConditions/Neumann", "Equation/Heat", "Equation/Wave", "mindset"],
+    images: ["image_1777211476986_0.png", "image_1777211651120_0.png"],
+    tags: [],
+    source: `lectures/cg-23-lecture-quiz.md`,
+  },
+  {
+    id: 25,
+    timestamp: `23:00`,
+    question: `What is the key conceptual difference between Lagrangian and Eulerian simulation approaches?`,
+    options: [`Lagrangian tracks individual particles while Eulerian observes fixed points in space`, `Lagrangian is faster to compute; Eulerian is more accurate`, `Lagrangian uses grids; Eulerian uses point clouds`, `Lagrangian is only for fluids; Eulerian is only for solids`],
+    answer: 0,
+    intuition: `In Eulerian simulation you are like a bear waiting for salmon to come to you — you observe at fixed points in space`,
+    explanation: `In Eulerian simulation you are like a bear waiting for salmon to come to you — you observe at fixed points in space. In Lagrangian simulation you are a control freak keeping track of every particle. Lagrangian is associated with point clouds.  #pointcloud`,
+    code: ``,
+    images: ["image_1777203645522_0.png", "image_1777203756379_0.png"],
+    tags: ["vs/langrangianvsEulerian"],
+    source: `lectures/cg-23-lecture-quiz.md`,
+  },
+  {
+    id: 26,
+    timestamp: `26:00`,
+    question: `Can Lagrangian and Eulerian simulation approaches be mixed, and how does this relate to PDE formulation?`,
+    options: [`No, they are mutually exclusive frameworks that cannot be combined`, `Yes, and the choice also relates to how you first formulate the PDEs on continuous domains`, `Only in fluid simulations, not solid body simulations`, `Only when using finite element methods on triangle meshes`],
+    answer: 1,
+    intuition: `You can mix the two approaches`,
+    explanation: `You can mix the two approaches. Another angle is how to formulate the #PDEs in the first place — starting with continuous PDE thinking makes it easier to switch between Lagrangian and Eulerian representations.`,
+    code: ``,
+    images: ["image_1777203884392_0.png", "image_1777203938182_0.png"],
+    tags: ["vs/langrangianvsEulerian"],
+    source: `lectures/cg-23-lecture-quiz.md`,
+  },
+  {
+    id: 27,
+    timestamp: `35:00`,
+    question: `What is the general strategy for numerically solving PDEs in computer graphics?`,
+    options: [`Convert to ODEs then solve analytically using closed-form expressions`, `Discretize the domain, approximate derivatives with finite differences, set up Ax=b, and solve with a sparse linear solver`, `Use machine learning to approximate solutions from training data`, `Apply symbolic integration techniques to find exact analytical solutions`],
+    answer: 1,
+    intuition: `The general strategy involves discretizing the domain (into a grid or mesh), approximating derivatives with finite differences or cotangent weights, assembling a sparse system of equations Ax=b, and solving it efficiently with a linear solver`,
+    explanation: `The general strategy involves discretizing the domain (into a grid or mesh), approximating derivatives with finite differences or cotangent weights, assembling a sparse system of equations Ax=b, and solving it efficiently with a linear solver. #strategy #PDEs`,
+    code: ``,
+    images: ["image_1777204000145_0.png"],
+    tags: [],
+    source: `lectures/cg-23-lecture-quiz.md`,
+  },
+  {
+    id: 28,
+    timestamp: `47:00`,
+    question: `What does a Dirichlet boundary condition specify?`,
+    options: [`The normal derivative of the function at the boundary`, `The rate of change of the function perpendicular to the boundary`, `The value of the function itself at the boundary (prescribed values)`, `The flux of the function through the boundary surface`],
+    answer: 2,
+    intuition: `A Dirichlet boundary condition simply means prescribing (specifying) the values of the function at the boundary — it just means prescribe values`,
+    explanation: `A Dirichlet boundary condition simply means prescribing (specifying) the values of the function at the boundary — it just means prescribe values. The boundary data are the values you want to interpolate: height values, color values, whatever you like.`,
+    code: ``,
+    images: ["image_1777211776507_0.png"],
+    tags: ["BoundaryConditions/Dirichlet"],
+    source: `lectures/cg-23-lecture-quiz.md`,
+  },
+  {
+    id: 29,
+    timestamp: `48:00`,
+    question: `What does a Neumann boundary condition specify?`,
+    options: [`The value of the function at the boundary`, `The normal derivative — how quickly the function changes perpendicular to the boundary`, `The second derivative of the function at the boundary`, `The integral of the function over the boundary`],
+    answer: 1,
+    intuition: `A Neumann boundary condition specifies the normal derivative of the function at the boundary — how quickly the function changes perpendicular to the boundary (the outward flux condition)`,
+    explanation: `A Neumann boundary condition specifies the normal derivative of the function at the boundary — how quickly the function changes perpendicular to the boundary (the outward flux condition).`,
+    code: ``,
+    images: ["image_1777211852618_0.png"],
+    tags: ["BoundaryConditions/Neumann"],
+    source: `lectures/cg-23-lecture-quiz.md`,
+  },
+  {
+    id: 30,
+    timestamp: `49:00`,
+    question: `Can we always satisfy the 1D Laplace equation given Dirichlet boundary conditions?`,
+    options: [`No — there may be no smooth function connecting the two endpoint values`, `Yes — in 1D it simply finds a linear function between the two boundary values`, `Only if both boundary values are equal to zero`, `Only if the domain length is less than 1 unit`],
+    answer: 1,
+    intuition: `The answer is yes because it is easy to do for a point — in 1D the Laplace equation has a unique solution: a straight line between the two prescribed boundary values`,
+    explanation: `The answer is yes because it is easy to do for a point — in 1D the Laplace equation has a unique solution: a straight line between the two prescribed boundary values. Satisfying boundary conditions is not the hard part; satisfying every value in the interior is what matters.`,
+    code: ``,
+    images: ["image_1777212043598_0.png"],
+    tags: ["BoundaryConditions/Dirichlet", "Laplace"],
+    source: `lectures/cg-23-lecture-quiz.md`,
+  },
+  {
+    id: 31,
+    timestamp: `50:00`,
+    question: `Can we always satisfy the Laplace equation given Neumann boundary conditions?`,
+    options: [`Yes, always — any Neumann conditions can always be satisfied`, `No — the second derivative is a rate of change of the first derivative; if the first derivative is not changing, the second derivative cannot be nonzero`, `Yes, but only in 2D or higher dimensions`, `No, because Neumann conditions are always mathematically inconsistent`],
+    answer: 1,
+    intuition: `No — the second derivative is a rate of change of the first derivative`,
+    explanation: `No — the second derivative is a rate of change of the first derivative. If the first derivative (normal derivative at the boundary) is not changing, then the second derivative is not working. There is a compatibility condition that must be satisfied for a solution to exist.`,
+    code: ``,
+    images: ["image_1777212242234_0.png"],
+    tags: ["BoundaryConditions/Neumann", "Laplace"],
+    source: `lectures/cg-23-lecture-quiz.md`,
+  },
+  {
+    id: 32,
+    timestamp: `52:00`,
+    question: `Can we satisfy the 2D Laplace equation with Dirichlet boundary conditions?`,
+    options: [`No — the 2D case is fundamentally different from 1D and has no general solution`, `Yes — with appropriate boundary data a unique smooth solution exists interpolating those values`, `Only if the domain is convex`, `Only for rectangular or triangular domains`],
+    answer: 1,
+    intuition: `Yes — the 2D Laplace equation with Dirichlet boundary conditions has a unique solution given appropriate boundary data`,
+    explanation: `Yes — the 2D Laplace equation with Dirichlet boundary conditions has a unique solution given appropriate boundary data. It finds the smoothest function that interpolates the prescribed boundary values over the interior.`,
+    code: ``,
+    images: ["image_1777212531236_0.png"],
+    tags: ["BoundaryConditions/Dirichlet", "Laplace"],
     source: `lectures/cg-23-lecture-quiz.md`,
   },
 ]
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 const formatTime = (s) => `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`
 
 const useTimer = () => {
@@ -378,7 +450,7 @@ function SlideImages({ images }) {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '0.75rem' }}>
       {images.map((img, i) => (
-        <img key={i} src={`/assets/${img}`} alt={`slide-${i+1}`}
+        <img key={i} src={`${BASE}/assets/${img}`} alt={`slide-${i+1}`}
           onError={e => { e.target.style.display='none' }}
           style={{ maxWidth: '100%', borderRadius: '8px', border: '1px solid #2a2a3a', display: 'block' }} />
       ))}
@@ -386,7 +458,7 @@ function SlideImages({ images }) {
   )
 }
 
-export default function Lec23Quiz() {
+export default function Lec23Part1Quiz() {
   const [screen, setScreen] = useState('welcome')
   const [qIdx, setQIdx] = useState(0)
   const [answers, setAnswers] = useState(Array(quizData.length).fill(null))
@@ -452,17 +524,21 @@ export default function Lec23Quiz() {
       <div style={box}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <Waves size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
-          <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 23: PDEs & Physical Animation</h1>
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 23: PDEs & Physical Animation — Part 1</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Elliptic/Parabolic/Hyperbolic PDEs, Laplacian, Wave/Heat Equations</p>
           <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-23-lecture-quiz.md</p>
-          <p style={{ color: C.accent, fontWeight: 600 }}>Q1–Q24 · 24 questions</p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
+            <a key={1} href={`${BASE}/lec23/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
+          <a key={2} href={`${BASE}/lec23/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
+          </div>
+          <p style={{ color: C.accent, fontWeight: 600 }}>Q1–Q32 · 32 questions</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>24</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Questions</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~8min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>1</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Part</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Questions</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>2</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Parts</div></div>
           </div>
         </div>
 
@@ -470,7 +546,7 @@ export default function Lec23Quiz() {
           onClick={() => { setScreen('quiz'); start() }}>
           <Waves size={20} /> Start Quiz
         </button>
-        <a href='/' style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
+        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
       </div>
     </div>
   )
@@ -496,7 +572,7 @@ export default function Lec23Quiz() {
             <RefreshCw size={20} /> Restart
           </button>
         </div>
-        <a href='/' style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
+        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
       </div>
     </div>
   )
@@ -510,16 +586,16 @@ export default function Lec23Quiz() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Waves size={18} color={C.accent} />
-              <span style={{ color: C.accent, fontWeight: 600 }}>Lecture 23: PDEs & Physical Animation</span>
+              <span style={{ color: C.accent, fontWeight: 600 }}>Lecture 23: PDEs & Physical Animation — Part 1</span>
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/24</span>
+              <span>{qIdx+1}/32</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/24*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/32*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -617,7 +693,7 @@ export default function Lec23Quiz() {
           )}
           {(showExp||reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 24-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 32-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

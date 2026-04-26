@@ -1,34 +1,35 @@
 'use client'
 import { useState } from 'react'
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 const quizzes = [
   {
     id: 'lec2',
     title: 'Lecture 2: Linear Algebra',
     description: 'Vectors, linear maps, inner products, Gram-Schmidt, Fourier',
     color: '#818cf8',
-    href: '/lec2',
+    href: `${BASE}/lec2`,
   },
   {
     id: 'lec3',
     title: 'Lecture 3: Vector Calculus',
     description: 'Gradient, divergence, curl, Laplacian, Hessian',
     color: '#38bdf8',
-    href: '/lec3',
+    href: `${BASE}/lec3`,
   },
   {
     id: 'lec4',
     title: 'Lecture 4: Rasterization & Sampling',
     description: 'Pipeline, coverage, aliasing, SSAA, point-in-triangle',
     color: '#34d399',
-    href: '/lec4',
+    href: `${BASE}/lec4`,
   },
   {
     id: 'lec23',
     title: 'Lecture 23: PDEs & Physical Animation',
     description: 'Elliptic/Parabolic/Hyperbolic PDEs, Laplacian, Wave/Heat equations',
     color: '#f87171',
-    href: '/lec23',
+    href: `${BASE}/lec23`,
   },
 ]
 

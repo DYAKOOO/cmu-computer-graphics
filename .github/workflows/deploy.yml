@@ -31,6 +31,8 @@ jobs:
 
       - run: pnpm install
       - run: pnpm build
+        env:
+          BASE_PATH: /cmu-computer-graphics
 
       - uses: actions/upload-pages-artifact@v3
         with:

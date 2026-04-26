@@ -1,9 +1,10 @@
 'use client'
 const ACCENT = '#818cf8'
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 const parts = [
-  { num: 1, range: 'Q1–Q32', href: '/lec2/1' },
-  { num: 2, range: 'Q33–Q64', href: '/lec2/2' },
-  { num: 3, range: 'Q65–Q65', href: '/lec2/3' },
+  { num: 1, range: 'Q1–Q32', href: `${BASE}/lec2/1` },
+  { num: 2, range: 'Q33–Q64', href: `${BASE}/lec2/2` },
+  { num: 3, range: 'Q65–Q65', href: `${BASE}/lec2/3` },
 ]
 export default function Lec2Index() {
   return (
@@ -20,7 +21,7 @@ export default function Lec2Index() {
           </a>
         ))}
       </div>
-      <a href='/' style={{ marginTop: '2rem', color: '#475569', fontSize: '0.875rem' }}>← All quizzes</a>
+      <a href={`${BASE}/`} style={{ marginTop: '2rem', color: '#475569', fontSize: '0.875rem' }}>← All quizzes</a>
     </div>
   )
 }

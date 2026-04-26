@@ -176,6 +176,7 @@ def gen_jsx(questions, part_num, total_parts, cfg, source_file):
     w()
 
     # Helpers
+    w("const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''")
     w("const formatTime = (s) => `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`")
     w()
 
@@ -198,7 +199,7 @@ def gen_jsx(questions, part_num, total_parts, cfg, source_file):
     w("  return (")
     w("    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '0.75rem' }}>")
     w("      {images.map((img, i) => (")
-    w("        <img key={i} src={`/assets/${img}`} alt={`slide-${i+1}`}")
+    w("        <img key={i} src={`${BASE}/assets/${img}`} alt={`slide-${i+1}`}")
     w("          onError={e => { e.target.style.display='none' }}")
     w("          style={{ maxWidth: '100%', borderRadius: '8px', border: '1px solid #2a2a3a', display: 'block' }} />")
     w("      ))}")
@@ -283,7 +284,7 @@ def gen_jsx(questions, part_num, total_parts, cfg, source_file):
         for pn in range(1, total_parts + 1):
             color = "C.accent" if pn == part_num else "C.muted"
             part_link_els.append(
-                f'<a key={{{pn}}} href="/{route}/{pn}" style={{{{ color: {color}, fontSize: "0.85rem" }}}}>Part {pn}</a>'
+                f'<a key={{{pn}}} href={{`${{BASE}}/{route}/{pn}`}} style={{{{ color: {color}, fontSize: "0.85rem" }}}}>Part {pn}</a>'
             )
         part_links_jsx = '\n          '.join(part_link_els)
     else:
@@ -317,7 +318,7 @@ def gen_jsx(questions, part_num, total_parts, cfg, source_file):
     w("          onClick={() => { setScreen('quiz'); start() }}>")
     w(f"          <{icon} size={{20}} /> Start Quiz")
     w("        </button>")
-    w("        <a href='/' style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>")
+    w("        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>")
     w("      </div>")
     w("    </div>")
     w("  )")
@@ -345,7 +346,7 @@ def gen_jsx(questions, part_num, total_parts, cfg, source_file):
     w("            <RefreshCw size={20} /> Restart")
     w("          </button>")
     w("        </div>")
-    w("        <a href='/' style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>")
+    w("        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>")
     w("      </div>")
     w("    </div>")
     w("  )")

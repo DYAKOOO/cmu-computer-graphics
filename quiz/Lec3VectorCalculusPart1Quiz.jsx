@@ -432,6 +432,7 @@ const quizData = [
   },
 ]
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 const formatTime = (s) => `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`
 
 const useTimer = () => {
@@ -450,7 +451,7 @@ function SlideImages({ images }) {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '0.75rem' }}>
       {images.map((img, i) => (
-        <img key={i} src={`/assets/${img}`} alt={`slide-${i+1}`}
+        <img key={i} src={`${BASE}/assets/${img}`} alt={`slide-${i+1}`}
           onError={e => { e.target.style.display='none' }}
           style={{ maxWidth: '100%', borderRadius: '8px', border: '1px solid #2a2a3a', display: 'block' }} />
       ))}
@@ -528,9 +529,9 @@ export default function Lec3Part1Quiz() {
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Gradient, Divergence, Curl, Laplacian, Hessian</p>
           <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-03-lecture-quiz.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
-            <a key={1} href="/lec3/1" style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
-          <a key={2} href="/lec3/2" style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
-          <a key={3} href="/lec3/3" style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
+            <a key={1} href={`${BASE}/lec3/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
+          <a key={2} href={`${BASE}/lec3/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
+          <a key={3} href={`${BASE}/lec3/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
           <p style={{ color: C.accent, fontWeight: 600 }}>Q1–Q32 · 32 questions</p>
         </div>
@@ -547,7 +548,7 @@ export default function Lec3Part1Quiz() {
           onClick={() => { setScreen('quiz'); start() }}>
           <Sigma size={20} /> Start Quiz
         </button>
-        <a href='/' style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
+        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
       </div>
     </div>
   )
@@ -573,7 +574,7 @@ export default function Lec3Part1Quiz() {
             <RefreshCw size={20} /> Restart
           </button>
         </div>
-        <a href='/' style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
+        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
       </div>
     </div>
   )

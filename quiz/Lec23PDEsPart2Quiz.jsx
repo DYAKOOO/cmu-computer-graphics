@@ -1,91 +1,63 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Sigma } from 'lucide-react'
+import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Waves } from 'lucide-react'
 
-// Source: lectures/cg-03-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 3: Vector Calculus — Part 3 · Q65–Q70 · 6 questions
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-03-lecture-quiz.md 3
+// Source: lectures/cg-23-lecture-quiz.md  (symlinked → Logseq pages)
+// Lecture 23: PDEs & Physical Animation — Part 2 · Q33–Q36 · 4 questions
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-23-lecture-quiz.md 23
 
 const quizData = [
   {
-    id: 65,
-    timestamp: `1:13:27`,
-    question: `What is the 2D curl formula?`,
-    options: [`The determinant of the 2×2 Jacobian matrix`, `∂x₂/∂x₁ - ∂x₁/∂x₂`, `∂x₁/∂x₁ + ∂x₂/∂x₂`, `The divergence of the 2D vector field`],
+    id: 33,
+    timestamp: `53:00`,
+    question: `Can we satisfy the 2D Laplace equation with Neumann boundary conditions?`,
+    options: [`No, the 2D Neumann problem never has a solution`, `Yes — because what goes in must come out (the net flux through the boundary must be zero)`, `Only if all Dirichlet values are also specified simultaneously`, `Only if boundary values are identically zero everywhere`],
     answer: 1,
-    intuition: `The curl of x is equal to the partial derivative of the second coordinate function along the first coordinate direction minus the partial derivative of the first coordinate function along the second coordinate direction.`,
-    explanation: `The lecturer gives the formula at [1:13:27]: "The curl of x is equal to the partial derivative of the second coordinate function along the first coordinate direction minus the partial derivative of the first coordinate function along the second coordinate direction."`,
+    intuition: `Short answer yes, because of what goes in must come out — the net flux through the boundary must be zero`,
+    explanation: `Short answer yes, because of what goes in must come out — the net flux through the boundary must be zero. Important: after solving Ax=b, always verify by computing ||b-Ax||, since numerical libraries won't tell you if you made a mistake. #Verification`,
     code: ``,
-    images: ["image_1771989224011_0.png", "image_1772584933293_0.png", "image_1772584943241_0.png", "image_1772585074709_0.png"],
-    tags: [],
-    source: `lectures/cg-03-lecture-quiz.md`,
+    images: ["image_1777212731913_0.png"],
+    tags: ["BoundaryConditions/Neumann", "Laplace"],
+    source: `lectures/cg-23-lecture-quiz.md`,
   },
   {
-    id: 66,
-    timestamp: `1:14:47`,
-    question: `What relationship does the lecturer identify between curl and divergence?`,
-    options: [`They are completely independent operations`, `The divergence of X equals the curl of the 90° rotation of X`, `The curl is always perpendicular to the divergence`, `The sum of curl and divergence always equals zero`],
+    id: 34,
+    timestamp: `55:00`,
+    question: `What is the standard numerical approach for solving the heat equation?`,
+    options: [`Solve analytically using Fourier transforms only`, `March forward in time: at each step update u by adding timestep times Laplacian(u)`, `Apply boundary conditions only at the final timestep`, `Solve it as an elliptic (Laplace) equation ignoring time`],
     answer: 1,
-    intuition: `Do you notice anything about the relationship between curl and divergence? Hopefully you do! Hopefully what you are kind of picking up on is that the divergence of x is the same as the curl of the 90 degree rotation of x.`,
-    explanation: `The lecturer observes at [1:14:47]: "Do you notice anything about the relationship between curl and divergence? Hopefully you do! Hopefully what you are kind of picking up on is that the divergence of x is the same as the curl of the 90 degree rotation of x."`,
+    intuition: `The heat equation (du/dt = Laplacian(u)) is solved numerically by marching forward in time: at each step update u by adding a small timestep times the Laplacian of u (the difference between a point and the average of its neighbors)`,
+    explanation: `The heat equation (du/dt = Laplacian(u)) is solved numerically by marching forward in time: at each step update u by adding a small timestep times the Laplacian of u (the difference between a point and the average of its neighbors).`,
     code: ``,
-    images: ["image_1771989278643_0.png"],
-    tags: ["Relationship", "CG-Lecture-Question"],
-    source: `lectures/cg-03-lecture-quiz.md`,
+    images: ["image_1777212918312_0.png"],
+    tags: ["Equation/Heat"],
+    source: `lectures/cg-23-lecture-quiz.md`,
   },
   {
-    id: 67,
-    timestamp: `1:16:38`,
-    question: `In the fluid simulation example, what change in variables leads to different simulation results?`,
-    options: [`Changing from 2D to 3D simulation`, `Changing from velocity field to stream function`, `Changing from laminar to turbulent flow`, `Changing from Eulerian to Lagrangian coordinates`],
+    id: 35,
+    timestamp: `57:00`,
+    question: `What is the standard numerical approach for solving the wave equation?`,
+    options: [`Treat it as a parabolic equation with only one time derivative`, `Track height u and velocity v at each grid point, update both each timestep using second-order time integration`, `Use only Dirichlet boundary conditions and solve once`, `Compute the Fourier transform of the initial conditions and propagate analytically`],
     answer: 1,
-    intuition: `So in one case you might use the fluid velocity u, in the other case you use the so-called stream function psi. And you can see that just this mathematically fairly simple change really changes the behavior of the simulation.`,
-    explanation: `The lecturer explains at [1:16:52]: "So in one case you might use the fluid velocity u, in the other case you use the so-called stream function psi. And you can see that just this mathematically fairly simple change really changes the behavior of the simulation."`,
+    intuition: `The wave equation (d2u/dt2 = Laplacian(u)) is solved by tracking height u and velocity v at each grid point, then using second-order time integration (e`,
+    explanation: `The wave equation (d2u/dt2 = Laplacian(u)) is solved by tracking height u and velocity v at each grid point, then using second-order time integration (e.g., leapfrog/Verlet) to update both each timestep.`,
     code: ``,
-    images: ["image_1771989335272_0.png"],
-    tags: [],
-    source: `lectures/cg-03-lecture-quiz.md`,
+    images: ["image_1777212992447_0.png"],
+    tags: ["Equation/Wave"],
+    source: `lectures/cg-23-lecture-quiz.md`,
   },
   {
-    id: 68,
-    timestamp: `1:17:34`,
-    question: `Why does the lecturer say the Laplacian is important for graphics?`,
-    options: [`It only appears in specialized applications`, `It appears across many domains including geometry, rendering, simulation, and imaging`, `It's only important for color processing`, `It's only useful for physics simulations`],
+    id: 36,
+    timestamp: `60:00`,
+    question: `What is a powerful mindset for developing algorithms in computer graphics and simulation?`,
+    options: [`Always start with discrete data structures (grids or graphs) and optimize later`, `Formulate problems as PDEs on continuous domains first — this makes it easy to port algorithms across different representations`, `Use machine learning to learn algorithms from example data rather than deriving them`, `Implement algorithms for one specific geometry type only and do not generalize`],
     answer: 1,
-    intuition: `This is unbelievably important for graphics, it shows up across geometry, across rendering, simulation, imaging, everywhere.`,
-    explanation: `The lecturer emphasizes at [1:17:34]: "This is unbelievably important for graphics, it shows up across geometry, across rendering, simulation, imaging, everywhere."`,
+    intuition: `If you can formulate your graphics and simulation problems as PDEs rather than in terms of discrete data, it is easier to port those algorithms to different contexts`,
+    explanation: `If you can formulate your graphics and simulation problems as PDEs rather than in terms of discrete data, it is easier to port those algorithms to different contexts. If you start by thinking in terms of graphs or grids, it will not be clear how to convert from one domain to another. #AlgorithmDesignTechnique`,
     code: ``,
-    images: ["image_1771989366312_0.png"],
-    tags: ["Laplacian"],
-    source: `lectures/cg-03-lecture-quiz.md`,
-  },
-  {
-    id: 69,
-    timestamp: `1:21:19`,
-    question: `How can the Laplacian be written in terms of other differential operators?`,
-    options: [`As the gradient of the divergence`, `As the curl of the gradient`, `As the divergence of the gradient`, `As the divergence of the curl`],
-    answer: 2,
-    intuition: `We can write it using the operators we just talked about: divergence and gradient. So Laplacian of f is the divergence of the gradient of f.`,
-    explanation: `The lecturer states at [1:21:19]: "We can write it using the operators we just talked about: divergence and gradient. So Laplacian of f is the divergence of the gradient of f."  ]`,
-    code: ``,
-    images: ["image_1771989413169_0.png"],
-    tags: ["Laplacian", "Operator", "Curvature"],
-    source: `lectures/cg-03-lecture-quiz.md`,
-  },
-  {
-    id: 70,
-    timestamp: `1:27:25`,
-    question: `How does the lecturer define the Hessian in terms of the gradient?`,
-    options: [`The Hessian is the determinant of the gradient`, `The Hessian is the transpose of the gradient`, `The Hessian gives the directional derivative of the gradient`, `The Hessian is the integral of the gradient`],
-    answer: 2,
-    intuition: `More precisely what I mean by that is if I take the Hessian of the function f and apply it to the vector or direction u, then I get the directional derivative of the gradient in the direction u.`,
-    explanation: `The lecturer defines at [1:27:25]: "More precisely what I mean by that is if I take the Hessian of the function f and apply it to the vector or direction u, then I get the directional derivative of the gradient in the direction u."
-
--`,
-    code: ``,
-    images: ["image_1771989791144_0.png"],
-    tags: [],
-    source: `lectures/cg-03-lecture-quiz.md`,
+    images: [],
+    tags: ["mindset"],
+    source: `lectures/cg-23-lecture-quiz.md`,
   },
 ]
 
@@ -116,7 +88,7 @@ function SlideImages({ images }) {
   )
 }
 
-export default function Lec3Part3Quiz() {
+export default function Lec23Part2Quiz() {
   const [screen, setScreen] = useState('welcome')
   const [qIdx, setQIdx] = useState(0)
   const [answers, setAnswers] = useState(Array(quizData.length).fill(null))
@@ -132,7 +104,7 @@ export default function Lec3Part3Quiz() {
     bg: '#0a0a0f',
     surface: '#111118',
     border: '#2a2a3a',
-    accent: '#38bdf8',
+    accent: '#f87171',
     text: '#e2e8f0',
     muted: '#94a3b8',
     ok: '#10b981',
@@ -181,29 +153,28 @@ export default function Lec3Part3Quiz() {
     <div style={base}>
       <div style={box}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <Sigma size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
-          <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 3: Vector Calculus — Part 3</h1>
-          <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Gradient, Divergence, Curl, Laplacian, Hessian</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-03-lecture-quiz.md</p>
+          <Waves size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 23: PDEs & Physical Animation — Part 2</h1>
+          <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Elliptic/Parabolic/Hyperbolic PDEs, Laplacian, Wave/Heat Equations</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-23-lecture-quiz.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
-            <a key={1} href={`${BASE}/lec3/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
-          <a key={2} href={`${BASE}/lec3/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
-          <a key={3} href={`${BASE}/lec3/3`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 3</a>
+            <a key={1} href={`${BASE}/lec23/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
+          <a key={2} href={`${BASE}/lec23/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>Q65–Q70 · 6 questions</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>Q33–Q36 · 4 questions</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>6</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Questions</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~2min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Parts</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>4</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Questions</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~1min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>2</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Parts</div></div>
           </div>
         </div>
 
         <button style={btn({ width: '100%', justifyContent: 'center', fontSize: '1.1rem', padding: '1rem' })}
           onClick={() => { setScreen('quiz'); start() }}>
-          <Sigma size={20} /> Start Quiz
+          <Waves size={20} /> Start Quiz
         </button>
         <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
       </div>
@@ -244,17 +215,17 @@ export default function Lec3Part3Quiz() {
         <div style={{ marginBottom: '1.5rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Sigma size={18} color={C.accent} />
-              <span style={{ color: C.accent, fontWeight: 600 }}>Lecture 3: Vector Calculus — Part 3</span>
+              <Waves size={18} color={C.accent} />
+              <span style={{ color: C.accent, fontWeight: 600 }}>Lecture 23: PDEs & Physical Animation — Part 2</span>
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/6</span>
+              <span>{qIdx+1}/4</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/6*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/4*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -352,7 +323,7 @@ export default function Lec3Part3Quiz() {
           )}
           {(showExp||reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 6-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 4-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>
