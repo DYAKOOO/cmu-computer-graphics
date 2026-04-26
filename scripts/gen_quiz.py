@@ -53,11 +53,12 @@ def parse_questions(md_path):
         ans_m = re.search(r'- ANSWER:\s*([A-D])', block)
         answer = ans_m.group(1) if ans_m else 'A'
 
-        # Full explanation block
-        exp_m = re.search(r'- EXPLANATION:\s*([\s\S]*?)(?=\n- #card|\Z)', block)
+        # Full explanation block (stops at - CODE: or next card)
+        exp_m = re.search(r'- EXPLANATION:\s*([\s\S]*?)(?=\n\s*- CODE:|\n- #card|\Z)', block)
         explanation_text = ''
         images = []
 
+        intuition_text = ''
         if exp_m:
             raw = exp_m.group(1)
             images = re.findall(r'!\[image\.png\]\(\.\./assets/(image_[^)]+)\)', raw)
@@ -73,6 +74,30 @@ def parse_questions(md_path):
                 if l or (clean and clean[-1]):
                     clean.append(l)
             explanation_text = '\n'.join(clean).strip()
+
+            # Intuition: extract the quoted lecturer statement(s) — the "..." parts
+            quotes = re.findall(r'"([^"]{15,})"', explanation_text)
+            if quotes:
+                # Use the longest quote as the key insight
+                intuition_text = max(quotes, key=len).strip()
+            else:
+                # Fallback: first sentence of explanation
+                first = explanation_text.split('.')[0].strip()
+                intuition_text = first if len(first) > 20 else explanation_text[:200]
+
+        # Optional code block: - CODE:\n  ```python\n  ...\n  ```
+        code_text = ''
+        code_m = re.search(r'- CODE:\s*\n([\s\S]*?)(?=\n- #card|\Z)', block)
+        if code_m:
+            raw_code = code_m.group(1)
+            # Strip ```python / ``` fences and leading indent
+            raw_code = re.sub(r'^\s*```[a-z]*\n?', '', raw_code)
+            raw_code = re.sub(r'\n?\s*```\s*$', '', raw_code)
+            # Remove consistent leading indentation (2 or 4 spaces added by Logseq)
+            code_lines = raw_code.splitlines()
+            if code_lines:
+                indent = len(code_lines[0]) - len(code_lines[0].lstrip())
+                code_text = '\n'.join(l[indent:] if len(l) >= indent else l for l in code_lines).strip()
 
         # Deduplicate images preserving order
         seen = set()
@@ -90,7 +115,9 @@ def parse_questions(md_path):
             'question': question,
             'options': [opts.get('A',''), opts.get('B',''), opts.get('C',''), opts.get('D','')],
             'answer': ord(answer) - ord('A'),
+            'intuition': intuition_text,
             'explanation': explanation_text,
+            'code': code_text,
             'images': unique_images,
             'tags': list(dict.fromkeys(tags)),
         })
@@ -138,7 +165,9 @@ def gen_jsx(questions, part_num, total_parts, cfg, source_file):
         w(f"    question: `{escape_js(q['question'])}`,")
         w(f"    options: [{opts_js}],")
         w(f"    answer: {q['answer']},")
+        w(f"    intuition: `{escape_js(q.get('intuition',''))}`,")
         w(f"    explanation: `{escape_js(q['explanation'])}`,")
+        w(f"    code: `{escape_js(q.get('code',''))}`,")
         w(f"    images: [{imgs_js}],")
         w(f"    tags: [{tags_js}],")
         w(f"    source: `lectures/{escape_js(source_basename)}`,")
@@ -187,6 +216,7 @@ def gen_jsx(questions, part_num, total_parts, cfg, source_file):
     w("  const [showExp, setShowExp] = useState(false)")
     w("  const [reviewMode, setReviewMode] = useState(false)")
     w("  const [expTab, setExpTab] = useState('explanation')")
+    w("  const [codeCopied, setCodeCopied] = useState(false)")
     w("  const { t, start, pause, reset: resetTimer } = useTimer()")
     w("  const q = quizData[qIdx]")
     w()
@@ -382,25 +412,42 @@ def gen_jsx(questions, part_num, total_parts, cfg, source_file):
     w("        {(showExp || reviewMode) && (")
     w("          <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '1.5rem', border: `1px solid ${C.border}` }}>")
     w("            {/* Tab switcher */}")
-    w("            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>")
-    w("              {['explanation','images','tags'].map(tab => (")
-    w("                <button key={tab} onClick={() => setExpTab(tab)}")
-    w("                  style={{ padding: '0.3rem 0.8rem', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600,")
-    w("                    background: expTab===tab ? C.accent : C.border, color: expTab===tab ? '#0a0a0f' : C.muted }}>")
-    w("                  {tab === 'explanation' ? '💡 Explanation' : tab === 'images' ? '🖼 Slides' : '🔗 Tags'}")
-    w("                </button>")
-    w("              ))}")
+    w("            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem', flexWrap: 'wrap' }}>")
+    w("              {['intuition','explanation','images','tags'].map(tab => {")
+    w("                return (")
+    w("                  <button key={tab} onClick={() => setExpTab(tab)}")
+    w("                    style={{ padding: '0.3rem 0.85rem', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600,")
+    w("                      background: expTab===tab ? C.accent : '#1e1e2e', color: expTab===tab ? '#0a0a0f' : C.muted,")
+    w("                      outline: expTab===tab ? 'none' : `1px solid ${C.border}` }}>")
+    w("                    {tab==='intuition' ? '💡 Intuition' : tab==='explanation' ? '📖 Explanation' : tab==='images' ? '🖼 Slides' : '🔗 Tags'}")
+    w("                  </button>")
+    w("                )")
+    w("              })}")
     w("            </div>")
+    w("            {expTab === 'intuition' && (")
+    w("              q.intuition")
+    w("                ? (")
+    w("                  <div style={{ borderLeft: `3px solid ${C.accent}`, paddingLeft: '1rem' }}>")
+    w("                    <p style={{ margin: '0 0 0.25rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>KEY INSIGHT FROM LECTURE</p>")
+    w("                    <p style={{ margin: 0, lineHeight: 1.75, color: C.text, fontSize: '1rem', fontStyle: 'italic' }}>\"{q.intuition}\"</p>")
+    w("                  </div>")
+    w("                )")
+    w("                : <p style={{ color: '#475569', margin: 0 }}>No intuition extracted.</p>")
+    w("            )}")
     w("            {expTab === 'explanation' && (")
     w("              q.explanation")
-    w("                ? <p style={{ lineHeight: 1.75, color: C.muted, whiteSpace: 'pre-wrap', margin: 0 }}>{q.explanation}</p>")
+    w("                ? <p style={{ lineHeight: 1.8, color: C.muted, whiteSpace: 'pre-wrap', margin: 0 }}>{q.explanation}</p>")
     w("                : <p style={{ color: '#475569', margin: 0 }}>No explanation provided.</p>")
     w("            )}")
-    w("            {expTab === 'images' && <SlideImages images={q.images} />}")
+    w("            {expTab === 'images' && (")
+    w("              q.images && q.images.length > 0")
+    w("                ? <SlideImages images={q.images} />")
+    w("                : <p style={{ color: '#475569', margin: 0 }}>No slide images for this question.</p>")
+    w("            )}")
     w("            {expTab === 'tags' && (")
     w("              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>")
     w("                {q.tags.length > 0")
-    w("                  ? q.tags.map((t,i) => <span key={i} style={tag()}>{t}</span>)")
+    w("                  ? q.tags.map((tg,i) => <span key={i} style={tag()}>{tg}</span>)")
     w("                  : <span style={{ color: '#475569' }}>No tags.</span>}")
     w("              </div>")
     w("            )}")
