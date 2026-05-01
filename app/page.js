@@ -25,6 +25,13 @@ const quizzes = [
     href: `${BASE}/lec4`,
   },
   {
+    id: 'lec20',
+    title: 'Lecture 20: Introduction to Animation',
+    description: 'Keyframing, splines, Hermite/Catmull-Rom/B-splines, skeletal animation, IK',
+    color: '#34d399',
+    href: `${BASE}/lec20`,
+  },
+  {
     id: 'lec21',
     title: 'Lecture 21: Dynamics & Time Integration',
     description: 'ODEs, Lagrangian mechanics, Forward/Backward/Symplectic Euler, particle systems',

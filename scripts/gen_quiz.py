@@ -485,6 +485,7 @@ CONFIGS = {
     '3': {'lec_num':'3','title':'Lecture 3: Vector Calculus','subtitle':'Gradient, Divergence, Curl, Laplacian, Hessian','accent':'#38bdf8','icon':'Sigma','route':'lec3','file_prefix':'Lec3VectorCalculus'},
     '4': {'lec_num':'4','title':'Lecture 4: Rasterization & Sampling','subtitle':'Pipeline, Coverage, Aliasing, SSAA, Nyquist','accent':'#34d399','icon':'Monitor','route':'lec4','file_prefix':'Lec4Rasterization'},
     '5': {'lec_num':'5','title':'Lecture 5: Spatial Transformations','subtitle':'Linear maps, homogeneous coords, rotation, translation','accent':'#f59e0b','icon':'Move','route':'lec5','file_prefix':'Lec5SpatialTransformations'},
+    '20': {'lec_num':'20','title':'Lecture 20: Introduction to Animation','subtitle':'Keyframing, Splines, Hermite/Catmull-Rom/B-Splines, Skeletal Animation','accent':'#34d399','icon':'Film','route':'lec20','file_prefix':'Lec20Animation'},
     '21': {'lec_num':'21','title':'Lecture 21: Dynamics & Time Integration','subtitle':'ODEs, Lagrangian Mechanics, Euler Integrators, Particle Systems','accent':'#a78bfa','icon':'Activity','route':'lec21','file_prefix':'Lec21Dynamics'},
     '23': {'lec_num':'23','title':'Lecture 23: PDEs & Physical Animation','subtitle':'Elliptic/Parabolic/Hyperbolic PDEs, Laplacian, Wave/Heat Equations','accent':'#f87171','icon':'Waves','route':'lec23','file_prefix':'Lec23PDEs'},
 }
