@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Activity } from 'lucide-react'
 
 // Source: lectures/cg-21-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 21: Dynamics & Time Integration — Part 2 · Q33–Q36 · 4 questions
+// Lecture 21: Dynamics & Time Integration — Part 2 · Q33–Q38 · 6 questions
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-21-lecture-quiz.md 21
 
 const quizData = [
@@ -16,8 +16,8 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:18:23]–[1:18:49], the lecturer explains: "The cool thing that happens now is the pendulum now conserves energy almost exactly forever. So you start out, this pendulum's going back and forth, and you can keep on running your simulation for forever — for days, for hours, for weeks — and it'll keep on going back and forth with basically the same energy as at the beginning." Forward Euler gains energy; Backward Euler loses it; Symplectic Euler maintains it.`,
     code: ``,
-    images: ["lec21_slide_34.png"],
-    tags: [],
+    images: ["image_1777623127545_0.png", "image_1777623169321_0.png"],
+    tags: ["Book"],
     source: `lectures/cg-21-lecture-quiz.md`,
   },
   {
@@ -27,9 +27,9 @@ const quizData = [
     options: [`Finite differences, integration, interpolation, extrapolation`, `By-hand derivation, numerical differentiation, automatic differentiation, symbolic differentiation`, `Gradient descent, Newton's method, secant method, bisection`, `Forward mode, backward mode, tangent mode, adjoint mode`],
     answer: 1,
     intuition: ``,
-    explanation: `At [1:21:23]–[1:25:19], the lecturer describes four methods: (1) by-hand (laborious but clean/fast code), (2) numerical differentiation (perturb and divide; general but inaccurate), (3) automatic differentiation (pairs of (value, derivative) with chain rule; accurate and fast but requires code changes), (4) symbolic differentiation (expression tree transformation; good for one-time use but often produces complicated results).`,
+    explanation: `At [1:21:23]–[1:25:19], the lecturer describes four methods: (1) by-hand (laborious & error prone but clean/fast code), (2) numerical differentiation (perturb and divide; general but inaccurate), (3) automatic differentiation (pairs of (value, derivative) with chain rule; accurate and fast but requires code changes), (4) symbolic differentiation (expression tree transformation; good for one-time use but often produces complicated results). 5) Geometric differentiation , differentiating a vertex with respect to a triangle.`,
     code: ``,
-    images: ["lec21_slide_36.png"],
+    images: ["image_1777623356232_0.png"],
     tags: [],
     source: `lectures/cg-21-lecture-quiz.md`,
   },
@@ -42,8 +42,8 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:29:18]–[1:29:47], the lecturer explains: "If you get down to a certain size, there's not any separation between numbers anymore. What I've plotted here is the error that you get for smaller and smaller h. You see at some point you get down to a pretty small error, but then it shoots back up again when you make h too small. So this is part of the annoyance of working with numerical differentiation."`,
     code: ``,
-    images: ["lec21_slide_39.png"],
-    tags: [],
+    images: ["image_1777623752196_0.png"],
+    tags: ["definition", "Differentiation/Numerical"],
     source: `lectures/cg-21-lecture-quiz.md`,
   },
   {
@@ -55,7 +55,33 @@ const quizData = [
     intuition: `Moving P parallel to E changes nothing (area = ½ base × height; base length and height are both unchanged). Moving P perpendicular to E changes height by 1, so area changes by |E|/2. Therefore: gradient direction = perpendicular to E, gradient magnitude = |E|/2. One clean geometric argument replaces a page of symbolic calculus from Mathematica.`,
     explanation: `At [1:35:30]–[1:39:18], the lecturer derives geometrically: "I know area is one half base times height. I can't change the length of the base by moving P. Moving P parallel to E doesn't change the height. So the gradient can't be parallel to E... The only other direction is orthogonal to the base... If H increases by one, area increases by one half the length of the base. The gradient of area must point in the direction perpendicular to E and must have magnitude proportional to |E|/2." In 3D: grad = (normal × E) / 2.`,
     code: ``,
-    images: ["lec21_slide_42.png"],
+    images: [],
+    tags: [],
+    source: `lectures/cg-21-lecture-quiz.md`,
+  },
+  {
+    id: 37,
+    timestamp: `1:29:51`,
+    question: `How does forward-mode automatic differentiation work mechanically?`,
+    options: [`It symbolically rewrites the expression tree and evaluates the resulting derivative formula`, `It perturbs inputs by a small h and divides the output change by h`, `It propagates pairs (f, f’) through every arithmetic operation using the chain rule`, `It records the computation graph and replays it in reverse to accumulate gradients`],
+    answer: 2,
+    intuition: `Instead of computing f(x) and then separately computing f’(x), you carry both at once as a pair (value, derivative). Every arithmetic op has a chain-rule rule for transforming pairs. Multiplying (u, u’) × (v, v’) gives (uv, uv’ + vu’) — exactly the product rule. No symbolic trees, no finite differences: just pair arithmetic all the way through.`,
+    explanation: `At [1:29:51], the lecturer explains: "Rather than work with values f, you’re going to work with pairs f and f prime. How do you operate on these pairs? Well, you use the chain rule to understand how any arithmetic operation is gonna transform these pairs." Example: f(x) = ax² at x=2. Start with (2,1) representing (x, dx/dx). Square via product rule: (2,1)×(2,1) = (4,4). Multiply by a: (4a, 4a). Derivative of ax² is 2ax, and 2a·2 = 4a — correct. Pros: good accuracy, reasonably fast. Cons: must redefine all arithmetic operators in code.`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-21-lecture-quiz.md`,
+  },
+  {
+    id: 38,
+    timestamp: `1:33:38`,
+    question: `How does symbolic differentiation work, and what is its key limitation compared to geometric reasoning?`,
+    options: [`It perturbs inputs numerically; limitation is floating-point precision loss`, `It builds an expression tree for f, applies derivative transformation rules to get a tree for f’, then evaluates it; limitation is it often produces unnecessarily complicated results`, `It replays a recorded computation graph backwards; limitation is high memory cost`, `It uses Fourier analysis to decompose f into sinusoids; limitation is it only works for periodic functions`],
+    answer: 1,
+    intuition: `Symbolic diff is like a rule-following algebra student — it applies the chain rule mechanically at every node of the expression tree, always correctly but never cleverly. The gradient of triangle area is geometrically obvious (perpendicular to opposite edge, magnitude |E|/2), but Mathematica outputs a full page of symbols even after simplification. Geometric intuition encodes the WHY; symbolic tools only know the HOW.`,
+    explanation: `At [1:33:38], the lecturer explains: "If you build up an expression tree, once I have that tree, if I want the derivative I transform this tree into a tree for the derivative." Pros: derivative tree computed once, then evaluates cheaply for any inputs; no code rewriting required. Cons: tools like Mathematica and Maple struggle with vectors/matrices common in 3D graphics; results are often far more complex than a human derivation. The triangle area gradient example illustrates this — Mathematica’s output versus the two-line geometric argument.`,
+    code: ``,
+    images: [],
     tags: [],
     source: `lectures/cg-21-lecture-quiz.md`,
   },
@@ -161,13 +187,13 @@ export default function Lec21Part2Quiz() {
             <a key={1} href={`${BASE}/lec21/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec21/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>Q33–Q36 · 4 questions</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>Q33–Q38 · 6 questions</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>4</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Questions</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~1min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>6</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Questions</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~2min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>2</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Parts</div></div>
           </div>
         </div>
@@ -220,12 +246,12 @@ export default function Lec21Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/4</span>
+              <span>{qIdx+1}/6</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/4*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/6*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -323,7 +349,7 @@ export default function Lec21Part2Quiz() {
           )}
           {(showExp||reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 4-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 6-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>
