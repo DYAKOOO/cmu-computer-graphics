@@ -25,6 +25,13 @@ const quizzes = [
     href: `${BASE}/lec4`,
   },
   {
+    id: 'lec21',
+    title: 'Lecture 21: Dynamics & Time Integration',
+    description: 'ODEs, Lagrangian mechanics, Forward/Backward/Symplectic Euler, particle systems',
+    color: '#a78bfa',
+    href: `${BASE}/lec21`,
+  },
+  {
     id: 'lec23',
     title: 'Lecture 23: PDEs & Physical Animation',
     description: 'Elliptic/Parabolic/Hyperbolic PDEs, Laplacian, Wave/Heat equations',
