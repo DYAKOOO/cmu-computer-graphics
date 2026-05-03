@@ -3,7 +3,7 @@ const ACCENT = '#f59e0b'
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 const parts = [
   { num: 1, range: 'Q1–Q32', href: `${BASE}/lec22/1` },
-  { num: 2, range: 'Q33+', href: `${BASE}/lec22/2` },
+  { num: 2, range: 'Q33–Q62', href: `${BASE}/lec22/2` },
 ]
 export default function Lec22Index() {
   return (

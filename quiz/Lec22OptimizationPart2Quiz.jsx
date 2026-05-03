@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, TrendingDown } from 'lucide-react'
 
 // Source: lectures/cg-22-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 22: Introduction to Optimization — Part 2 · Q33–Q53 · 21 questions
+// Lecture 22: Introduction to Optimization — Part 2 · Q33–Q62 · 30 questions
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-22-lecture-quiz.md 22
 
 const quizData = [
@@ -53,9 +53,11 @@ const quizData = [
     options: [`A vector of first derivatives`, `A matrix of second partial derivatives`, `A third-order tensor`, `The determinant of the Jacobian`],
     answer: 1,
     intuition: ``,
-    explanation: `At [49:18], the professor defines: "The Hessian is our generalization of the second derivative to multi variable functions and the way you usually learn this is it's a big matrix of all possible second partial derivatives so if I have variables x1 through xn then I take the second derivative of F with respect to X1 and then X1 then I do it again with respect to X1 and X2 X1 and X3 and so forth."`,
+    explanation: `At [49:18], the professor defines: "The Hessian is our generalization of the second derivative to multi variable functions and the way you usually learn this is it's a big matrix of all possible second partial derivatives so if I have variables x1 through xn then I take the second derivative of F with respect to X1 and then X1 then I do it again with respect to X1 and X2 X1 and X3 and so forth."
+
+- QUESTIONS (continued):`,
     code: ``,
-    images: ["image_1777605341768_0.png", "lec22_slide_18.png"],
+    images: ["image_1777605341768_0.png", "lec22_slide_13.png"],
     tags: [],
     source: `lectures/cg-22-lecture-quiz.md`,
   },
@@ -120,7 +122,7 @@ const quizData = [
     intuition: ``,
     explanation: `At [56:29], the professor describes: "How do I know it's convex how do I test whether whether or not a set is convex the basic idea is I should be able to if it's convex I should be able to take any two points inside the set and connect them by a straight line segment that doesn't leave that set."`,
     code: ``,
-    images: ["image_1777605660443_0.png", "lec22_slide_20.png"],
+    images: ["image_1777605660443_0.png", "lec22_slide_03.png"],
     tags: [],
     source: `lectures/cg-22-lecture-quiz.md`,
   },
@@ -133,7 +135,7 @@ const quizData = [
     intuition: ``,
     explanation: `At [57:25], the professor explains: "What does it mean for a objective or a function to be convex kind of a similar idea if I look at the graph of the function here it is graph of f of X and I take any two points and connect them by straight line segment I want that line segment to be above the graph of the function for all possible pairs of points."`,
     code: ``,
-    images: ["image_1777605669728_0.png", "lec22_slide_20.png"],
+    images: ["image_1777605669728_0.png", "lec22_slide_17.png"],
     tags: [],
     source: `lectures/cg-22-lecture-quiz.md`,
   },
@@ -146,7 +148,7 @@ const quizData = [
     intuition: ``,
     explanation: `At [58:31], the professor states: "Because we don't have little local minima all over the place we know that the result we get won't depend on finding a good initial guess... with convex problems strongly convex problems we don't have to worry about this at all we can start with whatever random guess we want and we'll always get the same optimal solution."`,
     code: ``,
-    images: ["image_1777605749519_0.png", "lec22_slide_20.png"],
+    images: ["image_1777605749519_0.png", "lec22_slide_09.png"],
     tags: [],
     source: `lectures/cg-22-lecture-quiz.md`,
   },
@@ -159,7 +161,7 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:00:09], the professor says: "So let's take a look at one really important class of convex optimization problems that show up all the time day and night in computer graphics both in animation and in geometry processing and an image processing all over the place which are convex quadratic objectives."`,
     code: ``,
-    images: ["image_1777608590620_0.png", "lec22_slide_21.png"],
+    images: ["image_1777608590620_0.png", "lec22_slide_02.png"],
     tags: ["optimization", "ddg", "ImageProcessing"],
     source: `lectures/cg-22-lecture-quiz.md`,
   },
@@ -211,7 +213,7 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:06:48], the professor uses this analogy: "This kind of gives a sense of why should it be that convex problems are easy to solve well if I have this bowl and I'm looking for the minimum of the bowl I can imagine just kind of skiing down to the bottom if I keep just going down down down following the gradient I'll get to the bottom."`,
     code: ``,
-    images: ["image_1777608844041_0.png", "lec22_slide_22.png"],
+    images: ["image_1777608844041_0.png", "lec22_slide_27.png"],
     tags: [],
     source: `lectures/cg-22-lecture-quiz.md`,
   },
@@ -224,7 +226,7 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:08:02], the professor states: "The reality is the kinds of optimization problems that show up in graphics are way more complicated and sadly aren't often not convex even if that's a good of getting our head around optimization problems."`,
     code: ``,
-    images: ["image_1777608862406_0.png", "image_1777608888150_0.png", "lec22_slide_22.png"],
+    images: ["image_1777608862406_0.png", "image_1777608888150_0.png", "lec22_slide_27.png"],
     tags: [],
     source: `lectures/cg-22-lecture-quiz.md`,
   },
@@ -237,7 +239,7 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:09:27], the professor explains: "So the most basic version of this descent method is something called gradient descent okay and the basic idea is to follow the gradient downhill until the gradient is 0 so follow the direction that's minus the gradient right."`,
     code: ``,
-    images: ["image_1777608964675_0.png", "lec22_slide_24.png"],
+    images: ["image_1777608964675_0.png", "lec22_slide_27.png"],
     tags: ["GradientDescent"],
     source: `lectures/cg-22-lecture-quiz.md`,
   },
@@ -264,7 +266,7 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:17:20], the professor describes: "Here's a very very common phenomenon where our objective function in the vicinity of a local minimum looks like a long slender Valley and so if I start at a point and I walk for a little while along the gradient at that initial point and then I stop I update the Greg find a new gradient I walk a little bit along that direction and then I do it again and again and again the solution can oscillate back and forth right."`,
     code: ``,
-    images: ["image_1777609145705_0.png", "lec22_slide_26.png"],
+    images: ["image_1777609145705_0.png", "lec22_slide_17.png"],
     tags: [],
     source: `lectures/cg-22-lecture-quiz.md`,
   },
@@ -281,6 +283,126 @@ const quizData = [
     code: ``,
     images: ["image_1777609303061_0.png", "lec22_slide_27.png"],
     tags: ["sgd"],
+    source: `lectures/cg-22-lecture-quiz.md`,
+  },
+  {
+    id: 54,
+    timestamp: `1:20:50`,
+    question: `How does Newton's method for optimization modify the basic gradient descent update?`,
+    options: [`It adds a momentum term to avoid oscillations`, `It applies the inverse of the Hessian to the gradient`, `It dynamically adjusts the step size based on progress`, `It adds random noise to escape local minima`],
+    answer: 1,
+    intuition: ``,
+    explanation: `At [1:20:50], the professor explains: "Our new position X K plus 1 is equal to our current position XK minus the time step times well no longer just the gradient right before in gradient ascent we would have just moved along the direction of the gradient now what we're gonna do is instead apply the inverse of the Hessian to the gradient before we take this step."`,
+    code: ``,
+    images: ["image_1777609378541_0.png", "lec22_slide_25.png"],
+    tags: ["NewtonsMethod", "Hessian"],
+    source: `lectures/cg-22-lecture-quiz.md`,
+  },
+  {
+    id: 55,
+    timestamp: `1:22:29`,
+    question: `What advantage of Newton's method did the professor highlight for convex optimization?`,
+    options: [`It requires less memory than gradient descent`, `It avoids the need to compute derivatives`, `It converges in very few steps (about 5-6) once near the minimum`, `It never gets stuck in local minima`],
+    answer: 2,
+    intuition: ``,
+    explanation: `At [1:22:29], the professor states: "This is particularly great for convex problems in fact they're even proof showing that in general you're gonna take only about five or six Newton steps to get to a local minimizer once you're kind of in the bowl-like region around the minimizer."`,
+    code: ``,
+    images: ["image_1777609387791_0.png", "lec22_slide_27.png"],
+    tags: ["Proof"],
+    source: `lectures/cg-22-lecture-quiz.md`,
+  },
+  {
+    id: 56,
+    timestamp: `1:22:53`,
+    question: `What challenge does Newton's method face with non-convex optimization?`,
+    options: [`The Hessian might not be positive definite, leading to saddle points`, `The algorithm becomes computationally too expensive`, `The method can only work with twice-differentiable functions`, `The inverse Hessian might not exist`],
+    answer: 0,
+    intuition: ``,
+    explanation: `At [1:22:53], the professor explains: "The reason we need to be more careful is that the Hessian is not always positive definite and so the point that we find with Newton's method might not be kind of a local minimum but it might be more like a saddle point it's not really making progress towards the minimizer."`,
+    code: ``,
+    images: ["image_1777609497987_0.png", "lec22_slide_27.png"],
+    tags: ["PSD"],
+    source: `lectures/cg-22-lecture-quiz.md`,
+  },
+  {
+    id: 57,
+    timestamp: `1:25:16`,
+    question: `What animation technique did the professor describe as an optimization application in graphics?`,
+    options: [`Motion capture`, `Physics simulation`, `Inverse kinematics`, `Procedural animation`],
+    answer: 2,
+    intuition: ``,
+    explanation: `At [1:25:35], the professor introduces: "So here's here's a great example from animation something called inverse kinematics... the idea behind inverse kinematics is to say actually I just have a simple goal for my character in this case I simply want the robot arm to go and touch one of the dinosaurs."`,
+    code: ``,
+    images: ["image_1777609512954_0.png", "lec22_slide_02.png"],
+    tags: ["InverseKinematics"],
+    source: `lectures/cg-22-lecture-quiz.md`,
+  },
+  {
+    id: 58,
+    timestamp: `1:27:34`,
+    question: `What is a kinematic chain according to the lecture?`,
+    options: [`A sequence of animation keyframes`, `A collection of rigid bodies connected by joints`, `A series of mathematical transformations`, `A path finding algorithm for characters`],
+    answer: 1,
+    intuition: ``,
+    explanation: `At [1:27:34], the professor explains: "So a lot of systems a lot of characters in an animation or robots or vehicles or whatever are well described by a kinematic chain which just means I have a collection of objects when your rigid bodies and they're connected by joints right."
+
+The goal is not to set all the variables in the robot arm yourself ,  therefore formulate it as optimization problem. You are trying to minimize the difference between robot arm and the location of the object trying to pick up . In addition we use gradient descent to move to the goal.`,
+    code: ``,
+    images: ["image_1777609560722_0.png", "lec22_slide_29.png"],
+    tags: [],
+    source: `lectures/cg-22-lecture-quiz.md`,
+  },
+  {
+    id: 59,
+    timestamp: `1:28:42`,
+    question: `What hierarchical property of kinematic chains did the professor emphasize?`,
+    options: [`Joint constraints must be satisfied in a specific order`, `The configuration of child components depends on parent components`, `Larger components must be animated before smaller ones`, `The animation timeline must proceed in hierarchical steps`],
+    answer: 1,
+    intuition: ``,
+    explanation: `At [1:28:42], the professor states: "For a kinematic chain we also have kind of a hierarchical structure the configuration of the leg depends on the configuration of the body if I rotate the whole body the leg rotates along with it if I rotate the leg the foot rotates along with it and so forth."`,
+    code: ``,
+    images: ["image_1777609765299_0.png", "lec22_slide_29.png"],
+    tags: [],
+    source: `lectures/cg-22-lecture-quiz.md`,
+  },
+  {
+    id: 60,
+    timestamp: `1:31:23`,
+    question: `What mathematical tool did the professor suggest for elegantly representing rotations in the 2D kinematic chain example?`,
+    options: [`Quaternions`, `Euler angles`, `Complex numbers`, `Homogeneous coordinates`],
+    answer: 2,
+    intuition: ``,
+    explanation: `At [1:31:23], the professor states: "We could also do this remember we talked about how complex numbers are really nice way to write down rotations simplifies conceptually a lot what's going on we could just write this down as p1 equals p0 plus e to the I theta naught u0."`,
+    code: ``,
+    images: ["image_1777609866228_0.png", "lec22_slide_09.png"],
+    tags: ["Representation"],
+    source: `lectures/cg-22-lecture-quiz.md`,
+  },
+  {
+    id: 61,
+    timestamp: `1:33:42`,
+    question: `What objective function did the professor propose for inverse kinematics?`,
+    options: [`The sum of all joint angles`, `The length of the kinematic chain`, `One-half the squared distance between the end effector and target`, `The product of all link lengths`],
+    answer: 2,
+    intuition: ``,
+    explanation: `At [1:33:42], the professor proposes: "Let's say that for endpoint or for for point P n we want it to get as close as possible to a given point P n tilde then we can just say that the function the objective function f naught of theta is equal to one-half P n tilde minus P n norm squared just the distance between those two points squared."`,
+    code: ``,
+    images: ["image_1777609986735_0.png", "image_1777609975031_0.png", "lec22_slide_31.png"],
+    tags: ["Objective"],
+    source: `lectures/cg-22-lecture-quiz.md`,
+  },
+  {
+    id: 62,
+    timestamp: `1:35:21`,
+    question: `What topic did the professor preview for the next lecture?`,
+    options: [`Monte Carlo methods`, `Partial differential equations`, `Character animation techniques`, `Physically-based rendering`],
+    answer: 1,
+    intuition: ``,
+    explanation: `At [1:35:21], the professor previews: "Next time we're gonna go back to our discussion of differential equations but this time talk about partial differential equations talking about things that have derivatives in both space and time."
+-`,
+    code: ``,
+    images: ["lec22_slide_02.png"],
+    tags: [],
     source: `lectures/cg-22-lecture-quiz.md`,
   },
 ]
@@ -385,13 +507,13 @@ export default function Lec22Part2Quiz() {
             <a key={1} href={`${BASE}/lec22/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec22/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>Q33–Q53 · 21 questions</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>Q33–Q62 · 30 questions</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>21</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Questions</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~7min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>30</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Questions</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>2</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Parts</div></div>
           </div>
         </div>
@@ -444,12 +566,12 @@ export default function Lec22Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/21</span>
+              <span>{qIdx+1}/30</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/21*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/30*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -547,7 +669,7 @@ export default function Lec22Part2Quiz() {
           )}
           {(showExp||reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 21-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 30-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

@@ -1,1 +1,1 @@
-/home/diako/csRobotics/logseq3/pages/cg-22-lecture-quiz.md
+/home/diako/csRobotics/logseq3/pages/cg-22-lecture-quiz.md.md

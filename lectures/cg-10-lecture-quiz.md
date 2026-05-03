@@ -1,1 +1,1 @@
-/home/diako/csRobotics/logseq3/pages/cg-10-lecture-quiz.md
+/home/diako/csRobotics/logseq3/pages/cg-10-mesh-lecture-quiz.md.md
