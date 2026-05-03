@@ -485,7 +485,11 @@ CONFIGS = {
     '3': {'lec_num':'3','title':'Lecture 3: Vector Calculus','subtitle':'Gradient, Divergence, Curl, Laplacian, Hessian','accent':'#38bdf8','icon':'Sigma','route':'lec3','file_prefix':'Lec3VectorCalculus'},
     '4': {'lec_num':'4','title':'Lecture 4: Rasterization & Sampling','subtitle':'Pipeline, Coverage, Aliasing, SSAA, Nyquist','accent':'#34d399','icon':'Monitor','route':'lec4','file_prefix':'Lec4Rasterization'},
     '5': {'lec_num':'5','title':'Lecture 5: Spatial Transformations','subtitle':'Linear maps, homogeneous coords, rotation, translation','accent':'#f59e0b','icon':'Move','route':'lec5','file_prefix':'Lec5SpatialTransformations'},
+    '10': {'lec_num':'10','title':'Lecture 10: Meshes & Manifolds','subtitle':'Manifold surfaces, halfedge data structure, mesh operations','accent':'#fb923c','icon':'Box','route':'lec10','file_prefix':'Lec10Meshes'},
+    '11': {'lec_num':'11','title':'Lecture 11: Geometry Processing','subtitle':'Mesh smoothing, subdivision, remeshing, simplification','accent':'#e879f9','icon':'Layers','route':'lec11','file_prefix':'Lec11GeoProc'},
+    '12': {'lec_num':'12','title':'Lecture 12: Geometric Queries','subtitle':'BVH, ray-triangle intersection, closest point queries','accent':'#22d3ee','icon':'Search','route':'lec12','file_prefix':'Lec12GeoQuery'},
     '20': {'lec_num':'20','title':'Lecture 20: Introduction to Animation','subtitle':'Keyframing, Splines, Hermite/Catmull-Rom/B-Splines, Skeletal Animation','accent':'#34d399','icon':'Film','route':'lec20','file_prefix':'Lec20Animation'},
+    '22': {'lec_num':'22','title':'Lecture 22: Introduction to Optimization','subtitle':'Gradient descent, Newton\'s method, convex optimization, inverse kinematics','accent':'#f59e0b','icon':'TrendingDown','route':'lec22','file_prefix':'Lec22Optimization'},
     '21': {'lec_num':'21','title':'Lecture 21: Dynamics & Time Integration','subtitle':'ODEs, Lagrangian Mechanics, Euler Integrators, Particle Systems','accent':'#a78bfa','icon':'Activity','route':'lec21','file_prefix':'Lec21Dynamics'},
     '23': {'lec_num':'23','title':'Lecture 23: PDEs & Physical Animation','subtitle':'Elliptic/Parabolic/Hyperbolic PDEs, Laplacian, Wave/Heat Equations','accent':'#f87171','icon':'Waves','route':'lec23','file_prefix':'Lec23PDEs'},
 }

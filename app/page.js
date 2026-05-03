@@ -25,6 +25,27 @@ const quizzes = [
     href: `${BASE}/lec4`,
   },
   {
+    id: 'lec10',
+    title: 'Lecture 10: Meshes & Manifolds',
+    description: 'Manifold surfaces, halfedge data structure, mesh connectivity',
+    color: '#fb923c',
+    href: `${BASE}/lec10`,
+  },
+  {
+    id: 'lec11',
+    title: 'Lecture 11: Geometry Processing',
+    description: 'Smoothing, subdivision, remeshing, simplification, Catmull-Clark',
+    color: '#e879f9',
+    href: `${BASE}/lec11`,
+  },
+  {
+    id: 'lec12',
+    title: 'Lecture 12: Geometric Queries',
+    description: 'BVH, ray-triangle intersection, closest point, inside-outside tests',
+    color: '#22d3ee',
+    href: `${BASE}/lec12`,
+  },
+  {
     id: 'lec20',
     title: 'Lecture 20: Introduction to Animation',
     description: 'Keyframing, splines, Hermite/Catmull-Rom/B-splines, skeletal animation, IK',
@@ -37,6 +58,13 @@ const quizzes = [
     description: 'ODEs, Lagrangian mechanics, Forward/Backward/Symplectic Euler, particle systems',
     color: '#a78bfa',
     href: `${BASE}/lec21`,
+  },
+  {
+    id: 'lec22',
+    title: 'Lecture 22: Introduction to Optimization',
+    description: 'Gradient descent, Newton\'s method, convex opt, inverse kinematics',
+    color: '#f59e0b',
+    href: `${BASE}/lec22`,
   },
   {
     id: 'lec23',
