@@ -459,7 +459,7 @@ def gen_jsx(questions, part_num, total_parts, cfg, source_file):
     w("            <RefreshCw size={20} /> Restart")
     w("          </button>")
     w("        </div>")
-    w("        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>")
+    w("        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes &nbsp;·&nbsp; ✏️ Export notes from home page</a>")
     w("      </div>")
     w("    </div>")
     w("  )")

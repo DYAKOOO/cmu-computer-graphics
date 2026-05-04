@@ -2,9 +2,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Move } from 'lucide-react'
 
-// Source: lectures/cg-05-lecture-quiz.md  (symlinked → Logseq pages)
+// Source: lectures/cg-05-lecture-quiz.md.md  (symlinked → Logseq pages)
 // Lecture 5: Spatial Transformations — Part 2 · QQ33–QQ47 · 15 questions (15 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-05-lecture-quiz.md 5
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-05-lecture-quiz.md.md 5
 
 const quizData = [
   {
@@ -22,7 +22,7 @@ const quizData = [
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 34,
@@ -35,12 +35,11 @@ const quizData = [
     answer: 2,
     answerText: ``,
     intuition: ``,
-    explanation: `As described at [56:30]: "So we're going to end up with a matrix that looks like this it looks like well the identity matrix plus some stuff in the upper right which is our displacement vector u1 u2." This corresponds to the matrix .
-==2d translations as 3d shears.==`,
+    explanation: `As described at [56:30]: "So we're going to end up with a matrix that looks like this it looks like well the identity matrix plus some stuff in the upper right which is our displacement vector u1 u2." This corresponds to the matrix .`,
     code: ``,
-    images: ["image_1775378673187_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 35,
@@ -55,9 +54,9 @@ const quizData = [
     intuition: ``,
     explanation: `As stated at [57:57]: "So performing a two-dimensional rotation of our original shape is going to be equivalent to rotating that whole collection of shapes around the x3 axis and so we can express a 2d rotation as just a 3d rotation that fixes the vertical axis."`,
     code: ``,
-    images: ["image_1775378751329_0.png"],
-    tags: ["CG-Lecture-Question"],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 36,
@@ -70,12 +69,11 @@ const quizData = [
     answer: 2,
     answerText: ``,
     intuition: ``,
-    explanation: `As explained at [59:09]: "Not much changes in three dimensions or even in more dimensions we're always just going to append one homogeneous coordinate to the first three to the first n."
-==the only one different is scaling==`,
+    explanation: `As explained at [59:09]: "Not much changes in three dimensions or even in more dimensions we're always just going to append one homogeneous coordinate to the first three to the first n."`,
     code: ``,
-    images: ["image_1775378814555_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 37,
@@ -90,9 +88,9 @@ const quizData = [
     intuition: ``,
     explanation: `As stated at [1:03:01]: "In general a point will have a non-zero homogeneous coordinate for instance c equal to one and a vector will have a zero homogeneous coordinate for instance c equal to zero."`,
     code: ``,
-    images: ["image_1775378925686_0.png"],
-    tags: ["vs/pointvsvectors"],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 38,
@@ -107,9 +105,9 @@ const quizData = [
     intuition: ``,
     explanation: `As explained at [1:03:33]: "If we divide by a much much smaller number then they start shooting off toward infinity right and kind of the limit is that these vectors become points at infinity or what are sometimes called ideal points."`,
     code: ``,
-    images: ["image_1775379017235_0.png"],
-    tags: ["Infinity"],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 39,
@@ -124,9 +122,9 @@ const quizData = [
     intuition: ``,
     explanation: `As described at [1:05:27]: "We can build a matrix that just copies the z coordinate into the homogeneous coordinates something like this."`,
     code: ``,
-    images: ["image_1775379083888_0.png"],
-    tags: ["projection", "Assumption"],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 40,
@@ -141,9 +139,9 @@ const quizData = [
     intuition: ``,
     explanation: `As explained at [1:07:19]: "You should be careful by the way that in one coordinate system y points up and in another coordinate system y points down... in computer graphics images are often indexed in a way where you start at the top left and go down as y increases." This means converting to pixel coordinates includes a y-axis flip.`,
     code: ``,
-    images: ["image_1775379173690_0.png"],
-    tags: ["CG-Lecture-Question"],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 41,
@@ -158,9 +156,9 @@ const quizData = [
     intuition: ``,
     explanation: `As explained at [1:09:21]: "The good thing about this is now if we go back and we transform the body right we want to just move the body left and right well then the upper arm and lower arm are going to go along with it we don't have to go and figure out what the new transformations for those parts of the body are."`,
     code: ``,
-    images: ["image_1775379360191_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 42,
@@ -173,13 +171,11 @@ const quizData = [
     answer: 3,
     answerText: ``,
     intuition: ``,
-    explanation: `As stated at [1:09:34]: "A scene graph in general stores relative transformations in a directed graph right so each edge of this graph and the root node stores some linear transformation as a four by four matrix."
-
-storing in stack.`,
+    explanation: `As stated at [1:09:34]: "A scene graph in general stores relative transformations in a directed graph right so each edge of this graph and the root node stores some linear transformation as a four by four matrix."`,
     code: ``,
-    images: ["image_1775379398713_0.png"],
-    tags: ["Stack"],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 43,
@@ -194,9 +190,9 @@ storing in stack.`,
     intuition: ``,
     explanation: `As explained at [1:11:54]: "Rather than actually having literally multiple copies of the geometry in memory in your in your computer what you can do is you can just put a pointer in the scene graph that says okay i want to draw a copy of this object but i'm going to do it with a different transformation than i did before."`,
     code: ``,
-    images: ["image_1775379453095_0.png"],
-    tags: ["Memory"],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 44,
@@ -211,9 +207,9 @@ storing in stack.`,
     intuition: ``,
     explanation: `As demonstrated at [1:13:20]: "If i first scale it by a half and then translate it by 3 1 i end up with a square that's size 1 on each side and has its lower left corner at the point 3 1. if on the other hand i reverse these operations and i first translate by 3 1 and then scale by one half well i get a square that has the same size it's still size 1 on each side but the lower left corner is now at 1.5 0.5." The lecturer explains at [1:13:53]: "By putting the scale second i kind of scaled my initial translation down."`,
     code: ``,
-    images: ["image_1775379504569_0.png"],
-    tags: ["Commutative"],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 45,
@@ -228,9 +224,9 @@ storing in stack.`,
     intuition: ``,
     explanation: `As described at [1:15:16]: "What i'm going to do is i'm going to first translate it by minus x so that it's centered at the origin then i'm going to rotate by some angle theta and then i'm going to put it back i'm going to translate back by x to its original center."`,
     code: ``,
-    images: ["image_1775379551473_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 46,
@@ -245,9 +241,9 @@ storing in stack.`,
     intuition: ``,
     explanation: `As explained at [1:16:16]: "We're going to apply additional 3d transformations to position our camera actually what we're going to do is we're going to simulate the motion of the camera by applying the inverse transformation to the cube creature if we want the camera to move left we translate the creature right and so forth."`,
     code: ``,
-    images: ["image_1775379620013_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 47,
@@ -260,11 +256,12 @@ storing in stack.`,
     answer: 0,
     answerText: ``,
     intuition: ``,
-    explanation: `As summarized at [1:18:01]: "We also saw that homogeneous coordinates are super cool and useful because they let us clearly distinguish between points and vectors."`,
+    explanation: `As summarized at [1:18:01]: "We also saw that homogeneous coordinates are super cool and useful because they let us clearly distinguish between points and vectors."
+-`,
     code: ``,
-    images: ["image_1775379675684_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
 ]
 
@@ -389,7 +386,7 @@ export default function Lec5Part2Quiz() {
           <Move size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 5: Spatial Transformations — Part 2</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Linear maps, homogeneous coords, rotation, translation</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-05-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-05-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec5/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec5/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
@@ -451,7 +448,7 @@ export default function Lec5Part2Quiz() {
             <RefreshCw size={20} /> Restart
           </button>
         </div>
-        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
+        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes &nbsp;·&nbsp; ✏️ Export notes from home page</a>
       </div>
     </div>
   )
@@ -559,7 +556,7 @@ export default function Lec5Part2Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-05-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-05-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

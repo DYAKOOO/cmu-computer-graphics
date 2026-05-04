@@ -415,7 +415,7 @@ export default function Lec15Part3Quiz() {
             <RefreshCw size={20} /> Restart
           </button>
         </div>
-        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
+        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes &nbsp;·&nbsp; ✏️ Export notes from home page</a>
       </div>
     </div>
   )

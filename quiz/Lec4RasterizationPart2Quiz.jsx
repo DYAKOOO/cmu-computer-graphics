@@ -1,18 +1,22 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Monitor } from 'lucide-react'
+import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Monitor } from 'lucide-react'
 
 // Source: lectures/cg-04-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 4: Rasterization & Sampling — Part 2 · Q33–Q64 · 32 questions
+// Lecture 4: Rasterization & Sampling — Part 2 · QQ33–QQ64 · 32 questions (32 MCQ, 0 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-04-lecture-quiz.md 4
 
 const quizData = [
   {
     id: 33,
+    qid: `Q33`,
+    qtype: `FREQUENCY`,
+    format: `mcq`,
     timestamp: `35:34`,
     question: `How does the lecture suggest we can understand signals like audio?`,
-    options: [`As a sequence of amplitudes over time`, `As a superposition or sum of different frequencies`, `As a set of discrete events`, `As a series of waveforms`],
-    answer: 1,
+    options: [`As a superposition or sum of different frequencies`, `As a set of discrete events`, `As a sequence of amplitudes over time`, `As a series of waveforms`],
+    answer: 0,
+    answerText: ``,
     intuition: ``,
     explanation: `At [35:34], the lecturer states: "A 1D signal like audio can be expressed as a superposition or a sum of different frequencies."`,
     code: ``,
@@ -22,10 +26,14 @@ const quizData = [
   },
   {
     id: 34,
+    qid: `Q34`,
+    qtype: `EXPERIMENT`,
+    format: `mcq`,
     timestamp: `38:30`,
     question: `In the pitch-rising experiment, what unexpected phenomenon was observed?`,
-    options: [`The audio became distorted`, `The frequency remained constant`, `The pitch appeared to rise and fall repeatedly`, `The sound became inaudible`],
-    answer: 2,
+    options: [`The frequency remained constant`, `The sound became inaudible`, `The audio became distorted`, `The pitch appeared to rise and fall repeatedly`],
+    answer: 3,
+    answerText: ``,
     intuition: ``,
     explanation: `At [38:30], the lecturer describes: "Rather than just going from low to high and higher and higher and higher it went from low to high back down to low back up to high back down to low what is going on there?"`,
     code: ``,
@@ -35,10 +43,14 @@ const quizData = [
   },
   {
     id: 35,
+    qid: `Q35`,
+    qtype: `EXPLANATION`,
+    format: `mcq`,
     timestamp: `38:50`,
     question: `What explains the unexpected result in the pitch experiment?`,
-    options: [`A bug in the audio playback system`, `Interference between multiple sound waves`, `Undersampling of the high-frequency signal`, `Incorrect frequency generation`],
+    options: [`Interference between multiple sound waves`, `Incorrect frequency generation`, `Undersampling of the high-frequency signal`, `A bug in the audio playback system`],
     answer: 2,
+    answerText: ``,
     intuition: ``,
     explanation: `At [38:50], the lecturer explains: "If we under sample if we have too few points to capture all of the little wiggles in that sound wave then we're going to get aliasing we're going to get a sound that doesn't actually represent the original continuous signal."`,
     code: ``,
@@ -48,10 +60,14 @@ const quizData = [
   },
   {
     id: 36,
+    qid: `Q36`,
+    qtype: `DEFINITION`,
+    format: `mcq`,
     timestamp: `40:22`,
     question: `How does the lecturer define aliasing in the audio example?`,
-    options: [`When audio frequencies exceed human hearing range`, `When high frequencies masquerade as low frequencies after reconstruction`, `When digital audio cannot reproduce analog sounds`, `When sound becomes too distorted to recognize`],
-    answer: 1,
+    options: [`When sound becomes too distorted to recognize`, `When audio frequencies exceed human hearing range`, `When digital audio cannot reproduce analog sounds`, `When high frequencies masquerade as low frequencies after reconstruction`],
+    answer: 3,
+    answerText: ``,
     intuition: ``,
     explanation: `At [40:22], the lecturer states: "In this case this is what we mean by aliasing high frequencies in the original signal quickly oscillating waves masquerade as low frequencies after we perform the reconstruction because we've under sampled.""`,
     code: ``,
@@ -61,10 +77,14 @@ const quizData = [
   },
   {
     id: 37,
+    qid: `Q37`,
+    qtype: `IMAGE`,
+    format: `mcq`,
     timestamp: `41:44`,
     question: `In the image frequency domain representation shown in the lecture, where are the low frequencies located?`,
-    options: [`At the edges of the representation`, `At the dead center`, `Uniformly distributed throughout`, `At the corners only`],
-    answer: 1,
+    options: [`At the edges of the representation`, `At the corners only`, `Uniformly distributed throughout`, `At the dead center`],
+    answer: 3,
+    answerText: ``,
     intuition: ``,
     explanation: `At [41:44], the lecturer explains: "This image that we see on the right is kind of like the analyzer the spectral analyzer for the image that we see on the left except this time all the low frequencies are dead center and as we go out in any direction... we're looking at higher and higher frequencies."`,
     code: ``,
@@ -74,10 +94,14 @@ const quizData = [
   },
   {
     id: 38,
+    qid: `Q38`,
+    qtype: `EXAMPLE`,
+    format: `mcq`,
     timestamp: `44:10`,
     question: `What function was used to create the synthetic aliasing example in the lecture?`,
-    options: [`sin(x) + sin(y)`, `sin(x² + y²)`, `sin(x) * sin(y)`, `cos(x² - y²)`],
-    answer: 1,
+    options: [`sin(x² + y²)`, `sin(x) + sin(y)`, `cos(x² - y²)`, `sin(x) * sin(y)`],
+    answer: 0,
+    answerText: ``,
     intuition: ``,
     explanation: `At [44:10], the lecturer describes: "We're going to build a function intentionally that has crazy high frequencies in it and that function is sine of x squared plus y squared."`,
     code: ``,
@@ -87,10 +111,14 @@ const quizData = [
   },
   {
     id: 39,
+    qid: `Q39`,
+    qtype: `EXAMPLE`,
+    format: `mcq`,
     timestamp: `45:32`,
     question: `What real-world example of temporal aliasing is described in the lecture?`,
-    options: [`Motion blur in photographs`, `Spinning wagon wheels appearing to rotate backwards`, `Lens flare effects`, `Image pixelation when zooming`],
-    answer: 1,
+    options: [`Lens flare effects`, `Image pixelation when zooming`, `Motion blur in photographs`, `Spinning wagon wheels appearing to rotate backwards`],
+    answer: 3,
+    answerText: ``,
     intuition: ``,
     explanation: `At [45:32], the lecturer explains: "If it's ever been nighttime you're looking out the car window at a car next to you and you stare at the hubcaps you'll see an effect like this. Maybe as the car leaves through the stop light the wheels start spinning faster and faster and rather than looking like they're spinning forward they start spinning backward."`,
     code: ``,
@@ -100,10 +128,14 @@ const quizData = [
   },
   {
     id: 40,
+    qid: `Q40`,
+    qtype: `THEOREM`,
+    format: `mcq`,
     timestamp: `46:41`,
     question: `What theorem establishes when a signal can be perfectly reconstructed from samples?`,
-    options: [`The Fourier Transform Theorem`, `The Sampling Law`, `The Nyquist-Shannon Theorem`, `The Signal Processing Theorem`],
-    answer: 2,
+    options: [`The Sampling Law`, `The Nyquist-Shannon Theorem`, `The Signal Processing Theorem`, `The Fourier Transform Theorem`],
+    answer: 1,
+    answerText: ``,
     intuition: ``,
     explanation: `At [46:41], the lecturer states: "So how can we be precise about when this phenomenon occurs this is something called the nyquist shannon theorem okay really important theorem in signal processing."`,
     code: ``,
@@ -113,10 +145,14 @@ const quizData = [
   },
   {
     id: 41,
+    qid: `Q41`,
+    qtype: `CONDITION`,
+    format: `mcq`,
     timestamp: `47:36`,
     question: `According to the Nyquist-Shannon theorem, what condition allows perfect signal reconstruction?`,
-    options: [`The signal must be continuous`, `The signal must be sampled at least twice as frequently as its highest frequency`, `The signal must have limited amplitude`, `The signal must be perfectly periodic`],
-    answer: 1,
+    options: [`The signal must be sampled at least twice as frequently as its highest frequency`, `The signal must be continuous`, `The signal must be perfectly periodic`, `The signal must have limited amplitude`],
+    answer: 0,
+    answerText: ``,
     intuition: ``,
     explanation: `At [47:36], the lecturer explains: "If your signal happens to be band limited then it can be perfectly reconstructed as long as you take samples at a rate that's twice as frequent as the highest frequency in the signal."`,
     code: ``,
@@ -126,10 +162,14 @@ const quizData = [
   },
   {
     id: 42,
+    qid: `Q42`,
+    qtype: `FILTER`,
+    format: `mcq`,
     timestamp: `47:56`,
     question: `What filter is used for perfect reconstruction according to the Nyquist-Shannon theorem?`,
-    options: [`Gaussian filter`, `Box filter`, `Sync filter`, `Triangle filter`],
+    options: [`Triangle filter`, `Gaussian filter`, `Sync filter`, `Box filter`],
     answer: 2,
+    answerText: ``,
     intuition: ``,
     explanation: `At [47:56], the lecturer states: "Once you have those samples you can reconstruct exactly the original signal by using something called a sync filter."`,
     code: ``,
@@ -139,10 +179,14 @@ const quizData = [
   },
   {
     id: 43,
+    qid: `Q43`,
+    qtype: `LIMITATION`,
+    format: `mcq`,
     timestamp: `48:38`,
     question: `Why can't most graphics signals be perfectly reconstructed using the Nyquist-Shannon approach?`,
-    options: [`The sampling rate is too low`, `The signals aren't band-limited due to features like hard edges`, `The reconstruction filters are too complex`, `There's too much noise in the signals`],
-    answer: 1,
+    options: [`The reconstruction filters are too complex`, `The sampling rate is too low`, `There's too much noise in the signals`, `The signals aren't band-limited due to features like hard edges`],
+    answer: 3,
+    answerText: ``,
     intuition: ``,
     explanation: `At [48:57], the lecturer explains: "Here's our triangle our coverage function how do I express something like a hard edge as a sum of sinusoids? Well actually it turns out that what I have to do is add an infinite series of higher and higher and higher frequencies until I can eventually approximate something like a piecewise constant function."`,
     code: ``,
@@ -152,10 +196,14 @@ const quizData = [
   },
   {
     id: 44,
+    qid: `Q44`,
+    qtype: `ARTIFACTS`,
+    format: `mcq`,
     timestamp: `50:39`,
     question: `What common aliasing artifact appears in static images with straight lines?`,
-    options: [`Moire patterns`, `Jaggies (jagged edges)`, `Banding`, `Pixel bleeding`],
-    answer: 1,
+    options: [`Banding`, `Pixel bleeding`, `Moire patterns`, `Jaggies (jagged edges)`],
+    answer: 3,
+    answerText: ``,
     intuition: ``,
     explanation: `At [50:39], the lecturer describes: "Really really common artifacts in graphics or you have let's say jaggies in a in a static image if I draw a line segment it has these jagged edges."`,
     code: ``,
@@ -165,10 +213,14 @@ const quizData = [
   },
   {
     id: 45,
+    qid: `Q45`,
+    qtype: `SOLUTION`,
+    format: `mcq`,
     timestamp: `51:39`,
     question: `What is the ideal goal when trying to reduce aliasing in pixel coverage?`,
-    options: [`To remove all high frequencies from the scene`, `To match the total light in a pixel with the total light in the original signal`, `To use the minimum number of samples possible`, `To randomize the sampling pattern`],
-    answer: 1,
+    options: [`To remove all high frequencies from the scene`, `To randomize the sampling pattern`, `To match the total light in a pixel with the total light in the original signal`, `To use the minimum number of samples possible`],
+    answer: 2,
+    answerText: ``,
     intuition: ``,
     explanation: `At [51:39], the lecturer explains: "If we think of a pixel as a little square of light then what we want is that the total light emitted from that pixel to be the same as the total light that we had in our original continuous signal in other words we want to integrate the input signal over the pixel to get the sample value."`,
     code: ``,
@@ -178,10 +230,14 @@ const quizData = [
   },
   {
     id: 46,
+    qid: `Q46`,
+    qtype: `TECHNIQUE`,
+    format: `mcq`,
     timestamp: `53:02`,
     question: `What anti-aliasing technique is described in the lecture?`,
-    options: [`Adaptive sampling`, `Super sampling`, `Anisotropic filtering`, `Gaussian blur`],
-    answer: 1,
+    options: [`Anisotropic filtering`, `Gaussian blur`, `Adaptive sampling`, `Super sampling`],
+    answer: 3,
+    answerText: ``,
     intuition: ``,
     explanation: `At [53:02], the lecturer explains: "So what we're really going to do is use a technique called super sampling rather than just taking one sample of the signal the coverage signal at each pixel we're going to take several samples."`,
     code: ``,
@@ -191,10 +247,14 @@ const quizData = [
   },
   {
     id: 47,
+    qid: `Q47`,
+    qtype: `PROCESS`,
+    format: `mcq`,
     timestamp: `53:54`,
     question: `How are the multiple samples used in super sampling anti-aliasing?`,
-    options: [`The brightest sample is selected`, `The samples are averaged to determine the pixel's coverage`, `The median value is used`, `The samples are combined using a weighted formula`],
-    answer: 1,
+    options: [`The samples are averaged to determine the pixel's coverage`, `The samples are combined using a weighted formula`, `The brightest sample is selected`, `The median value is used`],
+    answer: 0,
+    answerText: ``,
     intuition: ``,
     explanation: `At [53:54], the lecturer explains: "If some fraction of the samples are covered let's say half of them are covered well then we say okay 50% of that pixel is covered right so we just use the fraction of sample values that are covered to get an approximation of the fraction of the pixel that's covered."`,
     code: ``,
@@ -204,10 +264,14 @@ const quizData = [
   },
   {
     id: 48,
+    qid: `Q48`,
+    qtype: `RESULTS`,
+    format: `mcq`,
     timestamp: `55:16`,
     question: `What improvement was observed when increasing from 4 samples per pixel to 16 samples per pixel?`,
-    options: [`The image became perfectly aliasing-free`, `There was no visible difference`, `The image became smoother but still had some artifacts`, `The image became darker`],
-    answer: 2,
+    options: [`The image became smoother but still had some artifacts`, `The image became darker`, `There was no visible difference`, `The image became perfectly aliasing-free`],
+    answer: 0,
+    answerText: ``,
     intuition: ``,
     explanation: `At [55:16], the lecturer observes: "So now in each pixel we have 4x4 or 16 samples things get a little bit smoother okay still not perfect."`,
     code: ``,
@@ -217,10 +281,14 @@ const quizData = [
   },
   {
     id: 49,
+    qid: `Q49`,
+    qtype: `OBSERVATION`,
+    format: `mcq`,
     timestamp: `55:42`,
     question: `Even with 1024 samples per pixel, what was observed about the anti-aliasing result?`,
-    options: [`It became perfect with no visible artifacts`, `It still wasn't perfect`, `It became too blurry`, `It introduced new artifacts`],
-    answer: 1,
+    options: [`It still wasn't perfect`, `It became perfect with no visible artifacts`, `It became too blurry`, `It introduced new artifacts`],
+    answer: 0,
+    answerText: ``,
     intuition: ``,
     explanation: `At [55:30], the lecturer states: "So now we do 32 by 32 we have 1024 samples taken for every single pixel and we average them back down so even though this looks a lot better you notice it's still not perfect."
 
@@ -232,10 +300,14 @@ const quizData = [
   },
   {
     id: 50,
+    qid: `Q50`,
+    qtype: `SPECIAL`,
+    format: `mcq`,
     timestamp: `55:54`,
     question: `What special case for perfect anti-aliasing is mentioned in the lecture?`,
-    options: [`Straight line segments`, `Checkerboard patterns`, `Circular shapes`, `Uniform color regions`],
+    options: [`Circular shapes`, `Checkerboard patterns`, `Uniform color regions`, `Straight line segments`],
     answer: 1,
+    answerText: ``,
     intuition: ``,
     explanation: `At [55:54], the lecturer notes: "In this very very special case of the checkerboard there happens to be an exact solution you can analytically integrate the checkerboard over a pixel and get this beautifully smooth image."`,
     code: ``,
@@ -245,10 +317,14 @@ const quizData = [
   },
   {
     id: 51,
+    qid: `Q51`,
+    qtype: `ALGORITHM`,
+    format: `mcq`,
     timestamp: `57:10`,
     question: `What is the most basic operation needed for triangle rasterization?`,
-    options: [`Computing triangle area`, `Testing if a point is inside a triangle`, `Finding the closest point on a triangle`, `Calculating triangle perimeter`],
-    answer: 1,
+    options: [`Finding the closest point on a triangle`, `Computing triangle area`, `Calculating triangle perimeter`, `Testing if a point is inside a triangle`],
+    answer: 3,
+    answerText: ``,
     intuition: ``,
     explanation: `At [57:10], the lecturer explains: "The most basic thing that we need to do is say okay we have this triangle we have this pixel grid we want to know which pixels are covered by the triangle we can just break this down into an atomic query which is how do we check if a given point q is inside a triangle with vertices p0 p1 p2."`,
     code: ``,
@@ -258,10 +334,14 @@ const quizData = [
   },
   {
     id: 52,
+    qid: `Q52`,
+    qtype: `TEST`,
+    format: `mcq`,
     timestamp: `58:12`,
     question: `How is the point-in-triangle test typically implemented?`,
-    options: [`Using barycentric coordinates`, `Computing distance to each edge`, `Testing if the point is inside the three half-planes defined by the edges`, `Calculating angle sums`],
+    options: [`Using barycentric coordinates`, `Calculating angle sums`, `Testing if the point is inside the three half-planes defined by the edges`, `Computing distance to each edge`],
     answer: 2,
+    answerText: ``,
     intuition: ``,
     explanation: `At [58:12], the lecturer explains: "How do you test if a point's inside of a triangle? Well I know that if it's contained in the half plane made by the bottom edge and the right edge and the left edge then it must be inside the triangle."`,
     code: ``,
@@ -271,10 +351,14 @@ const quizData = [
   },
   {
     id: 53,
+    qid: `Q53`,
+    qtype: `APPROACH`,
+    format: `mcq`,
     timestamp: `59:36`,
     question: `What optimization is mentioned for incremental point-in-triangle testing?`,
-    options: [`Using graphics hardware acceleration`, `Reusing calculations between adjacent pixels`, `Pre-computing lookup tables`, `Approximating triangles with rectangles`],
+    options: [`Pre-computing lookup tables`, `Reusing calculations between adjacent pixels`, `Using graphics hardware acceleration`, `Approximating triangles with rectangles`],
     answer: 1,
+    answerText: ``,
     intuition: ``,
     explanation: `At [59:36], the lecturer describes: "I can make this a little bit faster by noticing that the half plane check looks very similar for nearby points so I can save myself some arithmetic by not going through these points in a random order but by marching let's say along rows of the triangle and incrementally updating my calculations."`,
     code: ``,
@@ -284,10 +368,14 @@ const quizData = [
   },
   {
     id: 54,
+    qid: `Q54`,
+    qtype: `BOTTLENECK`,
+    format: `mcq`,
     timestamp: `1:00:04`,
     question: `What does the lecturer identify as the primary bottleneck in modern hardware?`,
-    options: [`Arithmetic computations`, `Memory access`, `Cache size`, `Power consumption`],
-    answer: 1,
+    options: [`Memory access`, `Arithmetic computations`, `Cache size`, `Power consumption`],
+    answer: 0,
+    answerText: ``,
     intuition: ``,
     explanation: `At [1:00:04], the lecturer states: "In real modern hardware the bottleneck is typically not doing arithmetic doing math but the bottleneck is reading or writing to memory."`,
     code: ``,
@@ -297,10 +385,14 @@ const quizData = [
   },
   {
     id: 55,
+    qid: `Q55`,
+    qtype: `MODERN`,
+    format: `mcq`,
     timestamp: `1:00:46`,
     question: `What approach does modern hardware take to triangle rasterization?`,
-    options: [`Sequential processing of each pixel`, `Testing all samples in the triangle's bounding box in parallel`, `Using a lookup table for common triangle shapes`, `Processing one scan line at a time`],
-    answer: 1,
+    options: [`Processing one scan line at a time`, `Sequential processing of each pixel`, `Using a lookup table for common triangle shapes`, `Testing all samples in the triangle's bounding box in parallel`],
+    answer: 3,
+    answerText: ``,
     intuition: ``,
     explanation: `At [1:00:46], the lecturer explains: "What we're going to do instead is just test all the samples in the bounding box around the triangles so it's kind of the tightest fitting box around the triangle we're going to test all those samples in parallel."`,
     code: ``,
@@ -310,10 +402,14 @@ const quizData = [
   },
   {
     id: 56,
+    qid: `Q56`,
+    qtype: `CASE`,
+    format: `mcq`,
     timestamp: `1:02:09`,
     question: `What shape of triangle was identified as problematic for the parallel bounding box approach?`,
-    options: [`Very small triangles`, `Triangles with obtuse angles`, `Long, skinny triangles`, `Triangles with curved edges`],
-    answer: 2,
+    options: [`Long, skinny triangles`, `Triangles with curved edges`, `Triangles with obtuse angles`, `Very small triangles`],
+    answer: 0,
+    answerText: ``,
     intuition: ``,
     explanation: `At [1:02:09], the lecturer describes: "You can imagine for instance that I had just one long skinny triangle that stretched all the way across the screen right and so now if I'm testing all the points in the bounding box almost none of them are going to be covered I'm wasting a lot of time."`,
     code: ``,
@@ -323,10 +419,14 @@ const quizData = [
   },
   {
     id: 57,
+    qid: `Q57`,
+    qtype: `OPTIMIZATION`,
+    format: `mcq`,
     timestamp: `1:02:40`,
     question: `What optimization technique tests larger blocks before individual pixels?`,
-    options: [`Hierarchical decomposition`, `Scan conversion`, `Block-based optimization`, `Stochastic sampling`],
-    answer: 2,
+    options: [`Block-based optimization`, `Stochastic sampling`, `Hierarchical decomposition`, `Scan conversion`],
+    answer: 0,
+    answerText: ``,
     intuition: ``,
     explanation: `At [1:02:33], the lecturer introduces: "I can take kind of a hybrid or course define approach and first ask if large blocks of pixels intersect the triangle so before testing any individual pixel I draw some kind of medium size square."`,
     code: ``,
@@ -336,10 +436,14 @@ const quizData = [
   },
   {
     id: 58,
+    qid: `Q58`,
+    qtype: `BENEFIT`,
+    format: `mcq`,
     timestamp: `1:03:00`,
     question: `What is the benefit of the early-out test with blocks?`,
-    options: [`It improves cache coherence`, `It allows hardware acceleration`, `It avoids unnecessary work on pixels not covered by the triangle`, `It simplifies the triangle intersection test`],
-    answer: 2,
+    options: [`It simplifies the triangle intersection test`, `It improves cache coherence`, `It allows hardware acceleration`, `It avoids unnecessary work on pixels not covered by the triangle`],
+    answer: 3,
+    answerText: ``,
     intuition: ``,
     explanation: `At [1:03:00], the lecturer explains: "If I know that this gray box in the upper left doesn't intersect the triangle at all then I don't need to do any more work none of those none of those pixels are covered."`,
     code: ``,
@@ -349,10 +453,14 @@ const quizData = [
   },
   {
     id: 59,
+    qid: `Q59`,
+    qtype: `CONCEPT`,
+    format: `mcq`,
     timestamp: `1:04:49`,
     question: `What important graphics concept is introduced with the recursive block testing approach?`,
-    options: [`Dynamic programming`, `Hierarchical strategy`, `Backtracking`, `Divide and conquer`],
-    answer: 1,
+    options: [`Hierarchical strategy`, `Divide and conquer`, `Dynamic programming`, `Backtracking`],
+    answer: 0,
+    answerText: ``,
     intuition: ``,
     explanation: `At [1:04:49], the lecturer states: "This leads to another really really important idea in all of computer graphics which is to take a hierarchical strategy."`,
     code: ``,
@@ -362,10 +470,14 @@ const quizData = [
   },
   {
     id: 60,
+    qid: `Q60`,
+    qtype: `REALITY`,
+    format: `mcq`,
     timestamp: `1:06:16`,
     question: `Why isn't hierarchical rasterization commonly used in real graphics hardware?`,
-    options: [`It produces visual artifacts`, `It requires too much memory`, `The overhead of traversal is too high`, `It's patented and requires licensing`],
-    answer: 2,
+    options: [`It produces visual artifacts`, `The overhead of traversal is too high`, `It's patented and requires licensing`, `It requires too much memory`],
+    answer: 1,
+    answerText: ``,
     intuition: ``,
     explanation: `At [1:06:16], the lecturer explains: "This is actually not what happens in real graphics hardware because there's still quite a bit of overhead to doing this hierarchical traversal so having just one course to find level is kind of a nice sweet spot."`,
     code: ``,
@@ -375,10 +487,14 @@ const quizData = [
   },
   {
     id: 61,
+    qid: `Q61`,
+    qtype: `SUMMARY`,
+    format: `mcq`,
     timestamp: `1:07:20`,
     question: `What is one of the key frameworks mentioned in the summary for understanding graphics problems?`,
-    options: [`Object-oriented programming`, `Sampling and reconstruction`, `Linear algebra`, `Calculus of variations`],
-    answer: 1,
+    options: [`Sampling and reconstruction`, `Linear algebra`, `Object-oriented programming`, `Calculus of variations`],
+    answer: 0,
+    answerText: ``,
     intuition: ``,
     explanation: `At [1:07:20], the lecturer summarizes: "Overall today what we saw is that we can frame a lot of problems in computer graphics in terms of sampling and reconstruction."`,
     code: ``,
@@ -388,10 +504,14 @@ const quizData = [
   },
   {
     id: 62,
+    qid: `Q62`,
+    qtype: `MCQ`,
+    format: `mcq`,
     timestamp: `1:08:27`,
     question: `What does the lecturer describe as the basic strategy for reducing aliasing in rasterization?`,
-    options: [`Blurring the image`, `Using super sampling`, `Decreasing the resolution`, `Using different primitive shapes`],
-    answer: 1,
+    options: [`Blurring the image`, `Decreasing the resolution`, `Using different primitive shapes`, `Using super sampling`],
+    answer: 3,
+    answerText: ``,
     intuition: ``,
     explanation: `At [1:08:27], the lecturer concludes: "Our basic strategy for reducing aliasing at least for rasterization was to use super sampling."`,
     code: ``,
@@ -401,10 +521,14 @@ const quizData = [
   },
   {
     id: 63,
+    qid: `Q63`,
+    qtype: `FOUNDATION`,
+    format: `mcq`,
     timestamp: `1:08:57`,
     question: `According to the summary, what is the "basic building block" for the graphics pipeline?`,
-    options: [`Pixel shading`, `Vertex transformation`, `Triangle rasterization`, `Texture mapping`],
-    answer: 2,
+    options: [`Texture mapping`, `Vertex transformation`, `Pixel shading`, `Triangle rasterization`],
+    answer: 3,
+    answerText: ``,
     intuition: ``,
     explanation: `At [1:08:57], the lecturer states: "From a more system point of view we saw that triangle rasterization is the basic building block for the graphics pipeline."`,
     code: ``,
@@ -414,10 +538,14 @@ const quizData = [
   },
   {
     id: 64,
+    qid: `Q64`,
+    qtype: `NEXT`,
+    format: `mcq`,
     timestamp: `1:09:51`,
     question: `What topic will be covered in the next lecture according to the professor?`,
-    options: [`Texture mapping`, `Animation`, `3D transformations`, `Lighting models`],
-    answer: 2,
+    options: [`3D transformations`, `Texture mapping`, `Animation`, `Lighting models`],
+    answer: 0,
+    answerText: ``,
     intuition: ``,
     explanation: `At [1:09:51], the lecturer concludes: "Next time we're going to talk about another important stage of the pipeline was how we actually do these 3D transformations."
 
@@ -463,22 +591,16 @@ export default function Lec4Part2Quiz() {
   const [answers, setAnswers] = useState(Array(quizData.length).fill(null))
   const [selected, setSelected] = useState(null)
   const [showExp, setShowExp] = useState(false)
+  const [revealed, setRevealed] = useState(false)
   const [reviewMode, setReviewMode] = useState(false)
   const [expTab, setExpTab] = useState('explanation')
-  const [codeCopied, setCodeCopied] = useState(false)
   const { t, start, pause, reset: resetTimer } = useTimer()
   const q = quizData[qIdx]
 
   const C = {
-    bg: '#0a0a0f',
-    surface: '#111118',
-    border: '#2a2a3a',
-    accent: '#34d399',
-    text: '#e2e8f0',
-    muted: '#94a3b8',
-    ok: '#10b981',
-    err: '#ef4444',
-    warn: '#f59e0b',
+    bg: '#0a0a0f', surface: '#111118', border: '#2a2a3a',
+    accent: '#34d399', text: '#e2e8f0', muted: '#94a3b8',
+    ok: '#10b981', err: '#ef4444', warn: '#f59e0b',
   }
 
   const base = { fontFamily: 'system-ui,sans-serif', margin: 0, padding: 0, minHeight: '100vh',
@@ -487,36 +609,68 @@ export default function Lec4Part2Quiz() {
   const box = { maxWidth: '900px', width: '100%', background: C.surface, borderRadius: '16px',
     border: `1px solid ${C.border}`, padding: '2.5rem', boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }
   const btn = (extra={}) => ({ padding: '0.75rem 1.5rem', borderRadius: '8px', border: 'none',
-    background: C.accent, color: C.text, fontSize: '1rem', fontWeight: '600', cursor: 'pointer',
+    background: C.accent, color: '#0a0a0f', fontSize: '1rem', fontWeight: '600', cursor: 'pointer',
     display: 'inline-flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.2s', ...extra })
   const tag = (color=C.accent) => ({ padding: '0.25rem 0.75rem', borderRadius: '6px',
     background: `${color}22`, color, fontSize: '0.8rem', fontWeight: '600' })
 
-  useEffect(() => { if (screen==='quiz' && !showExp && !reviewMode) start(); else pause() }, [screen,showExp,reviewMode,qIdx])
+  useEffect(() => { if (screen==='quiz' && !showExp && !revealed && !reviewMode) start(); else pause() }, [screen,showExp,revealed,reviewMode,qIdx])
 
+  const STORE = 'quiz_lec4'
+  const [textAns, setTextAns] = useState({})
+  const [notes, setNotes] = useState({})
+  const [history, setHistory] = useState([])
+  useEffect(() => {
+    try {
+      setTextAns(JSON.parse(localStorage.getItem(STORE+'_text') || '{}'))
+      setNotes(JSON.parse(localStorage.getItem(STORE+'_notes') || '{}'))
+      setHistory(JSON.parse(localStorage.getItem(STORE+'_hist') || '[]'))
+    } catch {}
+  }, [])
+  const saveTextAns = (qid, val) => {
+    const u = { ...textAns, [qid]: val }; setTextAns(u)
+    try { localStorage.setItem(STORE+'_text', JSON.stringify(u)) } catch {}
+  }
+  const saveNote = (qid, val) => {
+    const u = { ...notes, [qid]: val }; setNotes(u)
+    try { localStorage.setItem(STORE+'_notes', JSON.stringify(u)) } catch {}
+  }
+  useEffect(() => {
+    if (screen !== 'results') return
+    const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
+    const p = Math.round(s / (32 || 1) * 100)
+    const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
+    setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
+  }, [screen])
+
+  const mcqQuestions = quizData.filter(q => q.format === 'mcq')
   const isCorrect = useCallback((question, ans) => {
-    if (ans === null || ans === undefined) return false
+    if (question.format !== 'mcq' || ans === null || ans === undefined) return false
     return ans === question.answer
   }, [])
 
   const handleSubmit = () => {
     const a = [...answers]; a[qIdx] = selected; setAnswers(a); setShowExp(true); setExpTab('explanation')
   }
+  const handleReveal = () => {
+    setRevealed(true); setShowExp(true); setExpTab('explanation')
+  }
   const handleNext = () => {
-    if (qIdx < quizData.length - 1) { setQIdx(q => q+1); setSelected(null); setShowExp(false) }
-    else { setScreen('results'); pause() }
+    if (qIdx < quizData.length - 1) {
+      setQIdx(q => q+1); setSelected(null); setShowExp(false); setRevealed(false)
+    } else { setScreen('results'); pause() }
   }
   const handlePrev = () => {
-    if (qIdx > 0) { setQIdx(q => q-1); setSelected(null); setShowExp(false) }
+    if (qIdx > 0) { setQIdx(q => q-1); setSelected(null); setShowExp(false); setRevealed(false) }
   }
   const handleRestart = () => {
     setScreen('welcome'); setQIdx(0); setAnswers(Array(quizData.length).fill(null))
-    setSelected(null); setShowExp(false); setReviewMode(false); resetTimer()
+    setSelected(null); setShowExp(false); setRevealed(false); setReviewMode(false); resetTimer()
   }
-  const handleReview = () => { setScreen('quiz'); setQIdx(0); setShowExp(false); setReviewMode(true) }
+  const handleReview = () => { setScreen('quiz'); setQIdx(0); setShowExp(false); setRevealed(false); setReviewMode(true) }
 
   const score = answers.filter((a,i) => isCorrect(quizData[i],a)).length
-  const pct = Math.round(score / quizData.length * 100)
+  const pct = Math.round(score / (mcqQuestions.length || 1) * 100)
 
   if (screen === 'welcome') return (
     <div style={base}>
@@ -530,14 +684,14 @@ export default function Lec4Part2Quiz() {
             <a key={1} href={`${BASE}/lec4/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec4/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>Q33–Q64 · 32 questions</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ64 · 32 questions (32 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Questions</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>2</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Parts</div></div>
           </div>
         </div>
 
@@ -560,9 +714,25 @@ export default function Lec4Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / {quizData.length} correct</div>
-          <div style={{ color: C.muted }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
+        {/* Score history */}
+        {history.length > 1 && (
+          <div style={{ background: '#0d0d12', padding: '1.25rem', borderRadius: '12px', marginBottom: '1.5rem', border: `1px solid ${C.border}` }}>
+            <p style={{ margin: '0 0 0.75rem', fontSize: '0.72rem', fontWeight: 700, color: C.muted, letterSpacing: '0.05em' }}>PREVIOUS RUNS</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+              {history.slice(1).map((h, i) => (
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: C.muted }}>
+                  <span>{h.date}</span>
+                  <span style={{ color: h.pct>=70?C.ok:h.pct>=50?C.warn:C.err, fontWeight: 600 }}>{h.pct}%</span>
+                  <span>{h.score}/{h.score !== undefined ? h.score : '?'} correct</span>
+                  <span>{formatTime(h.time)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         <div style={{ display: 'flex', gap: '1rem' }}>
           <button style={btn({ flex: 1, justifyContent: 'center' })} onClick={handleReview}>
             <BookOpen size={20} /> Review Answers
@@ -571,7 +741,7 @@ export default function Lec4Part2Quiz() {
             <RefreshCw size={20} /> Restart
           </button>
         </div>
-        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
+        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes &nbsp;·&nbsp; ✏️ Export notes from home page</a>
       </div>
     </div>
   )
@@ -601,62 +771,85 @@ export default function Lec4Part2Quiz() {
         {/* Question */}
         <div style={{ marginBottom: '1.5rem' }}>
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem', alignItems: 'center' }}>
-            <span style={tag()}>Q{q.id}</span>
+            <span style={tag()}>{q.qid}</span>
+            <span style={tag(`${C.accent}99`)}>{q.qtype}</span>
             <span style={tag()}>[{q.timestamp}]</span>
             <span style={{ color: '#475569', fontSize: '0.72rem', fontFamily: 'monospace', marginLeft: 'auto' }}>{q.source}</span>
           </div>
           <h2 style={{ fontSize: '1.3rem', fontWeight: 600, lineHeight: 1.55, marginBottom: '1.25rem' }}>{q.question}</h2>
         </div>
 
-        {/* Options */}
-        <div style={{ marginBottom: '1.5rem' }}>
-          {q.options.map((opt, i) => {
-            let borderColor = C.border, bgColor = C.surface
-            if (showExp || reviewMode) {
-              if (i === q.answer) { borderColor = C.ok; bgColor = `${C.ok}15` }
-              else if (selected === i) { borderColor = C.err; bgColor = `${C.err}15` }
-            } else if (selected === i) {
-              borderColor = C.accent; bgColor = `${C.accent}15`
-            }
-            return (
-              <div key={i} onClick={() => !(showExp||reviewMode) && setSelected(i)}
-                style={{ padding: '1rem', borderRadius: '8px', border: `2px solid ${borderColor}`,
-                  background: bgColor, cursor: (showExp||reviewMode)?'default':'pointer',
-                  transition: 'all 0.2s', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                {(showExp||reviewMode) && i===q.answer && <CheckCircle size={18} color={C.ok} />}
-                {(showExp||reviewMode) && selected===i && i!==q.answer && <XCircle size={18} color={C.err} />}
-                <span style={{ fontWeight: 700, color: C.accent, minWidth: '1.2rem' }}>{['A','B','C','D'][i]}.</span>
-                <span>{opt}</span>
-              </div>
-            )
-          })}
-        </div>
+        {/* MCQ Options */}
+        {q.format === 'mcq' && (
+          <div style={{ marginBottom: '1.5rem' }}>
+            {q.options.map((opt, i) => {
+              let borderColor = C.border, bgColor = C.surface
+              if (showExp || reviewMode) {
+                if (i === q.answer) { borderColor = C.ok; bgColor = `${C.ok}15` }
+                else if (selected === i) { borderColor = C.err; bgColor = `${C.err}15` }
+              } else if (selected === i) {
+                borderColor = C.accent; bgColor = `${C.accent}15`
+              }
+              return (
+                <div key={i} onClick={() => !(showExp||reviewMode) && setSelected(i)}
+                  style={{ padding: '1rem', borderRadius: '8px', border: `2px solid ${borderColor}`,
+                    background: bgColor, cursor: (showExp||reviewMode)?'default':'pointer',
+                    transition: 'all 0.2s', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  {(showExp||reviewMode) && i===q.answer && <CheckCircle size={18} color={C.ok} />}
+                  {(showExp||reviewMode) && selected===i && i!==q.answer && <XCircle size={18} color={C.err} />}
+                  <span style={{ fontWeight: 700, color: C.accent, minWidth: '1.2rem' }}>{['A','B','C','D'][i]}.</span>
+                  <span>{opt}</span>
+                </div>
+              )
+            })}
+          </div>
+        )}
 
-        {/* Explanation (shown after submit) */}
+        {/* Reveal-format: student input */}
+        {q.format === 'reveal' && !reviewMode && (
+          <div style={{ marginBottom: '1.25rem' }}>
+            <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: C.muted,
+              letterSpacing: '0.05em', marginBottom: '0.5rem' }}>YOUR ANSWER</label>
+            <textarea
+              placeholder='Write your answer here before revealing the model answer...'
+              value={textAns[q.qid] || ''}
+              onChange={e => saveTextAns(q.qid, e.target.value)}
+              rows={4}
+              style={{ width: '100%', background: '#0d0d12', border: `1px solid ${C.border}`,
+                borderRadius: '8px', color: C.text, fontSize: '0.95rem', padding: '0.75rem',
+                resize: 'vertical', fontFamily: 'system-ui,sans-serif', lineHeight: 1.6,
+                boxSizing: 'border-box', outline: 'none' }} />
+          </div>
+        )}
+
+        {/* Reveal-format answer */}
+        {q.format === 'reveal' && revealed && (
+          <div style={{ background: `${C.ok}10`, border: `2px solid ${C.ok}55`, borderRadius: '12px',
+            padding: '1.5rem', marginBottom: '1.5rem' }}>
+            <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.ok, letterSpacing: '0.06em' }}>MODEL ANSWER</p>
+            <p style={{ margin: 0, lineHeight: 1.8, color: C.text, whiteSpace: 'pre-wrap', fontSize: '0.98rem' }}>{q.answerText}</p>
+          </div>
+        )}
+
         {(showExp || reviewMode) && (
           <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '1.5rem', border: `1px solid ${C.border}` }}>
-            {/* Tab switcher */}
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
-              {['intuition','explanation','images','tags'].map(tab => {
-                return (
-                  <button key={tab} onClick={() => setExpTab(tab)}
-                    style={{ padding: '0.3rem 0.85rem', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600,
-                      background: expTab===tab ? C.accent : '#1e1e2e', color: expTab===tab ? '#0a0a0f' : C.muted,
-                      outline: expTab===tab ? 'none' : `1px solid ${C.border}` }}>
-                    {tab==='intuition' ? '💡 Intuition' : tab==='explanation' ? '📖 Explanation' : tab==='images' ? '🖼 Slides' : '🔗 Tags'}
-                  </button>
-                )
-              })}
+              {['intuition','explanation','images','notes','tags'].map(tab => (
+                <button key={tab} onClick={() => setExpTab(tab)}
+                  style={{ padding: '0.3rem 0.85rem', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600,
+                    background: expTab===tab ? C.accent : '#1e1e2e', color: expTab===tab ? '#0a0a0f' : C.muted,
+                    outline: expTab===tab ? 'none' : `1px solid ${C.border}` }}>
+                  {tab==='intuition' ? '💡 Intuition' : tab==='explanation' ? '📖 Explanation' : tab==='images' ? '🖼 Slides' : tab==='notes' ? '✏️ My Notes' : '🔗 Tags'}
+                </button>
+              ))}
             </div>
             {expTab === 'intuition' && (
               q.intuition
-                ? (
-                  <div style={{ borderLeft: `3px solid ${C.accent}`, paddingLeft: '1rem' }}>
+                ? <div style={{ borderLeft: `3px solid ${C.accent}`, paddingLeft: '1rem' }}>
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                )
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition written yet. Add a <code style={{ color: C.accent }}>- INTUITION:</code> block under this question in <code style={{ color: C.accent }}>lectures/cg-04-lecture-quiz.md</code>.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-04-lecture-quiz.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
@@ -668,6 +861,21 @@ export default function Lec4Part2Quiz() {
                 ? <SlideImages images={q.images} />
                 : <p style={{ color: '#475569', margin: 0 }}>No slide images for this question.</p>
             )}
+            {expTab === 'notes' && (
+              <div>
+                <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.muted, letterSpacing: '0.05em' }}>YOUR QUESTIONS & NOTES</p>
+                <textarea
+                  placeholder='Follow-up questions, things to look up, connections to other topics...'
+                  value={notes[q.qid] || ''}
+                  onChange={e => saveNote(q.qid, e.target.value)}
+                  rows={5}
+                  style={{ width: '100%', background: '#0a0a0f', border: `1px solid ${C.border}`,
+                    borderRadius: '8px', color: C.text, fontSize: '0.9rem', padding: '0.75rem',
+                    resize: 'vertical', fontFamily: 'system-ui,sans-serif', lineHeight: 1.6,
+                    boxSizing: 'border-box', outline: 'none' }} />
+                <p style={{ margin: '0.4rem 0 0', fontSize: '0.75rem', color: '#475569' }}>Auto-saved to your browser.</p>
+              </div>
+            )}
             {expTab === 'tags' && (
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 {q.tags.length > 0
@@ -678,19 +886,24 @@ export default function Lec4Part2Quiz() {
           </div>
         )}
 
-        {/* Navigation */}
         <div style={{ display: 'flex', gap: '1rem' }}>
           <button onClick={handlePrev} disabled={qIdx===0}
-            style={btn({ background: C.border, opacity: qIdx===0?0.4:1, cursor: qIdx===0?'not-allowed':'pointer' })}>
+            style={btn({ background: C.border, color: C.text, opacity: qIdx===0?0.4:1, cursor: qIdx===0?'not-allowed':'pointer' })}>
             <ChevronLeft size={20} /> Prev
           </button>
-          {!(showExp||reviewMode) && (
+          {q.format === 'mcq' && !(showExp||reviewMode) && (
             <button onClick={handleSubmit} disabled={selected===null}
               style={btn({ flex:1, justifyContent:'center', opacity: selected===null?0.4:1, cursor: selected===null?'not-allowed':'pointer' })}>
               Submit Answer
             </button>
           )}
-          {(showExp||reviewMode) && (
+          {q.format === 'reveal' && !revealed && !reviewMode && (
+            <button onClick={handleReveal}
+              style={btn({ flex:1, justifyContent:'center', background: '#1e3a5f', color: C.text, border: `1px solid ${C.accent}55` })}>
+              <Eye size={20} /> Reveal Answer
+            </button>
+          )}
+          {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
               {qIdx < 32-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>

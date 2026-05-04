@@ -2,9 +2,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Move } from 'lucide-react'
 
-// Source: lectures/cg-05-lecture-quiz.md  (symlinked → Logseq pages)
+// Source: lectures/cg-05-lecture-quiz.md.md  (symlinked → Logseq pages)
 // Lecture 5: Spatial Transformations — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-05-lecture-quiz.md 5
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-05-lecture-quiz.md.md 5
 
 const quizData = [
   {
@@ -25,7 +25,7 @@ const quizData = [
     code: ``,
     images: ["image_1771298936879_0.png", "image_1771298965374_0.png", "image_1771298994477_0.png"],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 2,
@@ -42,7 +42,7 @@ const quizData = [
     code: ``,
     images: ["image_1771299073294_0.png"],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 3,
@@ -59,7 +59,7 @@ const quizData = [
     code: ``,
     images: ["image_1771299154167_0.png"],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 4,
@@ -78,7 +78,7 @@ const quizData = [
     code: ``,
     images: ["image_1771299302158_0.png", "image_1771299285236_0.png"],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 5,
@@ -95,7 +95,7 @@ const quizData = [
     code: ``,
     images: ["image_1771299371552_0.png"],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 6,
@@ -112,7 +112,7 @@ const quizData = [
     code: ``,
     images: ["image_1771299460515_0.png"],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 7,
@@ -131,7 +131,7 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     code: ``,
     images: ["image_1771299798491_0.png"],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 8,
@@ -149,7 +149,7 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     code: ``,
     images: ["image_1771300035675_0.png"],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 9,
@@ -166,7 +166,7 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     code: ``,
     images: ["image_1771300344268_0.png"],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 10,
@@ -181,9 +181,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As stated at [16:55]: "R transpose r is equal to the identity or equivalently our transpose is our inverse."`,
     code: ``,
-    images: ["image_1771300344268_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 11,
@@ -198,9 +198,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As explained at [19:19]: "Rotations additionally preserve orientation so we can say that the determinant of the matrix is positive and reflections reverse orientation so the determinant is negative."`,
     code: ``,
-    images: ["image_1775353532710_0.png", "image_1775353587159_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 12,
@@ -215,9 +215,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As stated at [20:01]: "What is the basic invariant of scaling well it preserves the direction of all vectors."`,
     code: ``,
-    images: ["image_1775353615387_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 13,
@@ -232,9 +232,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As described at [22:21]: "It's pretty straightforward we can just build a diagonal matrix d with the number a all along the diagonal."`,
     code: ``,
-    images: ["image_1775353634336_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 14,
@@ -249,9 +249,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As explained at [25:18]: "This is a little bit surprising and counter-intuitive when you first start working with two and three-dimensional vectors that just negating the vector is a rotation in even dimensions and a reflection in odd dimensions."`,
     code: ``,
-    images: ["image_1775353677314_0.png"],
-    tags: ["counterintutive"],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 15,
@@ -268,7 +268,7 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 16,
@@ -282,12 +282,11 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     answerText: ``,
     intuition: ``,
     explanation: `As described at [26:38]: "Let's first rotate to the new axes to the new coordinate system where we want to do the stretching then apply a diagonal scaling like we just did and then rotate back to the original axes the original coordinate system."
-
 - # Spatial Transformations Quiz - Part 2`,
     code: ``,
-    images: ["image_1775353737752_0.png", "image_1775353760171_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 17,
@@ -302,9 +301,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As explained at [29:51]: "In other words every symmetric matrix indeed performs a non-uniform scaling along some set of orthogonal axes this is really nice because it gives us a geometric interpretation to symmetric matrices."`,
     code: ``,
-    images: ["image_1775353803395_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 18,
@@ -319,9 +318,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As defined at [30:46]: "A shear is going to displace each point x in some given direction u and the amount by which it's going to displace it is equal to its distance the distance of x along a fixed vector v."`,
     code: ``,
-    images: ["image_1775353820409_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 19,
@@ -336,9 +335,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As given at [31:33]: "We can represent it as a matrix which is i plus u v transpose."`,
     code: ``,
-    images: ["image_1775353845497_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 20,
@@ -353,9 +352,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As stated at [33:50]: "By the way something to always remember is the last matrix gets applied first right because we're going to take the matrix on the left and hit the vector on the right."`,
     code: ``,
-    images: ["image_1775353861054_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 21,
@@ -370,9 +369,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As stated at [34:38]: "In general there is no unique way to write a given linear transformation as a composition of basic transformations." The lecturer gives the example that a 90° rotation could be composed of two 45° rotations or ninety 1° rotations.`,
     code: ``,
-    images: ["image_1775354064847_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 22,
@@ -387,9 +386,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As defined at [36:27]: "One really nice decomposition is the so-called polar decomposition which writes any matrix a as an orthogonal matrix q and a symmetric positive semi-definite matrix p so i can write a is equal to q times p."`,
     code: ``,
-    images: ["image_1775354102423_0.png"],
-    tags: ["Decomposition"],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 23,
@@ -404,9 +403,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As demonstrated at [41:02]: "The good news is we did hit the start and end points right we started with the transformation we wanted and ended with the other transformation we wanted but it looks awful in between this is really not giving us good animation."`,
     code: ``,
-    images: ["image_1775354214135_0.png", "image_1775354256751_0.png"],
-    tags: ["counterintutive"],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 24,
@@ -421,9 +420,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As explained at [41:21]: "Let's consider for instance our polar decomposition and then separately interpolate these different components."`,
     code: ``,
-    images: ["image_1775354275131_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 25,
@@ -438,9 +437,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As mentioned at [43:45]: "If i do a naive interpolation of transformations let's say along the arm of such a character i can get some pretty nasty artifacts here something called the candy wrapper artifact where the interpolated transformation in the middle shrinks everything to zero."`,
     code: ``,
-    images: ["image_1775354295612_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 26,
@@ -455,9 +454,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As stated at [46:35]: "Another way we can see this is to just notice that the origin is not preserved by translation the translation is going to move the origin to the point u."`,
     code: ``,
-    images: ["image_1775354325014_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 27,
@@ -472,9 +471,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As explained at [47:25]: "We might say okay we could keep track of a matrix and a vector and that might work but we're going to see later on that this encoding of just working with a matrix and a vector isn't going to work out so well for other important cases like prospective transformations."`,
     code: ``,
-    images: ["image_1775354386177_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 28,
@@ -489,9 +488,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As explained at [48:07]: "Homogeneous coordinates came from the efforts of people to study really study perspective to study perspective in drawing and painting and the homogeneous coordinates themselves were introduced by a mathematician named mobius as a way of assigning coordinates to lines."`,
     code: ``,
-    images: ["image_1775354411936_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 29,
@@ -506,9 +505,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As described at [50:06]: "The basic basic idea of homogeneous coordinates is that any point p hat along this line can be used to represent the point p."`,
     code: ``,
-    images: ["image_1775354475174_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 30,
@@ -523,9 +522,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As explained at [50:38]: "Hopefully the story is reminding you a little bit of our pinhole camera right we said if we have this pinhole camera looking out at the world through this little hole then objects along the same line through space all project to the same point on the film at the back of the camera."`,
     code: ``,
-    images: ["image_1775354593006_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 31,
@@ -540,9 +539,9 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     intuition: ``,
     explanation: `As defined at [51:30]: "Any three numbers p hat equals abc such that a divided by c and b divided by c are the same as x and y give us homogeneous coordinates for p."`,
     code: ``,
-    images: ["image_1775354659304_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
   {
     id: 32,
@@ -556,12 +555,11 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     answerText: ``,
     intuition: ``,
     explanation: `As described at [53:41]: "Hopefully this reminds you of some three-dimensional transformation that we've already seen if you look at the movie on the right what kind of transformation does that look like well hopefully it reminds you of a shear we're taking this kind of cone made by the triangle and we're shearing it across the xy plane."
-
 - # Spatial Transformations Quiz - Part 3`,
     code: ``,
-    images: ["image_1775354701343_0.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-05-lecture-quiz.md`,
+    source: `lectures/cg-05-lecture-quiz.md.md`,
   },
 ]
 
@@ -686,7 +684,7 @@ export default function Lec5Part1Quiz() {
           <Move size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 5: Spatial Transformations — Part 1</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Linear maps, homogeneous coords, rotation, translation</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-05-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-05-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec5/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec5/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
@@ -748,7 +746,7 @@ export default function Lec5Part1Quiz() {
             <RefreshCw size={20} /> Restart
           </button>
         </div>
-        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes</a>
+        <a href={`${BASE}/`} style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: C.muted, fontSize: '0.875rem' }}>← All quizzes &nbsp;·&nbsp; ✏️ Export notes from home page</a>
       </div>
     </div>
   )
@@ -856,7 +854,7 @@ export default function Lec5Part1Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-05-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-05-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
