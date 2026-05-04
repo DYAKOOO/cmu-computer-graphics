@@ -10,3 +10,7 @@ SDL2.dll
 nest-libs/
 asst3_exr_archive
 handin*
+node_modules
+
+# Next.js build cache
+.next/

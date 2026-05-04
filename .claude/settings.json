@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git commit -m ' *)",
+      "Bash(ln -sf /home/diako/csRobotics/logseq3/pages/cg-23-lecture-quiz.md lectures/cg-23-lecture-quiz.md)",
+      "Bash(node -e \"const l = require\\('lucide-react'\\); console.log\\(Object.keys\\(l\\).filter\\(k => ['Waves','Activity','Radio','Zap','FlaskConical','Cpu','Globe','BarChart2'].includes\\(k\\)\\).join\\(', '\\)\\)\")",
+      "Bash(grep -n '`\\\\|\\\\${' /home/diako/csRobotics/logseq3/pages/cg-23-lecture-quiz.md)",
+      "Bash(node --input-type=module)",
+      "Bash(BASE_PATH=/cmu-computer-graphics pnpm build)",
+      "Bash(pdftoppm -r 150 \"lecturesvideo_slides/21_dynamicstimeintegration_slides.pdf\" /tmp/lec21_slide -png)",
+      "Bash(ln -sf /home/diako/csRobotics/logseq3/pages/cg-21-lecture-quiz.md cg-21-lecture-quiz.md)",
+      "Bash(pip show *)",
+      "Bash(marker --help)",
+      "Bash(marker_single --help)",
+      "Bash(pdftotext \"lecturesvideo_slides/20_introanimation_slides.pdf\" -)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
+    ]
+  }
+}

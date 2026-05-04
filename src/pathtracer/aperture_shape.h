@@ -1,11 +1,11 @@
 #pragma once
-
 /*
  * Aperture Shape represents an aperture shape that a camera can take.
  *
  */
 #include <string>
 #include <vector>
+#include <cstdint>
 
 struct ApertureShape {
 	uint32_t id; // unique id for this aperture shape (used for loading/saving!)
