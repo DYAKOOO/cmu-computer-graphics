@@ -42,28 +42,38 @@ def parse_questions(md_path):
             timestamp = header.group(2).strip()
             question  = re.sub(r'\s*\[\[.*?\]\]', '', header.group(3)).strip()
         else:
-            # Old lec5 format: question text is on the next non-empty line
-            # e.g. "- #card [Q1] [00:00] - [Topic] → [Subtopic]\n  collapsed::true\n  Question text?"
+            question = ''
+
+        # Old lec5 format fallback: the standard regex can backtrack and pick up
+        # a topic annotation "- [Topic] → [Subtopic]" as the question. Detect
+        # this and fall through to extract the real question from subsequent lines.
+        is_topic_annotation = re.match(r'^-?\s*\[.+\]\s*(?:→|->)', question)
+        if not question or is_topic_annotation:
             old_hdr = re.match(
                 r'- #card \[(Q(?:F?\d+))\]\s+\[([^\]]+)\]',
                 block
             )
             if not old_hdr:
-                continue
-            qid_raw   = old_hdr.group(1)
-            timestamp = old_hdr.group(2).strip()
-            # Find the question: first non-empty line that's not a Logseq property or A/B/C/D option
-            question = ''
-            for raw_line in block.split('\n')[1:]:
-                stripped = raw_line.strip()
-                if not stripped or stripped.startswith('collapsed::') or stripped.startswith('card-') or re.match(r'^[A-D]\)', stripped):
+                if not question:
                     continue
-                # Strip Logseq markup
-                question = re.sub(r'\s*\[\[.*?\]\]', '', stripped).strip()
-                question = re.sub(r'==([^=]+)==', r'\1', question).strip()
-                break
-            if not question:
-                continue
+            else:
+                qid_raw   = old_hdr.group(1)
+                timestamp = old_hdr.group(2).strip()
+                # Find the question: first non-empty line that's not a Logseq property or A/B/C/D option
+                question = ''
+                for raw_line in block.split('\n')[1:]:
+                    stripped = raw_line.strip()
+                    if (not stripped
+                            or stripped.startswith('collapsed::')
+                            or stripped.startswith('card-')
+                            or re.match(r'^[A-D]\)', stripped)
+                            or re.match(r'^-?\s*\[.+\]\s*(?:→|->)', stripped)):
+                        continue
+                    question = re.sub(r'\s*\[\[.*?\]\]', '', stripped).strip()
+                    question = re.sub(r'==([^=]+)==', r'\1', question).strip()
+                    break
+                if not question:
+                    continue
 
         # Detect question type from the first line
         first_line = block.split('\n')[0]
