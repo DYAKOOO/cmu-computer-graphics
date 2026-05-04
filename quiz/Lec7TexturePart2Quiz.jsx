@@ -2,9 +2,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Image } from 'lucide-react'
 
-// Source: lectures/cg-07-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Source: lectures/cg-07-lecture-quiz.md  (symlinked → Logseq pages)
 // Lecture 7: Texture Mapping — Part 2 · QQ30–QQ61 · 32 questions (32 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-07-lecture-quiz.md.md 7
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-07-lecture-quiz.md 7
 
 const quizData = [
   {
@@ -20,9 +20,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [22:36], the lecturer explains: "In this case I'm not solving for x. Normally with a matrix equation Ax = y you solve for x. In this case I'm actually solving for the unknown entries of the matrix A."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777878799982_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 31,
@@ -37,9 +37,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [23:42], the lecturer states: "We can break it up into kind of two pieces. One is that it applies a non-uniform scale to turn our original box into a box of size two, and then in the upper right we have this translation."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777878859438_0.png"],
+    tags: ["Scaling", "translation"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 32,
@@ -52,11 +52,13 @@ const quizData = [
     answer: 3,
     answerText: ``,
     intuition: ``,
-    explanation: `At [23:58], the lecturer explains: "That was the whole idea behind using homogeneous coordinates for spatial transformations, is that we can express translations as linear transformations in homogeneous coordinates."`,
+    explanation: `At [23:58], the lecturer explains: "That was the whole idea behind using homogeneous coordinates for spatial transformations, is that we can express translations as linear transformations in homogeneous coordinates."
+
+- our full perspective matrix takes geometry of view frustum into account.`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777878891870_0.png"],
+    tags: ["Homogeneous", "disclaimer"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 33,
@@ -71,9 +73,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [25:22], the lecturer states: "If in the end I want to divide by z, then I'm going to construct a matrix that copies z into the homogeneous coordinate."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777878941002_0.png"],
+    tags: ["Homogeneous"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 34,
@@ -88,9 +90,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [25:47], the lecturer states: "When we go to turn our vector (x,y,z,w) into the final vector by dividing, we just get (x/z, y/z, 1, 1)."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777878985726_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 35,
@@ -105,9 +107,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [27:00], the lecturer explains: "Our projection from 3D to 2D will always give us points in the square from minus one to one sitting on the z equals one plane."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777879005679_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 36,
@@ -122,9 +124,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [27:29], the lecturer states: "In mathematics usually x points to the right and y points up. In image coordinate systems, for historical reasons, x points to the right and y points down."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777879036856_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 37,
@@ -139,9 +141,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [28:46-30:19], the lecturer explains the complete pipeline: from world coordinates, to view coordinates (via the inverse camera transform), to clip coordinates (mapping to a standard cube), and finally to screen coordinates.`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777879135721_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 38,
@@ -156,9 +158,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [29:32-29:58], the lecturer explains that clip coordinates make it easy to toss out primitives we don't want to see, and they also encode the type of projection we're going to see (perspective or orthogonal).`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777879154543_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 39,
@@ -173,9 +175,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [30:52], the lecturer mentions: "We do a few half plane tests, pretty straightforward, but this doesn't give us very interesting triangles."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777879186478_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 40,
@@ -190,9 +192,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [31:24], the lecturer explains: "A standard strategy is to interpolate somehow the color values at vertices to get a smooth blend or smooth gradation of color or any other attribute that we might have stored at vertices."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777879244352_0.png"],
+    tags: ["Interpolation"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 41,
@@ -207,9 +209,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [32:49], the lecturer explains: "One way to do this is to cook up a parameter t that is zero when we're at x_i and one when we're at x_(i+1)."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777879302571_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 42,
@@ -224,9 +226,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [34:35], the lecturer states: "What we want to do really is fit a linear or really affine function to these three values. Any such function has three unknown coefficients a, b, and c."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777879329890_0.png"],
+    tags: ["affine"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 43,
@@ -241,9 +243,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [36:43], the lecturer explains: "We can really think of this as a linear combination of two functions, of two sort of basis functions."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777879496989_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 44,
@@ -258,9 +260,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [38:05], the lecturer states: "One way is given a point x, we can measure the distance from x to each of the three edges and then divide those distances by the height of the triangle."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777879550363_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 45,
@@ -275,9 +277,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [39:27], the lecturer explains: "As we approach vertex i, two of the basis functions fade away and go to zero, one of the basis functions φ_i gets towards one, and we just recover the sample value at i."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777879661784_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 46,
@@ -292,9 +294,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [42:15], the lecturer explains: "We're going to define the basis function φ_i as just the ratio of the area of this little subtriangle (x, x_j, x_k) divided by the overall area (x_i, x_j, x_k)."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777879642343_0.png"],
+    tags: ["CG-Lecture-Question"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 47,
@@ -309,9 +311,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [43:30], the lecturer defines: "No matter how you compute them, the values of the three functions φ_i, φ_j, φ_k for a given point x are called the barycentric coordinates of x."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777879752322_0.png"],
+    tags: ["definition"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 48,
@@ -326,9 +328,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [44:09], the lecturer states: "Importantly, these same three values conveniently enough fall out of the half plane tests that you're already doing for triangle rasterization."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777879791424_0.png"],
+    tags: ["Coordinate/barycenteric", "halfplane"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 49,
@@ -343,9 +345,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [45:41], the lecturer explains: "Due to the fact that we're doing perspective projection, barycentric interpolation of values on a triangle with different depths is not an affine function of screen coordinates."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777879995584_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 50,
@@ -358,12 +360,11 @@ const quizData = [
     answer: 0,
     answerText: ``,
     intuition: ``,
-    explanation: `At [47:35], the lecturer describes: "We wanted to map a checkerboard onto this quad, but because the rates of change are not quite right when we use the 2D coordinates rather than the 3D ones, we get this funky sort of bend in our checkerboard in this middle picture."
-- QUESTIONS (continued):`,
+    explanation: `At [47:35], the lecturer describes: "We wanted to map a checkerboard onto this quad, but because the rates of change are not quite right when we use the 2D coordinates rather than the 3D ones, we get this funky sort of bend in our checkerboard in this middle picture."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777880031286_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 51,
@@ -378,9 +379,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [47:53], the lecturer states: "So how do we correct this? Well we can do a perspective correct interpolation."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777880068619_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 52,
@@ -395,9 +396,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [48:05], the lecturer explains: "The basic recipe is we're going to compute the depth value z at each vertex, we're going to evaluate 1/z (call that capital Z) and φ/z (call that capital P) at each vertex."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777880087243_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 53,
@@ -412,9 +413,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [48:37], the lecturer states: "Finally to display the final result, we can divide the interpolated P by the interpolated Z and that gives us our final value."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777880100265_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 54,
@@ -429,9 +430,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [49:19], the lecturer states: "A really good analogy for texture mapping is wrapping a gift."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777880126283_0.png"],
+    tags: ["Analogy", "TextureMapping"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 55,
@@ -446,9 +447,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [49:38], the lecturer explains: "Essentially that's all texture mapping is. We're going to have two dimensional images and we want to find ways to wrap them around three-dimensional surfaces."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777880163977_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 56,
@@ -463,9 +464,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [50:19], the lecturer states: "We might have a texture map that describes where the surface is wet and where the surface is dry, and that wet versus dry attribute will subsequently affect how we shade the surface."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777880251014_0.png"],
+    tags: ["Application"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 57,
@@ -480,9 +481,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [50:57], the lecturer explains: "One common technique is something called normal mapping where the texture isn't describing color at all, it's actually telling us how to perturb the normal of the surface so that when we go to shade it it looks like there's actually geometric detail that's not there."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777880326948_0.png"],
+    tags: ["Technique", "Mapping"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 58,
@@ -497,9 +498,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [51:48], the lecturer points out: "One is that the silhouette of the object is perfectly smooth even though it looks like it should be wrinkled and the other is that the shadow is perfectly smooth."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777880338139_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 59,
@@ -514,9 +515,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [52:08], the lecturer states: "Displacement mapping is a technique that takes this idea all the way. We take that texture that's been wrapped around the surface and we use the values in that texture to actually displace or move the surface in different directions."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777880350315_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 60,
@@ -531,9 +532,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [52:54], the lecturer explains: "We can imagine if we're a little bug sitting at any point on the surface, the ambient occlusion tells us what fraction of our view is of the sky and what fraction is of the surface itself."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777880408930_0.png"],
+    tags: ["definition"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 61,
@@ -548,9 +549,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [53:50], the lecturer states: "We're not using the position of the surface, something more like the reflected direction - which direction did light bounce and where does that land in our texture map."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777883536580_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
 ]
 
@@ -675,7 +676,7 @@ export default function Lec7Part2Quiz() {
           <Image size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 7: Texture Mapping — Part 2</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>UV mapping, mipmaps, filtering, environment maps, bump mapping</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-07-lecture-quiz.md.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-07-lecture-quiz.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec7/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec7/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
@@ -846,7 +847,7 @@ export default function Lec7Part2Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-07-lecture-quiz.md.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-07-lecture-quiz.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

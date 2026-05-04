@@ -2,9 +2,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Image } from 'lucide-react'
 
-// Source: lectures/cg-07-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Source: lectures/cg-07-lecture-quiz.md  (symlinked → Logseq pages)
 // Lecture 7: Texture Mapping — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-07-lecture-quiz.md.md 7
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-07-lecture-quiz.md 7
 
 const quizData = [
   {
@@ -21,8 +21,8 @@ const quizData = [
     explanation: ``,
     code: ``,
     images: [],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    tags: ["Projection/Perspective"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 2,
@@ -39,7 +39,7 @@ const quizData = [
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 3,
@@ -56,7 +56,7 @@ const quizData = [
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 1,
@@ -73,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_01.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 2,
@@ -90,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_02.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 3,
@@ -107,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_04.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 4,
@@ -124,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_04.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 5,
@@ -140,8 +140,8 @@ const quizData = [
     explanation: `At [01:24], the lecturer notes: "If we go back for instance and look through the history of painting, we can see that people really struggled to get accurate perspective."`,
     code: ``,
     images: ["lec7_slide_05.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    tags: ["perspective"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 6,
@@ -157,8 +157,8 @@ const quizData = [
     explanation: `At [02:08], the lecturer explains: "Later on as people mastered perspective, they said well actually we can reject perspective now that we can understand it, we can play all sorts of games with it."`,
     code: ``,
     images: ["lec7_slide_07.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    tags: ["Perception"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 7,
@@ -173,9 +173,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [02:57], the lecturer states: "Like an orthographic projection where sizes are more predictable or more preserved."`,
     code: ``,
-    images: ["lec7_slide_16.png"],
+    images: ["image_1777877958173_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 8,
@@ -190,9 +190,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [03:21], the lecturer states: "We'll start out with some object described in world coordinates, like you might remember from our first lecture we specified a cube by just giving the location of its vertices in some absolute global coordinate system."`,
     code: ``,
-    images: ["lec7_slide_38.png"],
+    images: ["image_1777878006564_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 9,
@@ -207,9 +207,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [03:42], the lecturer explains: "If our camera is positioned and rotated in a certain way, we actually are going to apply the inverse translation and rotation to our input coordinates to effectively position the camera."`,
     code: ``,
-    images: ["lec7_slide_40.png"],
+    images: ["image_1777878048771_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 10,
@@ -224,9 +224,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [03:54], the lecturer states: "These coordinates are often then mapped into what are called clip coordinates, so into a sort of standard cube that's going to make it easy to throw out things that shouldn't get drawn."`,
     code: ``,
-    images: ["lec7_slide_45.png"],
+    images: ["image_1777878066148_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 11,
@@ -241,9 +241,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [05:06], the lecturer states: "As a concrete example, let's imagine we have a camera centered at the position (4,2,0) and it's looking down the x-axis."`,
     code: ``,
-    images: ["lec7_slide_48.png"],
+    images: ["image_1777878125272_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 12,
@@ -258,9 +258,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [06:09], the lecturer explains: "One way of thinking about this is that we subtract the camera center (4,2,0) from the coordinates describing our object. In other words we translate the object vertex positions by (-4,-2,0)."`,
     code: ``,
-    images: ["lec7_slide_48.png"],
+    images: ["image_1777878137729_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 13,
@@ -275,9 +275,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [06:42], the lecturer states: "In this case we can do this by just a simple rotation. We can rotate about the y-axis by π/2 and now we'll effectively have aligned the camera's view direction with the minus z-axis."`,
     code: ``,
-    images: ["lec7_slide_66.png"],
+    images: ["image_1777878185517_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 14,
@@ -292,9 +292,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [10:48], the lecturer explains: "There's something very special about rotation matrices that makes them particularly nice to invert, which is that the inverse of a rotation matrix is just its transpose."`,
     code: ``,
-    images: ["lec7_slide_66.png"],
+    images: ["image_1777878253854_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 15,
@@ -309,9 +309,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [11:24], the lecturer defines: "The view frustum is the region this final camera can see."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777878294269_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 16,
@@ -326,9 +326,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [11:37], the lecturer states: "Just to keep things simple we always imagine that the camera is sitting at the origin and pointed down the minus z axis."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777878329132_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 17,
@@ -343,9 +343,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [12:04], the lecturer explains: "We can think of the top, bottom, left, and right sides/planes of this box as the four sides of the image that we want to draw."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777878320696_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 18,
@@ -360,9 +360,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [12:55], the lecturer states: "Clipping is the process of eliminating triangles not inside this view frustum."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777878386258_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 19,
@@ -377,9 +377,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [13:13], the lecturer explains: "Why do we even bother with this clipping process? Well one answer is that we don't want to waste time rasterizing primitives that we can't see."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777878407909_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 20,
@@ -396,7 +396,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 21,
@@ -412,8 +412,8 @@ const quizData = [
     explanation: `At [14:54], the lecturer explains: "Generally the way that clipping is done in a real rasterization pipeline is we take any partial triangle and we split it up into several sub-triangles."`,
     code: ``,
     images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    tags: ["Implementation"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 22,
@@ -428,9 +428,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [15:33], the lecturer states: "The reason goes back to something very important that we've discussed with the rasterization pipeline, which is that we're really trying to build a pipeline that does one thing really really well and really really fast, which is to draw triangles onto the screen."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777878440216_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 23,
@@ -445,9 +445,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [16:28], the lecturer explains: "One reason is that you could easily imagine primitives that have vertices both in front of and behind the eye. You get really close to an object and some of these triangles are going to be spanning positive and negative z values."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777878497278_0.png"],
+    tags: ["Clipping/near"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 24,
@@ -462,9 +462,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [17:12], the lecturer describes: "The idea is if I want to draw many primitives on the screen and have them occlude each other, I'm going to keep track in an additional image of the closest depth I've seen so far."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777878572601_0.png"],
+    tags: ["ZBuffer"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 25,
@@ -478,11 +478,12 @@ const quizData = [
     answerText: ``,
     intuition: ``,
     explanation: `At [18:50], the lecturer explains: "It's happening because the z values, the depth values that I'm storing in this buffer really are fighting because I don't have enough precision."
-- QUESTIONS (continued):`,
+
+-`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777878593505_0.png"],
+    tags: ["PRECISION"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 26,
@@ -497,9 +498,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [19:13], the lecturer states: "From frame to frame I get these ugly jaggy artifacts. Actually even within a single frame I might have two planes overlapping and get this zigzag back and forth across where they meet."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777878627150_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 27,
@@ -514,9 +515,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [19:49], the lecturer explains: "Before we go ahead and do the 2D projection, what we're going to do is map the view frustum, this gray box, to a standard cube, the cube between -1 and 1 in all three components."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777878681990_0.png"],
+    tags: ["Transformation"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 28,
@@ -531,9 +532,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [20:04], the lecturer states: "Why do we do this? Well for one thing it makes clipping a lot easier. We can just toss out any points that are outside the range minus one to one."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777878727105_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 29,
@@ -548,9 +549,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [21:07], the lecturer confirms: "Yes, so we can set up a linear transformation that maps vertices of the view frustum to a cube."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777878776015_0.png"],
+    tags: ["Mapping"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
 ]
 
@@ -675,7 +676,7 @@ export default function Lec7Part1Quiz() {
           <Image size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 7: Texture Mapping — Part 1</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>UV mapping, mipmaps, filtering, environment maps, bump mapping</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-07-lecture-quiz.md.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-07-lecture-quiz.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec7/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec7/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
@@ -847,7 +848,7 @@ export default function Lec7Part1Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-07-lecture-quiz.md.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-07-lecture-quiz.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

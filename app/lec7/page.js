@@ -5,7 +5,7 @@ export default function Lec7Index() {
   return (
     <div style={{ minHeight: '100vh', background: '#0f172a', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', fontFamily: 'system-ui,sans-serif' }}>
       <h1 style={{ color: '#f1f5f9', fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>Lecture 7: Texture Mapping</h1>
-      <p style={{ color: '#64748b', fontSize: '0.8rem', fontFamily: 'monospace', marginBottom: '2rem' }}>lectures/cg-07-lecture-quiz.md · 85 questions · 3 parts</p>
+      <p style={{ color: '#64748b', fontSize: '0.8rem', fontFamily: 'monospace', marginBottom: '2rem' }}>lectures/cg-07-lecture-quiz.md · 89 questions · 3 parts</p>
       <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
       
       <a href={`${BASE}/lec7/1`} style={{ display: 'block', background: '#1e293b', border: `2px solid ${ACCENT}`, borderRadius: '10px', padding: '1.25rem 2rem', textDecoration: 'none', textAlign: 'center' }}

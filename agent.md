@@ -58,6 +58,22 @@ A good target is roughly one question per *content* slide, which is usually
 3. **Always verify by reading the slide content**, not just the number. A common failure mode: keyword scoring assigns Q_flip → slide_29 and Q_split → slide_27 when the correct mapping is Q_flip → slide_27, Q_split → slide_28. If two adjacent questions' slides are out of numerical order, stop and re-read both slide texts to find the correct mapping.
 4. Double-check the final sequence by printing `[QN] → slide_NN: <first line of slide text>` for every question and scanning for any slide number that decreases.
 
+### Critical failure mode: stalling at a slide
+
+**Symptom**: The automated scoring correctly maps the first 5–10 questions (slides 1–10 or so), then assigns the same slide to every remaining question for the rest of the lecture.
+
+**Why it happens**: The monotonic constraint prevents going backwards. Once scoring finds a high-overlap match at slide N and marks it as the floor, all later questions that don't strongly match any slide > N get clamped to slide N. The last confidently-matched slide gets repeated indefinitely.
+
+**How to detect it**: After running the script, print or inspect the mapping. Any run of 5+ consecutive questions assigned to the same slide is almost certainly wrong.
+
+**How to fix it**:
+1. Identify the last correctly-mapped question (where the slide content clearly matches the question).
+2. For all subsequent questions, read the question text and manually find the matching slide by scanning slide images in order from that point forward.
+3. Directly edit the `![lecN_slide_NN.png](../assets/lecN_slide_NN.png)` lines in the Logseq `.md` file.
+4. Run gen_quiz.py again — it picks up the corrected image refs from the source file.
+
+**Reference**: lec6 and lec7 were manually corrected this way. The user corrected them after automated generation produced wrong mappings for ~half the questions.
+
 ---
 
 ## 5. Edit the existing Logseq file in-place

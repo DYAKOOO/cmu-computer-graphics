@@ -2,9 +2,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Image } from 'lucide-react'
 
-// Source: lectures/cg-07-lecture-quiz.md.md  (symlinked → Logseq pages)
-// Lecture 7: Texture Mapping — Part 3 · QQ62–QQ85 · 24 questions (24 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-07-lecture-quiz.md.md 7
+// Source: lectures/cg-07-lecture-quiz.md  (symlinked → Logseq pages)
+// Lecture 7: Texture Mapping — Part 3 · QQ62–QQ89 · 28 questions (28 MCQ, 0 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-07-lecture-quiz.md 7
 
 const quizData = [
   {
@@ -20,9 +20,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [54:15], the lecturer states: "Texture coordinates are what we use to define a mapping from the surface to points in the texture domain."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777883583265_0.png"],
+    tags: ["texture", "Coordinate/Texture"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 63,
@@ -38,8 +38,8 @@ const quizData = [
     explanation: `At [54:22], the lecturer explains: "Most commonly if we're working with triangle mesh, we might linearly interpolate texture coordinates at the triangle vertices over the interior of the triangle."`,
     code: ``,
     images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    tags: ["Process"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 64,
@@ -54,9 +54,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [55:54], the lecturer states: "One nice way to visualize texture coordinates is to associate them with colors. So if we think of u as red and v as green, then we get kind of a color map that looks like this."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777883637755_0.png", "image_1777883659001_0.png"],
+    tags: ["Visualization"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 65,
@@ -71,9 +71,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [58:20], the lecturer explains: "One natural thing we might like to do with a building is to cover it with some regular pattern like bricks."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777883684771_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 66,
@@ -88,9 +88,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [59:05], the lecturer outlines: "For each pixel in the rasterized image, for each pixel on the screen, we're going to interpolate uv coordinates from vertices onto whatever pixel we're currently looking at."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777883779513_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 67,
@@ -105,9 +105,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [59:52], the lecturer states: "The reason is this adversary that we keep on encountering in this class: aliasing."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777883787732_0.png"],
+    tags: ["Aliasing"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 68,
@@ -122,9 +122,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:00:50], the lecturer explains: "The key idea is that since triangles are projected from three dimensions to two dimensions, pixels in screen space will correspond to regions of varying size and location in the texture itself."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777883838891_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 69,
@@ -139,9 +139,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:01:51], the lecturer states: "Magnification is somewhat the easier case. You can imagine that what's happened is the camera has gotten really close to an object... In this case a single pixel on the screen is going to cover just a tiny region of the texture."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777883852833_0.png"],
+    tags: ["TextureMapping"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 70,
@@ -156,9 +156,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:02:30], the lecturer explains: "Minification is much harder. The example here is that the object is really really far away so that a single pixel on the screen covers a very large region in the texture."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777883927810_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 71,
@@ -173,9 +173,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:03:38], the lecturer states: "The fast, simple but ugly solution is just grab the value of the nearest pixel, the nearest texture pixel or what's called a texel."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777883944380_0.png"],
+    tags: ["Sampling"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 72,
@@ -190,9 +190,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:03:50], the lecturer explains: "As we get closer and closer to the wall, the image gets blockier and blockier until we're really staring at these big color blocks. Doesn't look very nice."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777883980961_0.png"],
+    tags: ["Sampling"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 73,
@@ -207,9 +207,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:04:08], the lecturer states: "We'd like to do something just a little bit better, and a very common idea is to use bilinear interpolation."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777883994818_0.png"],
+    tags: ["Interpolation"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 74,
@@ -224,9 +224,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:05:22], the lecturer explains: "I'm going to first do linear interpolation in the horizontal direction just as we did before for our 1D function."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777884010828_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 75,
@@ -240,11 +240,12 @@ const quizData = [
     answerText: ``,
     intuition: ``,
     explanation: `At [1:07:35], the lecturer states: "The thing to realize is that texture aliasing often occurs because a single pixel on the screen covers many pixels of the texture."
+
 - QUESTIONS (continued):`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777884039336_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 76,
@@ -259,9 +260,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:08:14], the lecturer explains: "If we have lots of different colors covered by that screen pixel, we're essentially just grabbing one random color out of that region."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777884104458_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 77,
@@ -276,9 +277,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:09:26], the lecturer states: "What we're going to do instead is pre-compute some of these averages just once and look up these averages at runtime. We're going to do a lot of the work ahead of time."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777884136923_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 78,
@@ -293,9 +294,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:11:06], the lecturer explains: "What we're really going to do is use a technique called mipmapping where the rough idea is to store a pre-filtered image at sort of every possible scale."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777884193446_0.png"],
+    tags: ["Mipmapping"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 79,
@@ -310,9 +311,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:11:13], the lecturer states: "Actually we're gonna do this in powers of two. We're gonna start out with our original image at level zero, get the next smallest image, we're going to average four pixels together to get the next smallest one."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777884221316_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 80,
@@ -327,9 +328,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:12:50], the lecturer notes: "The entire storage cost of the mipmap is something like a third of the storage cost of the original image."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    images: ["image_1777884231702_0.png"],
+    tags: ["Storage"],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 81,
@@ -344,9 +345,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:14:33], the lecturer explains: "The red pixel is going to cover a bigger region in texture space, so we want to effectively take an average over a larger region, which means we want to grab something from a coarser level of the mipmap hierarchy."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777884290351_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 82,
@@ -361,9 +362,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:15:35], the lecturer states: "What we can do is ask how quickly are the uv coordinates changing as we go along the horizontal direction and along the vertical direction."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777884323208_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 83,
@@ -378,9 +379,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:16:57], the lecturer explains: "In particular we're going to let our mipmap level d be the log base 2 of the longer length capital L."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777884340300_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 84,
@@ -395,9 +396,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [1:17:12], the lecturer states: "Why are we taking a logarithm here? Well because to generate our mipmaps, each time we divided the image size by two. So we want to know which of those levels we're on, we need to take the log base two."`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777884355763_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
   {
     id: 85,
@@ -410,12 +411,87 @@ const quizData = [
     answer: 2,
     answerText: ``,
     intuition: ``,
-    explanation: `At [1:19:10], the lecturer explains: "If we just use the nearest mipmap level, so if we take that number d and we just clamp it to the closest integer, then we're going to get artifacts where this level jumps."
--`,
+    explanation: `At [1:19:10], the lecturer explains: "If we just use the nearest mipmap level, so if we take that number d and we just clamp it to the closest integer, then we're going to get artifacts where this level jumps." we want to combine the different mimamp levels. avergea them.`,
     code: ``,
-    images: ["lec7_slide_68.png"],
+    images: ["image_1777884396061_0.png", "image_1777884444647_0.png", "image_1777884483135_0.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md.md`,
+    source: `lectures/cg-07-lecture-quiz.md`,
+  },
+  {
+    id: 86,
+    qid: `Q86`,
+    qtype: `CONCEPT`,
+    format: `mcq`,
+    timestamp: `1:20:00`,
+    question: `Trilinear filtering extends bilinear filtering to 3D. Given a point (u, v, w) ∈ [0,1]³ with eight closest values f_ijk, how are the weights computed?`,
+    options: [`Apply bilinear interpolation twice independently`, `Average all eight f_ijk values equally`, `Take the single nearest f_ijk value`, `Iterate linear interpolation: weighted average along u, then v, then w`],
+    answer: 3,
+    answerText: ``,
+    intuition: `Trilinear is just bilinear done one more time — the same idea stacked into the third dimension.`,
+    explanation: `The slide states "Just iterate linear filtering: weighted average along u, weighted average along v, weighted average along w." Starting from four horizontal blends (g_ij), two vertical blends (h_0, h_1) are computed, then one final blend along w gives the result.
+
+- INTUITION: Trilinear is just bilinear done one more time — the same idea stacked into the third dimension.`,
+    code: ``,
+    images: ["lec7_slide_64.png"],
+    tags: [],
+    source: `lectures/cg-07-lecture-quiz.md`,
+  },
+  {
+    id: 87,
+    qid: `Q87`,
+    qtype: `TECHNIQUE`,
+    format: `mcq`,
+    timestamp: `1:21:00`,
+    question: `How does MIP map lookup use trilinear filtering to interpolate between mipmap levels?`,
+    options: [`It chooses the coarser level when d is not an integer to reduce bandwidth`, `It performs bilinear interpolation independently at levels ⌊d⌋ and ⌊d⌋+1, then blends using w = d - ⌊d⌋`, `It selects the nearest integer mipmap level d and applies bilinear interpolation once`, `It averages all mipmap levels weighted by their resolution`],
+    answer: 1,
+    answerText: ``,
+    intuition: `Trilinear MIP lookup = bilinear at level below + bilinear at level above + one more lerp between them. "Trilinear" literally means the same operation in the third (level) dimension.`,
+    explanation: `The slide explains that MIP map interpolation works the same as trilinear filtering: perform bilinear interpolation at each of the two nearest levels, then interpolate between those two results using fractional weight w = d − ⌊d⌋. This costs eight texel reads and seven linear interpolations.
+
+- INTUITION: Trilinear MIP lookup = bilinear at level below + bilinear at level above + one more lerp between them. "Trilinear" literally means the same operation in the third (level) dimension.`,
+    code: ``,
+    images: ["lec7_slide_65.png"],
+    tags: [],
+    source: `lectures/cg-07-lecture-quiz.md`,
+  },
+  {
+    id: 88,
+    qid: `Q88`,
+    qtype: `PROBLEM`,
+    format: `mcq`,
+    timestamp: `1:23:00`,
+    question: `Why does trilinear (isotropic) filtering produce over-blurring at grazing angles, and what is the standard solution?`,
+    options: [`Grazing angles increase the mipmap level computation error; the fix is to use a higher-resolution base texture`, `Isotropic filtering ignores the w component at shallow angles; anisotropic filtering uses a separate mipmap for each axis`, `At grazing angles the footprint in texture space is stretched differently along u vs v, so isotropic filtering blurs in the wrong direction; anisotropic filtering combines multiple MIP map samples to match the stretched footprint`, `Grazing angles cause perspective-correct interpolation to break down; the fix is to disable mipmapping at shallow view angles`],
+    answer: 2,
+    answerText: ``,
+    intuition: `Isotropic = same radius in all directions. Grazing angles break that assumption. Anisotropic filtering adapts the sample shape to the actual stretched footprint.`,
+    explanation: `The slide shows that at grazing angles the screen pixel's footprint in texture space is tall and narrow in one axis and wide in the other. Isotropic trilinear filtering uses a single square region, blurring too much in the narrow direction. Anisotropic filtering combines multiple MIP map samples to approximate the actual elongated footprint.
+
+- INTUITION: Isotropic = same radius in all directions. Grazing angles break that assumption. Anisotropic filtering adapts the sample shape to the actual stretched footprint.`,
+    code: ``,
+    images: ["lec7_slide_66.png"],
+    tags: [],
+    source: `lectures/cg-07-lecture-quiz.md`,
+  },
+  {
+    id: 89,
+    qid: `Q89`,
+    qtype: `ALGORITHM`,
+    format: `mcq`,
+    timestamp: `1:25:00`,
+    question: `The texture sampling pipeline has 8 steps. What are the first three steps in order?`,
+    options: [`Convert UV to pixel locations → Compute mip level → Perform bilinear interpolation`, `Compute mip level → Barycentric interpolation → Load texels`, `Compute UV from screen sample via barycentric interpolation → Approximate du/dx, dv/dx, du/dy, dv/dy via finite differences → Compute mip map level d`, `Load texels → Compute mip level → Convert UV to pixel locations`],
+    answer: 2,
+    answerText: ``,
+    intuition: `The pipeline is: where am I in texture space → how fast am I moving → which mip level → which texels → blend. Each step feeds the next.`,
+    explanation: `The slide lists the 8-step pipeline starting with: (1) compute u,v from screen sample (x,y) via barycentric interpolation, (2) approximate the four partial derivatives du/dx, dv/dx, du/dy, dv/dy by taking differences between screen-adjacent samples, (3) compute mip map level d. The pipeline ends with trilinear interpolation — requiring dedicated GPU hardware because of the arithmetic and bandwidth cost.
+
+- INTUITION: The pipeline is: where am I in texture space → how fast am I moving → which mip level → which texels → blend. Each step feeds the next.`,
+    code: ``,
+    images: ["lec7_slide_67.png"],
+    tags: [],
+    source: `lectures/cg-07-lecture-quiz.md`,
   },
 ]
 
@@ -499,7 +575,7 @@ export default function Lec7Part3Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (24 || 1) * 100)
+    const p = Math.round(s / (28 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -540,20 +616,20 @@ export default function Lec7Part3Quiz() {
           <Image size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 7: Texture Mapping — Part 3</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>UV mapping, mipmaps, filtering, environment maps, bump mapping</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-07-lecture-quiz.md.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-07-lecture-quiz.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec7/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec7/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           <a key={3} href={`${BASE}/lec7/3`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ62–QQ85 · 24 questions (24 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ62–QQ89 · 28 questions (28 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>24</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>28</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~8min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~9min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -576,7 +652,7 @@ export default function Lec7Part3Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 24 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 28 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -621,12 +697,12 @@ export default function Lec7Part3Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/24</span>
+              <span>{qIdx+1}/28</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/24*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/28*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -711,7 +787,7 @@ export default function Lec7Part3Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-07-lecture-quiz.md.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-07-lecture-quiz.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
@@ -767,7 +843,7 @@ export default function Lec7Part3Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 24-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 28-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>
