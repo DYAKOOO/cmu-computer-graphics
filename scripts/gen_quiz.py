@@ -36,12 +36,34 @@ def parse_questions(md_path):
             r'- #card \[(Q(?:F?\d+))\]\s*(?:\[[^\]]*\]\s*)*\[([^\]]+)\]\s*(.+?)$',
             block, re.MULTILINE
         )
-        if not header:
-            continue
 
-        qid_raw  = header.group(1)          # "Q1", "QF1", "Q25"
-        timestamp = header.group(2).strip()
-        question  = re.sub(r'\s*\[\[.*?\]\]', '', header.group(3)).strip()
+        if header:
+            qid_raw   = header.group(1)
+            timestamp = header.group(2).strip()
+            question  = re.sub(r'\s*\[\[.*?\]\]', '', header.group(3)).strip()
+        else:
+            # Old lec5 format: question text is on the next non-empty line
+            # e.g. "- #card [Q1] [00:00] - [Topic] → [Subtopic]\n  collapsed::true\n  Question text?"
+            old_hdr = re.match(
+                r'- #card \[(Q(?:F?\d+))\]\s+\[([^\]]+)\]',
+                block
+            )
+            if not old_hdr:
+                continue
+            qid_raw   = old_hdr.group(1)
+            timestamp = old_hdr.group(2).strip()
+            # Find the question: first non-empty line that's not a Logseq property or A/B/C/D option
+            question = ''
+            for raw_line in block.split('\n')[1:]:
+                stripped = raw_line.strip()
+                if not stripped or stripped.startswith('collapsed::') or stripped.startswith('card-') or re.match(r'^[A-D]\)', stripped):
+                    continue
+                # Strip Logseq markup
+                question = re.sub(r'\s*\[\[.*?\]\]', '', stripped).strip()
+                question = re.sub(r'==([^=]+)==', r'\1', question).strip()
+                break
+            if not question:
+                continue
 
         # Detect question type from the first line
         first_line = block.split('\n')[0]

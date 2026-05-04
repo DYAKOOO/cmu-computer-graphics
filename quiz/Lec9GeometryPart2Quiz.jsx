@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Box } from 'lucide-react'
 
-// Source: lectures/cg-09-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 9: Introduction to Geometry — Part 2 · QQ33–QQ37 · 5 questions (5 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-09-lecture-quiz.md 9
+// Source: lectures/cg-09-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 9: Introduction to Geometry — Part 2 · QQ30–QQ37 · 8 questions (8 MCQ, 0 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-09-lecture-quiz.md.md 9
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `DEFINITION`,
+    format: `mcq`,
+    timestamp: `51:28`,
+    question: `What is a Bézier curve as defined in the lecture?`,
+    options: [`A curve defined by a distance function`, `A curve expressed using the Bernstein basis`, `A curve created using subdivision`, `A curve defined by an implicit function`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [51:28], the lecturer states directly: "A bezier curve is a curve expressed using the bernstein basis."`,
+    code: ``,
+    images: ["lec9_slide_70.png"],
+    tags: [],
+    source: `lectures/cg-09-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `PROPERTY`,
+    format: `mcq`,
+    timestamp: `51:28`,
+    question: `Which of the following is NOT mentioned as a property of Bézier curves?`,
+    options: [`They're contained in the convex hull of the control points`, `They are tangent to the end segments`, `They exactly interpolate the endpoints`, `They can exactly represent any conic section`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `This property is not mentioned as a property of basic Bézier curves. In fact, later at [1:06:10], the lecturer mentions this as a limitation: "One really simple thing is the bezier curves can't exactly represent conics. For instance with curves I can't exactly represent circles."`,
+    code: ``,
+    images: ["lec9_slide_70.png"],
+    tags: [],
+    source: `lectures/cg-09-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `TECHNIQUE`,
+    format: `mcq`,
+    timestamp: `53:15`,
+    question: `What approach does the lecture recommend for creating curves with many control points?`,
+    options: [`Using implicit representations instead`, `Increasing the degree of the Bernstein basis`, `Using subdivision surfaces`, `Piecing together many low-order Bézier curves`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [53:58], the lecturer states: "What we often do instead is to just piece together many low order bezier curves."`,
+    code: ``,
+    images: ["lec9_slide_70.png"],
+    tags: [],
+    source: `lectures/cg-09-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec9_slide_70.png"],
     tags: [],
-    source: `lectures/cg-09-lecture-quiz.md`,
+    source: `lectures/cg-09-lecture-quiz.md.md`,
   },
   {
     id: 34,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec9_slide_70.png"],
     tags: [],
-    source: `lectures/cg-09-lecture-quiz.md`,
+    source: `lectures/cg-09-lecture-quiz.md.md`,
   },
   {
     id: 35,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec9_slide_70.png"],
     tags: [],
-    source: `lectures/cg-09-lecture-quiz.md`,
+    source: `lectures/cg-09-lecture-quiz.md.md`,
   },
   {
     id: 36,
@@ -73,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec9_slide_70.png"],
     tags: [],
-    source: `lectures/cg-09-lecture-quiz.md`,
+    source: `lectures/cg-09-lecture-quiz.md.md`,
   },
   {
     id: 37,
@@ -92,7 +143,7 @@ const quizData = [
     code: ``,
     images: ["lec9_slide_70.png"],
     tags: [],
-    source: `lectures/cg-09-lecture-quiz.md`,
+    source: `lectures/cg-09-lecture-quiz.md.md`,
   },
 ]
 
@@ -176,7 +227,7 @@ export default function Lec9Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (5 || 1) * 100)
+    const p = Math.round(s / (8 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -217,19 +268,19 @@ export default function Lec9Part2Quiz() {
           <Box size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 9: Introduction to Geometry — Part 2</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Implicit/explicit surfaces, point clouds, splines, level sets</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-09-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-09-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec9/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec9/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ37 · 5 questions (5 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ37 · 8 questions (8 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>5</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>8</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~1min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~2min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -252,7 +303,7 @@ export default function Lec9Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 5 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 8 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -297,12 +348,12 @@ export default function Lec9Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/5</span>
+              <span>{qIdx+1}/8</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/5*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/8*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -387,7 +438,7 @@ export default function Lec9Part2Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-09-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-09-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
@@ -443,7 +494,7 @@ export default function Lec9Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 5-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 8-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

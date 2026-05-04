@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Layers } from 'lucide-react'
 
-// Source: lectures/cg-08-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 8: Depth & Transparency — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-08-lecture-quiz.md 8
+// Source: lectures/cg-08-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 8: Depth & Transparency — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-08-lecture-quiz.md.md 8
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Lecture 8 is described as "wrapping up the rasterization pipeline." What two remaining problems does it solve, and why were they deferred until after rasterization and texture mapping were established?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `(1) Depth (occlusion): which of multiple overlapping triangles is visible at each pixel sample? (2) Transparency (alpha blending): how do we composit semi-transparent surfaces? Both were deferred because they depend on earlier stages: depth requires interpolating a per-vertex attribute (depth value) exactly like texture coords; transparency requires per-fragment alpha values that come from textures. Without rasterization and attribute interpolation in place, neither can be implemented.`,
+    intuition: `Depth and transparency are the last two entries in the pipeline diagram shown at the start of the lecture.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture presents two solutions to the occlusion problem: the painter's algorithm and the Z-buffer. What fundamental limitation of the painter's algorithm motivates the Z-buffer?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `The painter's algorithm sorts triangles by depth and draws back-to-front. This fails when triangles intersect or cyclically overlap (A behind B, B behind C, C behind A — no valid sort order exists). It also requires a global sort every frame. The Z-buffer solves this per-sample: for each sample, track the minimum depth seen so far and overwrite only if a new fragment is closer. No sort required, handles intersections naturally.`,
+    intuition: `The painter's algorithm is a global ordering problem. The Z-buffer converts it to a local per-pixel problem.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these lecture 8 topics in the order they are covered: alpha compositing for transparency / Z-buffer algorithm / painter's algorithm (and why it fails) / depth interpolation using barycentric coordinates`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Painter's algorithm → depth interpolation using barycentric coordinates → Z-buffer algorithm → alpha compositing for transparency`,
+    intuition: `Establish the problem → how to compute depth → correct algorithmic solution → extend to semi-transparent surfaces.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -20,9 +71,9 @@ const quizData = [
     intuition: ``,
     explanation: `As explained at [24:03], "Notice by the way that this operation composites alpha in exactly the same way as how it composites the red green and blue channels right we don't have separate operations for color and alpha."`,
     code: ``,
-    images: ["lec8_slide_36.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 2,
@@ -37,9 +88,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer states at [25:10], "Hopefully it reminds you of our discussion of homogeneous coordinates because that's exactly what this is we're expressing our colors and our alpha values in homogeneous coordinates."`,
     code: ``,
-    images: ["lec8_slide_36.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 3,
@@ -54,9 +105,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer demonstrates at [26:51], "And i get this result and you notice it looks almost right i have a blue blob on a gray background but there's this green halo around my blue blob that's no good."`,
     code: ``,
-    images: ["lec8_slide_36.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 4,
@@ -71,9 +122,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer specifically mentions at [28:36], "I want to render leaves in my scene i have trees made of polygons i want to draw as just quads with textures on them okay and to do this in a nice way I want to map my textures so I get nice filtering."`,
     code: ``,
-    images: ["lec8_slide_36.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 5,
@@ -88,9 +139,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [29:57], "So if we divide the dark green by this this medium gray that's actually going to multiply it it's going to make it brighter and then when we composite it over the white background we get this nice light green color."`,
     code: ``,
-    images: ["lec8_slide_36.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 6,
@@ -105,9 +156,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer calculates at [31:35], "And our alpha gets blended like this 0.5 plus 1 minus 0.5 times 0.5 is 0.75."`,
     code: ``,
-    images: ["lec8_slide_36.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 7,
@@ -122,9 +173,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer states at [32:56], "I blended together two bright red things the color itself hasn't changed it's still bright red it's only the alpha that's changed it's increased to become more opaque."`,
     code: ``,
-    images: ["lec8_slide_36.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 8,
@@ -139,9 +190,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [33:22-33:48], the lecturer lists advantages including treating all channels the same, fewer operations, closure under composition, and better filtering, but does not mention improved depth testing.`,
     code: ``,
-    images: ["lec8_slide_36.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 9,
@@ -156,9 +207,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer poses this question at [35:04], "But what about depth if i draw a semi-transparent triangle should i change the depth value is that the closest thing i've seen now can't i still see triangles that i've already drawn through that triangle and shouldn't i care about their depth."`,
     code: ``,
-    images: ["lec8_slide_38.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 10,
@@ -173,9 +224,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [35:57], "Only if things are drawn in back to front order," and later at [36:35] notes the challenges with sorting, including that it's "annoying" and "not something actually that's very easy to do on a graphics card."`,
     code: ``,
-    images: ["lec8_slide_38.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 11,
@@ -190,9 +241,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer describes at [38:23], "We can first render our opaque primitives in any order we want using the depth buffer... After we're done drawing all of our opaque triangles we're going to disable the depth buffer update... render semi-transparent surfaces in back to front order."`,
     code: ``,
-    images: ["lec8_slide_38.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 12,
@@ -207,9 +258,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer states at [40:03], "So the most important thing to remember is what is our goal what are we trying to do here we're trying to turn some inputs into a final image."`,
     code: ``,
-    images: ["lec8_slide_40.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 13,
@@ -224,9 +275,9 @@ const quizData = [
     intuition: ``,
     explanation: `Between [40:14] and [41:12], the lecturer lists triangle positions, texture coordinates, camera transform, perspective transform, and image dimensions, but does not mention lighting equations.`,
     code: ``,
-    images: ["lec8_slide_40.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 14,
@@ -241,9 +292,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [41:51], "Okay what do we do first to each triangle we transform the triangles into camera space by applying the inverse of the camera transform."`,
     code: ``,
-    images: ["lec8_slide_41.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 15,
@@ -258,9 +309,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [43:33], "So we know we're going to need to do lots of checks with the triangle edges are we inside or outside these half planes so we can write down the triangle edge equations and attributes and so forth."`,
     code: ``,
-    images: ["lec8_slide_45.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 16,
@@ -275,9 +326,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer states at [45:01], "Right so we update the color buffer if the depth buffer test passed and that's it we've written values into our image now we just repeat this process for all the remaining triangles in our list and we're done."`,
     code: ``,
-    images: ["lec8_slide_50.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 17,
@@ -292,9 +343,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [47:24], "And so these rasterizers are not going to be implemented in software people aren't writing them on their you know cpus like you're doing for this class but they've actually been baked into hardware these days."`,
     code: ``,
-    images: ["lec8_slide_50.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 18,
@@ -309,9 +360,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer states at [48:08], "A gpu is really a heterogeneous multi-core processor so it's not just a big bunch of cpus glued onto a single chip it also has some highly highly specialized hardware that does some of the operations that you now know and love."`,
     code: ``,
-    images: ["lec8_slide_53.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 19,
@@ -326,9 +377,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [49:43], "And even more flexible scheduling of stages so rather than just going linear down linearly down the pipeline you can now tell the gpu hey take the data that you computed in this stage and actually feed it back to an earlier stage of the pipeline."`,
     code: ``,
-    images: ["lec8_slide_54.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 20,
@@ -343,9 +394,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [51:05], "The thing to realize is that all of these lighting effects all these shadows and the light bouncing off various surfaces is all being done in real time. And this is stuff that you really can't pull off very easily with rasterization."`,
     code: ``,
-    images: ["lec8_slide_55.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 21,
@@ -360,9 +411,9 @@ const quizData = [
     intuition: ``,
     explanation: `At [52:28], the lecturer previews, "Next time we're going to start talking about geometry and then we're going to move on to materials and lighting and photorealistic rendering and finally near the end of the course we'll talk about animation," but does not mention virtual reality.`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 22,
@@ -377,9 +428,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer makes this connection around [24:57], asking "Does this division remind you of anything does this division and adding a fourth coordinate onto our vectors does that remind you of anything we've seen before... hopefully it reminds you of our discussion of homogeneous coordinates."`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 23,
@@ -394,9 +445,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [25:23], "Right so now we can think of colors as different directions and different opacities of those colors as points along the line in that direction."`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 24,
@@ -411,9 +462,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer demonstrates that when using non-premultiplied alpha, the green background color from the original image bleeds through during upsampling and compositing, creating the green halo effect.`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 25,
@@ -428,9 +479,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [28:36] that proper filtering is important for rendering objects like tree leaves with transparent edges, which is why correct mipmapping with alpha values matters.`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 26,
@@ -445,9 +496,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer states at [29:38], "If on the other hand we were to pre-multiply the color so we multiply color by alpha right so now we get just green and black."`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 27,
@@ -462,9 +513,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer calculates at [31:35], "If we do the arithmetic here we get 0.75 0 0," showing the resulting RGB value is (0.75, 0, 0).`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 28,
@@ -479,9 +530,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [32:41], "But remember that to recover the original color i'm going to actually divide by alpha so the color i get is bright red 1 0 0 and the alpha i get is still that .75."`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 29,
@@ -496,60 +547,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer states at [34:02], "And also it fits naturally into the rasterization pipeline we've already built so we've already said homogeneous coordinates are a good idea we're going to work with 4x4 matrices our graphics card is built that way."`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
-  },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `CHALLENGE`,
-    format: `mcq`,
-    timestamp: `35:04`,
-    question: `What fundamental assumption does compositing with the "over" operator make that creates challenges for handling depth?`,
-    options: [`That primitives never intersect`, `That all primitives are the same color`, `That all primitives are fully opaque`, `That primitives are drawn in back-to-front order`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer explains at [35:57], "The key word here is the word over because we're compositing our colors using this over operation we're assuming that a is over b right that we're drawing things in the right order and we're not worrying about occlusion only if things are drawn in back to front order."`,
-    code: ``,
-    images: ["lec8_slide_58.png"],
-    tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `PROBLEM`,
-    format: `mcq`,
-    timestamp: `36:59`,
-    question: `What makes sorting transparent triangles particularly difficult?`,
-    options: [`They have too many vertices`, `There may be no valid ordering when triangles intersect each other`, `They require special shaders`, `They don't work with the depth buffer`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer explains at [36:35], "We have to deal with these issues of primitives intersecting each other if we have two triangles intersecting each other there may be no ordering that gives us the right answer."`,
-    code: ``,
-    images: ["lec8_slide_58.png"],
-    tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `TECHNIQUE`,
-    format: `mcq`,
-    timestamp: `38:05`,
-    question: `In the two-pass approach for rendering mixed opaque and transparent primitives, what happens to the depth buffer between passes?`,
-    options: [`It's inverted`, `It's cleared completely`, `It's replaced with a different buffer`, `It's preserved but updates are disabled`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer states at [38:46], "After we're done drawing all of our opaque triangles we're going to disable the depth buffer update we're no longer going to change the depth values."`,
-    code: ``,
-    images: ["lec8_slide_58.png"],
-    tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
 ]
 
@@ -633,7 +633,7 @@ export default function Lec8Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -674,18 +674,18 @@ export default function Lec8Part1Quiz() {
           <Layers size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 8: Depth & Transparency — Part 1</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Z-buffer, painter's algorithm, alpha blending, order-independent</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-08-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-08-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec8/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec8/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -709,7 +709,8 @@ export default function Lec8Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -844,7 +845,7 @@ export default function Lec8Part1Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-08-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-08-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

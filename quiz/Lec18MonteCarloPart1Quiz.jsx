@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Crosshair } from 'lucide-react'
 
-// Source: lectures/cg-18-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 18: Monte Carlo Ray Tracing — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-18-lecture-quiz.md 18
+// Source: lectures/cg-18-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 18: Monte Carlo Ray Tracing — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-18-lecture-quiz.md.md 18
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture identifies two key differences between ray tracing and rasterization. What are they, and why do those differences make ray tracing better for photorealism but worse for real-time performance?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `(1) Loop order: rasterization iterates primitives → samples (easy to batch-process geometry on GPU); ray tracing iterates samples → primitives (each ray independently queries all geometry). (2) Illumination model: rasterization uses local shading (one primitive at a time, hard to access other geometry); ray tracing uses global shading (each ray knows the full scene, enabling shadows, reflections, indirect light). The global nature requires expensive BVH traversal per ray — orders of magnitude slower than rasterization for the same scene.`,
+    intuition: `Ray tracing trades speed for the ability to ask "what does the rest of the scene look like from here?"`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-18-lecture-quiz.md.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Lecture 18 claims to "put together many ideas we've studied." Trace the chain: which prior-lecture topics does a single path-traced pixel sample depend on?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `(1) Spatial data structures (BVH, lecture 13) — to find which geometry the ray hits. (2) Geometry / transformations (lec 5-9) — to represent and transform the scene. (3) Color + radiometry (lec 14-15) — to define what "light" means and what quantity to track. (4) The rendering equation (lec 16) — to know what integral to estimate at each surface. (5) Numerical integration / Monte Carlo (lec 17) — to estimate that integral with random samples. (6) BRDFs — to scatter the ray at surfaces and importance-sample directions.`,
+    intuition: `Monte Carlo ray tracing is not one algorithm — it's the combination of every prior algorithm in the course.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-18-lecture-quiz.md.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these steps of a single path-traced sample in execution order: evaluate BRDF and scatter the ray to the next bounce / generate primary ray from camera through pixel / test ray against scene geometry using BVH / evaluate direct illumination via shadow ray to a light source`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Generate primary ray from camera through pixel → Test ray against scene geometry using BVH → Evaluate direct illumination via shadow ray → Evaluate BRDF and scatter ray to next bounce`,
+    intuition: `Camera → scene → light → scatter. Each step builds on the intersection point found by the previous step.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-18-lecture-quiz.md.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_02.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 2,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_02.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 3,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_03.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 4,
@@ -73,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_04.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 5,
@@ -90,7 +141,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_05.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 6,
@@ -107,7 +158,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_05.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 7,
@@ -124,7 +175,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_06.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 8,
@@ -141,7 +192,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_06.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 9,
@@ -158,7 +209,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_06.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 10,
@@ -175,7 +226,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_51.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 11,
@@ -192,7 +243,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_51.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 12,
@@ -209,7 +260,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_51.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 13,
@@ -226,7 +277,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_51.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 14,
@@ -243,7 +294,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_51.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 15,
@@ -262,7 +313,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_51.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 16,
@@ -279,7 +330,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 17,
@@ -296,7 +347,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 18,
@@ -313,7 +364,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 19,
@@ -330,7 +381,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 20,
@@ -347,7 +398,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 21,
@@ -364,7 +415,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 22,
@@ -381,7 +432,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 23,
@@ -398,7 +449,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 24,
@@ -415,7 +466,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 25,
@@ -432,7 +483,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 26,
@@ -449,7 +500,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 27,
@@ -466,7 +517,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 28,
@@ -483,7 +534,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 29,
@@ -500,60 +551,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
-  },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `STRATEGY`,
-    format: `mcq`,
-    timestamp: `34:14`,
-    question: `When importance sampling a BRDF, where should samples be concentrated?`,
-    options: [`Primarily in shadow regions`, `Only in the specular reflection direction`, `Uniformly across the hemisphere`, `Around the lobe where most light is scattered`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [34:14], the lecturer states: "I really shouldn't waste time putting a lot of samples where there's essentially no reflection occurring where nothing is getting contributed to the integral I should really try to lump all of my samples around this lobe of the brdf where all the light is getting scattered out."
-- # Monte Carlo Rendering Quiz - Part 3
-- ## QUESTIONS (continued):`,
-    code: ``,
-    images: ["lec18_slide_52.png"],
-    tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `VISUAL`,
-    format: `mcq`,
-    timestamp: `53:15`,
-    question: `What was the key improvement when using light source sampling instead of uniform hemisphere sampling?`,
-    options: [`The image had better color accuracy`, `The image had much less noise with the same number of samples`, `The image rendered much faster`, `The image had improved shadow detail`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [53:23], the lecturer observes: "Here we're doing the exact same scene we're using the same number of sample rays just a hundred sample rays per pixel per point on the plane but the image is way smoother."`,
-    code: ``,
-    images: ["lec18_slide_52.png"],
-    tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `EFFICIENCY`,
-    format: `mcq`,
-    timestamp: `54:55`,
-    question: `According to the lecture, what two factors determine the efficiency of a Monte Carlo estimator?`,
-    options: [`Convergence rate and memory usage`, `Speed and accuracy`, `Sample count and distribution type`, `Variance and cost`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer explains at [55:08]: "Efficiency is basically inversely proportional to both the variance of the estimator... but also you need to care about the cost... you do have to balance these things variance from end cost."`,
-    code: ``,
-    images: ["lec18_slide_52.png"],
-    tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
 ]
 
@@ -637,7 +635,7 @@ export default function Lec18Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -678,18 +676,18 @@ export default function Lec18Part1Quiz() {
           <Crosshair size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 18: Monte Carlo Ray Tracing — Part 1</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Path tracing, direct/indirect lighting, BRDF sampling</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-18-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-18-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec18/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec18/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -713,7 +711,8 @@ export default function Lec18Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -848,7 +847,7 @@ export default function Lec18Part1Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-18-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-18-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

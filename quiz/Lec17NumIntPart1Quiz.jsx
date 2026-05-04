@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Hash } from 'lucide-react'
 
-// Source: lectures/cg-17-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 17: Numerical Integration — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-17-lecture-quiz.md 17
+// Source: lectures/cg-17-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 17: Numerical Integration — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-17-lecture-quiz.md.md 17
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture opens by asking "how can we possibly evaluate the rendering equation?" What two properties of the rendering equation make analytical evaluation impossible, and what is the solution the lecture builds toward?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `(1) The integrand involves the rendering equation itself (recursive) — the radiance arriving from direction ωᵢ depends on another surface, which requires evaluating the rendering equation again. (2) The BRDF and scene geometry are arbitrary — no closed-form antiderivative exists. The solution is Monte Carlo integration: randomly sample the hemisphere of incoming directions, evaluate the integrand at those samples, average. The Central Limit Theorem guarantees convergence as sample count grows.`,
+    intuition: `"Area under curve" becomes "average value of random samples." Randomness is a feature, not a bug.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-17-lecture-quiz.md.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture introduces both deterministic quadrature (midpoint/trapezoid/Simpson's rule) and Monte Carlo integration. What fundamental advantage does Monte Carlo have for high-dimensional integrals like the rendering equation?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Deterministic quadrature in d dimensions requires n^d function evaluations to achieve n-point accuracy per dimension — exponential in d. Monte Carlo converges at O(1/√n) regardless of dimension. The rendering equation integrates over a hemisphere (2D), but accounting for recursive bounces and participating media, the effective dimensionality is very high. Monte Carlo's dimension-independence makes it the only scalable approach.`,
+    intuition: `"Curse of dimensionality" kills quadrature; Monte Carlo is immune to dimension count.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-17-lecture-quiz.md.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these numerical integration ideas in the order lecture 17 introduces them: importance sampling / Monte Carlo with uniform random samples / deterministic quadrature rules / fundamental theorem of calculus (why analytical integration is hard here)`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Fundamental theorem of calculus → Deterministic quadrature rules → Monte Carlo with uniform random samples → Importance sampling`,
+    intuition: `The lecture starts by showing why the easy solution (calculus) doesn't work, proposes a structured but limited approach (quadrature), then replaces it with randomness (Monte Carlo), then improves that (importance sampling).`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-17-lecture-quiz.md.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_01.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 2,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_01.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 3,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_02.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 4,
@@ -73,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_03.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 5,
@@ -91,7 +142,7 @@ const quizData = [
     code: ``,
     images: ["image_1745943567576_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 6,
@@ -108,7 +159,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_03.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 7,
@@ -126,7 +177,7 @@ const quizData = [
     code: ``,
     images: ["image_1745943516851_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 8,
@@ -143,7 +194,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_03.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 9,
@@ -161,7 +212,7 @@ const quizData = [
     code: ``,
     images: ["image_1745945014999_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 10,
@@ -179,7 +230,7 @@ const quizData = [
     code: ``,
     images: ["image_1745944811489_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 11,
@@ -196,7 +247,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_03.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 12,
@@ -214,7 +265,7 @@ const quizData = [
     code: ``,
     images: ["image_1745945576592_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 13,
@@ -232,7 +283,7 @@ const quizData = [
     code: ``,
     images: ["image_1745945220575_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 14,
@@ -250,7 +301,7 @@ const quizData = [
     code: ``,
     images: ["image_1745943229545_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 15,
@@ -267,7 +318,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_11.png"],
     tags: ["Rule/Quadrature"],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 16,
@@ -285,7 +336,7 @@ const quizData = [
     code: ``,
     images: ["image_1745943955511_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 17,
@@ -303,7 +354,7 @@ const quizData = [
     code: ``,
     images: ["image_1745945458082_0.png"],
     tags: ["function/affine"],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 18,
@@ -321,7 +372,7 @@ const quizData = [
     code: ``,
     images: ["image_1745945088993_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 19,
@@ -339,7 +390,7 @@ const quizData = [
     code: ``,
     images: ["image_1745944949377_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 20,
@@ -356,7 +407,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_16.png"],
     tags: ["Rule/Trapezoid"],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 21,
@@ -373,7 +424,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_17.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 22,
@@ -394,7 +445,7 @@ as the number of samples or inputs  grows , how quikcly the error goes to zero .
     code: ``,
     images: ["image_1745944212062_0.png"],
     tags: ["Rule/Trapezoid"],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 23,
@@ -411,7 +462,7 @@ as the number of samples or inputs  grows , how quikcly the error goes to zero .
     code: ``,
     images: ["lec17_slide_17.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 24,
@@ -429,7 +480,7 @@ as the number of samples or inputs  grows , how quikcly the error goes to zero .
     code: ``,
     images: ["image_1745943642705_0.png", "image_1745943653679_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 25,
@@ -446,7 +497,7 @@ as the number of samples or inputs  grows , how quikcly the error goes to zero .
     code: ``,
     images: ["lec17_slide_20.png"],
     tags: ["Rule/Trapezoid"],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 26,
@@ -464,7 +515,7 @@ as the number of samples or inputs  grows , how quikcly the error goes to zero .
     code: ``,
     images: ["image_1745945397236_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 27,
@@ -482,7 +533,7 @@ as the number of samples or inputs  grows , how quikcly the error goes to zero .
     code: ``,
     images: ["image_1745943713032_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 28,
@@ -499,7 +550,7 @@ as the number of samples or inputs  grows , how quikcly the error goes to zero .
     code: ``,
     images: ["lec17_slide_23.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 29,
@@ -516,65 +567,7 @@ as the number of samples or inputs  grows , how quikcly the error goes to zero .
     code: ``,
     images: ["lec17_slide_24.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
-  },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `DEFINITION`,
-    format: `mcq`,
-    timestamp: `34:54`,
-    question: `What does the Cumulative Distribution Function (CDF) represent according to the lecture?`,
-    options: [`The expected value of the random variable`, `The probability that the random variable takes a specific value`, `The sum of all probabilities in the distribution`, `The probability that one of the first J events occurred`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [35:23], the professor explains: "What are these values represent well they that they represent the possibility or the probability that one of the first J events occurred or one of the first J values was seen when we looked at our random variable."
-mya:: random varialbe X takes a value less than or equal to j. The CDF gives you a **probability**, not the actual result. ITS a prediction.  For example, it says there’s a **1/3 chance** of rolling a 2 or less. But it doesn’t say, “Hey, you rolled a 2 this time!”
--
--  #Analogy`,
-    code: ``,
-    images: ["image_1745941831427_0.png", "image_1745942614079_0.png"],
-    tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `IMPLEMENTATION`,
-    format: `mcq`,
-    timestamp: `36:16`,
-    question: `What is the first step in sampling from a discrete probability distribution using the CDF method?`,
-    options: [`Draw a random sample from the distribution`, `Compute the CDF by taking the cumulative sum of probabilities`, `Compute the mean of the distribution`, `Sort the probabilities in descending order`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [36:25], the professor explains: "If we want a sample from a discrete probability distribution we're gonna first compute its CDF capital P and all that means is we compute this cumulative sum right we just start adding up the little P's."
--`,
-    code: ``,
-    images: ["image_1745944638314_0.png"],
-    tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `CONCEPTUAL`,
-    format: `mcq`,
-    timestamp: `37:49`,
-    question: `Why is the probability of selecting a value from a discrete distribution using the CDF method proportional to the original probability distribution?`,
-    options: [`Because the CDF is sorted in ascending order`, `Because we're drawing uniform random samples between 0 and 1`, `Because the size of each interval in the CDF corresponds to the original probability`, `Because the CDF is normalized between 0 and 1`],
-    answer: 2,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [37:49], the professor explains: "The probability that psy lands in one of these ranges on the vertical axis is exactly proportional to the little probabilities P themselves."
-- {:height 395, :width 535}
--  #Analogy
--`,
-    code: ``,
-    images: ["image_1745942868531_0.png", "image_1745942850313_0.png"],
-    tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
 ]
 
@@ -658,7 +651,7 @@ export default function Lec17Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -699,18 +692,18 @@ export default function Lec17Part1Quiz() {
           <Hash size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 17: Numerical Integration — Part 1</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Quadrature, Monte Carlo integration, importance sampling</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-17-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-17-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec17/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec17/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -734,7 +727,8 @@ export default function Lec17Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -869,7 +863,7 @@ export default function Lec17Part1Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-17-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-17-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Sun } from 'lucide-react'
 
-// Source: lectures/cg-14-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 14: Color — Part 2 · QQ33–QQ64 · 32 questions (32 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-14-lecture-quiz.md 14
+// Source: lectures/cg-14-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 14: Color — Part 2 · QQ30–QQ61 · 32 questions (32 MCQ, 0 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-14-lecture-quiz.md.md 14
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `EXPERIMENTAL`,
+    format: `mcq`,
+    timestamp: `34:15`,
+    question: `What does the peripheral vision color experiment described in the lecture demonstrate?`,
+    options: [`Peripheral vision is more accurate for certain colors than others`, `The brain often incorrectly guesses colors in the peripheral vision`, `People can see colors more vividly in their peripheral vision`, `Color vision improves with practice in the periphery`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [35:38], the lecturer predicts: "You will do a very poor job of guessing what the color is you'll get signals from your brain that say oh it's it's definitely a color and it's blue and then you'll turn around and look at it and it'll actually be yellow" and explains at [35:51] that "your brain is very good at filling in the gaps."`,
+    code: ``,
+    images: ["lec14_slide_65.png"],
+    tags: [],
+    source: `lectures/cg-14-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `CONCEPTUAL`,
+    format: `mcq`,
+    timestamp: `35:25`,
+    question: `Why is it important to use objects of the same shape in the peripheral vision experiment?`,
+    options: [`To ensure the objects reflect light in similar ways`, `To prevent identifying objects by their shape rather than color`, `To make the experiment more aesthetically pleasing`, `To make the experiment easier to conduct`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer explains at [35:25]: "For this for this reason that's actually pretty important that all these objects have the same shape you don't want to be distinguishing which one it is based on how they're shaped."`,
+    code: ``,
+    images: ["lec14_slide_65.png"],
+    tags: [],
+    source: `lectures/cg-14-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `CONCEPTUAL`,
+    format: `mcq`,
+    timestamp: `36:48`,
+    question: `Why does the lecturer say color is hard to deal with in computer graphics?`,
+    options: [`Because monitors can't display the full range of visible colors`, `Because there are too many colors to represent digitally`, `Because color theory is still poorly understood scientifically`, `Because color perception involves non-linear relationships and complex brain processing`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [36:48], the lecturer states: "That is one of the reasons why color is so hard to deal with in computer graphics because it's not a linear relationship it's not a very simple mathematical relationship the brain and the mind are doing a lot to turn the data that it gets into a color image in a very unpredictable way."`,
+    code: ``,
+    images: ["lec14_slide_65.png"],
+    tags: [],
+    source: `lectures/cg-14-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 34,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 35,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 36,
@@ -73,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 37,
@@ -90,7 +141,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 38,
@@ -107,7 +158,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 39,
@@ -124,7 +175,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 40,
@@ -141,7 +192,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 41,
@@ -158,7 +209,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 42,
@@ -175,7 +226,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 43,
@@ -192,7 +243,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 44,
@@ -209,7 +260,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 45,
@@ -226,7 +277,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 46,
@@ -243,7 +294,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 47,
@@ -260,7 +311,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 48,
@@ -277,7 +328,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 49,
@@ -294,7 +345,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 50,
@@ -311,7 +362,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 51,
@@ -328,7 +379,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 52,
@@ -345,7 +396,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 53,
@@ -362,7 +413,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 54,
@@ -379,7 +430,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 55,
@@ -396,7 +447,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 56,
@@ -413,7 +464,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 57,
@@ -430,7 +481,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 58,
@@ -447,7 +498,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 59,
@@ -464,7 +515,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 60,
@@ -481,7 +532,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
   {
     id: 61,
@@ -498,58 +549,7 @@ const quizData = [
     code: ``,
     images: ["lec14_slide_65.png"],
     tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
-  },
-  {
-    id: 62,
-    qid: `Q62`,
-    qtype: `CHALLENGE`,
-    format: `mcq`,
-    timestamp: `1:13:43`,
-    question: `What makes color management between different devices so challenging?`,
-    options: [`The lack of standard color models`, `Different gamuts, perception effects, and the fundamental complexity of matching spectra`, `The high cost of color calibration equipment`, `Device manufacturers keeping their color specifications secret`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer explains at [1:15:15]: "Color management is really hard it's a really challenging problem and it's challenging because of perception it's challenging because there's so many different models and it's challenging just because conceptually there's a lot to get your head around." He also discusses gamut limitations at [1:14:39].`,
-    code: ``,
-    images: ["lec14_slide_65.png"],
-    tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
-  },
-  {
-    id: 63,
-    qid: `Q63`,
-    qtype: `TECHNICAL`,
-    format: `mcq`,
-    timestamp: `1:16:16`,
-    question: `What problem does gamma correction address?`,
-    options: [`The tendency of colors to fade over time in digital media`, `The non-linear relationship between voltage input and light intensity output in displays`, `Color blindness in human viewers`, `The limited color range of early digital cameras`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [1:16:24], the lecturer explains: "The relationship between voltage and the intensity of the light is a nonlinear relationship it looks roughly something like Y is proportional to V to the gamma where V is the voltage and Y is the light intensity."`,
-    code: ``,
-    images: ["lec14_slide_65.png"],
-    tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
-  },
-  {
-    id: 64,
-    qid: `Q64`,
-    qtype: `APPLICATION`,
-    format: `mcq`,
-    timestamp: `1:17:40`,
-    question: `Why do photographers working with RAW image files need to understand gamma correction?`,
-    options: [`To increase dynamic range in their photos`, `To properly adjust exposure values`, `To compensate for the gamma relationship in camera sensors when processing images`, `To ensure proper color balance in artificial lighting`],
-    answer: 2,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [1:17:40], the lecturer states: "If you get raw data from your camera which is something photographers you love to do work with RAW images and and really get all the information from the camera and process it the way that they want then you really have to think about this gamma correction."`,
-    code: ``,
-    images: ["lec14_slide_65.png"],
-    tags: [],
-    source: `lectures/cg-14-lecture-quiz.md`,
+    source: `lectures/cg-14-lecture-quiz.md.md`,
   },
 ]
 
@@ -674,13 +674,13 @@ export default function Lec14Part2Quiz() {
           <Sun size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 14: Color — Part 2</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Radiometry, color spaces, tone mapping, gamma correction</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-14-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-14-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec14/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec14/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           <a key={3} href={`${BASE}/lec14/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ64 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ61 · 32 questions (32 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
@@ -845,7 +845,7 @@ export default function Lec14Part2Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-14-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-14-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

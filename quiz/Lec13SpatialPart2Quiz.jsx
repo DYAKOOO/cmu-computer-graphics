@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Database } from 'lucide-react'
 
-// Source: lectures/cg-13-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 13: Spatial Data Structures — Part 2 · QQ33–QQ51 · 19 questions (19 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-13-lecture-quiz.md 13
+// Source: lectures/cg-13-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 13: Spatial Data Structures — Part 2 · QQ30–QQ51 · 22 questions (22 MCQ, 0 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-13-lecture-quiz.md.md 13
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `MCQ`,
+    format: `mcq`,
+    timestamp: `39:26`,
+    question: `When building a BVH, what is the problem with partitioning primitives into nodes with equal numbers?`,
+    options: [`It requires too much computation`, `It makes the tree too shallow`, `It creates too many leaf nodes`, `It can create bounding boxes with lots of empty space`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer states at [39:26]: "If we if we say we want to partition the child into nodes with an equal number of primitives then one of these nodes is huge even though mostly it just contains empty space so most of the time that we're hitting the node on the Left we're actually not going to hit a primitive."`,
+    code: ``,
+    images: ["lec13_slide_48.png"],
+    tags: [],
+    source: `lectures/cg-13-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `MCQ`,
+    format: `mcq`,
+    timestamp: `40:10`,
+    question: `What are the two main characteristics of a good BVH partitioning?`,
+    options: [`Many primitives per leaf node and few interior nodes`, `Small bounding boxes with minimal wasted space and minimal overlap between children`, `Balanced tree and deep hierarchy`, `Cubic boxes and evenly distributed primitives`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer summarizes at [40:10]: "That's that's pretty good intuition that we want to we want small bounding boxes without a lot of wasted space and also we want to minimize overlap between children."`,
+    code: ``,
+    images: ["lec13_slide_48.png"],
+    tags: [],
+    source: `lectures/cg-13-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `MCQ`,
+    format: `mcq`,
+    timestamp: `42:29`,
+    question: `What is the general cost model for traversing an interior node in a BVH?`,
+    options: [`Sum of costs of all enclosed primitives`, `Fixed cost per node`, `Logarithm of number of enclosed primitives`, `Cost of traversing node + probability of hitting left child * cost of left child + probability of hitting right child * cost of right child`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer formulates at [42:29]: "We can model the cost as C equals C trav the cost of traversing an interior node so just the cost of doing the bounding box test for that one node plus PA times CA meaning the probability that we hit the left child times the cost of traversing the whole left child plus PB times CB."`,
+    code: ``,
+    images: ["lec13_slide_48.png"],
+    tags: [],
+    source: `lectures/cg-13-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 34,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_49.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 35,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_49.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 36,
@@ -73,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_49.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 37,
@@ -90,7 +141,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_49.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 38,
@@ -107,7 +158,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_49.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 39,
@@ -124,7 +175,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_49.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 40,
@@ -141,7 +192,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_49.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 41,
@@ -158,7 +209,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_49.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 42,
@@ -175,7 +226,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_49.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 43,
@@ -192,7 +243,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_49.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 44,
@@ -209,7 +260,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_50.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 45,
@@ -226,7 +277,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_50.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 46,
@@ -243,7 +294,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_50.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 47,
@@ -260,7 +311,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_50.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 48,
@@ -277,7 +328,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_50.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 49,
@@ -294,7 +345,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_50.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 50,
@@ -311,7 +362,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_50.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 51,
@@ -331,7 +382,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_50.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
 ]
 
@@ -415,7 +466,7 @@ export default function Lec13Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (19 || 1) * 100)
+    const p = Math.round(s / (22 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -456,19 +507,19 @@ export default function Lec13Part2Quiz() {
           <Database size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 13: Spatial Data Structures — Part 2</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>BVH, KD-trees, octrees, uniform grids, spatial hashing</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-13-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-13-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec13/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec13/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ51 · 19 questions (19 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ51 · 22 questions (22 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>19</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>22</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~6min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~7min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -491,7 +542,7 @@ export default function Lec13Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 19 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 22 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -536,12 +587,12 @@ export default function Lec13Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/19</span>
+              <span>{qIdx+1}/22</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/19*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/22*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -626,7 +677,7 @@ export default function Lec13Part2Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-13-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-13-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
@@ -682,7 +733,7 @@ export default function Lec13Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 19-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 22-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

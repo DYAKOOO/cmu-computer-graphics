@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Image } from 'lucide-react'
 
-// Source: lectures/cg-07-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 7: Texture Mapping — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-07-lecture-quiz.md 7
+// Source: lectures/cg-07-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 7: Texture Mapping — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-07-lecture-quiz.md.md 7
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture opens with paintings spanning the 8th–20th century showing the history of perspective in art. What does this art-history detour accomplish for the technical content that follows?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `It establishes that perspective is a fundamental human perceptual phenomenon, not just a mathematical trick. Artists struggled for centuries to get it right — and Picasso deliberately broke it. This motivates why perspective projection must be treated carefully mathematically, and primes the viewer to notice perspective errors in renders. It also makes the upcoming "perspective-correct interpolation" problem feel concrete: incorrect perspective is instantly visible.`,
+    intuition: `History of perception → history of rendering. Both are about matching what we see to what we compute.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-07-lecture-quiz.md.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `After covering perspective projection, the lecture introduces texture mapping. What specific problem arises when you combine these two ideas, and what technique resolves it?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Barycentric coordinates are linear in 3D space but the perspective division (dividing by w) is nonlinear. Linearly interpolating texture coordinates in screen space (after projection) produces incorrect results — textures appear warped. Perspective-correct interpolation recovers the correct 3D interpolant by dividing by the interpolated 1/w before looking up the texture.`,
+    intuition: `Perspective "bends" the space that interpolation happens in. Correcting for that bend is the key insight.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-07-lecture-quiz.md.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these lecture 7 topics in the order they are covered: perspective-correct texture interpolation / mipmap anti-aliasing / UV coordinate mapping / perspective projection matrix derivation`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Perspective projection matrix derivation → UV coordinate mapping → perspective-correct texture interpolation → mipmap anti-aliasing`,
+    intuition: `The lecture builds the rendering pipeline left-to-right: project first, then map texture coordinates, then fix the interpolation, then handle filtering artifacts.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-07-lecture-quiz.md.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_01.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 2,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_02.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 3,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_04.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 4,
@@ -73,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_04.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 5,
@@ -90,7 +141,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_05.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 6,
@@ -107,7 +158,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_07.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 7,
@@ -124,7 +175,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_16.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 8,
@@ -141,7 +192,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_38.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 9,
@@ -158,7 +209,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_40.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 10,
@@ -175,7 +226,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_45.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 11,
@@ -192,7 +243,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_48.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 12,
@@ -209,7 +260,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_48.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 13,
@@ -226,7 +277,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_66.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 14,
@@ -243,7 +294,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_66.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 15,
@@ -260,7 +311,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 16,
@@ -277,7 +328,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 17,
@@ -294,7 +345,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 18,
@@ -311,7 +362,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 19,
@@ -328,7 +379,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 20,
@@ -345,7 +396,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 21,
@@ -362,7 +413,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 22,
@@ -379,7 +430,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 23,
@@ -396,7 +447,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 24,
@@ -413,7 +464,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 25,
@@ -431,7 +482,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 26,
@@ -448,7 +499,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 27,
@@ -465,7 +516,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 28,
@@ -482,7 +533,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 29,
@@ -499,58 +550,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
-  },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `APPROACH`,
-    format: `mcq`,
-    timestamp: `22:36`,
-    question: `When solving the matrix equation for the view frustum transformation, what unusual aspect does the lecturer point out?`,
-    options: [`The matrix must be inverted first`, `We're solving for the matrix entries, not the vector`, `The determinant must be calculated differently`, `The matrix is always singular`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [22:36], the lecturer explains: "In this case I'm not solving for x. Normally with a matrix equation Ax = y you solve for x. In this case I'm actually solving for the unknown entries of the matrix A."`,
-    code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `COMPONENTS`,
-    format: `mcq`,
-    timestamp: `23:42`,
-    question: `What are the two main components of the orthographic projection matrix?`,
-    options: [`Shearing and scaling`, `Scaling and translation`, `Translation and rotation`, `Reflection and rotation`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [23:42], the lecturer states: "We can break it up into kind of two pieces. One is that it applies a non-uniform scale to turn our original box into a box of size two, and then in the upper right we have this translation."`,
-    code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `HOMOGENEOUS`,
-    format: `mcq`,
-    timestamp: `23:58`,
-    question: `What benefit do homogeneous coordinates provide for spatial transformations?`,
-    options: [`They simplify perspective division`, `They use less memory`, `They make rotation matrices orthogonal`, `They allow expressing translations as linear transformations`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [23:58], the lecturer explains: "That was the whole idea behind using homogeneous coordinates for spatial transformations, is that we can express translations as linear transformations in homogeneous coordinates."`,
-    code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
 ]
 
@@ -634,7 +634,7 @@ export default function Lec7Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -675,19 +675,19 @@ export default function Lec7Part1Quiz() {
           <Image size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 7: Texture Mapping — Part 1</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>UV mapping, mipmaps, filtering, environment maps, bump mapping</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-07-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-07-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec7/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec7/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           <a key={3} href={`${BASE}/lec7/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -711,7 +711,8 @@ export default function Lec7Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -846,7 +847,7 @@ export default function Lec7Part1Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-07-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-07-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

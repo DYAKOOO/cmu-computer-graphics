@@ -12,6 +12,18 @@ tags:: cg/lec8 , cg
 - "Pre-multiplied Alpha" [22:42] - "Rather than working with the color values directly, we're going to multiply or pre-multiply those color values by the alpha value."
   
   QUESTIONS:
+- #card [QF1] [FLOW] [00:00] Lecture 8 is described as "wrapping up the rasterization pipeline." What two remaining problems does it solve, and why were they deferred until after rasterization and texture mapping were established?
+	- ANSWER: (1) Depth (occlusion): which of multiple overlapping triangles is visible at each pixel sample? (2) Transparency (alpha blending): how do we composit semi-transparent surfaces? Both were deferred because they depend on earlier stages: depth requires interpolating a per-vertex attribute (depth value) exactly like texture coords; transparency requires per-fragment alpha values that come from textures. Without rasterization and attribute interpolation in place, neither can be implemented.
+	- INTUITION: Depth and transparency are the last two entries in the pipeline diagram shown at the start of the lecture.
+
+- #card [QF2] [FLOW] [00:00] The lecture presents two solutions to the occlusion problem: the painter's algorithm and the Z-buffer. What fundamental limitation of the painter's algorithm motivates the Z-buffer?
+	- ANSWER: The painter's algorithm sorts triangles by depth and draws back-to-front. This fails when triangles intersect or cyclically overlap (A behind B, B behind C, C behind A — no valid sort order exists). It also requires a global sort every frame. The Z-buffer solves this per-sample: for each sample, track the minimum depth seen so far and overwrite only if a new fragment is closer. No sort required, handles intersections naturally.
+	- INTUITION: The painter's algorithm is a global ordering problem. The Z-buffer converts it to a local per-pixel problem.
+
+- #card [QF3] [ORDER] [00:00] Put these lecture 8 topics in the order they are covered: alpha compositing for transparency / Z-buffer algorithm / painter's algorithm (and why it fails) / depth interpolation using barycentric coordinates
+	- ANSWER: Painter's algorithm → depth interpolation using barycentric coordinates → Z-buffer algorithm → alpha compositing for transparency
+	- INTUITION: Establish the problem → how to compute depth → correct algorithmic solution → extend to semi-transparent surfaces.
+
 - #card [Q1] [DEFINITION] [24:03] What advantage does pre-multiplied alpha provide in terms of channel handling during compositing?
   A) It requires more arithmetic operations
   B) It treats all channels (RGB and alpha) the same way

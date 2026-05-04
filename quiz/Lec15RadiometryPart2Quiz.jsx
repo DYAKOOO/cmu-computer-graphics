@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Zap } from 'lucide-react'
 
-// Source: lectures/cg-15-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 15: Radiometry — Part 2 · QQ33–QQ64 · 32 questions (32 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-15-lecture-quiz.md 15
+// Source: lectures/cg-15-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 15: Radiometry — Part 2 · QQ30–QQ61 · 32 questions (32 MCQ, 0 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-15-lecture-quiz.md.md 15
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `CREATIVE`,
+    format: `mcq`,
+    timestamp: `34:55`,
+    question: `What aspect of physically-based lighting do graphics artists sometimes modify for practical reasons?`,
+    options: [`They make shadows darker than physically accurate`, `They change the light's color based on distance`, `They increase the speed of light`, `They adjust the inverse square falloff to be less steep (e.g., linear)`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [35:01], the lecturer states, "What people will do sometimes is say, you know, it's really a pain in the butt that things are falling off quadratically, I'm just gonna make them fall off linearly instead, or fall off in some other way that's easier to light."`,
+    code: ``,
+    images: ["lec15_slide_63.png"],
+    tags: [],
+    source: `lectures/cg-15-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `DEFINITION`,
+    format: `mcq`,
+    timestamp: `35:52`,
+    question: `How is an angle mathematically defined?`,
+    options: [`As the slope of a line`, `As the ratio of an arc length on a circle to the radius of that circle`, `As the difference between two directions`, `As a measure of rotation in three dimensions`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [35:52], the lecturer defines an angle as "the ratio of an arc on the circle to the radius of that circle."`,
+    code: ``,
+    images: ["lec15_slide_63.png"],
+    tags: [],
+    source: `lectures/cg-15-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `DEFINITION`,
+    format: `mcq`,
+    timestamp: `36:33`,
+    question: `What is a solid angle?`,
+    options: [`The ratio of a patch of area on a sphere to the squared radius`, `The angle between two solid objects`, `A three-dimensional wedge`, `An angle that doesn't change over time`],
+    answer: 0,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [36:33], the lecturer defines solid angle as "the ratio of this area to the squared radius."`,
+    code: ``,
+    images: ["lec15_slide_63.png"],
+    tags: [],
+    source: `lectures/cg-15-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 34,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 35,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 36,
@@ -73,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 37,
@@ -90,7 +141,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 38,
@@ -107,7 +158,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 39,
@@ -124,7 +175,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 40,
@@ -141,7 +192,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 41,
@@ -158,7 +209,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 42,
@@ -175,7 +226,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 43,
@@ -192,7 +243,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 44,
@@ -209,7 +260,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 45,
@@ -226,7 +277,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 46,
@@ -243,7 +294,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 47,
@@ -260,7 +311,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 48,
@@ -277,7 +328,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 49,
@@ -294,7 +345,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 50,
@@ -311,7 +362,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 51,
@@ -328,7 +379,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 52,
@@ -345,7 +396,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 53,
@@ -362,7 +413,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 54,
@@ -379,7 +430,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 55,
@@ -396,7 +447,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 56,
@@ -413,7 +464,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 57,
@@ -430,7 +481,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 58,
@@ -447,7 +498,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 59,
@@ -464,7 +515,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 60,
@@ -481,7 +532,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 61,
@@ -498,58 +549,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
-  },
-  {
-    id: 62,
-    qid: `Q62`,
-    qtype: `MATHEMATICAL`,
-    format: `mcq`,
-    timestamp: `57:06`,
-    question: `How is irradiance calculated for a uniform area light source?`,
-    options: [`By taking the light's intensity and dividing by distance`, `By using the inverse square law`, `By multiplying the area of the light by its intensity`, `By integrating the incident radiance weighted by the cosine over the solid angle subtended by the source`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [57:06], the lecturer states, "If the source emits irradiance L, then we can say the irradiance at a point P arriving at a point P is the integral over the Hemisphere around that point of the incident radiance L at the point P in the direction Omega times cosine theta D Omega."`,
-    code: ``,
-    images: ["lec15_slide_63.png"],
-    tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
-  },
-  {
-    id: 63,
-    qid: `Q63`,
-    qtype: `DEFINITION`,
-    format: `mcq`,
-    timestamp: `58:08`,
-    question: `What is projected solid angle?`,
-    options: [`The solid angle divided by π`, `The cosine-weighted solid angle`, `The solid angle without accounting for direction`, `The solid angle projected onto a flat surface`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [58:08], the lecturer defines, "Projected solid angle is just the cosine weighted solid angle."`,
-    code: ``,
-    images: ["lec15_slide_63.png"],
-    tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
-  },
-  {
-    id: 64,
-    qid: `Q64`,
-    qtype: `EXAMPLE`,
-    format: `mcq`,
-    timestamp: `58:16`,
-    question: `What example of an area light does the lecturer use to demonstrate solid angle calculations?`,
-    options: [`A uniform disk source`, `A rectangular area light`, `A cylindrical light`, `A triangular light`],
-    answer: 0,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [58:16], the lecturer states, "As a concrete example we can consider a uniform disk source."`,
-    code: ``,
-    images: ["lec15_slide_63.png"],
-    tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
 ]
 
@@ -674,13 +674,13 @@ export default function Lec15Part2Quiz() {
           <Zap size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 15: Radiometry — Part 2</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Radiance, irradiance, BRDFs, rendering equation basics</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-15-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-15-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec15/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec15/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           <a key={3} href={`${BASE}/lec15/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ64 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ61 · 32 questions (32 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
@@ -845,7 +845,7 @@ export default function Lec15Part2Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-15-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-15-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

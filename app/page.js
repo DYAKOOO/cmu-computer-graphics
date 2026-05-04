@@ -7,6 +7,7 @@ const quizzes = [
   { id: 'lec2',  title: 'Lecture 2: Linear Algebra',               description: 'Vectors, linear maps, inner products, Gram-Schmidt, Fourier',                color: '#818cf8', href: `${BASE}/lec2`  },
   { id: 'lec3',  title: 'Lecture 3: Vector Calculus',              description: 'Gradient, divergence, curl, Laplacian, Hessian',                            color: '#38bdf8', href: `${BASE}/lec3`  },
   { id: 'lec4',  title: 'Lecture 4: Rasterization & Sampling',     description: 'Pipeline, coverage, aliasing, SSAA, point-in-triangle',                    color: '#34d399', href: `${BASE}/lec4`  },
+  { id: 'lec5',  title: 'Lecture 5: Spatial Transformations',       description: 'Linear maps, homogeneous coords, rotation, scaling, translation, affine transforms',color: '#f59e0b', href: `${BASE}/lec5`  },
   { id: 'lec6',  title: 'Lecture 6: 3D Rotations',                 description: 'Euler angles, rotation matrices, quaternions, exponential maps',            color: '#f472b6', href: `${BASE}/lec6`  },
   { id: 'lec7',  title: 'Lecture 7: Texture Mapping',              description: 'UV mapping, mipmaps, filtering, environment maps, bump mapping',            color: '#a3e635', href: `${BASE}/lec7`  },
   { id: 'lec8',  title: 'Lecture 8: Depth & Transparency',         description: 'Z-buffer, painter\'s algorithm, alpha blending, order-independent',         color: '#67e8f9', href: `${BASE}/lec8`  },

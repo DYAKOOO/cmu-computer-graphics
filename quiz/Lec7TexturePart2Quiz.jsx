@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Image } from 'lucide-react'
 
-// Source: lectures/cg-07-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 7: Texture Mapping — Part 2 · QQ33–QQ64 · 32 questions (32 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-07-lecture-quiz.md 7
+// Source: lectures/cg-07-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 7: Texture Mapping — Part 2 · QQ30–QQ61 · 32 questions (32 MCQ, 0 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-07-lecture-quiz.md.md 7
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `APPROACH`,
+    format: `mcq`,
+    timestamp: `22:36`,
+    question: `When solving the matrix equation for the view frustum transformation, what unusual aspect does the lecturer point out?`,
+    options: [`The matrix must be inverted first`, `We're solving for the matrix entries, not the vector`, `The determinant must be calculated differently`, `The matrix is always singular`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [22:36], the lecturer explains: "In this case I'm not solving for x. Normally with a matrix equation Ax = y you solve for x. In this case I'm actually solving for the unknown entries of the matrix A."`,
+    code: ``,
+    images: ["lec7_slide_68.png"],
+    tags: [],
+    source: `lectures/cg-07-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `COMPONENTS`,
+    format: `mcq`,
+    timestamp: `23:42`,
+    question: `What are the two main components of the orthographic projection matrix?`,
+    options: [`Shearing and scaling`, `Scaling and translation`, `Translation and rotation`, `Reflection and rotation`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [23:42], the lecturer states: "We can break it up into kind of two pieces. One is that it applies a non-uniform scale to turn our original box into a box of size two, and then in the upper right we have this translation."`,
+    code: ``,
+    images: ["lec7_slide_68.png"],
+    tags: [],
+    source: `lectures/cg-07-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `HOMOGENEOUS`,
+    format: `mcq`,
+    timestamp: `23:58`,
+    question: `What benefit do homogeneous coordinates provide for spatial transformations?`,
+    options: [`They simplify perspective division`, `They use less memory`, `They make rotation matrices orthogonal`, `They allow expressing translations as linear transformations`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [23:58], the lecturer explains: "That was the whole idea behind using homogeneous coordinates for spatial transformations, is that we can express translations as linear transformations in homogeneous coordinates."`,
+    code: ``,
+    images: ["lec7_slide_68.png"],
+    tags: [],
+    source: `lectures/cg-07-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 34,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 35,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 36,
@@ -73,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 37,
@@ -90,7 +141,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 38,
@@ -107,7 +158,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 39,
@@ -124,7 +175,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 40,
@@ -141,7 +192,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 41,
@@ -158,7 +209,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 42,
@@ -175,7 +226,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 43,
@@ -192,7 +243,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 44,
@@ -209,7 +260,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 45,
@@ -226,7 +277,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 46,
@@ -243,7 +294,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 47,
@@ -260,7 +311,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 48,
@@ -277,7 +328,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 49,
@@ -294,7 +345,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 50,
@@ -312,7 +363,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 51,
@@ -329,7 +380,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 52,
@@ -346,7 +397,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 53,
@@ -363,7 +414,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 54,
@@ -380,7 +431,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 55,
@@ -397,7 +448,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 56,
@@ -414,7 +465,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 57,
@@ -431,7 +482,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 58,
@@ -448,7 +499,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 59,
@@ -465,7 +516,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 60,
@@ -482,7 +533,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
   {
     id: 61,
@@ -499,58 +550,7 @@ const quizData = [
     code: ``,
     images: ["lec7_slide_68.png"],
     tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
-  },
-  {
-    id: 62,
-    qid: `Q62`,
-    qtype: `DEFINITION`,
-    format: `mcq`,
-    timestamp: `54:15`,
-    question: `What are texture coordinates?`,
-    options: [`The position of textures in memory`, `What define a mapping from the surface to points in the texture domain`, `The file paths to texture images`, `The resolution of texture images`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [54:15], the lecturer states: "Texture coordinates are what we use to define a mapping from the surface to points in the texture domain."`,
-    code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
-  },
-  {
-    id: 63,
-    qid: `Q63`,
-    qtype: `PROCESS`,
-    format: `mcq`,
-    timestamp: `54:22`,
-    question: `How are texture coordinates typically handled across a triangle?`,
-    options: [`They are computed from the triangle normal`, `They are linearly interpolated from the vertices`, `They are constant across each triangle`, `They are randomly generated for each pixel`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [54:22], the lecturer explains: "Most commonly if we're working with triangle mesh, we might linearly interpolate texture coordinates at the triangle vertices over the interior of the triangle."`,
-    code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
-  },
-  {
-    id: 64,
-    qid: `Q64`,
-    qtype: `VISUALIZATION`,
-    format: `mcq`,
-    timestamp: `55:54`,
-    question: `How can texture coordinates be visualized using colors?`,
-    options: [`By using a gradient from dark to light`, `By using a checkerboard pattern`, `By assigning u to red and v to green`, `By using random colors for each coordinate`],
-    answer: 2,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [55:54], the lecturer states: "One nice way to visualize texture coordinates is to associate them with colors. So if we think of u as red and v as green, then we get kind of a color map that looks like this."`,
-    code: ``,
-    images: ["lec7_slide_68.png"],
-    tags: [],
-    source: `lectures/cg-07-lecture-quiz.md`,
+    source: `lectures/cg-07-lecture-quiz.md.md`,
   },
 ]
 
@@ -675,13 +675,13 @@ export default function Lec7Part2Quiz() {
           <Image size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 7: Texture Mapping — Part 2</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>UV mapping, mipmaps, filtering, environment maps, bump mapping</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-07-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-07-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec7/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec7/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           <a key={3} href={`${BASE}/lec7/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ64 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ61 · 32 questions (32 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
@@ -846,7 +846,7 @@ export default function Lec7Part2Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-07-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-07-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

@@ -2,11 +2,69 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Hash } from 'lucide-react'
 
-// Source: lectures/cg-17-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 17: Numerical Integration — Part 2 · QQ33–QQ46 · 14 questions (14 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-17-lecture-quiz.md 17
+// Source: lectures/cg-17-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 17: Numerical Integration — Part 2 · QQ30–QQ46 · 17 questions (17 MCQ, 0 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-17-lecture-quiz.md.md 17
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `DEFINITION`,
+    format: `mcq`,
+    timestamp: `34:54`,
+    question: `What does the Cumulative Distribution Function (CDF) represent according to the lecture?`,
+    options: [`The expected value of the random variable`, `The probability that the random variable takes a specific value`, `The sum of all probabilities in the distribution`, `The probability that one of the first J events occurred`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [35:23], the professor explains: "What are these values represent well they that they represent the possibility or the probability that one of the first J events occurred or one of the first J values was seen when we looked at our random variable."
+mya:: random varialbe X takes a value less than or equal to j. The CDF gives you a **probability**, not the actual result. ITS a prediction.  For example, it says there’s a **1/3 chance** of rolling a 2 or less. But it doesn’t say, “Hey, you rolled a 2 this time!”
+-
+-  #Analogy`,
+    code: ``,
+    images: ["image_1745941831427_0.png", "image_1745942614079_0.png"],
+    tags: [],
+    source: `lectures/cg-17-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `IMPLEMENTATION`,
+    format: `mcq`,
+    timestamp: `36:16`,
+    question: `What is the first step in sampling from a discrete probability distribution using the CDF method?`,
+    options: [`Draw a random sample from the distribution`, `Compute the CDF by taking the cumulative sum of probabilities`, `Compute the mean of the distribution`, `Sort the probabilities in descending order`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [36:25], the professor explains: "If we want a sample from a discrete probability distribution we're gonna first compute its CDF capital P and all that means is we compute this cumulative sum right we just start adding up the little P's."
+-`,
+    code: ``,
+    images: ["image_1745944638314_0.png"],
+    tags: [],
+    source: `lectures/cg-17-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `CONCEPTUAL`,
+    format: `mcq`,
+    timestamp: `37:49`,
+    question: `Why is the probability of selecting a value from a discrete distribution using the CDF method proportional to the original probability distribution?`,
+    options: [`Because the CDF is sorted in ascending order`, `Because we're drawing uniform random samples between 0 and 1`, `Because the size of each interval in the CDF corresponds to the original probability`, `Because the CDF is normalized between 0 and 1`],
+    answer: 2,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [37:49], the professor explains: "The probability that psy lands in one of these ranges on the vertical axis is exactly proportional to the little probabilities P themselves."
+- {:height 395, :width 535}
+-  #Analogy
+-`,
+    code: ``,
+    images: ["image_1745942868531_0.png", "image_1745942850313_0.png"],
+    tags: [],
+    source: `lectures/cg-17-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -22,7 +80,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_24.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 34,
@@ -40,7 +98,7 @@ const quizData = [
     code: ``,
     images: ["image_1745943404642_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 35,
@@ -58,7 +116,7 @@ const quizData = [
     code: ``,
     images: ["image_1745945326393_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 36,
@@ -76,7 +134,7 @@ const quizData = [
     code: ``,
     images: ["image_1745944040573_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 37,
@@ -94,7 +152,7 @@ const quizData = [
     code: ``,
     images: ["image_1745944083591_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 38,
@@ -111,7 +169,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_29.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 39,
@@ -129,7 +187,7 @@ const quizData = [
     code: ``,
     images: ["image_1745941772247_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 40,
@@ -146,7 +204,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_29.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 41,
@@ -164,7 +222,7 @@ const quizData = [
     code: ``,
     images: ["image_1745944541436_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 42,
@@ -182,7 +240,7 @@ const quizData = [
     code: ``,
     images: ["image_1745943888039_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 43,
@@ -200,7 +258,7 @@ const quizData = [
     code: ``,
     images: ["image_1745943835798_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 44,
@@ -218,7 +276,7 @@ const quizData = [
     code: ``,
     images: ["image_1745943147493_0.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 45,
@@ -235,7 +293,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_30.png"],
     tags: ["Sampling/Rejection", "Efficiency"],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
   {
     id: 46,
@@ -253,7 +311,7 @@ const quizData = [
     code: ``,
     images: ["lec17_slide_30.png"],
     tags: [],
-    source: `lectures/cg-17-lecture-quiz.md`,
+    source: `lectures/cg-17-lecture-quiz.md.md`,
   },
 ]
 
@@ -337,7 +395,7 @@ export default function Lec17Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (14 || 1) * 100)
+    const p = Math.round(s / (17 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -378,19 +436,19 @@ export default function Lec17Part2Quiz() {
           <Hash size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 17: Numerical Integration — Part 2</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Quadrature, Monte Carlo integration, importance sampling</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-17-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-17-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec17/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec17/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ46 · 14 questions (14 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ46 · 17 questions (17 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>14</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>17</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~4min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~5min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -413,7 +471,7 @@ export default function Lec17Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 14 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 17 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -458,12 +516,12 @@ export default function Lec17Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/14</span>
+              <span>{qIdx+1}/17</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/14*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/17*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -548,7 +606,7 @@ export default function Lec17Part2Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-17-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-17-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
@@ -604,7 +662,7 @@ export default function Lec17Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 14-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 17-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

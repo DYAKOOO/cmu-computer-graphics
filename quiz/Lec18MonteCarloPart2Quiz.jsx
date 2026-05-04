@@ -2,11 +2,64 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Crosshair } from 'lucide-react'
 
-// Source: lectures/cg-18-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 18: Monte Carlo Ray Tracing — Part 2 · QQ33–QQ46 · 14 questions (14 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-18-lecture-quiz.md 18
+// Source: lectures/cg-18-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 18: Monte Carlo Ray Tracing — Part 2 · QQ30–QQ46 · 17 questions (17 MCQ, 0 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-18-lecture-quiz.md.md 18
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `STRATEGY`,
+    format: `mcq`,
+    timestamp: `34:14`,
+    question: `When importance sampling a BRDF, where should samples be concentrated?`,
+    options: [`Primarily in shadow regions`, `Only in the specular reflection direction`, `Uniformly across the hemisphere`, `Around the lobe where most light is scattered`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [34:14], the lecturer states: "I really shouldn't waste time putting a lot of samples where there's essentially no reflection occurring where nothing is getting contributed to the integral I should really try to lump all of my samples around this lobe of the brdf where all the light is getting scattered out."
+- # Monte Carlo Rendering Quiz - Part 3
+- ## QUESTIONS (continued):`,
+    code: ``,
+    images: ["lec18_slide_52.png"],
+    tags: [],
+    source: `lectures/cg-18-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `VISUAL`,
+    format: `mcq`,
+    timestamp: `53:15`,
+    question: `What was the key improvement when using light source sampling instead of uniform hemisphere sampling?`,
+    options: [`The image had better color accuracy`, `The image had much less noise with the same number of samples`, `The image rendered much faster`, `The image had improved shadow detail`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [53:23], the lecturer observes: "Here we're doing the exact same scene we're using the same number of sample rays just a hundred sample rays per pixel per point on the plane but the image is way smoother."`,
+    code: ``,
+    images: ["lec18_slide_52.png"],
+    tags: [],
+    source: `lectures/cg-18-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `EFFICIENCY`,
+    format: `mcq`,
+    timestamp: `54:55`,
+    question: `According to the lecture, what two factors determine the efficiency of a Monte Carlo estimator?`,
+    options: [`Convergence rate and memory usage`, `Speed and accuracy`, `Sample count and distribution type`, `Variance and cost`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer explains at [55:08]: "Efficiency is basically inversely proportional to both the variance of the estimator... but also you need to care about the cost... you do have to balance these things variance from end cost."`,
+    code: ``,
+    images: ["lec18_slide_52.png"],
+    tags: [],
+    source: `lectures/cg-18-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -22,7 +75,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 34,
@@ -39,7 +92,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 35,
@@ -56,7 +109,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 36,
@@ -73,7 +126,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 37,
@@ -90,7 +143,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 38,
@@ -107,7 +160,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 39,
@@ -124,7 +177,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 40,
@@ -141,7 +194,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 41,
@@ -158,7 +211,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 42,
@@ -175,7 +228,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 43,
@@ -192,7 +245,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 44,
@@ -209,7 +262,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 45,
@@ -226,7 +279,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
   {
     id: 46,
@@ -244,7 +297,7 @@ const quizData = [
     code: ``,
     images: ["lec18_slide_52.png"],
     tags: [],
-    source: `lectures/cg-18-lecture-quiz.md`,
+    source: `lectures/cg-18-lecture-quiz.md.md`,
   },
 ]
 
@@ -328,7 +381,7 @@ export default function Lec18Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (14 || 1) * 100)
+    const p = Math.round(s / (17 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -369,19 +422,19 @@ export default function Lec18Part2Quiz() {
           <Crosshair size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 18: Monte Carlo Ray Tracing — Part 2</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Path tracing, direct/indirect lighting, BRDF sampling</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-18-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-18-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec18/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec18/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ46 · 14 questions (14 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ46 · 17 questions (17 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>14</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>17</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~4min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~5min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -404,7 +457,7 @@ export default function Lec18Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 14 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 17 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -449,12 +502,12 @@ export default function Lec18Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/14</span>
+              <span>{qIdx+1}/17</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/14*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/17*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -539,7 +592,7 @@ export default function Lec18Part2Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-18-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-18-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
@@ -595,7 +648,7 @@ export default function Lec18Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 14-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 17-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

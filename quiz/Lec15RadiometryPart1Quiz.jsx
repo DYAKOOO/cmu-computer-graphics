@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Zap } from 'lucide-react'
 
-// Source: lectures/cg-15-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 15: Radiometry — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-15-lecture-quiz.md 15
+// Source: lectures/cg-15-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 15: Radiometry — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-15-lecture-quiz.md.md 15
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture opens with "rendering is more than just color." What measurement gap does radiometry fill that color theory alone cannot address?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Color theory tells us the hue/chromaticity of a surface's appearance but not its intensity — how many photons hit each pixel. A red surface in bright sunlight and the same red in shadow have the same color but vastly different brightness. Radiometry provides the physical framework to measure energy flow: radiant flux, irradiance, and radiance. These tell the renderer not just what color arrives but how much energy, which determines actual pixel brightness.`,
+    intuition: `Color = what kind of light. Radiometry = how much light. Both are needed for a realistic image.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-15-lecture-quiz.md.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture introduces: radiant flux → irradiance → radiance (adding the solid angle dimension). Why is radiance specifically — and not irradiance — the quantity that ray tracers track along each ray?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Irradiance measures total power arriving per unit area from all directions — useful for computing total brightness of a surface but it collapses directional information. Radiance adds directional resolution: power per unit area per solid angle, measuring light from one specific direction. Crucially, radiance is constant along a ray in a vacuum (no participating media). This means a ray tracer can track the same radiance value from a light source all the way to the camera, making it the natural quantity for path tracing.`,
+    intuition: `Irradiance is an integral of radiance over a hemisphere. Radiance is the integrand. Ray tracers sample that integrand.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-15-lecture-quiz.md.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these radiometric quantities in order from most basic to most directionally resolved: radiance / irradiance / solid angle / radiant flux (power)`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Radiant flux (power) → Solid angle → Irradiance (power per area) → Radiance (power per area per solid angle)`,
+    intuition: `Each step adds one more dimension of precision: from total power, to how it spreads over a sphere, to how it arrives at a surface, to from which direction it arrives.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-15-lecture-quiz.md.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_07.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 2,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_16.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 3,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_62.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 4,
@@ -73,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_62.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 5,
@@ -90,7 +141,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_62.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 6,
@@ -107,7 +158,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_62.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 7,
@@ -124,7 +175,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_62.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 8,
@@ -141,7 +192,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_62.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 9,
@@ -158,7 +209,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_62.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 10,
@@ -175,7 +226,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_62.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 11,
@@ -192,7 +243,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_62.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 12,
@@ -209,7 +260,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_62.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 13,
@@ -226,7 +277,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_62.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 14,
@@ -243,7 +294,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_62.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 15,
@@ -260,7 +311,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 16,
@@ -277,7 +328,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 17,
@@ -294,7 +345,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 18,
@@ -311,7 +362,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 19,
@@ -328,7 +379,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 20,
@@ -345,7 +396,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 21,
@@ -362,7 +413,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 22,
@@ -379,7 +430,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 23,
@@ -396,7 +447,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 24,
@@ -413,7 +464,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 25,
@@ -430,7 +481,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 26,
@@ -447,7 +498,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 27,
@@ -464,7 +515,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 28,
@@ -481,7 +532,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 29,
@@ -498,58 +549,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
-  },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `CREATIVE`,
-    format: `mcq`,
-    timestamp: `34:55`,
-    question: `What aspect of physically-based lighting do graphics artists sometimes modify for practical reasons?`,
-    options: [`They make shadows darker than physically accurate`, `They change the light's color based on distance`, `They increase the speed of light`, `They adjust the inverse square falloff to be less steep (e.g., linear)`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [35:01], the lecturer states, "What people will do sometimes is say, you know, it's really a pain in the butt that things are falling off quadratically, I'm just gonna make them fall off linearly instead, or fall off in some other way that's easier to light."`,
-    code: ``,
-    images: ["lec15_slide_63.png"],
-    tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `DEFINITION`,
-    format: `mcq`,
-    timestamp: `35:52`,
-    question: `How is an angle mathematically defined?`,
-    options: [`As the slope of a line`, `As the ratio of an arc length on a circle to the radius of that circle`, `As the difference between two directions`, `As a measure of rotation in three dimensions`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [35:52], the lecturer defines an angle as "the ratio of an arc on the circle to the radius of that circle."`,
-    code: ``,
-    images: ["lec15_slide_63.png"],
-    tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `DEFINITION`,
-    format: `mcq`,
-    timestamp: `36:33`,
-    question: `What is a solid angle?`,
-    options: [`The ratio of a patch of area on a sphere to the squared radius`, `The angle between two solid objects`, `A three-dimensional wedge`, `An angle that doesn't change over time`],
-    answer: 0,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [36:33], the lecturer defines solid angle as "the ratio of this area to the squared radius."`,
-    code: ``,
-    images: ["lec15_slide_63.png"],
-    tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
 ]
 
@@ -633,7 +633,7 @@ export default function Lec15Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -674,19 +674,19 @@ export default function Lec15Part1Quiz() {
           <Zap size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 15: Radiometry — Part 1</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Radiance, irradiance, BRDFs, rendering equation basics</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-15-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-15-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec15/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec15/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           <a key={3} href={`${BASE}/lec15/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -710,7 +710,8 @@ export default function Lec15Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -845,7 +846,7 @@ export default function Lec15Part1Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-15-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-15-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

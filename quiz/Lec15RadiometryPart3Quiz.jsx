@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Zap } from 'lucide-react'
 
-// Source: lectures/cg-15-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 15: Radiometry — Part 3 · QQ65–QQ74 · 10 questions (10 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-15-lecture-quiz.md 15
+// Source: lectures/cg-15-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 15: Radiometry — Part 3 · QQ62–QQ74 · 13 questions (13 MCQ, 0 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-15-lecture-quiz.md.md 15
 
 const quizData = [
+  {
+    id: 62,
+    qid: `Q62`,
+    qtype: `MATHEMATICAL`,
+    format: `mcq`,
+    timestamp: `57:06`,
+    question: `How is irradiance calculated for a uniform area light source?`,
+    options: [`By taking the light's intensity and dividing by distance`, `By using the inverse square law`, `By multiplying the area of the light by its intensity`, `By integrating the incident radiance weighted by the cosine over the solid angle subtended by the source`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [57:06], the lecturer states, "If the source emits irradiance L, then we can say the irradiance at a point P arriving at a point P is the integral over the Hemisphere around that point of the incident radiance L at the point P in the direction Omega times cosine theta D Omega."`,
+    code: ``,
+    images: ["lec15_slide_63.png"],
+    tags: [],
+    source: `lectures/cg-15-lecture-quiz.md.md`,
+  },
+  {
+    id: 63,
+    qid: `Q63`,
+    qtype: `DEFINITION`,
+    format: `mcq`,
+    timestamp: `58:08`,
+    question: `What is projected solid angle?`,
+    options: [`The solid angle divided by π`, `The cosine-weighted solid angle`, `The solid angle without accounting for direction`, `The solid angle projected onto a flat surface`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [58:08], the lecturer defines, "Projected solid angle is just the cosine weighted solid angle."`,
+    code: ``,
+    images: ["lec15_slide_63.png"],
+    tags: [],
+    source: `lectures/cg-15-lecture-quiz.md.md`,
+  },
+  {
+    id: 64,
+    qid: `Q64`,
+    qtype: `EXAMPLE`,
+    format: `mcq`,
+    timestamp: `58:16`,
+    question: `What example of an area light does the lecturer use to demonstrate solid angle calculations?`,
+    options: [`A uniform disk source`, `A rectangular area light`, `A cylindrical light`, `A triangular light`],
+    answer: 0,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [58:16], the lecturer states, "As a concrete example we can consider a uniform disk source."`,
+    code: ``,
+    images: ["lec15_slide_63.png"],
+    tags: [],
+    source: `lectures/cg-15-lecture-quiz.md.md`,
+  },
   {
     id: 65,
     qid: `Q65`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 66,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 67,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 68,
@@ -73,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 69,
@@ -90,7 +141,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 70,
@@ -107,7 +158,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 71,
@@ -124,7 +175,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 72,
@@ -141,7 +192,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 73,
@@ -158,7 +209,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
   {
     id: 74,
@@ -176,7 +227,7 @@ const quizData = [
     code: ``,
     images: ["lec15_slide_63.png"],
     tags: [],
-    source: `lectures/cg-15-lecture-quiz.md`,
+    source: `lectures/cg-15-lecture-quiz.md.md`,
   },
 ]
 
@@ -260,7 +311,7 @@ export default function Lec15Part3Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (10 || 1) * 100)
+    const p = Math.round(s / (13 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -301,20 +352,20 @@ export default function Lec15Part3Quiz() {
           <Zap size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 15: Radiometry — Part 3</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Radiance, irradiance, BRDFs, rendering equation basics</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-15-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-15-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec15/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec15/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           <a key={3} href={`${BASE}/lec15/3`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ65–QQ74 · 10 questions (10 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ62–QQ74 · 13 questions (13 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>10</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>13</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~3min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~4min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -337,7 +388,7 @@ export default function Lec15Part3Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 10 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 13 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -382,12 +433,12 @@ export default function Lec15Part3Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/10</span>
+              <span>{qIdx+1}/13</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/10*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/13*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -472,7 +523,7 @@ export default function Lec15Part3Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-15-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-15-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
@@ -528,7 +579,7 @@ export default function Lec15Part3Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 10-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 13-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

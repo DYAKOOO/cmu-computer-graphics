@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, TrendingDown } from 'lucide-react'
 
-// Source: lectures/cg-19-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 19: Variance Reduction — Part 2 · QQ33–QQ58 · 26 questions (26 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-19-lecture-quiz.md 19
+// Source: lectures/cg-19-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 19: Variance Reduction — Part 2 · QQ30–QQ58 · 29 questions (29 MCQ, 0 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-19-lecture-quiz.md.md 19
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `PRACTICAL`,
+    format: `mcq`,
+    timestamp: `39:21`,
+    question: `Why can't we use the ideal importance sampling distribution in practice?`,
+    options: [`It would make the algorithm inconsistent`, `It would make the estimator biased`, `It would require too much computation`, `It creates a chicken-and-egg problem as we need to know the integral we're trying to compute`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer states at [39:21]: "So this would be a perfect important sampling strategy just sample proportional to the integrand itself as you might guess that's not something we could do in practice it's a little bit of a chicken and egg problem." To create this distribution, we would need to know the integral we're trying to compute.`,
+    code: ``,
+    images: ["lec19_slide_63.png"],
+    tags: [],
+    source: `lectures/cg-19-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `APPLICATION`,
+    format: `mcq`,
+    timestamp: `40:09`,
+    question: `What are the two important classes of local importance sampling strategies in rendering?`,
+    options: [`Sampling according to camera position and sampling according to object complexity`, `Sampling according to materials and sampling according to lights`, `Sampling according to image brightness and sampling according to scene geometry`, `Sampling according to color and sampling according to depth`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer states at [40:09]: "There's two important classes of local important sampling strategies we talked a little bit about last time one is too important sample according to materials... We can also do important sampling of lights."`,
+    code: ``,
+    images: ["lec19_slide_63.png"],
+    tags: [],
+    source: `lectures/cg-19-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `EXAMPLE`,
+    format: `mcq`,
+    timestamp: `40:45`,
+    question: `For what type of material should you only sample the reflection direction?`,
+    options: [`Perfect mirror`, `Diffuse material`, `Rough material`, `Translucent material`],
+    answer: 0,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer states at [40:45]: "An important special case kind of a limit case is a perfect mirror right if we if we know that the only light that gets reflected is along this reflection direction then we should really only sample that direction."`,
+    code: ``,
+    images: ["lec19_slide_63.png"],
+    tags: [],
+    source: `lectures/cg-19-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 34,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 35,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 36,
@@ -73,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 37,
@@ -90,7 +141,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 38,
@@ -107,7 +158,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 39,
@@ -124,7 +175,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 40,
@@ -142,7 +193,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 41,
@@ -159,7 +210,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 42,
@@ -176,7 +227,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 43,
@@ -193,7 +244,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 44,
@@ -210,7 +261,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 45,
@@ -227,7 +278,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 46,
@@ -244,7 +295,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 47,
@@ -261,7 +312,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 48,
@@ -278,7 +329,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 49,
@@ -295,7 +346,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 50,
@@ -312,7 +363,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 51,
@@ -329,7 +380,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 52,
@@ -346,7 +397,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 53,
@@ -363,7 +414,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 54,
@@ -380,7 +431,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 55,
@@ -397,7 +448,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 56,
@@ -414,7 +465,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 57,
@@ -431,7 +482,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
   {
     id: 58,
@@ -450,7 +501,7 @@ const quizData = [
     code: ``,
     images: ["lec19_slide_63.png"],
     tags: [],
-    source: `lectures/cg-19-lecture-quiz.md`,
+    source: `lectures/cg-19-lecture-quiz.md.md`,
   },
 ]
 
@@ -534,7 +585,7 @@ export default function Lec19Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (26 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -575,19 +626,19 @@ export default function Lec19Part2Quiz() {
           <TrendingDown size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 19: Variance Reduction — Part 2</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Stratified sampling, MIS, next-event estimation, photon mapping</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-19-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-19-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec19/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec19/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ58 · 26 questions (26 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ58 · 29 questions (29 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>26</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~8min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~9min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -610,7 +661,7 @@ export default function Lec19Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 26 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -655,12 +706,12 @@ export default function Lec19Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/26</span>
+              <span>{qIdx+1}/29</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/26*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/29*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -745,7 +796,7 @@ export default function Lec19Part2Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-19-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-19-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
@@ -801,7 +852,7 @@ export default function Lec19Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 26-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 29-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

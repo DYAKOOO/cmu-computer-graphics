@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Layers } from 'lucide-react'
 
-// Source: lectures/cg-08-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 8: Depth & Transparency — Part 2 · QQ33–QQ41 · 9 questions (9 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-08-lecture-quiz.md 8
+// Source: lectures/cg-08-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 8: Depth & Transparency — Part 2 · QQ30–QQ41 · 12 questions (12 MCQ, 0 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-08-lecture-quiz.md.md 8
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `CHALLENGE`,
+    format: `mcq`,
+    timestamp: `35:04`,
+    question: `What fundamental assumption does compositing with the "over" operator make that creates challenges for handling depth?`,
+    options: [`That primitives never intersect`, `That all primitives are the same color`, `That all primitives are fully opaque`, `That primitives are drawn in back-to-front order`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer explains at [35:57], "The key word here is the word over because we're compositing our colors using this over operation we're assuming that a is over b right that we're drawing things in the right order and we're not worrying about occlusion only if things are drawn in back to front order."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `PROBLEM`,
+    format: `mcq`,
+    timestamp: `36:59`,
+    question: `What makes sorting transparent triangles particularly difficult?`,
+    options: [`They have too many vertices`, `There may be no valid ordering when triangles intersect each other`, `They require special shaders`, `They don't work with the depth buffer`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer explains at [36:35], "We have to deal with these issues of primitives intersecting each other if we have two triangles intersecting each other there may be no ordering that gives us the right answer."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `TECHNIQUE`,
+    format: `mcq`,
+    timestamp: `38:05`,
+    question: `In the two-pass approach for rendering mixed opaque and transparent primitives, what happens to the depth buffer between passes?`,
+    options: [`It's inverted`, `It's cleared completely`, `It's replaced with a different buffer`, `It's preserved but updates are disabled`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer states at [38:46], "After we're done drawing all of our opaque triangles we're going to disable the depth buffer update we're no longer going to change the depth values."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -20,9 +71,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer states at [40:54], "By the way all of these positions are also in homogeneous coordinates."`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 34,
@@ -37,9 +88,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [42:17], "We perform clipping so we discard triangles that lie outside the unit cube if they're completely inside the unit cube we keep them and if they are partially contained in this cube well we have to do a little work to cut them up into smaller triangles."`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 35,
@@ -54,9 +105,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [43:44], "Basically look at our code that does the rasterization and say is there something that's getting recomputed over and over and over again for every sample that we could just pull out of that loop and compute once ahead of time."`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 36,
@@ -71,9 +122,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer states at [45:01], "We update the color buffer if the depth buffer test passed."`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 37,
@@ -88,9 +139,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [46:52], "The goal of these rasterization pipelines is to render scenes with extremely high complexity they need to render thousands and millions of triangles with complex transforms and shaders and you have really high resolution outputs right 10 megapixels with super sampling."`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 38,
@@ -105,9 +156,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer specifically mentions at [48:27], "It has hardware for doing bilinear filtering of textures it has hardware for clipping triangles it has hardware for doing blending operations like the over operation."`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 39,
@@ -122,9 +173,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer explains at [49:07], "Okay so although gpus have gone more and more toward programmability toward flexibility they still benefit from having some very specialized components."`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 40,
@@ -139,9 +190,9 @@ const quizData = [
     intuition: ``,
     explanation: `The lecturer states at [51:10], "And this is stuff that you really can't pull off very easily with rasterization you can pull various tricks to kind of get these effects but to get the true physically based appearance you really need this ray tracing technology."`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
   {
     id: 41,
@@ -157,9 +208,9 @@ const quizData = [
     explanation: `The lecturer outlines at [52:28], "Next time we're going to start talking about geometry and then we're going to move on to materials and lighting and photorealistic rendering and finally near the end of the course we'll talk about animation."
 -`,
     code: ``,
-    images: ["lec8_slide_58.png"],
+    images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md`,
+    source: `lectures/cg-08-lecture-quiz.md.md`,
   },
 ]
 
@@ -243,7 +294,7 @@ export default function Lec8Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (9 || 1) * 100)
+    const p = Math.round(s / (12 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -284,19 +335,19 @@ export default function Lec8Part2Quiz() {
           <Layers size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 8: Depth & Transparency — Part 2</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Z-buffer, painter's algorithm, alpha blending, order-independent</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-08-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-08-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec8/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec8/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ41 · 9 questions (9 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ41 · 12 questions (12 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>9</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>12</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~3min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~4min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -319,7 +370,7 @@ export default function Lec8Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 9 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 12 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -364,12 +415,12 @@ export default function Lec8Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/9</span>
+              <span>{qIdx+1}/12</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/9*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/12*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -454,7 +505,7 @@ export default function Lec8Part2Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-08-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-08-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
@@ -510,7 +561,7 @@ export default function Lec8Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 9-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 12-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

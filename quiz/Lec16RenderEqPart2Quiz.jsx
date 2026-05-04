@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Globe } from 'lucide-react'
 
-// Source: lectures/cg-16-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 16: The Rendering Equation — Part 2 · QQ33–QQ63 · 31 questions (31 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-16-lecture-quiz.md 16
+// Source: lectures/cg-16-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 16: The Rendering Equation — Part 2 · QQ30–QQ61 · 32 questions (32 MCQ, 0 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-16-lecture-quiz.md.md 16
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `EXAMPLE`,
+    format: `mcq`,
+    timestamp: `23:13`,
+    question: `What mathematical simplification is possible when calculating the outgoing radiance for a Lambertian reflection?`,
+    options: [`The integral reduces to a simple multiplication`, `The scattering function can be pulled outside the integral because it's constant`, `The integral can be evaluated using the Dirac delta function`, `The cosine term can be eliminated completely`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [23:13], the lecturer explains: "Because a lambertian reflection is uniform because it has the same amount of scattering in every direction this function f R doesn't depend on Omega I or Omega Oh so we can just pull it out of the integral."`,
+    code: ``,
+    images: ["lec16_slide_56.png"],
+    tags: [],
+    source: `lectures/cg-16-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `DEFINITION`,
+    format: `mcq`,
+    timestamp: `24:11`,
+    question: `In the context of Lambertian reflection, what does the term "albedo" refer to?`,
+    options: [`The roughness of the material surface`, `The brightness factor or reflection coefficient of the surface`, `The angular distribution of reflected light`, `The rate at which energy is converted to heat`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [24:11], the lecturer states: "There's a common name for the brightness factor which is the albedo."`,
+    code: ``,
+    images: ["lec16_slide_56.png"],
+    tags: [],
+    source: `lectures/cg-16-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `GEOMETRY`,
+    format: `mcq`,
+    timestamp: `24:57`,
+    question: `What geometric relationship characterizes perfect specular reflection?`,
+    options: [`The outgoing angle is always perpendicular to the incoming angle`, `The outgoing angle equals twice the incoming angle`, `The sum of incoming and outgoing angles equals 90 degrees`, `The incoming and outgoing angles with the normal are equal`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [24:57], the lecturer states: "For a specular reflection in this side view theta I and theta oh the incoming and outgoing angle are going to be the same we want them to make the same angle with a normal."`,
+    code: ``,
+    images: ["lec16_slide_56.png"],
+    tags: [],
+    source: `lectures/cg-16-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 34,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 35,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 36,
@@ -74,7 +125,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 37,
@@ -91,7 +142,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 38,
@@ -108,7 +159,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 39,
@@ -125,7 +176,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 40,
@@ -142,7 +193,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 41,
@@ -159,7 +210,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 42,
@@ -176,7 +227,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 43,
@@ -193,7 +244,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 44,
@@ -210,7 +261,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 45,
@@ -227,7 +278,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 46,
@@ -244,7 +295,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 47,
@@ -261,7 +312,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 48,
@@ -278,7 +329,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 49,
@@ -295,7 +346,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_56.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 50,
@@ -312,7 +363,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_58.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 51,
@@ -329,7 +380,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_58.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 52,
@@ -346,7 +397,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_58.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 53,
@@ -364,7 +415,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_58.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 54,
@@ -381,7 +432,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_58.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 55,
@@ -398,7 +449,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_58.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 56,
@@ -415,7 +466,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_58.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 57,
@@ -432,7 +483,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_58.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 58,
@@ -449,7 +500,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_58.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 59,
@@ -466,7 +517,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_58.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 60,
@@ -483,7 +534,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_58.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
   {
     id: 61,
@@ -500,42 +551,7 @@ const quizData = [
     code: ``,
     images: ["lec16_slide_58.png"],
     tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
-  },
-  {
-    id: 62,
-    qid: `Q62`,
-    qtype: `APPLICATION`,
-    format: `mcq`,
-    timestamp: `34:01`,
-    question: `Which real-world objects most clearly demonstrate the need for subsurface scattering models?`,
-    options: [`Polished metals and mirrors`, `Clear glass and water`, `Matte painted walls`, `Jade, skin, and leaves`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [34:01] and surrounding timestamps, the lecturer specifically mentions jade, skin (particularly ears), and leaves as examples of materials that exhibit subsurface scattering where light enters at one point and exits at another.`,
-    code: ``,
-    images: ["lec16_slide_58.png"],
-    tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
-  },
-  {
-    id: 63,
-    qid: `Q63`,
-    qtype: `CONCEPTUAL`,
-    format: `mcq`,
-    timestamp: `17:13`,
-    question: `According to physical principles discussed in the lecture, what happens to light energy that is absorbed by a material?`,
-    options: [`It is re-emitted at different wavelengths`, `It is converted into quantum states`, `It is stored indefinitely in the material`, `It is converted to heat energy`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [17:13] and elaborated around [21:21], the lecturer explains that absorbed light energy is typically converted to heat, which manifests as increased kinetic energy of particles at the atomic scale.
--`,
-    code: ``,
-    images: ["lec16_slide_58.png"],
-    tags: [],
-    source: `lectures/cg-16-lecture-quiz.md`,
+    source: `lectures/cg-16-lecture-quiz.md.md`,
   },
 ]
 
@@ -619,7 +635,7 @@ export default function Lec16Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (31 || 1) * 100)
+    const p = Math.round(s / (32 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -660,17 +676,18 @@ export default function Lec16Part2Quiz() {
           <Globe size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 16: The Rendering Equation — Part 2</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Light transport, global illumination, Monte Carlo basics</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-16-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-16-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec16/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec16/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
+          <a key={3} href={`${BASE}/lec16/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ63 · 31 questions (31 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ61 · 32 questions (32 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>31</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
@@ -695,7 +712,7 @@ export default function Lec16Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 31 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -740,12 +757,12 @@ export default function Lec16Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/31</span>
+              <span>{qIdx+1}/32</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/31*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/32*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -830,7 +847,7 @@ export default function Lec16Part2Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-16-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-16-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
@@ -886,7 +903,7 @@ export default function Lec16Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 31-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 32-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

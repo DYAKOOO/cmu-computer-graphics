@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Database } from 'lucide-react'
 
-// Source: lectures/cg-13-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 13: Spatial Data Structures — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-13-lecture-quiz.md 13
+// Source: lectures/cg-13-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 13: Spatial Data Structures — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-13-lecture-quiz.md.md 13
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture motivates all spatial data structures with a single problem. What is the "first hit" problem, and why does brute-force O(n) ray-triangle intersection not scale to real scenes?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `The first-hit problem: given n primitives and a ray, find the closest intersection point. Brute-force is O(n) per ray. Real scenes have millions of triangles, millions of pixels, and multiple bounces per pixel — total cost is O(n × pixels × bounces) which is completely infeasible. Spatial data structures reduce per-ray cost to O(log n) by pruning large parts of the scene without testing individual primitives.`,
+    intuition: `The first-hit problem is the algorithmic bottleneck of ray tracing. Every data structure in this lecture is an answer to "how do we avoid testing all n triangles?"`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-13-lecture-quiz.md.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture evaluates: simple bounding box → BVH → KD-tree → uniform grid. What failure of a single bounding box motivates the hierarchical BVH?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `A single bounding box wrapping all geometry provides only one binary decision per ray: does the ray intersect the box? If yes, we must still test all n primitives inside. If the ray hits the scene at all (the common case), no work is saved. A BVH recursively subdivides: a ray that misses a node's bounding box prunes the entire subtree. This turns the worst-case O(n) into O(log n) for well-balanced scenes.`,
+    intuition: `One level of hierarchy saves almost nothing. The speedup comes from many levels of hierarchy compounding.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-13-lecture-quiz.md.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these spatial acceleration structures in the order lecture 13 introduces them: KD-tree / uniform grid / bounding volume hierarchy (BVH) / single bounding box (no hierarchy)`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Single bounding box → Bounding volume hierarchy (BVH) → KD-tree → Uniform grid`,
+    intuition: `The lecture starts with the simplest structure and adds complexity: object-space splitting (BVH) → space-splitting (KD-tree) → regular space subdivision (grid).`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-13-lecture-quiz.md.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_01.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 2,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_33.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 3,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_33.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 4,
@@ -73,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_33.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 5,
@@ -90,7 +141,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_33.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 6,
@@ -107,7 +158,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_47.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 7,
@@ -124,7 +175,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_47.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 8,
@@ -141,7 +192,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_47.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 9,
@@ -158,7 +209,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_47.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 10,
@@ -175,7 +226,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_47.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 11,
@@ -192,7 +243,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_47.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 12,
@@ -209,7 +260,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_47.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 13,
@@ -226,7 +277,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_47.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 14,
@@ -244,7 +295,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_47.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 15,
@@ -261,7 +312,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 16,
@@ -278,7 +329,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 17,
@@ -295,7 +346,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 18,
@@ -312,7 +363,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 19,
@@ -329,7 +380,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 20,
@@ -346,7 +397,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 21,
@@ -363,7 +414,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 22,
@@ -380,7 +431,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 23,
@@ -397,7 +448,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 24,
@@ -414,7 +465,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 25,
@@ -431,7 +482,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 26,
@@ -448,7 +499,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 27,
@@ -466,7 +517,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 28,
@@ -483,7 +534,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
   {
     id: 29,
@@ -500,58 +551,7 @@ const quizData = [
     code: ``,
     images: ["lec13_slide_48.png"],
     tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
-  },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `MCQ`,
-    format: `mcq`,
-    timestamp: `39:26`,
-    question: `When building a BVH, what is the problem with partitioning primitives into nodes with equal numbers?`,
-    options: [`It requires too much computation`, `It makes the tree too shallow`, `It creates too many leaf nodes`, `It can create bounding boxes with lots of empty space`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer states at [39:26]: "If we if we say we want to partition the child into nodes with an equal number of primitives then one of these nodes is huge even though mostly it just contains empty space so most of the time that we're hitting the node on the Left we're actually not going to hit a primitive."`,
-    code: ``,
-    images: ["lec13_slide_48.png"],
-    tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `MCQ`,
-    format: `mcq`,
-    timestamp: `40:10`,
-    question: `What are the two main characteristics of a good BVH partitioning?`,
-    options: [`Many primitives per leaf node and few interior nodes`, `Small bounding boxes with minimal wasted space and minimal overlap between children`, `Balanced tree and deep hierarchy`, `Cubic boxes and evenly distributed primitives`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer summarizes at [40:10]: "That's that's pretty good intuition that we want to we want small bounding boxes without a lot of wasted space and also we want to minimize overlap between children."`,
-    code: ``,
-    images: ["lec13_slide_48.png"],
-    tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `MCQ`,
-    format: `mcq`,
-    timestamp: `42:29`,
-    question: `What is the general cost model for traversing an interior node in a BVH?`,
-    options: [`Sum of costs of all enclosed primitives`, `Fixed cost per node`, `Logarithm of number of enclosed primitives`, `Cost of traversing node + probability of hitting left child * cost of left child + probability of hitting right child * cost of right child`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer formulates at [42:29]: "We can model the cost as C equals C trav the cost of traversing an interior node so just the cost of doing the bounding box test for that one node plus PA times CA meaning the probability that we hit the left child times the cost of traversing the whole left child plus PB times CB."`,
-    code: ``,
-    images: ["lec13_slide_48.png"],
-    tags: [],
-    source: `lectures/cg-13-lecture-quiz.md`,
+    source: `lectures/cg-13-lecture-quiz.md.md`,
   },
 ]
 
@@ -635,7 +635,7 @@ export default function Lec13Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -676,18 +676,18 @@ export default function Lec13Part1Quiz() {
           <Database size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 13: Spatial Data Structures — Part 1</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>BVH, KD-trees, octrees, uniform grids, spatial hashing</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-13-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-13-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec13/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec13/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -711,7 +711,8 @@ export default function Lec13Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -846,7 +847,7 @@ export default function Lec13Part1Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-13-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-13-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation

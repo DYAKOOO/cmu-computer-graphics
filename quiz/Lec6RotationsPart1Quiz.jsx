@@ -2,11 +2,62 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, RotateCw } from 'lucide-react'
 
-// Source: lectures/cg-06-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 6: 3D Rotations — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-06-lecture-quiz.md 6
+// Source: lectures/cg-06-lecture-quiz.md.md  (symlinked → Logseq pages)
+// Lecture 6: 3D Rotations — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-06-lecture-quiz.md.md 6
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture opens with "what is a rotation, intuitively?" rather than starting with matrix formulas. Why does defining transformations by their invariants (not formulas) matter for understanding everything that follows?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Starting from invariants (length preserved, orientation preserved, origin fixed) gives a conceptual test that any representation must pass. This means each subsequent representation — Euler angles, rotation matrices, quaternions — can be evaluated by whether it captures all three invariants and whether it's convenient. Without this framing, the parade of formulas has no organizing principle.`,
+    intuition: `"What does it preserve?" is the master question. Every representation is just a different answer to that question.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-06-lecture-quiz.md.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture covers three major representation families for 3D rotations: Euler angles/rotation matrices, complex numbers → quaternions, and exponential maps. What specific failure of each motivates the next?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Euler angles → rotation matrices work but can suffer gimbal lock (two axes align, losing a DOF). Rotation matrices are 9 numbers for 3 DOF (overconstrained, orthogonality must be enforced). Complex numbers generalize to quaternions: a 4-number representation that avoids gimbal lock and is closed under composition. Exponential maps encode a rotation as a 3-vector (axis × half-angle), useful for interpolation and optimization.`,
+    intuition: `Each step fixes the previous representation's weakest point at the cost of more abstraction.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-06-lecture-quiz.md.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these rotation topics in the order the lecture introduces them, from first to last: quaternion rotation formula / 3D rotation matrices and Euler angles / 2D rotation matrix derived from first principles / complex numbers as 90° rotations`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `2D rotation matrix derived from first principles → 3D rotation matrices and Euler angles → complex numbers as 90° rotations → quaternion rotation formula`,
+    intuition: `The lecture builds from the simplest case (2D) outward, using complex numbers as a bridge to quaternions.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-06-lecture-quiz.md.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -22,7 +73,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_02.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 2,
@@ -39,7 +90,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_02.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 3,
@@ -56,7 +107,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_02.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 4,
@@ -73,7 +124,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_03.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 5,
@@ -90,7 +141,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_03.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 6,
@@ -107,7 +158,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_03.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 7,
@@ -124,7 +175,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_04.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 8,
@@ -141,7 +192,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_04.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 9,
@@ -158,7 +209,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_05.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 10,
@@ -175,7 +226,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_05.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 11,
@@ -192,7 +243,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_06.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 12,
@@ -209,7 +260,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_06.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 13,
@@ -226,7 +277,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_07.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 14,
@@ -243,7 +294,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 15,
@@ -260,7 +311,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 16,
@@ -277,7 +328,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 17,
@@ -294,7 +345,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 18,
@@ -311,7 +362,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 19,
@@ -328,7 +379,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 20,
@@ -345,7 +396,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 21,
@@ -362,7 +413,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 22,
@@ -379,7 +430,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 23,
@@ -396,7 +447,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 24,
@@ -413,7 +464,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 25,
@@ -430,7 +481,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 26,
@@ -447,7 +498,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 27,
@@ -464,7 +515,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 28,
@@ -481,7 +532,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
   {
     id: 29,
@@ -498,58 +549,7 @@ const quizData = [
     code: ``,
     images: ["lec6_slide_32.png"],
     tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
-  },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `CONCEPTUAL`,
-    format: `mcq`,
-    timestamp: `34:04`,
-    question: `How should e^(iθ) be interpreted according to the lecturer?`,
-    options: [`As a rotation matrix in disguise`, `As a power series expansion`, `As a complex exponential function`, `As the point on the unit circle at angle θ from the x-axis`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer advises at [34:04]: "Whenever you see e to the i theta don't think about exponentials don't think about some power series you can just think about this as please give me the point on the circle theta away from the x-axis."`,
-    code: ``,
-    images: ["lec6_slide_32.png"],
-    tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `COMPARISON`,
-    format: `mcq`,
-    timestamp: `38:20`,
-    question: `What advantage does the lecturer highlight when comparing complex number representation with matrices for 2D rotations?`,
-    options: [`Complex numbers lead to simpler expressions without trig identities`, `Complex numbers produce more accurate results`, `Complex numbers are computationally faster`, `Complex numbers work in higher dimensions`],
-    answer: 0,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [38:00], the lecturer states: "This was easier to do on pen and paper it's somehow easier conceptually there's no trig identities involved it's a much more compact expression."`,
-    code: ``,
-    images: ["lec6_slide_32.png"],
-    tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `CONCEPTUAL`,
-    format: `mcq`,
-    timestamp: `39:02`,
-    question: `What is the lecturer's key principle regarding different mathematical representations?`,
-    options: [`Matrices are generally better than other representations`, `Always use the simplest representation`, `Complex numbers should always be used for 2D problems`, `Identify which representation will help simplify and solve the problem at hand`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [39:02], the lecturer emphasizes: "The point is to be able to identify at any given moment which representation should you use which representation is going to really help you simplify and solve the problem at hand."`,
-    code: ``,
-    images: ["lec6_slide_32.png"],
-    tags: [],
-    source: `lectures/cg-06-lecture-quiz.md`,
+    source: `lectures/cg-06-lecture-quiz.md.md`,
   },
 ]
 
@@ -633,7 +633,7 @@ export default function Lec6Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -674,18 +674,18 @@ export default function Lec6Part1Quiz() {
           <RotateCw size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 6: 3D Rotations — Part 1</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Euler angles, rotation matrices, quaternions, exponential maps</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-06-lecture-quiz.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-06-lecture-quiz.md.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec6/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec6/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -709,7 +709,8 @@ export default function Lec6Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -844,7 +845,7 @@ export default function Lec6Part1Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-06-lecture-quiz.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-06-lecture-quiz.md.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
