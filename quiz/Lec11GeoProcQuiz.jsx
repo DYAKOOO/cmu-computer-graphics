@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Layers } from 'lucide-react'
 
 // Source: lectures/cg-11-lecture-quiz.md.md  (symlinked → Logseq pages)
-// Lecture 11: Geometry Processing · QQ1–QQ27 · 27 questions (27 MCQ, 0 reveal)
+// Lecture 11: Geometry Processing · QQF1–QQ27 · 30 questions (27 MCQ, 3 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-11-lecture-quiz.md.md 11
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Lecture 11 frames geometry processing as "digital signal processing applied to geometry." What does this analogy concretely mean, and why is it useful beyond just being a metaphor?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `In 1D signal processing: upsampling (add samples), downsampling (remove samples), filtering (blur/sharpen). In geometry: subdivision (add vertices/faces = upsample), simplification (remove faces = downsample), Laplacian smoothing (blur high-frequency detail = low-pass filter). The analogy is mathematically precise — mesh Laplacian is the discrete analog of the 1D Laplace operator, and the same theory (Fourier analysis, aliasing, Nyquist) applies to geometry. This lets you import results from a century of signal processing directly into geometry processing algorithms.`,
+    intuition: `A mesh is a 2D signal sampled on an irregular grid. Everything you know about processing 1D audio signals applies — you just need the right "Fourier transform" for the mesh.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-11-lecture-quiz.md.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture covers Laplacian smoothing, then subdivision (Catmull-Clark), then simplification. Why is Laplacian smoothing discussed before the other two, even though subdivision and simplification seem more fundamental?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Laplacian smoothing introduces the key operator — the discrete Laplacian — that underlies all of geometry processing. Subdivision uses a weighted-Laplacian mask to compute new vertex positions (Catmull-Clark rule = average of neighbors, which is Laplacian-based). Simplification uses edge collapse, but the error metric (quadric error) measures how much removing an edge changes the local curvature — again Laplacian-related. Understanding the Laplacian first makes subdivision and simplification both instances of the same underlying principle rather than ad-hoc algorithms.`,
+    intuition: `The Laplacian is the geometry processing operator. All other operations are specializations of it.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-11-lecture-quiz.md.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these geometry processing tasks in the order lecture 11 introduces them: mesh simplification via edge collapse / Laplacian smoothing / Catmull-Clark subdivision / parameterization (UV unwrapping)`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Laplacian smoothing → Catmull-Clark subdivision → Mesh simplification via edge collapse → Parameterization (UV unwrapping)`,
+    intuition: `Introduce the core operator (Laplacian) → apply it to add resolution (subdivision) → remove resolution (simplification) → flatten the surface (parameterization).`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-11-lecture-quiz.md.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -592,14 +643,14 @@ export default function Lec11Quiz() {
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 11: Geometry Processing</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Mesh smoothing, subdivision, remeshing, simplification</p>
           <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-11-lecture-quiz.md.md</p>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ27 · 27 questions (27 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ27 · 30 questions (27 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>27</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~9min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -623,6 +674,7 @@ export default function Lec11Quiz() {
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
           <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 27 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -667,12 +719,12 @@ export default function Lec11Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/27</span>
+              <span>{qIdx+1}/30</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/27*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/30*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -813,7 +865,7 @@ export default function Lec11Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 27-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 30-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

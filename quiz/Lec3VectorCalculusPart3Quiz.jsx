@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Sigma } from 'lucide-react'
 
 // Source: lectures/cg-03-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 3: Vector Calculus — Part 3 · QQ65–QQ70 · 6 questions (6 MCQ, 0 reveal)
+// Lecture 3: Vector Calculus — Part 3 · QQ62–QQ70 · 9 questions (9 MCQ, 0 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-03-lecture-quiz.md 3
 
 const quizData = [
+  {
+    id: 62,
+    qid: `Q62`,
+    qtype: `FORMULA`,
+    format: `mcq`,
+    timestamp: `1:09:41`,
+    question: `How is the divergence written in notation?`,
+    options: [`div X`, `∇ · X`, `∇² X`, `∇ × X`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer notes at [1:09:41]: "We often write the divergence as nabla dot x."`,
+    code: ``,
+    images: ["image_1771989058728_0.png"],
+    tags: [],
+    source: `lectures/cg-03-lecture-quiz.md`,
+  },
+  {
+    id: 63,
+    qid: `Q63`,
+    qtype: `FORMULA`,
+    format: `mcq`,
+    timestamp: `1:10:18`,
+    question: `What is the coordinate formula for the divergence of a vector field?`,
+    options: [`The cross product of the gradient with the vector field`, `The sum of the partial derivatives of each component with respect to its corresponding coordinate`, `The determinant of the vector field's Jacobian`, `The trace of the vector field's gradient`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer describes at [1:10:18]: "We sum over all the coordinates each partial derivative being applied to each coordinate function. We take the derivative of the first coordinate function along the first direction, add that to the derivative of the second coordinate function along the second direction, and so on."`,
+    code: ``,
+    images: ["image_1771989089559_0.png"],
+    tags: ["Divergence"],
+    source: `lectures/cg-03-lecture-quiz.md`,
+  },
+  {
+    id: 64,
+    qid: `Q64`,
+    qtype: `FORMULA`,
+    format: `mcq`,
+    timestamp: `1:12:22`,
+    question: `How is the curl written in notation?`,
+    options: [`∇ · X`, `curl X`, `∇ × X`, `∇² X`],
+    answer: 2,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer states at [1:12:22]: "We can write curl also with nabla. We can write it as nabla cross x with a cross product."`,
+    code: ``,
+    images: ["image_1771989199368_0.png"],
+    tags: [],
+    source: `lectures/cg-03-lecture-quiz.md`,
+  },
   {
     id: 65,
     qid: `Q65`,
@@ -193,7 +244,7 @@ export default function Lec3Part3Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (6 || 1) * 100)
+    const p = Math.round(s / (9 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -240,14 +291,14 @@ export default function Lec3Part3Quiz() {
           <a key={2} href={`${BASE}/lec3/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           <a key={3} href={`${BASE}/lec3/3`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ65–QQ70 · 6 questions (6 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ62–QQ70 · 9 questions (9 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>6</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>9</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~2min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~3min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -270,7 +321,7 @@ export default function Lec3Part3Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 6 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 9 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -315,12 +366,12 @@ export default function Lec3Part3Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/6</span>
+              <span>{qIdx+1}/9</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/6*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/9*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -461,7 +512,7 @@ export default function Lec3Part3Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 6-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 9-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

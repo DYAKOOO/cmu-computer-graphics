@@ -3,10 +3,63 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, TrendingDown } from 'lucide-react'
 
 // Source: lectures/cg-22-lecture-quiz.md.md  (symlinked → Logseq pages)
-// Lecture 22: Introduction to Optimization — Part 2 · QQ33–QQ62 · 30 questions (30 MCQ, 0 reveal)
+// Lecture 22: Introduction to Optimization — Part 2 · QQ30–QQ61 · 32 questions (32 MCQ, 0 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-22-lecture-quiz.md.md 22
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `SUFFICIENT`,
+    format: `mcq`,
+    timestamp: `40:49`,
+    question: `What does the extreme value theorem require to guarantee existence of a minimizer?`,
+    options: [`A coercive objective function with no constraints`, `A continuous objective function and a compact domain`, `A convex objective function and convex constraints`, `A differentiable objective function with bounded derivatives`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [40:49], the professor states: "We want to have a continuous objective an objective that doesn't jump in value as we change X by a small amount and a compact domain meaning the set of feasible points is a closed and bounded set closed and bounded subset of RN."`,
+    code: ``,
+    images: ["image_1777604639814_0.png", "lec22_slide_09.png"],
+    tags: [],
+    source: `lectures/cg-22-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `DEFINITION`,
+    format: `mcq`,
+    timestamp: `41:21`,
+    question: `What does "coercivity" mean for an objective function?`,
+    options: [`The function has unique minima`, `The function approaches infinity as variables get farther from the origin`, `The function is bounded from below`, `The function is continuously differentiable`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [41:21], the professor explains: "Coercivity means that the objective function loosely speaking goes to positive infinity as we travel far far away in any direction right... coercivity is kind of saying there's gonna be a global minimum because if you allow yourself to get too big too far from the origin things are just gonna keep going up."
+
+e(x) is not because its not going to positive infinity.`,
+    code: ``,
+    images: ["image_1777604881232_0.png", "lec22_slide_12.png"],
+    tags: [],
+    source: `lectures/cg-22-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `TESTING`,
+    format: `mcq`,
+    timestamp: `43:22`,
+    question: `According to the professor, which is typically harder to verify?`,
+    options: [`Whether a point is a global minimum`, `Whether a function is convex`, `Whether a function is coercive`, `Whether a point is a local minimum`],
+    answer: 0,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [43:22], the professor states: "In general I'll actually say that checking if a point is a global minimizer is typically hard if I just hand you a point X and I say I claim this is the global minimum and you want to go check is it or isn't it the global minimum do I believe that this is actually the optimal solution that's usually hard actually checking that a given point is the global minimum maybe as hard as solving the original problem."`,
+    code: ``,
+    images: ["image_1777604944073_0.png", "lec22_slide_16.png"],
+    tags: [],
+    source: `lectures/cg-22-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -507,24 +560,6 @@ The goal is not to set all the variables in the robot arm yourself ,  therefore 
     tags: ["Objective"],
     source: `lectures/cg-22-lecture-quiz.md.md`,
   },
-  {
-    id: 62,
-    qid: `Q62`,
-    qtype: `NEXT`,
-    format: `mcq`,
-    timestamp: `1:35:21`,
-    question: `What topic did the professor preview for the next lecture?`,
-    options: [`Monte Carlo methods`, `Character animation techniques`, `Physically-based rendering`, `Partial differential equations`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [1:35:21], the professor previews: "Next time we're gonna go back to our discussion of differential equations but this time talk about partial differential equations talking about things that have derivatives in both space and time."
--`,
-    code: ``,
-    images: ["lec22_slide_02.png"],
-    tags: [],
-    source: `lectures/cg-22-lecture-quiz.md.md`,
-  },
 ]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
@@ -607,7 +642,7 @@ export default function Lec22Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (30 || 1) * 100)
+    const p = Math.round(s / (32 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -652,13 +687,14 @@ export default function Lec22Part2Quiz() {
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec22/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec22/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
+          <a key={3} href={`${BASE}/lec22/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ62 · 30 questions (30 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ61 · 32 questions (32 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>30</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
@@ -683,7 +719,7 @@ export default function Lec22Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 30 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -728,12 +764,12 @@ export default function Lec22Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/30</span>
+              <span>{qIdx+1}/32</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/30*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/32*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -874,7 +910,7 @@ export default function Lec22Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 30-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 32-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

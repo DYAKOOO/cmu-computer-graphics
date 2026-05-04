@@ -14,3 +14,7 @@ node_modules
 
 # Next.js build cache
 .next/
+
+# Lecture PDFs (not needed for web app, too large)
+lecture_pdfs/
+lecturesvideo_slides/

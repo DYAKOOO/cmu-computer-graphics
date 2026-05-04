@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Search } from 'lucide-react'
 
 // Source: lectures/cg-12-lecture-quiz.md.md  (symlinked → Logseq pages)
-// Lecture 12: Geometric Queries — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
+// Lecture 12: Geometric Queries — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-12-lecture-quiz.md.md 12
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Lecture 12 is titled "Geometric Queries." What are the three core query types it covers, and why do each appear repeatedly across different graphics algorithms?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `(1) Ray-triangle intersection: used in ray tracing, picking (click-select in a scene), shadow testing, and collision detection. (2) Closest-point queries: used in collision detection (contact response), mesh-to-mesh distance (for animation retargeting), and point-cloud processing. (3) Inside/outside tests: used in CSG Boolean operations, sampling procedures, and physics collision detection. These three are the atomic building blocks that spatial data structures (lecture 13) accelerate — nearly every geometric algorithm reduces to many instances of one of these queries.`,
+    intuition: `Ray cast = "what's in this direction?" Closest point = "how near is this surface?" Inside/outside = "am I contained?" These three questions cover most of geometric computation.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-12-lecture-quiz.md.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `After ray-triangle intersection, the lecture introduces barycentric coordinates as a unified formulation. What advantage does solving for (u, v, t) simultaneously give over the "intersect plane, then test inside triangle" approach?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `The two-step approach requires: (1) find where the ray hits the plane (solve one linear equation for t), then (2) run a separate point-in-triangle test (check sign of three edge cross products). The barycentric formulation combines both: solve for u, v, t in one 3×3 linear system. u≥0, v≥0, u+v≤1 guarantees the point is inside the triangle; t gives the distance. One matrix solve instead of two tests. The (u, v) values are also free for attribute interpolation (texture, normals), so the formulation produces everything needed for shading at once.`,
+    intuition: `Two separate tests → one solve that gives intersection, inside/outside, and interpolation weights simultaneously.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-12-lecture-quiz.md.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these geometric query topics in the order lecture 12 introduces them: BVH (bounding volume hierarchy) preview / inside-outside test / closest-point query on a mesh / ray-triangle intersection`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Ray-triangle intersection → Closest-point query → Inside-outside test → BVH preview`,
+    intuition: `Each query type builds from the previous: hit testing → distance testing → containment testing → acceleration structure that speeds up all three.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-12-lecture-quiz.md.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -500,57 +551,6 @@ const quizData = [
     tags: [],
     source: `lectures/cg-12-lecture-quiz.md.md`,
   },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `EQUATION`,
-    format: `mcq`,
-    timestamp: `38:15`,
-    question: `What is the implicit equation for a unit sphere?`,
-    options: [`|x| - 1 = 0`, `|x|² - 1 = 0`, `|x|² = 1`, `|x| = 1`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [38:22] the lecturer states: "The function f is just f of X is the norm of x squared minus 1 any point that has unit norm will evaluate to 0 those points are on the sphere."`,
-    code: ``,
-    images: ["lec12_slide_20.png"],
-    tags: [],
-    source: `lectures/cg-12-lecture-quiz.md.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `MCQ`,
-    format: `mcq`,
-    timestamp: `39:32`,
-    question: `What type of equation results from finding the intersection of a ray with a sphere?`,
-    options: [`Cubic equation`, `Quadratic equation`, `Linear equation`, `Exponential equation`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [39:32] the lecturer states: "If we call norm of d squared a to OD is B and norm of o squared minus one is C then we have a quadratic equation for T we just have a T squared plus BT plus C is equal to zero."`,
-    code: ``,
-    images: ["lec12_slide_20.png"],
-    tags: [],
-    source: `lectures/cg-12-lecture-quiz.md.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `CASES`,
-    format: `mcq`,
-    timestamp: `40:47`,
-    question: `When considering ray-sphere intersection, what is the geometric meaning of having two solutions to the quadratic equation?`,
-    options: [`The ray pierces the sphere twice (entering and exiting)`, `The ray completely misses the sphere`, `There's an error in the calculation`, `The ray is tangent to the sphere`],
-    answer: 0,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [41:29] the lecturer explains: "In the case that we show here on the bottom right it's pretty clear that the Ray pierces the sphere twice it goes into the sphere and then back out of the sphere ah those must be the two solutions to the quadratic equation."`,
-    code: ``,
-    images: ["lec12_slide_20.png"],
-    tags: [],
-    source: `lectures/cg-12-lecture-quiz.md.md`,
-  },
 ]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
@@ -633,7 +633,7 @@ export default function Lec12Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -679,13 +679,13 @@ export default function Lec12Part1Quiz() {
             <a key={1} href={`${BASE}/lec12/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec12/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -709,7 +709,8 @@ export default function Lec12Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}

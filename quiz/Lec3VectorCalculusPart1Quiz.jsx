@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Sigma } from 'lucide-react'
 
 // Source: lectures/cg-03-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 3: Vector Calculus — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
+// Lecture 3: Vector Calculus — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-03-lecture-quiz.md 3
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture opens with "why is vector calculus important for computer graphics?" What does it add beyond linear algebra (lecture 2) that graphics specifically needs?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Linear algebra describes static relationships — a vector, a transformation, a linear map. Vector calculus describes how quantities change over space and time. The gradient tells you which direction a scalar field increases fastest (used in optimization and shading). The Laplacian measures how a value differs from its local average (used in mesh smoothing, heat diffusion, and fluid simulation). The divergence and curl describe the flow and rotation of vector fields (used in fluid simulation and geometry processing). Modern graphics algorithms for cloth, fluids, geometry processing, and rendering are all formulated as PDEs — which require vector calculus.`,
+    intuition: `Linear algebra is the language of states; vector calculus is the language of how states change.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-03-lecture-quiz.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture introduces the gradient, divergence, and curl as three distinct differential operators. What different geometric property of a field does each measure, and which one appears most often in geometry processing?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Gradient (∇f): direction and rate of steepest increase of a scalar field — a vector at each point. Divergence (∇·F): how much a vector field spreads out or converges at each point — a scalar measuring "source" or "sink." Curl (∇×F): how much a vector field rotates at each point — a vector measuring local angular velocity. The Laplacian Δf = ∇·∇f = divergence of gradient appears most often in geometry processing because Laplacian smoothing, the heat equation, and the Poisson equation for surface reconstruction all use it.`,
+    intuition: `Gradient = "which way is up?" Divergence = "does it spread or contract?" Curl = "does it spin?" Laplacian = "is it different from its neighbors?"`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-03-lecture-quiz.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these vector calculus topics in the order lecture 3 introduces them: Hessian matrix (second-order partial derivatives) / divergence and curl of vector fields / Laplacian operator / gradient of a scalar field`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Gradient of a scalar field → Divergence and curl of vector fields → Laplacian operator → Hessian matrix`,
+    intuition: `The lecture follows the natural hierarchy: first-order scalar → first-order vector → scalar from diverging a gradient → matrix of all second partial derivatives.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-03-lecture-quiz.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -507,57 +558,6 @@ const quizData = [
     tags: ["Operator", "Differential", "optimization", "Numericalization"],
     source: `lectures/cg-03-lecture-quiz.md`,
   },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `DEFINITION`,
-    format: `mcq`,
-    timestamp: `35:30`,
-    question: `What is the most basic definition of a derivative according to the lecture?`,
-    options: [`The limit of a difference quotient`, `The change in a function with respect to time`, `The second-order approximation of a function`, `The slope or rise over run of a function`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer states at [35:30]: "Perhaps the most basic definition, one that you might have learned first, is that it gives the slope. It gives the rise over run of the function for a short distance."`,
-    code: ``,
-    images: ["image_1771970280186_0.png"],
-    tags: ["definition", "Derivatives"],
-    source: `lectures/cg-03-lecture-quiz.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `FORMULA`,
-    format: `mcq`,
-    timestamp: `35:41`,
-    question: `What is the formal definition of the derivative?`,
-    options: [`The second derivative of the function`, `The limit as epsilon goes to zero of [f(x₀+ε)-f(x₀)]/ε`, `The integral of the function's rate of change`, `The area under the function's curve`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer gives the definition at [35:41]: "We look at how much the function is changing over a little distance epsilon. So we start at some point x naught, move over to x naught plus epsilon, evaluate the function, take the difference from the function value at x naught, divide by epsilon and then take the limit as epsilon goes to 0."`,
-    code: ``,
-    images: ["image_1771970353123_0.png"],
-    tags: [],
-    source: `lectures/cg-03-lecture-quiz.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `CONCEPTUAL`,
-    format: `mcq`,
-    timestamp: `37:03`,
-    question: `When is a function not differentiable at a point?`,
-    options: [`When the function is constant around that point`, `When its value at that point is zero`, `When the function has a local maximum at that point`, `When the left and right limits of the derivative don't agree`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer explains at [37:03]: "In this case we say the function is not differentiable at x naught, or that it is differentiable if f plus is the same as f minus."`,
-    code: ``,
-    images: ["image_1771970359791_0.png"],
-    tags: [],
-    source: `lectures/cg-03-lecture-quiz.md`,
-  },
 ]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
@@ -640,7 +640,7 @@ export default function Lec3Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -687,13 +687,13 @@ export default function Lec3Part1Quiz() {
           <a key={2} href={`${BASE}/lec3/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           <a key={3} href={`${BASE}/lec3/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -717,7 +717,8 @@ export default function Lec3Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}

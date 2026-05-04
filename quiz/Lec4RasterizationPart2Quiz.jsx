@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Monitor } from 'lucide-react'
 
 // Source: lectures/cg-04-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 4: Rasterization & Sampling — Part 2 · QQ33–QQ64 · 32 questions (32 MCQ, 0 reveal)
+// Lecture 4: Rasterization & Sampling — Part 2 · QQ30–QQ61 · 32 questions (32 MCQ, 0 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-04-lecture-quiz.md 4
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `DISPLAY`,
+    format: `mcq`,
+    timestamp: `31:46`,
+    question: `In the context of displaying sampled image values, what does a pixel represent according to the lecture?`,
+    options: [`A weighted average of surrounding points`, `A square of light with uniform color`, `A mathematical point with no area`, `A triangular region on screen`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [31:46], the lecturer states: "Each image sample sent to the display is converted into roughly speaking a little square of light and maybe you get to specify the color of that light."`,
+    code: ``,
+    images: ["image_1771997934002_0.png"],
+    tags: [],
+    source: `lectures/cg-04-lecture-quiz.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `TERM`,
+    format: `mcq`,
+    timestamp: `31:57`,
+    question: `According to the lecture, what does the term "pixel" stand for?`,
+    options: [`Pixelated image`, `Picture element`, `Picture cell`, `Point index location`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [31:57], the lecturer explains: "The word pixel is just an abbreviation for picture element right you have a picture it's your entire screen one little element of that is a pixel."`,
+    code: ``,
+    images: ["image_1771998071836_0.png"],
+    tags: ["pixel"],
+    source: `lectures/cg-04-lecture-quiz.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `DEFINITION`,
+    format: `mcq`,
+    timestamp: `33:47`,
+    question: `What is aliasing in the context of computer graphics?`,
+    options: [`When colors look different on different displays`, `When one triangle is rendered on top of another`, `When triangles are too small to be visible`, `When a mismatch occurs between sampling and reconstruction`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [33:47], the lecturer introduces: "This leads us into a discussion of something that's really core to computer graphics which is the phenomenon of aliasing," and throughout the lecture explains it as a mismatch between sampling and reconstruction causing misrepresentation of the original signal.`,
+    code: ``,
+    images: ["image_1771998130102_0.png", "image_1771998135778_0.png"],
+    tags: ["Aliasing", "definition"],
+    source: `lectures/cg-04-lecture-quiz.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -502,60 +553,6 @@ const quizData = [
     tags: [],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
-  {
-    id: 62,
-    qid: `Q62`,
-    qtype: `MCQ`,
-    format: `mcq`,
-    timestamp: `1:08:27`,
-    question: `What does the lecturer describe as the basic strategy for reducing aliasing in rasterization?`,
-    options: [`Blurring the image`, `Decreasing the resolution`, `Using different primitive shapes`, `Using super sampling`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [1:08:27], the lecturer concludes: "Our basic strategy for reducing aliasing at least for rasterization was to use super sampling."`,
-    code: ``,
-    images: ["image_1775353150954_0.png"],
-    tags: [],
-    source: `lectures/cg-04-lecture-quiz.md`,
-  },
-  {
-    id: 63,
-    qid: `Q63`,
-    qtype: `FOUNDATION`,
-    format: `mcq`,
-    timestamp: `1:08:57`,
-    question: `According to the summary, what is the "basic building block" for the graphics pipeline?`,
-    options: [`Texture mapping`, `Vertex transformation`, `Pixel shading`, `Triangle rasterization`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [1:08:57], the lecturer states: "From a more system point of view we saw that triangle rasterization is the basic building block for the graphics pipeline."`,
-    code: ``,
-    images: [],
-    tags: [],
-    source: `lectures/cg-04-lecture-quiz.md`,
-  },
-  {
-    id: 64,
-    qid: `Q64`,
-    qtype: `NEXT`,
-    format: `mcq`,
-    timestamp: `1:09:51`,
-    question: `What topic will be covered in the next lecture according to the professor?`,
-    options: [`3D transformations`, `Texture mapping`, `Animation`, `Lighting models`],
-    answer: 0,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [1:09:51], the lecturer concludes: "Next time we're going to talk about another important stage of the pipeline was how we actually do these 3D transformations."
-
--
--`,
-    code: ``,
-    images: ["image_1775353176771_0.png"],
-    tags: [],
-    source: `lectures/cg-04-lecture-quiz.md`,
-  },
 ]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
@@ -683,8 +680,9 @@ export default function Lec4Part2Quiz() {
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec4/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec4/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
+          <a key={3} href={`${BASE}/lec4/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ64 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ61 · 32 questions (32 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>

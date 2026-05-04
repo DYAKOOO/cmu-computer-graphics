@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Film } from 'lucide-react'
 
 // Source: lectures/cg-20-lecture-quiz.md.md  (symlinked → Logseq pages)
-// Lecture 20: Introduction to Animation — Part 2 · QQ33–QQ48 · 16 questions (16 MCQ, 0 reveal)
+// Lecture 20: Introduction to Animation — Part 2 · QQ30–QQ48 · 19 questions (19 MCQ, 0 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-20-lecture-quiz.md.md 20
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `MCQ`,
+    format: `mcq`,
+    timestamp: `24:46`,
+    question: `- [Cubic Splines] → [Special properties]`,
+    options: [`They're the only type that can represent circles`, `They give exact solutions to the elastic spline problem under small displacements`, `According to the lecture, why are cubic splines particularly useful in computer graphics?`, `They use the fewest control points`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [25:00], Professor Crane explains: "One reason is that piecewise cubic splines give exact solutions to the elastic spline problem under the assumption of small displacements."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-20-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `MCQ`,
+    format: `mcq`,
+    timestamp: `27:52`,
+    question: `- [Runge Phenomenon] → [Problem with high-degree polynomials]`,
+    options: [`The computational challenges in solving high-degree polynomial equations`, `The tendency of high-degree polynomials to oscillate wildly near the endpoints`, `What is the Runge Phenomenon as described in the lecture?`, `The difficulty in finding roots of high-degree polynomials`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [28:47], Professor Crane describes: "As I go up I noticed that near the endpoints I get these these oscillations and they kind of get you know wilder and weirder as they go on even though overall my function is doing a better job at zero of approximating the target function."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-20-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `MCQ`,
+    format: `mcq`,
+    timestamp: `29:28`,
+    question: `- [Cubic Polynomial Fitting] → [Endpoint constraints]`,
+    options: [`4`, `When fitting a cubic polynomial to interpolate two endpoints, how many degrees of freedom (coefficients) does the polynomial have?`, `6`, `3`],
+    answer: 0,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [29:33], Professor Crane states: "Let's consider a single cubic polynomial P of T equals 80 cubed plus BT squared plus C T plus D" which shows four coefficients (A, B, C, D), and at [31:14] he confirms: "Cubic polynomial has these four degrees of freedom ABCD."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-20-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -361,7 +412,7 @@ export default function Lec20Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (16 || 1) * 100)
+    const p = Math.round(s / (19 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -407,14 +458,14 @@ export default function Lec20Part2Quiz() {
             <a key={1} href={`${BASE}/lec20/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec20/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ48 · 16 questions (16 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ48 · 19 questions (19 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>16</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>19</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~5min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~6min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -437,7 +488,7 @@ export default function Lec20Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 16 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 19 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -482,12 +533,12 @@ export default function Lec20Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/16</span>
+              <span>{qIdx+1}/19</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/16*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/19*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -628,7 +679,7 @@ export default function Lec20Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 16-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 19-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

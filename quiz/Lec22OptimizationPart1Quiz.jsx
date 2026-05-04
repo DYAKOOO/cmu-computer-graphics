@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, TrendingDown } from 'lucide-react'
 
 // Source: lectures/cg-22-lecture-quiz.md.md  (symlinked → Logseq pages)
-// Lecture 22: Introduction to Optimization — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
+// Lecture 22: Introduction to Optimization — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-22-lecture-quiz.md.md 22
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture opens with Dido's problem (800 BCE) and modern graphics examples (motion synthesis, symmetrization, spin balance). What does this framing accomplish for the technical content?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `It establishes that optimization is domain-agnostic — the same mathematical framework applies to ancient land enclosure, motion capture retargeting, and 3D printing. This means the algorithms (gradient descent, Newton's method) are general-purpose tools. Any problem where you can write an objective function f(x) to minimize — and graphics produces many such problems — immediately benefits from the same machinery. The historical example also makes the key insight concrete: unconstrained isoperimetric optimization gives a circle, but the boundary constraint (coastline) changes the answer.`,
+    intuition: `"Find the best x" is one problem regardless of domain. Gradient descent doesn't care whether x is a flight price or a joint angle.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-22-lecture-quiz.md.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture introduces gradient descent before Newton's method. What fundamental limitation of gradient descent motivates adding second-order information?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Gradient descent uses only the gradient ∇f (first derivative — "which direction is downhill?"). Near the optimum, the gradient is small, so it takes many tiny steps — slow convergence. It also ignores curvature: it takes the same step size in all directions regardless of whether the landscape is steep or flat in that direction. Newton's method uses the Hessian ∇²f (second derivative — "how curved is the landscape here?"). It adjusts step sizes per direction, taking large steps where the curvature is low and small steps where it's high. This achieves quadratic convergence near the optimum vs. linear convergence for gradient descent.`,
+    intuition: `Gradient descent uses a map of current slope. Newton's method uses a map of current slope AND terrain curvature — far better navigation.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-22-lecture-quiz.md.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these optimization topics in the order lecture 22 introduces them: inverse kinematics formulated as optimization / Newton's method / gradient descent / constrained optimization and Lagrange multipliers`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Gradient descent → Newton's method → Constrained optimization and Lagrange multipliers → Inverse kinematics as optimization`,
+    intuition: `Simple unconstrained descent → faster unconstrained descent → handle constraints → apply the full machinery to a graphics problem (IK).`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-22-lecture-quiz.md.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -516,59 +567,6 @@ you have a function that you need a minimize (satisfy) and that it has to satisf
     tags: ["BoundaryConditions"],
     source: `lectures/cg-22-lecture-quiz.md.md`,
   },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `SUFFICIENT`,
-    format: `mcq`,
-    timestamp: `40:49`,
-    question: `What does the extreme value theorem require to guarantee existence of a minimizer?`,
-    options: [`A coercive objective function with no constraints`, `A continuous objective function and a compact domain`, `A convex objective function and convex constraints`, `A differentiable objective function with bounded derivatives`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [40:49], the professor states: "We want to have a continuous objective an objective that doesn't jump in value as we change X by a small amount and a compact domain meaning the set of feasible points is a closed and bounded set closed and bounded subset of RN."`,
-    code: ``,
-    images: ["image_1777604639814_0.png", "lec22_slide_09.png"],
-    tags: [],
-    source: `lectures/cg-22-lecture-quiz.md.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `DEFINITION`,
-    format: `mcq`,
-    timestamp: `41:21`,
-    question: `What does "coercivity" mean for an objective function?`,
-    options: [`The function has unique minima`, `The function approaches infinity as variables get farther from the origin`, `The function is bounded from below`, `The function is continuously differentiable`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [41:21], the professor explains: "Coercivity means that the objective function loosely speaking goes to positive infinity as we travel far far away in any direction right... coercivity is kind of saying there's gonna be a global minimum because if you allow yourself to get too big too far from the origin things are just gonna keep going up."
-
-e(x) is not because its not going to positive infinity.`,
-    code: ``,
-    images: ["image_1777604881232_0.png", "lec22_slide_12.png"],
-    tags: [],
-    source: `lectures/cg-22-lecture-quiz.md.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `TESTING`,
-    format: `mcq`,
-    timestamp: `43:22`,
-    question: `According to the professor, which is typically harder to verify?`,
-    options: [`Whether a point is a global minimum`, `Whether a function is convex`, `Whether a function is coercive`, `Whether a point is a local minimum`],
-    answer: 0,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [43:22], the professor states: "In general I'll actually say that checking if a point is a global minimizer is typically hard if I just hand you a point X and I say I claim this is the global minimum and you want to go check is it or isn't it the global minimum do I believe that this is actually the optimal solution that's usually hard actually checking that a given point is the global minimum maybe as hard as solving the original problem."`,
-    code: ``,
-    images: ["image_1777604944073_0.png", "lec22_slide_16.png"],
-    tags: [],
-    source: `lectures/cg-22-lecture-quiz.md.md`,
-  },
 ]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
@@ -651,7 +649,7 @@ export default function Lec22Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -696,14 +694,15 @@ export default function Lec22Part1Quiz() {
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec22/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec22/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
+          <a key={3} href={`${BASE}/lec22/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -727,7 +726,8 @@ export default function Lec22Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}

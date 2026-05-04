@@ -3,10 +3,63 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Activity } from 'lucide-react'
 
 // Source: lectures/cg-21-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 21: Dynamics & Time Integration — Part 2 · QQ33–QQ38 · 6 questions (6 MCQ, 0 reveal)
+// Lecture 21: Dynamics & Time Integration — Part 2 · QQ30–QQ38 · 9 questions (9 MCQ, 0 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-21-lecture-quiz.md 21
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `ANALYSIS`,
+    format: `mcq`,
+    timestamp: `1:15:24`,
+    question: `What stability property does Backward Euler have?`,
+    options: [`Stable only when τ = a exactly`, `Unconditionally stable for linear ODEs: never blows up regardless of time step size`, `Conditionally stable: requires τ < 1/a`, `Unstable for stiff systems (large a): requires very small time steps`],
+    answer: 1,
+    answerText: ``,
+    intuition: `For u̇ = -au, Backward Euler gives u_{k+1} = u_k / (1 + τa). The factor 1/(1+τa) is always less than 1 for any τ > 0, a > 0 — so the sequence always decays. Compare to Forward Euler where the factor (1-τa) can exceed 1 and blow up. Implicit methods "look ahead" and self-correct, making them inherently more stable.`,
+    explanation: `At [1:15:24]–[1:15:49], the lecturer derives: "U_{k+1} = 1/(1+τa) × u_k, which means after n steps, u_n = (1/(1+τa))^n × u₀... This is going to decay as long as 1 + τa > 1. Well, tau is a positive number, and A is a positive number, so this is always going to be true. What that means is backward Euler is unconditionally stable for linear ODEs."
+
+that backward euler doesn't blow us but the drawback is we get damping. To solve damping , we can take more timestep but that is what we were trying to avoid in the first place. one way to solve it is simplectic euler.`,
+    code: ``,
+    images: ["image_1777622951939_0.png"],
+    tags: ["Stability", "TheoriticalGuarantee", "Euler"],
+    source: `lectures/cg-21-lecture-quiz.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `TRADEOFF`,
+    format: `mcq`,
+    timestamp: `1:13:55`,
+    question: `What is the main drawback of Backward Euler compared to Forward Euler?`,
+    options: [`It requires computing more force evaluations per step`, `It exhibits numerical damping — energy artificially dissipates even when the true system conserves energy`, `It is less stable for all time step sizes`, `It only works for linear ODEs and fails for nonlinear systems`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [1:13:55]–[1:14:22], the lecturer observes: "What's going to happen is the motion is going to become damped out. It's going to go slower and slower and slower until it stops and doesn't move at all. And that's also kind of sad, right? Where did all the energy go? We weren't modeling friction... But in our mathematical model, there was no friction. Energy shouldn't have been created or destroyed." This artificial damping is the price of unconditional stability.`,
+    code: ``,
+    images: ["image_1777623100398_0.png"],
+    tags: ["Damping"],
+    source: `lectures/cg-21-lecture-quiz.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `ALGORITHM`,
+    format: `mcq`,
+    timestamp: `1:17:31`,
+    question: `What is the Symplectic Euler update rule?`,
+    options: [`v_{k+1} = v_k + τ·f(q_k); q_{k+1} = q_k + τ·v_k (both use current state)`, `v_{k+1} = v_k + τ·f(q_{k+1}); q_{k+1} = q_k + τ·v_{k+1} (implicit velocity, implicit position)`, `q_{k+1} = q_k + τ·v_k + ½τ²·f(q_k) (Verlet position update)`, `v_{k+1} = v_k + τ·f(q_k); q_{k+1} = q_k + τ·v_{k+1} (explicit velocity from current q, position uses new v)`],
+    answer: 3,
+    answerText: ``,
+    intuition: `The twist: update velocity first (using current position, like Forward Euler), THEN update position using the brand-new velocity (not the old one). This "stagger" — v then q, v then q — happens to conserve the symplectic structure of Hamiltonian mechanics. Result: energy is preserved over long simulations, unlike Forward (grows) or Backward (shrinks) Euler.`,
+    explanation: `At [1:17:31]–[1:17:55], the lecturer describes: "We're gonna update our velocity using the current configuration. So we're gonna go from the current velocity to the next velocity using data from the current configuration. And then we're gonna update the configuration using our new velocity. So the configuration and the velocity aren't moving forward in lockstep. We're updating the velocity and then updating the configuration — they're kind of staggered."`,
+    code: ``,
+    images: ["image_1777623111287_0.png"],
+    tags: [],
+    source: `lectures/cg-21-lecture-quiz.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -191,7 +244,7 @@ export default function Lec21Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (6 || 1) * 100)
+    const p = Math.round(s / (9 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -237,14 +290,14 @@ export default function Lec21Part2Quiz() {
             <a key={1} href={`${BASE}/lec21/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec21/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ38 · 6 questions (6 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ38 · 9 questions (9 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>6</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>9</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~2min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~3min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -267,7 +320,7 @@ export default function Lec21Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 6 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 9 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -312,12 +365,12 @@ export default function Lec21Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/6</span>
+              <span>{qIdx+1}/9</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/6*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/9*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -458,7 +511,7 @@ export default function Lec21Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 6-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 9-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

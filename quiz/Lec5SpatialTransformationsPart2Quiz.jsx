@@ -3,10 +3,62 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Move } from 'lucide-react'
 
 // Source: lectures/cg-05-lecture-quiz.md.md  (symlinked → Logseq pages)
-// Lecture 5: Spatial Transformations — Part 2 · QQ33–QQ47 · 15 questions (15 MCQ, 0 reveal)
+// Lecture 5: Spatial Transformations — Part 2 · QQ30–QQ47 · 18 questions (18 MCQ, 0 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-05-lecture-quiz.md.md 5
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `MCQ`,
+    format: `mcq`,
+    timestamp: `50:38`,
+    question: `- [Review: Perspective projection] → [Connection to homogeneous coordinates]`,
+    options: [`Both were developed at the same time for computer graphics`, `Both involve converting between different coordinate systems`, `They are unrelated concepts from different fields`, `Both use the idea that points along the same line project to the same point`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `As explained at [50:38]: "Hopefully the story is reminding you a little bit of our pinhole camera right we said if we have this pinhole camera looking out at the world through this little hole then objects along the same line through space all project to the same point on the film at the back of the camera."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `MCQ`,
+    format: `mcq`,
+    timestamp: `51:16`,
+    question: `- [Homogeneous Coordinates (2D)] → [Mathematical formulation]`,
+    options: [`By converting to polar coordinates (r,θ)`, `By any three numbers (a,b,c) where a/c and b/c give the original 2D coordinates`, `By adding a third coordinate that is always 1`, `By multiplying both coordinates by a constant`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `As defined at [51:30]: "Any three numbers p hat equals abc such that a divided by c and b divided by c are the same as x and y give us homogeneous coordinates for p."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `MCQ`,
+    format: `mcq`,
+    timestamp: `52:53`,
+    question: `- [Translation in Homogeneous Coordinates] → [Making translation linear]`,
+    options: [`3D shear`, `3D rotation`, `3D reflection`, `3D scaling`],
+    answer: 0,
+    answerText: ``,
+    intuition: ``,
+    explanation: `As described at [53:41]: "Hopefully this reminds you of some three-dimensional transformation that we've already seen if you look at the movie on the right what kind of transformation does that look like well hopefully it reminds you of a shear we're taking this kind of cone made by the triangle and we're shearing it across the xy plane."
+- # Spatial Transformations Quiz - Part 3`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -345,7 +397,7 @@ export default function Lec5Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (15 || 1) * 100)
+    const p = Math.round(s / (18 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -391,14 +443,14 @@ export default function Lec5Part2Quiz() {
             <a key={1} href={`${BASE}/lec5/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec5/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ47 · 15 questions (15 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ47 · 18 questions (18 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>15</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>18</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~5min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~6min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -421,7 +473,7 @@ export default function Lec5Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 15 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 18 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -466,12 +518,12 @@ export default function Lec5Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/15</span>
+              <span>{qIdx+1}/18</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/15*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/18*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -612,7 +664,7 @@ export default function Lec5Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 15-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 18-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

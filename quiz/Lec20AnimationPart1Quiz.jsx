@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Film } from 'lucide-react'
 
 // Source: lectures/cg-20-lecture-quiz.md.md  (symlinked → Logseq pages)
-// Lecture 20: Introduction to Animation — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
+// Lecture 20: Introduction to Animation — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-20-lecture-quiz.md.md 20
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture begins with animation history spanning 5000 years (ancient Iran, Egypt, da Vinci, Monet, phenakistoscope). What does this detour accomplish for the technical content that follows?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `It establishes animation as the fundamental human desire to represent motion — not a modern technology trick. More importantly, it reveals the core principle: animation creates an illusion of motion by showing a sequence of still images faster than the human visual system can distinguish them (~24 fps). This frames the technical challenge: how to efficiently specify and interpolate between keyframes so the illusion is convincing. All the splines, skinning, and IK that follow are answers to "how do we author that sequence with less manual work per frame?"`,
+    intuition: `Animation = tricking the brain with still frames. The whole lecture is about making that trick cheaper to produce.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-20-lecture-quiz.md.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture evaluates Hermite → Catmull-Rom → B-splines as animation curve representations. What specific failure of each motivates the next?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Hermite splines: animator must explicitly specify tangent vectors at every keyframe — extra labor and unnatural. Catmull-Rom: tangents computed automatically from neighboring keyframes (tangent = (p_{i+1} - p_{i-1})/2), removing tangent editing. But it passes through all control points, so unexpected overshoots can appear between keyframes. B-splines: approximating splines that don't pass through control points, giving smoother, more predictable motion at the cost of the curve no longer hitting the animator's exact keyframe positions.`,
+    intuition: `Each step trades interpolation constraint for smoothness: forced-tangent → auto-tangent → approximate.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-20-lecture-quiz.md.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these animation topics in the order lecture 20 introduces them: inverse kinematics (IK) / B-spline approximating curves / keyframe interpolation and splines / skeletal animation and linear blend skinning`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Keyframe interpolation and splines → B-spline approximating curves → Skeletal animation and linear blend skinning → Inverse kinematics (IK)`,
+    intuition: `Curves first (how to interpolate scalars over time) → skeletons (how to interpolate rigid body poses) → IK (how to compute poses from end-effector goals rather than specifying them directly).`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-20-lecture-quiz.md.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -500,57 +551,6 @@ const quizData = [
     tags: [],
     source: `lectures/cg-20-lecture-quiz.md.md`,
   },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `MCQ`,
-    format: `mcq`,
-    timestamp: `24:46`,
-    question: `- [Cubic Splines] → [Special properties]`,
-    options: [`They're the only type that can represent circles`, `They give exact solutions to the elastic spline problem under small displacements`, `According to the lecture, why are cubic splines particularly useful in computer graphics?`, `They use the fewest control points`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [25:00], Professor Crane explains: "One reason is that piecewise cubic splines give exact solutions to the elastic spline problem under the assumption of small displacements."`,
-    code: ``,
-    images: [],
-    tags: [],
-    source: `lectures/cg-20-lecture-quiz.md.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `MCQ`,
-    format: `mcq`,
-    timestamp: `27:52`,
-    question: `- [Runge Phenomenon] → [Problem with high-degree polynomials]`,
-    options: [`The computational challenges in solving high-degree polynomial equations`, `The tendency of high-degree polynomials to oscillate wildly near the endpoints`, `What is the Runge Phenomenon as described in the lecture?`, `The difficulty in finding roots of high-degree polynomials`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [28:47], Professor Crane describes: "As I go up I noticed that near the endpoints I get these these oscillations and they kind of get you know wilder and weirder as they go on even though overall my function is doing a better job at zero of approximating the target function."`,
-    code: ``,
-    images: [],
-    tags: [],
-    source: `lectures/cg-20-lecture-quiz.md.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `MCQ`,
-    format: `mcq`,
-    timestamp: `29:28`,
-    question: `- [Cubic Polynomial Fitting] → [Endpoint constraints]`,
-    options: [`4`, `When fitting a cubic polynomial to interpolate two endpoints, how many degrees of freedom (coefficients) does the polynomial have?`, `6`, `3`],
-    answer: 0,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [29:33], Professor Crane states: "Let's consider a single cubic polynomial P of T equals 80 cubed plus BT squared plus C T plus D" which shows four coefficients (A, B, C, D), and at [31:14] he confirms: "Cubic polynomial has these four degrees of freedom ABCD."`,
-    code: ``,
-    images: [],
-    tags: [],
-    source: `lectures/cg-20-lecture-quiz.md.md`,
-  },
 ]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
@@ -633,7 +633,7 @@ export default function Lec20Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -679,13 +679,13 @@ export default function Lec20Part1Quiz() {
             <a key={1} href={`${BASE}/lec20/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec20/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -709,7 +709,8 @@ export default function Lec20Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}

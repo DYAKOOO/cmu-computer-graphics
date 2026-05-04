@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Grid } from 'lucide-react'
 
 // Source: lectures/cg-02-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 2: Linear Algebra — Part 2 · QQ33–QQ64 · 32 questions (32 MCQ, 0 reveal)
+// Lecture 2: Linear Algebra — Part 2 · QQ30–QQ61 · 32 questions (32 MCQ, 0 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-02-lecture-quiz.md 2
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `CALCULATION`,
+    format: `mcq`,
+    timestamp: `39:22`,
+    question: `What is the Euclidean norm of the vector (4,2)?`,
+    options: [`20`, `4.47...`, `6`, `2√5`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer calculates at [39:22]: "If i have the vector u equals 4 2 its norm is the square root of 4 squared plus 2 squared which we can simplify to 2 root 5."`,
+    code: ``,
+    images: ["image_1771901728304_0.png"],
+    tags: [],
+    source: `lectures/cg-02-lecture-quiz.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `DEFINITION`,
+    format: `mcq`,
+    timestamp: `40:22`,
+    question: `What domain restriction is placed on functions when defining the L² norm?`,
+    options: [`The functions must be defined over the unit interval [0,1]`, `The functions must be continuous`, `The functions must be periodic`, `The functions must be polynomials`],
+    answer: 0,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer specifies at [40:22]: "Just to keep things simple let's consider real valued functions over the unit interval 0 1. okay so by that i mean we have a function and we only know its values between 0 and 1 it doesn't exist outside of this interval."`,
+    code: ``,
+    images: ["image_1771901960791_0.png"],
+    tags: ["Norm/L2", "definition"],
+    source: `lectures/cg-02-lecture-quiz.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `FORMULA`,
+    format: `mcq`,
+    timestamp: `40:59`,
+    question: `What is the formula for the L² norm of a function f(x) on the unit interval?`,
+    options: [`The maximum value of f(x) on [0,1]`, `The integral of f(x) from 0 to 1`, `The average value of f(x) on [0,1]`, `The square root of the integral of [f(x)]² from 0 to 1`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer defines at [40:59]: "The l2 norm is defined as the norm of f is equal to the square root of the integral from 0 to 1 of f of x squared dx."`,
+    code: ``,
+    images: ["image_1771901960791_0.png"],
+    tags: [],
+    source: `lectures/cg-02-lecture-quiz.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -513,57 +564,6 @@ fourier transformation is a linear mapping from one basis to another.`,
     tags: ["Concept", "System/Coordinate"],
     source: `lectures/cg-02-lecture-quiz.md`,
   },
-  {
-    id: 62,
-    qid: `Q62`,
-    qtype: `RELATIONSHIP`,
-    format: `mcq`,
-    timestamp: `1:37:11`,
-    question: `How do matrix entries relate to coordinate systems?`,
-    options: [`Matrix entries are independent of coordinate systems`, `Matrix entries must use Cartesian coordinates`, `Matrix entries are always the same in any coordinate system`, `Matrix entries depend on the choice of coordinates`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer states at [1:37:11]: "As we've seen the entries of those matrices are going to depend on your choice of coordinates so i could have two matrices that represent the exact same geometric operation  that represent the same linear map for instance but have completely different entries."`,
-    code: ``,
-    images: ["image_1771911680590_0.png"],
-    tags: ["Coordinate", "Relationship"],
-    source: `lectures/cg-02-lecture-quiz.md`,
-  },
-  {
-    id: 63,
-    qid: `Q63`,
-    qtype: `PURPOSE`,
-    format: `mcq`,
-    timestamp: `1:38:08`,
-    question: `Despite their limitations, why do we use matrices according to the lecture?`,
-    options: [`They make linear algebra problems more challenging`, `They're useful for symbolic manipulation and efficient numerical computation`, `They're easier to teach than other representations`, `They're the only way to represent linear maps`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer explains at [1:38:08]: "They are very very useful for doing certain kinds of symbolic manipulation but more importantly for doing numerical computation at the end of the day we want to boil down our linear algebra problem into a matrix equation that we can hand off to our computer and our computer will solve that for us very very fast."`,
-    code: ``,
-    images: [],
-    tags: ["computation"],
-    source: `lectures/cg-02-lecture-quiz.md`,
-  },
-  {
-    id: 64,
-    qid: `Q64`,
-    qtype: `CONSTRUCTION`,
-    format: `mcq`,
-    timestamp: `1:40:52`,
-    question: `How do you construct a matrix representing a linear map f(u) = u₁a₁ + u₂a₂?`,
-    options: [`Compute the inverse of the vectors a₁ and a₂`, `Use a₁ and a₂ as the rows of the matrix`, `Use a₁ and a₂ as the columns of the matrix`, `Take the cross product of a₁ and a₂`],
-    answer: 2,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer explains at [1:40:52]: "From that point of view building this matrix is super straightforward i just take these fixed vectors a and i make those the columns of the matrix capital A."`,
-    code: ``,
-    images: [],
-    tags: ["Homework"],
-    source: `lectures/cg-02-lecture-quiz.md`,
-  },
 ]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
@@ -693,7 +693,7 @@ export default function Lec2Part2Quiz() {
           <a key={2} href={`${BASE}/lec2/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           <a key={3} href={`${BASE}/lec2/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ64 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ61 · 32 questions (32 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>

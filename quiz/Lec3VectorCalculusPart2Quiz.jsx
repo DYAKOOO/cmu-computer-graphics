@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Sigma } from 'lucide-react'
 
 // Source: lectures/cg-03-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 3: Vector Calculus — Part 2 · QQ33–QQ64 · 32 questions (32 MCQ, 0 reveal)
+// Lecture 3: Vector Calculus — Part 2 · QQ30–QQ61 · 32 questions (32 MCQ, 0 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-03-lecture-quiz.md 3
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `DEFINITION`,
+    format: `mcq`,
+    timestamp: `35:30`,
+    question: `What is the most basic definition of a derivative according to the lecture?`,
+    options: [`The limit of a difference quotient`, `The change in a function with respect to time`, `The second-order approximation of a function`, `The slope or rise over run of a function`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer states at [35:30]: "Perhaps the most basic definition, one that you might have learned first, is that it gives the slope. It gives the rise over run of the function for a short distance."`,
+    code: ``,
+    images: ["image_1771970280186_0.png"],
+    tags: ["definition", "Derivatives"],
+    source: `lectures/cg-03-lecture-quiz.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `FORMULA`,
+    format: `mcq`,
+    timestamp: `35:41`,
+    question: `What is the formal definition of the derivative?`,
+    options: [`The second derivative of the function`, `The limit as epsilon goes to zero of [f(x₀+ε)-f(x₀)]/ε`, `The integral of the function's rate of change`, `The area under the function's curve`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer gives the definition at [35:41]: "We look at how much the function is changing over a little distance epsilon. So we start at some point x naught, move over to x naught plus epsilon, evaluate the function, take the difference from the function value at x naught, divide by epsilon and then take the limit as epsilon goes to 0."`,
+    code: ``,
+    images: ["image_1771970353123_0.png"],
+    tags: [],
+    source: `lectures/cg-03-lecture-quiz.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `CONCEPTUAL`,
+    format: `mcq`,
+    timestamp: `37:03`,
+    question: `When is a function not differentiable at a point?`,
+    options: [`When the function is constant around that point`, `When its value at that point is zero`, `When the function has a local maximum at that point`, `When the left and right limits of the derivative don't agree`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer explains at [37:03]: "In this case we say the function is not differentiable at x naught, or that it is differentiable if f plus is the same as f minus."`,
+    code: ``,
+    images: ["image_1771970359791_0.png"],
+    tags: [],
+    source: `lectures/cg-03-lecture-quiz.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -505,57 +556,6 @@ const quizData = [
     tags: [],
     source: `lectures/cg-03-lecture-quiz.md`,
   },
-  {
-    id: 62,
-    qid: `Q62`,
-    qtype: `FORMULA`,
-    format: `mcq`,
-    timestamp: `1:09:41`,
-    question: `How is the divergence written in notation?`,
-    options: [`div X`, `∇ · X`, `∇² X`, `∇ × X`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer notes at [1:09:41]: "We often write the divergence as nabla dot x."`,
-    code: ``,
-    images: ["image_1771989058728_0.png"],
-    tags: [],
-    source: `lectures/cg-03-lecture-quiz.md`,
-  },
-  {
-    id: 63,
-    qid: `Q63`,
-    qtype: `FORMULA`,
-    format: `mcq`,
-    timestamp: `1:10:18`,
-    question: `What is the coordinate formula for the divergence of a vector field?`,
-    options: [`The cross product of the gradient with the vector field`, `The sum of the partial derivatives of each component with respect to its corresponding coordinate`, `The determinant of the vector field's Jacobian`, `The trace of the vector field's gradient`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer describes at [1:10:18]: "We sum over all the coordinates each partial derivative being applied to each coordinate function. We take the derivative of the first coordinate function along the first direction, add that to the derivative of the second coordinate function along the second direction, and so on."`,
-    code: ``,
-    images: ["image_1771989089559_0.png"],
-    tags: ["Divergence"],
-    source: `lectures/cg-03-lecture-quiz.md`,
-  },
-  {
-    id: 64,
-    qid: `Q64`,
-    qtype: `FORMULA`,
-    format: `mcq`,
-    timestamp: `1:12:22`,
-    question: `How is the curl written in notation?`,
-    options: [`∇ · X`, `curl X`, `∇ × X`, `∇² X`],
-    answer: 2,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer states at [1:12:22]: "We can write curl also with nabla. We can write it as nabla cross x with a cross product."`,
-    code: ``,
-    images: ["image_1771989199368_0.png"],
-    tags: [],
-    source: `lectures/cg-03-lecture-quiz.md`,
-  },
 ]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
@@ -685,7 +685,7 @@ export default function Lec3Part2Quiz() {
           <a key={2} href={`${BASE}/lec3/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           <a key={3} href={`${BASE}/lec3/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ64 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ61 · 32 questions (32 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>

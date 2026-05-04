@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Activity } from 'lucide-react'
 
 // Source: lectures/cg-21-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 21: Dynamics & Time Integration — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
+// Lecture 21: Dynamics & Time Integration — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-21-lecture-quiz.md 21
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture opens by contrasting keyframe animation (lecture 20) with physically-based animation. What specific limitation of keyframing does physics-based simulation address, and at what cost?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Keyframe animation requires an animator to manually specify every joint pose at every keyframe. For complex secondary motion (hair, cloth jiggling, splashing water) this requires thousands of keyframes and expert judgment. Physics-based simulation generates motion automatically from Newton's laws — given initial conditions and forces, the trajectory follows. The cost: far more computation (solving ODEs/PDEs every frame), less direct artistic control (you set up the physics, not the path), and numerical instability risks if timesteps are too large or forces too stiff.`,
+    intuition: `Keyframe = "tell the computer what to draw." Physics = "tell the computer the rules and let it figure out what to draw."`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-21-lecture-quiz.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture introduces three time integrators: Forward Euler, Backward Euler, and Symplectic Euler. What failure of Forward Euler motivates each alternative, and what is the key trade-off of each?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Forward Euler (explicit): uses current force/velocity to update. Simple and fast, but adds energy to the system over time — unstable with large timesteps or stiff forces. Backward Euler (implicit): solves for the next state using the next force — requires a linear system solve each step but is unconditionally stable. Symplectic Euler: update velocity with current force (explicit), then use the *new* velocity to update position. No linear solve needed (cheap), and it exactly conserves energy for harmonic oscillators (unlike Forward Euler). It's the practical sweet spot for most animation simulations.`,
+    intuition: `Forward Euler adds energy → unstable. Backward Euler removes energy → stable but expensive. Symplectic Euler conserves energy → stable and cheap.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-21-lecture-quiz.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these dynamics topics in the order lecture 21 introduces them: particle systems and mass-spring networks / Symplectic Euler integrator / Newton's 2nd law as the "animation equation" / Forward Euler and stability analysis`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Newton's 2nd law as the animation equation → Forward Euler and stability analysis → Symplectic Euler integrator → Particle systems and mass-spring networks`,
+    intuition: `Establish the physics (Newton) → naively integrate it (Euler) → show the failure mode → fix it (Symplectic) → apply to complex systems (particles, springs).`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-21-lecture-quiz.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -505,59 +556,6 @@ In continuous function , derivative is evaluted at current time but in discerte 
     tags: ["Equation/Implicit", "Relationship", "vs/implicitvsexplicit"],
     source: `lectures/cg-21-lecture-quiz.md`,
   },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `ANALYSIS`,
-    format: `mcq`,
-    timestamp: `1:15:24`,
-    question: `What stability property does Backward Euler have?`,
-    options: [`Stable only when τ = a exactly`, `Unconditionally stable for linear ODEs: never blows up regardless of time step size`, `Conditionally stable: requires τ < 1/a`, `Unstable for stiff systems (large a): requires very small time steps`],
-    answer: 1,
-    answerText: ``,
-    intuition: `For u̇ = -au, Backward Euler gives u_{k+1} = u_k / (1 + τa). The factor 1/(1+τa) is always less than 1 for any τ > 0, a > 0 — so the sequence always decays. Compare to Forward Euler where the factor (1-τa) can exceed 1 and blow up. Implicit methods "look ahead" and self-correct, making them inherently more stable.`,
-    explanation: `At [1:15:24]–[1:15:49], the lecturer derives: "U_{k+1} = 1/(1+τa) × u_k, which means after n steps, u_n = (1/(1+τa))^n × u₀... This is going to decay as long as 1 + τa > 1. Well, tau is a positive number, and A is a positive number, so this is always going to be true. What that means is backward Euler is unconditionally stable for linear ODEs."
-
-that backward euler doesn't blow us but the drawback is we get damping. To solve damping , we can take more timestep but that is what we were trying to avoid in the first place. one way to solve it is simplectic euler.`,
-    code: ``,
-    images: ["image_1777622951939_0.png"],
-    tags: ["Stability", "TheoriticalGuarantee", "Euler"],
-    source: `lectures/cg-21-lecture-quiz.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `TRADEOFF`,
-    format: `mcq`,
-    timestamp: `1:13:55`,
-    question: `What is the main drawback of Backward Euler compared to Forward Euler?`,
-    options: [`It requires computing more force evaluations per step`, `It exhibits numerical damping — energy artificially dissipates even when the true system conserves energy`, `It is less stable for all time step sizes`, `It only works for linear ODEs and fails for nonlinear systems`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [1:13:55]–[1:14:22], the lecturer observes: "What's going to happen is the motion is going to become damped out. It's going to go slower and slower and slower until it stops and doesn't move at all. And that's also kind of sad, right? Where did all the energy go? We weren't modeling friction... But in our mathematical model, there was no friction. Energy shouldn't have been created or destroyed." This artificial damping is the price of unconditional stability.`,
-    code: ``,
-    images: ["image_1777623100398_0.png"],
-    tags: ["Damping"],
-    source: `lectures/cg-21-lecture-quiz.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `ALGORITHM`,
-    format: `mcq`,
-    timestamp: `1:17:31`,
-    question: `What is the Symplectic Euler update rule?`,
-    options: [`v_{k+1} = v_k + τ·f(q_k); q_{k+1} = q_k + τ·v_k (both use current state)`, `v_{k+1} = v_k + τ·f(q_{k+1}); q_{k+1} = q_k + τ·v_{k+1} (implicit velocity, implicit position)`, `q_{k+1} = q_k + τ·v_k + ½τ²·f(q_k) (Verlet position update)`, `v_{k+1} = v_k + τ·f(q_k); q_{k+1} = q_k + τ·v_{k+1} (explicit velocity from current q, position uses new v)`],
-    answer: 3,
-    answerText: ``,
-    intuition: `The twist: update velocity first (using current position, like Forward Euler), THEN update position using the brand-new velocity (not the old one). This "stagger" — v then q, v then q — happens to conserve the symplectic structure of Hamiltonian mechanics. Result: energy is preserved over long simulations, unlike Forward (grows) or Backward (shrinks) Euler.`,
-    explanation: `At [1:17:31]–[1:17:55], the lecturer describes: "We're gonna update our velocity using the current configuration. So we're gonna go from the current velocity to the next velocity using data from the current configuration. And then we're gonna update the configuration using our new velocity. So the configuration and the velocity aren't moving forward in lockstep. We're updating the velocity and then updating the configuration — they're kind of staggered."`,
-    code: ``,
-    images: ["image_1777623111287_0.png"],
-    tags: [],
-    source: `lectures/cg-21-lecture-quiz.md`,
-  },
 ]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
@@ -640,7 +638,7 @@ export default function Lec21Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -686,13 +684,13 @@ export default function Lec21Part1Quiz() {
             <a key={1} href={`${BASE}/lec21/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec21/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -716,7 +714,8 @@ export default function Lec21Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}

@@ -1,6 +1,18 @@
 tags:: CG/lec5 , CG
 
 - # Spatial Transformations Quiz - Part 1
+- #card [QF1] [FLOW] [00:00] The lecture lists many uses of spatial transformations in graphics: positioning objects, moving the camera, animating, projecting to 2D, mapping textures, casting shadows. What single mathematical property makes one framework cover all of these?
+	- ANSWER: Linearity — and its consequence, composability. Each stage of the graphics pipeline is a linear map (a matrix), so the entire pipeline from model space to screen space is also a linear map (the product of all matrices). An entire sequence of transforms — model→world→camera→clip→NDC→screen — can be pre-multiplied into a single matrix applied once per vertex. This is why transformations are everywhere in graphics: any stage that can be expressed as a matrix gets this "bake everything together" efficiency for free.
+	- INTUITION: Composing linear transforms = multiplying matrices. One multiplication instead of N sequential operations per vertex.
+
+- #card [QF2] [FLOW] [00:00] The lecture derives the 2D rotation matrix from first principles (where do basis vectors land?) rather than just stating the formula. Why is this derivation approach important beyond just getting the formula?
+	- ANSWER: The derivation reveals the general principle: any linear map is fully determined by where it sends the basis vectors. The columns of a matrix are exactly the images of the input basis vectors. This means: to build any linear transform from scratch, ask "where does e₁ go? where does e₂ go?" and read off the matrix columns. This technique works for reflections, scaling, shearing, and all composed transforms — and generalizes to 3D and non-standard bases.
+	- INTUITION: A linear map has no memory, so knowing where the basis goes determines everything. The formula is just a side effect of that principle.
+
+- #card [QF3] [ORDER] [00:00] Put these transformation topics in the order lecture 5 introduces them: affine transformations and homogeneous coordinates / 3D rotation matrices / 2D rotation matrix derivation from first principles / scaling, reflection, and shear
+	- ANSWER: 2D rotation matrix derivation → Scaling, reflection, and shear → 3D rotation matrices → Affine transformations and homogeneous coordinates
+	- INTUITION: Build from the simplest case (2D rotation) → generalize within 2D → extend to 3D → add translation via homogeneous trick.
+
 - #card [Q1] [00:00] - [Introduction] → [Course context and transformation overview]
   collapsed:: true
   What is the fundamental definition of a spatial transformation according to Prof. Crane?

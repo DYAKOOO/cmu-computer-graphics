@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Grid } from 'lucide-react'
 
 // Source: lectures/cg-02-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 2: Linear Algebra — Part 3 · QQ65–QQ65 · 1 questions (1 MCQ, 0 reveal)
+// Lecture 2: Linear Algebra — Part 3 · QQ62–QQ65 · 4 questions (4 MCQ, 0 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-02-lecture-quiz.md 2
 
 const quizData = [
+  {
+    id: 62,
+    qid: `Q62`,
+    qtype: `RELATIONSHIP`,
+    format: `mcq`,
+    timestamp: `1:37:11`,
+    question: `How do matrix entries relate to coordinate systems?`,
+    options: [`Matrix entries are independent of coordinate systems`, `Matrix entries must use Cartesian coordinates`, `Matrix entries are always the same in any coordinate system`, `Matrix entries depend on the choice of coordinates`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer states at [1:37:11]: "As we've seen the entries of those matrices are going to depend on your choice of coordinates so i could have two matrices that represent the exact same geometric operation  that represent the same linear map for instance but have completely different entries."`,
+    code: ``,
+    images: ["image_1771911680590_0.png"],
+    tags: ["Coordinate", "Relationship"],
+    source: `lectures/cg-02-lecture-quiz.md`,
+  },
+  {
+    id: 63,
+    qid: `Q63`,
+    qtype: `PURPOSE`,
+    format: `mcq`,
+    timestamp: `1:38:08`,
+    question: `Despite their limitations, why do we use matrices according to the lecture?`,
+    options: [`They make linear algebra problems more challenging`, `They're useful for symbolic manipulation and efficient numerical computation`, `They're easier to teach than other representations`, `They're the only way to represent linear maps`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer explains at [1:38:08]: "They are very very useful for doing certain kinds of symbolic manipulation but more importantly for doing numerical computation at the end of the day we want to boil down our linear algebra problem into a matrix equation that we can hand off to our computer and our computer will solve that for us very very fast."`,
+    code: ``,
+    images: [],
+    tags: ["computation"],
+    source: `lectures/cg-02-lecture-quiz.md`,
+  },
+  {
+    id: 64,
+    qid: `Q64`,
+    qtype: `CONSTRUCTION`,
+    format: `mcq`,
+    timestamp: `1:40:52`,
+    question: `How do you construct a matrix representing a linear map f(u) = u₁a₁ + u₂a₂?`,
+    options: [`Compute the inverse of the vectors a₁ and a₂`, `Use a₁ and a₂ as the rows of the matrix`, `Use a₁ and a₂ as the columns of the matrix`, `Take the cross product of a₁ and a₂`],
+    answer: 2,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The lecturer explains at [1:40:52]: "From that point of view building this matrix is super straightforward i just take these fixed vectors a and i make those the columns of the matrix capital A."`,
+    code: ``,
+    images: [],
+    tags: ["Homework"],
+    source: `lectures/cg-02-lecture-quiz.md`,
+  },
   {
     id: 65,
     qid: `Q65`,
@@ -109,7 +160,7 @@ export default function Lec2Part3Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (1 || 1) * 100)
+    const p = Math.round(s / (4 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -156,12 +207,12 @@ export default function Lec2Part3Quiz() {
           <a key={2} href={`${BASE}/lec2/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           <a key={3} href={`${BASE}/lec2/3`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ65–QQ65 · 1 questions (1 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ62–QQ65 · 4 questions (4 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>1</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>4</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~1min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
@@ -186,7 +237,7 @@ export default function Lec2Part3Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 1 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 4 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -231,12 +282,12 @@ export default function Lec2Part3Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/1</span>
+              <span>{qIdx+1}/4</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/1*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/4*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -377,7 +428,7 @@ export default function Lec2Part3Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 1-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 4-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

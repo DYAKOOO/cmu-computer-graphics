@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Search } from 'lucide-react'
 
 // Source: lectures/cg-12-lecture-quiz.md.md  (symlinked → Logseq pages)
-// Lecture 12: Geometric Queries — Part 2 · QQ33–QQ41 · 9 questions (9 MCQ, 0 reveal)
+// Lecture 12: Geometric Queries — Part 2 · QQ30–QQ41 · 12 questions (12 MCQ, 0 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-12-lecture-quiz.md.md 12
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `EQUATION`,
+    format: `mcq`,
+    timestamp: `38:15`,
+    question: `What is the implicit equation for a unit sphere?`,
+    options: [`|x| - 1 = 0`, `|x|² - 1 = 0`, `|x|² = 1`, `|x| = 1`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [38:22] the lecturer states: "The function f is just f of X is the norm of x squared minus 1 any point that has unit norm will evaluate to 0 those points are on the sphere."`,
+    code: ``,
+    images: ["lec12_slide_20.png"],
+    tags: [],
+    source: `lectures/cg-12-lecture-quiz.md.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `MCQ`,
+    format: `mcq`,
+    timestamp: `39:32`,
+    question: `What type of equation results from finding the intersection of a ray with a sphere?`,
+    options: [`Cubic equation`, `Quadratic equation`, `Linear equation`, `Exponential equation`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [39:32] the lecturer states: "If we call norm of d squared a to OD is B and norm of o squared minus one is C then we have a quadratic equation for T we just have a T squared plus BT plus C is equal to zero."`,
+    code: ``,
+    images: ["lec12_slide_20.png"],
+    tags: [],
+    source: `lectures/cg-12-lecture-quiz.md.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `CASES`,
+    format: `mcq`,
+    timestamp: `40:47`,
+    question: `When considering ray-sphere intersection, what is the geometric meaning of having two solutions to the quadratic equation?`,
+    options: [`The ray pierces the sphere twice (entering and exiting)`, `The ray completely misses the sphere`, `There's an error in the calculation`, `The ray is tangent to the sphere`],
+    answer: 0,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [41:29] the lecturer explains: "In the case that we show here on the bottom right it's pretty clear that the Ray pierces the sphere twice it goes into the sphere and then back out of the sphere ah those must be the two solutions to the quadratic equation."`,
+    code: ``,
+    images: ["lec12_slide_20.png"],
+    tags: [],
+    source: `lectures/cg-12-lecture-quiz.md.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -243,7 +294,7 @@ export default function Lec12Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (9 || 1) * 100)
+    const p = Math.round(s / (12 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -289,14 +340,14 @@ export default function Lec12Part2Quiz() {
             <a key={1} href={`${BASE}/lec12/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec12/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ41 · 9 questions (9 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ41 · 12 questions (12 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>9</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>12</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~3min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~4min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -319,7 +370,7 @@ export default function Lec12Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 9 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 12 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -364,12 +415,12 @@ export default function Lec12Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/9</span>
+              <span>{qIdx+1}/12</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/9*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/12*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -510,7 +561,7 @@ export default function Lec12Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 9-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 12-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

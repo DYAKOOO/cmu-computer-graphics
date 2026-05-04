@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Waves } from 'lucide-react'
 
 // Source: lectures/cg-23-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 23: PDEs & Physical Animation — Part 2 · QQ33–QQ36 · 4 questions (4 MCQ, 0 reveal)
+// Lecture 23: PDEs & Physical Animation — Part 2 · QQ30–QQ36 · 7 questions (7 MCQ, 0 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-23-lecture-quiz.md 23
 
 const quizData = [
+  {
+    id: 30,
+    qid: `Q30`,
+    qtype: `CONCEPTUAL`,
+    format: `mcq`,
+    timestamp: `49:00`,
+    question: `Can we always satisfy the 1D Laplace equation given Dirichlet boundary conditions?`,
+    options: [`Only if the domain length is less than 1 unit`, `Yes — in 1D it simply finds a linear function between the two boundary values`, `No — there may be no smooth function connecting the two endpoint values`, `Only if both boundary values are equal to zero`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `The answer is yes because it is easy to do for a point — in 1D the Laplace equation has a unique solution: a straight line between the two prescribed boundary values. Satisfying boundary conditions is not the hard part; satisfying every value in the interior is what matters.`,
+    code: ``,
+    images: ["image_1777212043598_0.png"],
+    tags: ["BoundaryConditions/Dirichlet", "Laplace"],
+    source: `lectures/cg-23-lecture-quiz.md`,
+  },
+  {
+    id: 31,
+    qid: `Q31`,
+    qtype: `CONCEPTUAL`,
+    format: `mcq`,
+    timestamp: `50:00`,
+    question: `Can we always satisfy the Laplace equation given Neumann boundary conditions?`,
+    options: [`Yes, but only in 2D or higher dimensions`, `No — the second derivative is a rate of change of the first derivative; if the first derivative is not changing, the second derivative cannot be nonzero`, `Yes, always — any Neumann conditions can always be satisfied`, `No, because Neumann conditions are always mathematically inconsistent`],
+    answer: 1,
+    answerText: ``,
+    intuition: ``,
+    explanation: `No — the second derivative is a rate of change of the first derivative. If the first derivative (normal derivative at the boundary) is not changing, then the second derivative is not working. There is a compatibility condition that must be satisfied for a solution to exist.`,
+    code: ``,
+    images: ["image_1777212242234_0.png"],
+    tags: ["BoundaryConditions/Neumann", "Laplace"],
+    source: `lectures/cg-23-lecture-quiz.md`,
+  },
+  {
+    id: 32,
+    qid: `Q32`,
+    qtype: `CONCEPTUAL`,
+    format: `mcq`,
+    timestamp: `52:00`,
+    question: `Can we satisfy the 2D Laplace equation with Dirichlet boundary conditions?`,
+    options: [`Only if the domain is convex`, `No — the 2D case is fundamentally different from 1D and has no general solution`, `Only for rectangular or triangular domains`, `Yes — with appropriate boundary data a unique smooth solution exists interpolating those values`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `Yes — the 2D Laplace equation with Dirichlet boundary conditions has a unique solution given appropriate boundary data. It finds the smoothest function that interpolates the prescribed boundary values over the interior.`,
+    code: ``,
+    images: ["image_1777212531236_0.png"],
+    tags: ["BoundaryConditions/Dirichlet", "Laplace"],
+    source: `lectures/cg-23-lecture-quiz.md`,
+  },
   {
     id: 33,
     qid: `Q33`,
@@ -157,7 +208,7 @@ export default function Lec23Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (4 || 1) * 100)
+    const p = Math.round(s / (7 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -203,14 +254,14 @@ export default function Lec23Part2Quiz() {
             <a key={1} href={`${BASE}/lec23/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec23/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ33–QQ36 · 4 questions (4 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ36 · 7 questions (7 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>4</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>7</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~1min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~2min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -233,7 +284,7 @@ export default function Lec23Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 4 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 7 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -278,12 +329,12 @@ export default function Lec23Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/4</span>
+              <span>{qIdx+1}/7</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/4*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/7*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -424,7 +475,7 @@ export default function Lec23Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 4-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 7-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>

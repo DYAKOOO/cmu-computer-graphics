@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Grid } from 'lucide-react'
 
 // Source: lectures/cg-02-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 2: Linear Algebra — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
+// Lecture 2: Linear Algebra — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-02-lecture-quiz.md 2
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture opens with "why is linear algebra important for computer graphics?" and answers it before covering any formulas. Why does this framing — starting from applications rather than axioms — shape what the lecture covers and in what order?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Linear algebra is useful in graphics because, once a problem is expressed as Ax=b, the computer can solve it efficiently. This shapes the lecture to focus on the tools that appear most in graphics: norms (measuring size/error), inner products (measuring alignment, projections), linear maps (transformations), and eigenvalues (principal directions of deformation). The application-first framing also explains why the formal vector space axioms are shown but not drilled — the intuition matters more than the proof.`,
+    intuition: `"Once it's linear algebra, the computer handles it" — that promise justifies everything that follows.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-02-lecture-quiz.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture introduces vectors geometrically ("a little arrow") before introducing coordinate representations. Why does separating the geometric concept from its coordinate encoding matter for graphics?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `A geometric vector (direction + magnitude) exists independently of any coordinate system. Its coordinates depend on the chosen basis — the same arrow has different numbers in different coordinate frames. Graphics constantly changes frames (model → world → camera → screen), so operations defined geometrically (dot product, cross product, norm) are guaranteed to give the same answer in any frame, while coordinate arithmetic is not. Starting from geometry prevents a common bug: applying coordinate-specific shortcuts in the wrong frame.`,
+    intuition: `The arrow doesn't change when you rotate the ruler. The numbers do.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-02-lecture-quiz.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these linear algebra topics in the order lecture 2 introduces them: eigenvalues and eigenvectors / Gram-Schmidt orthogonalization / inner product and norm / linear maps and matrices / vector spaces (abstract definition)`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Vector spaces (abstract definition) → Inner product and norm → Linear maps and matrices → Gram-Schmidt orthogonalization → Eigenvalues and eigenvectors`,
+    intuition: `Each layer adds structure to the previous: sets → measurable sets → structure-preserving maps → orthonormal structure → intrinsic directions.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-02-lecture-quiz.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -503,57 +554,6 @@ vectors with base points appear in differential geometry and are not important i
     tags: ["Formula"],
     source: `lectures/cg-02-lecture-quiz.md`,
   },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `CALCULATION`,
-    format: `mcq`,
-    timestamp: `39:22`,
-    question: `What is the Euclidean norm of the vector (4,2)?`,
-    options: [`20`, `4.47...`, `6`, `2√5`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer calculates at [39:22]: "If i have the vector u equals 4 2 its norm is the square root of 4 squared plus 2 squared which we can simplify to 2 root 5."`,
-    code: ``,
-    images: ["image_1771901728304_0.png"],
-    tags: [],
-    source: `lectures/cg-02-lecture-quiz.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `DEFINITION`,
-    format: `mcq`,
-    timestamp: `40:22`,
-    question: `What domain restriction is placed on functions when defining the L² norm?`,
-    options: [`The functions must be defined over the unit interval [0,1]`, `The functions must be continuous`, `The functions must be periodic`, `The functions must be polynomials`],
-    answer: 0,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer specifies at [40:22]: "Just to keep things simple let's consider real valued functions over the unit interval 0 1. okay so by that i mean we have a function and we only know its values between 0 and 1 it doesn't exist outside of this interval."`,
-    code: ``,
-    images: ["image_1771901960791_0.png"],
-    tags: ["Norm/L2", "definition"],
-    source: `lectures/cg-02-lecture-quiz.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `FORMULA`,
-    format: `mcq`,
-    timestamp: `40:59`,
-    question: `What is the formula for the L² norm of a function f(x) on the unit interval?`,
-    options: [`The maximum value of f(x) on [0,1]`, `The integral of f(x) from 0 to 1`, `The average value of f(x) on [0,1]`, `The square root of the integral of [f(x)]² from 0 to 1`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `The lecturer defines at [40:59]: "The l2 norm is defined as the norm of f is equal to the square root of the integral from 0 to 1 of f of x squared dx."`,
-    code: ``,
-    images: ["image_1771901960791_0.png"],
-    tags: [],
-    source: `lectures/cg-02-lecture-quiz.md`,
-  },
 ]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
@@ -636,7 +636,7 @@ export default function Lec2Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -683,13 +683,13 @@ export default function Lec2Part1Quiz() {
           <a key={2} href={`${BASE}/lec2/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           <a key={3} href={`${BASE}/lec2/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -713,7 +713,8 @@ export default function Lec2Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}

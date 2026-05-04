@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Move } from 'lucide-react'
 
 // Source: lectures/cg-05-lecture-quiz.md.md  (symlinked → Logseq pages)
-// Lecture 5: Spatial Transformations — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
+// Lecture 5: Spatial Transformations — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-05-lecture-quiz.md.md 5
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture lists many uses of spatial transformations in graphics: positioning objects, moving the camera, animating, projecting to 2D, mapping textures, casting shadows. What single mathematical property makes one framework cover all of these?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Linearity — and its consequence, composability. Each stage of the graphics pipeline is a linear map (a matrix), so the entire pipeline from model space to screen space is also a linear map (the product of all matrices). An entire sequence of transforms — model→world→camera→clip→NDC→screen — can be pre-multiplied into a single matrix applied once per vertex. This is why transformations are everywhere in graphics: any stage that can be expressed as a matrix gets this "bake everything together" efficiency for free.`,
+    intuition: `Composing linear transforms = multiplying matrices. One multiplication instead of N sequential operations per vertex.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture derives the 2D rotation matrix from first principles (where do basis vectors land?) rather than just stating the formula. Why is this derivation approach important beyond just getting the formula?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `The derivation reveals the general principle: any linear map is fully determined by where it sends the basis vectors. The columns of a matrix are exactly the images of the input basis vectors. This means: to build any linear transform from scratch, ask "where does e₁ go? where does e₂ go?" and read off the matrix columns. This technique works for reflections, scaling, shearing, and all composed transforms — and generalizes to 3D and non-standard bases.`,
+    intuition: `A linear map has no memory, so knowing where the basis goes determines everything. The formula is just a side effect of that principle.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these transformation topics in the order lecture 5 introduces them: affine transformations and homogeneous coordinates / 3D rotation matrices / 2D rotation matrix derivation from first principles / scaling, reflection, and shear`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `2D rotation matrix derivation → Scaling, reflection, and shear → 3D rotation matrices → Affine transformations and homogeneous coordinates`,
+    intuition: `Build from the simplest case (2D rotation) → generalize within 2D → extend to 3D → add translation via homogeneous trick.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-05-lecture-quiz.md.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -509,58 +560,6 @@ instead of thinking cos and sine as this osciliatary functions , its better to t
     tags: [],
     source: `lectures/cg-05-lecture-quiz.md.md`,
   },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `MCQ`,
-    format: `mcq`,
-    timestamp: `50:38`,
-    question: `- [Review: Perspective projection] → [Connection to homogeneous coordinates]`,
-    options: [`Both were developed at the same time for computer graphics`, `Both involve converting between different coordinate systems`, `They are unrelated concepts from different fields`, `Both use the idea that points along the same line project to the same point`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `As explained at [50:38]: "Hopefully the story is reminding you a little bit of our pinhole camera right we said if we have this pinhole camera looking out at the world through this little hole then objects along the same line through space all project to the same point on the film at the back of the camera."`,
-    code: ``,
-    images: [],
-    tags: [],
-    source: `lectures/cg-05-lecture-quiz.md.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `MCQ`,
-    format: `mcq`,
-    timestamp: `51:16`,
-    question: `- [Homogeneous Coordinates (2D)] → [Mathematical formulation]`,
-    options: [`By converting to polar coordinates (r,θ)`, `By any three numbers (a,b,c) where a/c and b/c give the original 2D coordinates`, `By adding a third coordinate that is always 1`, `By multiplying both coordinates by a constant`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `As defined at [51:30]: "Any three numbers p hat equals abc such that a divided by c and b divided by c are the same as x and y give us homogeneous coordinates for p."`,
-    code: ``,
-    images: [],
-    tags: [],
-    source: `lectures/cg-05-lecture-quiz.md.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `MCQ`,
-    format: `mcq`,
-    timestamp: `52:53`,
-    question: `- [Translation in Homogeneous Coordinates] → [Making translation linear]`,
-    options: [`3D shear`, `3D rotation`, `3D reflection`, `3D scaling`],
-    answer: 0,
-    answerText: ``,
-    intuition: ``,
-    explanation: `As described at [53:41]: "Hopefully this reminds you of some three-dimensional transformation that we've already seen if you look at the movie on the right what kind of transformation does that look like well hopefully it reminds you of a shear we're taking this kind of cone made by the triangle and we're shearing it across the xy plane."
-- # Spatial Transformations Quiz - Part 3`,
-    code: ``,
-    images: [],
-    tags: [],
-    source: `lectures/cg-05-lecture-quiz.md.md`,
-  },
 ]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
@@ -643,7 +642,7 @@ export default function Lec5Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -689,13 +688,13 @@ export default function Lec5Part1Quiz() {
             <a key={1} href={`${BASE}/lec5/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec5/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -719,7 +718,8 @@ export default function Lec5Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}

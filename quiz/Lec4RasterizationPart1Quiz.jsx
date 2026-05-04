@@ -3,10 +3,61 @@ import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Monitor } from 'lucide-react'
 
 // Source: lectures/cg-04-lecture-quiz.md  (symlinked → Logseq pages)
-// Lecture 4: Rasterization & Sampling — Part 1 · QQ1–QQ32 · 32 questions (32 MCQ, 0 reveal)
+// Lecture 4: Rasterization & Sampling — Part 1 · QQF1–QQ29 · 32 questions (29 MCQ, 3 reveal)
 // Regenerate: python3 scripts/gen_quiz.py lectures/cg-04-lecture-quiz.md 4
 
 const quizData = [
+  {
+    id: 1,
+    qid: `QF1`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `The lecture opens by contrasting rasterization and ray tracing as "two major techniques for getting stuff on the screen." What is the key loop-order difference between them, and why does that difference make rasterization faster for real-time applications?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Rasterization: for each primitive → for each covered sample (determine coverage). Ray tracing: for each sample → for each primitive (determine what's visible). Rasterization processes geometry in a fixed forward order that maps well to GPU parallelism — each triangle's pixels can be computed independently. Ray tracing requires a global scene query per pixel (which primitive does this ray hit?), demanding random memory access and a BVH data structure. Rasterization can achieve billions of triangles per second on GPU; ray tracing is orders of magnitude slower per frame.`,
+    intuition: `Rasterization asks "where does this triangle go?" once per triangle. Ray tracing asks "what's in this direction?" once per pixel — requiring scene-wide search.`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-04-lecture-quiz.md`,
+  },
+  {
+    id: 2,
+    qid: `QF2`,
+    qtype: `FLOW`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `After coverage testing, the lecture introduces barycentric coordinates. What specific problem do barycentric coordinates solve that a simple binary point-in-triangle test cannot?`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `A point-in-triangle test answers only yes/no: is this sample covered? Barycentric coordinates express the sample's position as a weighted combination of the three vertices (α, β, γ with α+β+γ=1). These weights directly interpolate any per-vertex attribute — color, texture coordinates, depth, normals — at the sample location. Without barycentric coordinates, we know a pixel is covered but have no way to determine its color, depth, or texture. The weights are the interpolation mechanism for the entire rasterization pipeline.`,
+    intuition: `Coverage says "you're inside." Barycentric coordinates say "you're inside, and here's how to blend the three corners at your exact location."`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-04-lecture-quiz.md`,
+  },
+  {
+    id: 3,
+    qid: `QF3`,
+    qtype: `ORDER`,
+    format: `reveal`,
+    timestamp: `00:00`,
+    question: `Put these rasterization topics in the order lecture 4 covers them: supersampling anti-aliasing (SSAA) / barycentric coordinates for attribute interpolation / rasterization vs. ray tracing comparison / point-in-triangle coverage test`,
+    options: [``, ``, ``, ``],
+    answer: -1,
+    answerText: `Rasterization vs. ray tracing comparison → Point-in-triangle coverage test → Barycentric coordinates → Supersampling anti-aliasing (SSAA)`,
+    intuition: `The lecture establishes the approach (rasterization), solves the core problem (coverage), adds interpolation for useful data (barycentric), then improves quality (anti-aliasing).`,
+    explanation: ``,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-04-lecture-quiz.md`,
+  },
   {
     id: 1,
     qid: `Q1`,
@@ -502,57 +553,6 @@ The next question skips this sldie`,
     tags: [],
     source: `lectures/cg-04-lecture-quiz.md`,
   },
-  {
-    id: 30,
-    qid: `Q30`,
-    qtype: `DISPLAY`,
-    format: `mcq`,
-    timestamp: `31:46`,
-    question: `In the context of displaying sampled image values, what does a pixel represent according to the lecture?`,
-    options: [`A weighted average of surrounding points`, `A square of light with uniform color`, `A mathematical point with no area`, `A triangular region on screen`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [31:46], the lecturer states: "Each image sample sent to the display is converted into roughly speaking a little square of light and maybe you get to specify the color of that light."`,
-    code: ``,
-    images: ["image_1771997934002_0.png"],
-    tags: [],
-    source: `lectures/cg-04-lecture-quiz.md`,
-  },
-  {
-    id: 31,
-    qid: `Q31`,
-    qtype: `TERM`,
-    format: `mcq`,
-    timestamp: `31:57`,
-    question: `According to the lecture, what does the term "pixel" stand for?`,
-    options: [`Pixelated image`, `Picture element`, `Picture cell`, `Point index location`],
-    answer: 1,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [31:57], the lecturer explains: "The word pixel is just an abbreviation for picture element right you have a picture it's your entire screen one little element of that is a pixel."`,
-    code: ``,
-    images: ["image_1771998071836_0.png"],
-    tags: ["pixel"],
-    source: `lectures/cg-04-lecture-quiz.md`,
-  },
-  {
-    id: 32,
-    qid: `Q32`,
-    qtype: `DEFINITION`,
-    format: `mcq`,
-    timestamp: `33:47`,
-    question: `What is aliasing in the context of computer graphics?`,
-    options: [`When colors look different on different displays`, `When one triangle is rendered on top of another`, `When triangles are too small to be visible`, `When a mismatch occurs between sampling and reconstruction`],
-    answer: 3,
-    answerText: ``,
-    intuition: ``,
-    explanation: `At [33:47], the lecturer introduces: "This leads us into a discussion of something that's really core to computer graphics which is the phenomenon of aliasing," and throughout the lecture explains it as a mismatch between sampling and reconstruction causing misrepresentation of the original signal.`,
-    code: ``,
-    images: ["image_1771998130102_0.png", "image_1771998135778_0.png"],
-    tags: ["Aliasing", "definition"],
-    source: `lectures/cg-04-lecture-quiz.md`,
-  },
 ]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
@@ -635,7 +635,7 @@ export default function Lec4Part1Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (32 || 1) * 100)
+    const p = Math.round(s / (29 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -680,14 +680,15 @@ export default function Lec4Part1Quiz() {
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec4/1`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec4/2`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 2</a>
+          <a key={3} href={`${BASE}/lec4/3`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 3</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ1–QQ32 · 32 questions (32 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQF1–QQ29 · 32 questions (29 graded + 3 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>32</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>29</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>3</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~10min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
@@ -711,7 +712,8 @@ export default function Lec4Part1Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 32 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 29 MCQ correct</div>
+          <div style={{ color: '#475569', fontSize: '0.875rem' }}>+ 3 open questions (self-assessed)</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
