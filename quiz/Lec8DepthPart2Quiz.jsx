@@ -2,215 +2,367 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw, BookOpen, Trophy, Clock, CheckCircle, XCircle, Eye, Layers } from 'lucide-react'
 
-// Source: lectures/cg-08-lecture-quiz.md.md  (symlinked → Logseq pages)
-// Lecture 8: Depth & Transparency — Part 2 · QQ30–QQ41 · 12 questions (12 MCQ, 0 reveal)
-// Regenerate: python3 scripts/gen_quiz.py lectures/cg-08-lecture-quiz.md.md 8
+// Source: lectures/cg-08-lecture-quiz.md  (symlinked → Logseq pages)
+// Lecture 8: Depth & Transparency — Part 2 · QQ30–QQ50 · 21 questions (21 MCQ, 0 reveal)
+// Regenerate: python3 scripts/gen_quiz.py lectures/cg-08-lecture-quiz.md 8
 
 const quizData = [
   {
     id: 30,
     qid: `Q30`,
-    qtype: `CHALLENGE`,
+    qtype: `ADVANTAGE`,
     format: `mcq`,
-    timestamp: `35:04`,
-    question: `What fundamental assumption does compositing with the "over" operator make that creates challenges for handling depth?`,
-    options: [`That primitives never intersect`, `That all primitives are the same color`, `That all primitives are fully opaque`, `That primitives are drawn in back-to-front order`],
-    answer: 3,
+    timestamp: `32:56`,
+    question: `What does pre-multiplied alpha preserve that non-premultiplied compositing distorts?`,
+    options: [`The depth value — pre-mult keeps depth consistent during compositing`, `The original color — blending two bright red things still gives bright red; only the alpha increases`, `The alpha value — pre-mult keeps alpha fixed at 1.0`, `The texture coordinates — pre-mult avoids UV distortion at edges`],
+    answer: 1,
     answerText: ``,
     intuition: ``,
-    explanation: `The lecturer explains at [35:57], "The key word here is the word over because we're compositing our colors using this over operation we're assuming that a is over b right that we're drawing things in the right order and we're not worrying about occlusion only if things are drawn in back to front order."`,
+    explanation: `At [32:56], the lecturer states: "I blended together two bright red things the color itself hasn't changed it's still bright red it's only the alpha that's changed it's increased to become more opaque." Pre-multiplied alpha separates color blending from opacity blending.`,
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md.md`,
+    source: `lectures/cg-08-lecture-quiz.md`,
   },
   {
     id: 31,
     qid: `Q31`,
-    qtype: `PROBLEM`,
+    qtype: `CALCULATION`,
     format: `mcq`,
-    timestamp: `36:59`,
-    question: `What makes sorting transparent triangles particularly difficult?`,
-    options: [`They have too many vertices`, `There may be no valid ordering when triangles intersect each other`, `They require special shaders`, `They don't work with the depth buffer`],
-    answer: 1,
+    timestamp: `32:41`,
+    question: `When compositing two identical 50%-opaque bright red primitives using pre-multiplied alpha, what is the final recovered RGB color?`,
+    options: [`(1.0, 0, 0)`, `(0.75, 0, 0)`, `(0.5, 0, 0)`, `(0.25, 0, 0)`],
+    answer: 0,
     answerText: ``,
     intuition: ``,
-    explanation: `The lecturer explains at [36:35], "We have to deal with these issues of primitives intersecting each other if we have two triangles intersecting each other there may be no ordering that gives us the right answer."`,
+    explanation: `At [32:41], the lecturer explains: "But remember that to recover the original color i'm going to actually divide by alpha so the color i get is bright red 1 0 0 and the alpha i get is still that .75." Pre-multiplied alpha recovers the original bright red, while non-premultiplied gives the distorted dark red (0.75, 0, 0).`,
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md.md`,
+    source: `lectures/cg-08-lecture-quiz.md`,
   },
   {
     id: 32,
     qid: `Q32`,
-    qtype: `TECHNIQUE`,
+    qtype: `SUMMARY`,
     format: `mcq`,
-    timestamp: `38:05`,
-    question: `In the two-pass approach for rendering mixed opaque and transparent primitives, what happens to the depth buffer between passes?`,
-    options: [`It's inverted`, `It's cleared completely`, `It's replaced with a different buffer`, `It's preserved but updates are disabled`],
-    answer: 3,
+    timestamp: `33:22`,
+    question: `Which of the following is NOT listed as an advantage of pre-multiplied alpha in the lecture?`,
+    options: [`Fewer arithmetic operations for the "over" operation`, `Better representation for filtering (upsampling and downsampling)`, `Improved depth testing accuracy for transparent surfaces`, `Treating all channels (RGB and alpha) the same way`],
+    answer: 2,
     answerText: ``,
     intuition: ``,
-    explanation: `The lecturer states at [38:46], "After we're done drawing all of our opaque triangles we're going to disable the depth buffer update we're no longer going to change the depth values."`,
+    explanation: `At [33:22–33:48], the lecturer lists advantages: treating all channels the same, fewer arithmetic operations, closure under composition, and better filtering. Improved depth testing is not mentioned as an advantage of pre-multiplied alpha.`,
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md.md`,
+    source: `lectures/cg-08-lecture-quiz.md`,
   },
   {
     id: 33,
     qid: `Q33`,
-    qtype: `INPUT`,
+    qtype: `ADVANTAGE`,
     format: `mcq`,
-    timestamp: `40:54`,
-    question: `What format does the lecturer mention the positions are stored in?`,
-    options: [`Polar coordinates`, `Homogeneous coordinates`, `Cartesian coordinates`, `Barycentric coordinates`],
-    answer: 1,
+    timestamp: `34:02`,
+    question: `Why does pre-multiplied alpha "fit naturally into the rasterization pipeline"?`,
+    options: [`The pipeline already uses homogeneous coordinates and 4×4 matrices, and pre-mult color is just a 4-vector in the same space`, `It reduces the number of triangles that need to be drawn`, `It eliminates the need for a depth buffer when rendering transparent objects`, `It allows texture coordinates to be omitted for transparent surfaces`],
+    answer: 0,
     answerText: ``,
     intuition: ``,
-    explanation: `The lecturer states at [40:54], "By the way all of these positions are also in homogeneous coordinates."`,
+    explanation: `At [34:02], the lecturer states: "And also it fits naturally into the rasterization pipeline we've already built so we've already said homogeneous coordinates are a good idea we're going to work with 4x4 matrices our graphics card is built that way so it's pretty cool that our color blending works out the same way."`,
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md.md`,
+    source: `lectures/cg-08-lecture-quiz.md`,
   },
   {
     id: 34,
     qid: `Q34`,
-    qtype: `STAGE`,
+    qtype: `CHALLENGE`,
     format: `mcq`,
-    timestamp: `42:04`,
-    question: `What happens during the "clipping" stage of the pipeline?`,
-    options: [`Colors are clipped to a valid range`, `Alpha values are set to zero or one`, `Triangles are stretched to fit the screen`, `Triangles outside the view are discarded, and partially visible triangles are cut into smaller ones`],
-    answer: 3,
+    timestamp: `35:04`,
+    question: `What fundamental question arises when trying to use the depth buffer with semi-transparent triangles?`,
+    options: [`Should a semi-transparent triangle update the depth buffer, given that objects behind it should still be visible?`, `Should transparent triangles be rendered at a lower resolution to save time?`, `Should the depth buffer store a list of all depths at each sample instead of just the minimum?`, `Should the alpha value be stored in the depth buffer instead of a separate buffer?`],
+    answer: 0,
     answerText: ``,
     intuition: ``,
-    explanation: `The lecturer explains at [42:17], "We perform clipping so we discard triangles that lie outside the unit cube if they're completely inside the unit cube we keep them and if they are partially contained in this cube well we have to do a little work to cut them up into smaller triangles."`,
+    explanation: `At [35:04], the lecturer poses: "But what about depth if i draw a semi-transparent triangle should i change the depth value is that the closest thing i've seen now can't i still see triangles that i've already drawn through that triangle and shouldn't i care about their depth."`,
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md.md`,
+    source: `lectures/cg-08-lecture-quiz.md`,
   },
   {
     id: 35,
     qid: `Q35`,
-    qtype: `OPTIMIZATION`,
+    qtype: `REQUIREMENT`,
     format: `mcq`,
-    timestamp: `43:33`,
-    question: `What is the purpose of triangle setup in the rasterization pipeline?`,
-    options: [`To compute data once that will be reused for every sample point`, `To check if triangles are visible`, `To determine triangle color`, `To position triangles on the screen`],
-    answer: 0,
+    timestamp: `35:57`,
+    question: `What ordering assumption must hold for the "over" operator to produce correct compositing results?`,
+    options: [`Primitives must be drawn front-to-back so closer surfaces are composited first`, `Primitives must be sorted by color brightness before compositing`, `Primitives must be drawn back-to-front so the operator correctly places each new layer on top`, `Primitives can be drawn in any order — the "over" operator handles reordering internally`],
+    answer: 2,
     answerText: ``,
     intuition: ``,
-    explanation: `The lecturer explains at [43:44], "Basically look at our code that does the rasterization and say is there something that's getting recomputed over and over and over again for every sample that we could just pull out of that loop and compute once ahead of time."`,
+    explanation: `At [35:57], the lecturer states: "The key word here is the word over because we're compositing our colors using this over operation we're assuming that a is over b right that we're drawing things in the right order and we're not worrying about occlusion only if things are drawn in back to front order."`,
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md.md`,
+    source: `lectures/cg-08-lecture-quiz.md`,
   },
   {
     id: 36,
     qid: `Q36`,
-    qtype: `DECISION`,
+    qtype: `CHALLENGE`,
     format: `mcq`,
-    timestamp: `45:01`,
-    question: `What determines whether a sample's color is written to the color buffer?`,
-    options: [`If it's inside the triangle`, `If it passes the alpha test`, `If it has a non-zero alpha value`, `If it passes the depth test`],
+    timestamp: `36:35`,
+    question: `Why does sorting transparent triangles back-to-front remain difficult on real GPUs?`,
+    options: [`The sort must be redone at every mipmap level`, `GPUs cannot store depth values at higher than 16-bit precision`, `Transparent triangles must be tessellated before sorting`, `Sorting is annoying, GPUs are not well-suited to it, and intersecting triangles have no valid sort order`],
     answer: 3,
     answerText: ``,
     intuition: ``,
-    explanation: `The lecturer states at [45:01], "We update the color buffer if the depth buffer test passed."`,
+    explanation: `At [36:35], the lecturer explains: "This is annoying for a couple reasons for one thing it's just annoying to have to do this sort all the time it's not something actually that's very easy to do on a on a graphics card and also we have to deal with these issues of primitives intersecting each other if we have two triangles intersecting each other there may be no ordering that gives us the right answer."`,
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md.md`,
+    source: `lectures/cg-08-lecture-quiz.md`,
   },
   {
     id: 37,
     qid: `Q37`,
-    qtype: `REQUIREMENT`,
+    qtype: `ALGORITHM`,
     format: `mcq`,
-    timestamp: `46:35`,
-    question: `What requirement of modern rasterization pipelines necessitates hardware implementation?`,
-    options: [`The need to support ray tracing`, `The need to support multiple monitors`, `The need to use pre-multiplied alpha`, `The need to handle extremely high complexity and performance`],
-    answer: 3,
+    timestamp: `38:05`,
+    question: `What two-pass approach handles scenes with both opaque and transparent primitives?`,
+    options: [`Render transparent first, then opaque — so transparent surfaces always composite over the opaque ones`, `Render each primitive independently into a separate buffer and composite them all at the end`, `First render opaque primitives in any order using the depth buffer; then disable depth writes and render transparent primitives back-to-front`, `Render all primitives in one pass using a combined depth-and-alpha test`],
+    answer: 2,
     answerText: ``,
     intuition: ``,
-    explanation: `The lecturer explains at [46:52], "The goal of these rasterization pipelines is to render scenes with extremely high complexity they need to render thousands and millions of triangles with complex transforms and shaders and you have really high resolution outputs right 10 megapixels with super sampling."`,
+    explanation: `At [38:23–38:52], the lecturer describes: "We can first render our opaque primitives in any order we want using the depth buffer... After we're done drawing all of our opaque triangles we're going to disable the depth buffer update we're no longer going to change the depth values we're just going to go ahead and render semi-transparent surfaces in back to front order we're still going to check if we pass the depth test."`,
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md.md`,
+    source: `lectures/cg-08-lecture-quiz.md`,
   },
   {
     id: 38,
     qid: `Q38`,
-    qtype: `HARDWARE`,
+    qtype: `TECHNIQUE`,
     format: `mcq`,
-    timestamp: `48:08`,
-    question: `What specific hardware components does the lecturer mention GPUs have for graphics operations?`,
-    options: [`Hardware for bilinear filtering, clipping triangles, and blending operations`, `Ray tracing cores and tensor cores`, `Specialized SIMD units`, `Neural network accelerators`],
+    timestamp: `38:46`,
+    question: `In the two-pass approach, what happens to the depth buffer when rendering the transparent pass?`,
+    options: [`It is preserved from the opaque pass, but depth writes are disabled — only depth reads occur`, `It is cleared completely so transparent triangles can write fresh depth values`, `It is replaced with a separate transparency depth buffer`, `It is inverted so that transparency appears in front of all opaque geometry`],
     answer: 0,
     answerText: ``,
     intuition: ``,
-    explanation: `The lecturer specifically mentions at [48:27], "It has hardware for doing bilinear filtering of textures it has hardware for clipping triangles it has hardware for doing blending operations like the over operation."`,
+    explanation: `At [38:46], the lecturer states: "After we're done drawing all of our opaque triangles we're going to disable the depth buffer update we're no longer going to change the depth values." Transparent triangles still test against opaque depth values to detect correct occlusion, but do not overwrite them.`,
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md.md`,
+    source: `lectures/cg-08-lecture-quiz.md`,
   },
   {
     id: 39,
     qid: `Q39`,
-    qtype: `EVOLUTION`,
+    qtype: `GOAL`,
     format: `mcq`,
-    timestamp: `49:43`,
-    question: `How has GPU design evolved according to the lecturer?`,
-    options: [`From fixed function to more programmable stages while maintaining specialized hardware`, `From large chips to smaller ones`, `From specialized hardware to completely general-purpose processors`, `From parallel to sequential processing`],
-    answer: 0,
+    timestamp: `40:03`,
+    question: `What is the most fundamental goal of the rasterization pipeline according to the lecture summary?`,
+    options: [`To simulate physically accurate lighting in real time`, `To match the visual quality of offline ray tracing`, `To maximize GPU utilization by processing millions of triangles per second`, `To turn a list of triangles and associated data into a final bitmap image`],
+    answer: 3,
     answerText: ``,
     intuition: ``,
-    explanation: `The lecturer explains at [49:07], "Okay so although gpus have gone more and more toward programmability toward flexibility they still benefit from having some very specialized components."`,
+    explanation: `At [40:03], the lecturer states: "So the most important thing to remember is what is our goal what are we trying to do here we're trying to turn some inputs into a final image."`,
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md.md`,
+    source: `lectures/cg-08-lecture-quiz.md`,
   },
   {
     id: 40,
     qid: `Q40`,
-    qtype: `LIMITATION`,
+    qtype: `INPUT`,
     format: `mcq`,
-    timestamp: `51:05`,
-    question: `What limitation of rasterization does the ray tracing demo highlight?`,
-    options: [`Rasterization cannot easily produce realistic lighting, shadows and reflections`, `Rasterization is too slow for real-time applications`, `Rasterization uses too much memory`, `Rasterization cannot handle high polygon counts`],
-    answer: 0,
+    timestamp: `40:54`,
+    question: `Which of the following is NOT mentioned as an input to the rasterization pipeline?`,
+    options: [`Texture coordinates (UV) per vertex`, `Lighting equations and light source positions`, `Perspective transform matrix`, `Triangle vertex positions (in homogeneous coordinates)`],
+    answer: 1,
     answerText: ``,
     intuition: ``,
-    explanation: `The lecturer states at [51:10], "And this is stuff that you really can't pull off very easily with rasterization you can pull various tricks to kind of get these effects but to get the true physically based appearance you really need this ray tracing technology."`,
+    explanation: `Between [40:14] and [41:12], the lecturer lists: triangle positions, UV coordinates, texture map, object-to-camera transform, perspective transform, and output image dimensions. Lighting equations are not listed as a pipeline input at this stage.`,
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md.md`,
+    source: `lectures/cg-08-lecture-quiz.md`,
   },
   {
     id: 41,
     qid: `Q41`,
-    qtype: `ROADMAP`,
+    qtype: `PROCESS`,
     format: `mcq`,
-    timestamp: `51:53`,
-    question: `In what order does the lecturer say the remaining topics will be covered in the course?`,
-    options: [`Materials and lighting, geometry, animation`, `Animation, geometry, materials and lighting`, `Ray tracing, animation, geometry`, `Geometry, materials and lighting, animation`],
+    timestamp: `41:51`,
+    question: `What is the first transformation applied to each triangle in the rasterization pipeline?`,
+    options: [`Homogeneous divide to convert from 4D to 3D`, `Perspective projection to normalized device coordinates`, `Clipping against the view frustum`, `Transformation into camera space using the inverse camera transform`],
     answer: 3,
     answerText: ``,
     intuition: ``,
-    explanation: `The lecturer outlines at [52:28], "Next time we're going to start talking about geometry and then we're going to move on to materials and lighting and photorealistic rendering and finally near the end of the course we'll talk about animation."
--`,
+    explanation: `At [41:51], the lecturer states: "Okay what do we do first to each triangle we transform the triangles into camera space by applying the inverse of the camera transform."`,
     code: ``,
     images: [],
     tags: [],
-    source: `lectures/cg-08-lecture-quiz.md.md`,
+    source: `lectures/cg-08-lecture-quiz.md`,
+  },
+  {
+    id: 42,
+    qid: `Q42`,
+    qtype: `PROCESS`,
+    format: `mcq`,
+    timestamp: `42:17`,
+    question: `What happens during the clipping stage of the pipeline?`,
+    options: [`Alpha values are quantized to 0 or 1 to simplify depth testing`, `Triangles are stretched to fill the screen boundaries`, `Triangles outside the normalized unit cube are discarded; partially visible triangles are cut into smaller triangles that fit inside`, `RGB color values are clamped to the [0,1] range`],
+    answer: 2,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [42:17], the lecturer explains: "We perform clipping so we discard triangles that lie outside the unit cube if they're completely inside the unit cube we keep them and if they are partially contained in this cube well we have to do a little work to cut them up into smaller triangles that are contained inside the cube."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md`,
+  },
+  {
+    id: 43,
+    qid: `Q43`,
+    qtype: `OPTIMIZATION`,
+    format: `mcq`,
+    timestamp: `43:44`,
+    question: `What is the purpose of "triangle setup" before iterating over individual sample points?`,
+    options: [`To determine whether the triangle should be drawn at all`, `To compute the final pixel color once for the whole triangle`, `To compute the texture LOD level for the entire triangle`, `To pull computations out of the per-sample loop that only need to be done once per triangle — edge equations, barycentric coefficient setup, etc.`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [43:44], the lecturer explains: "Basically look at our code that does the rasterization and say is there something that's getting recomputed over and over and over again for every sample that we could just pull out of that loop and compute once ahead of time."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md`,
+  },
+  {
+    id: 44,
+    qid: `Q44`,
+    qtype: `DECISION`,
+    format: `mcq`,
+    timestamp: `44:39`,
+    question: `What determines whether a sample's color is written to the color buffer?`,
+    options: [`Whether the sample's UV coordinates are within the valid texture range`, `Whether the sample falls within the center half of the triangle`, `Whether the sample has a non-zero alpha value`, `Whether the sample passes the depth test (its depth is less than what is stored in the Z-buffer)`],
+    answer: 3,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [44:39–45:01], the lecturer states: "Once we know what color the sample should be we actually have to figure out should we even bother writing it into the color buffer so we perform a depth test if the thing that we're drawing is closer than anything we've seen before we write the new depth into the depth buffer we write the color into the color buffer otherwise we do nothing. Right so we update the color buffer if the depth buffer test passed."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md`,
+  },
+  {
+    id: 45,
+    qid: `Q45`,
+    qtype: `HARDWARE`,
+    format: `mcq`,
+    timestamp: `47:24`,
+    question: `Why are real-world rasterizers implemented in hardware rather than software?`,
+    options: [`Software rasterizers produce lower quality images due to floating-point limitations`, `Software rasterizers cannot support pre-multiplied alpha`, `Real-time rasterization demands — millions of triangles, complex shaders, 10+ megapixel output, hundreds of frames per second for VR — are far beyond what CPU software can deliver`, `Hardware is required by the OpenGL specification`],
+    answer: 2,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [46:52–47:24], the lecturer explains: "The goal of these rasterization pipelines is to render scenes with extremely high complexity they need to render thousands and millions of triangles with complex transforms and shaders and you have really high resolution outputs right 10 megapixels with super sampling... And so these rasterizers are not going to be implemented in software people aren't writing them on their you know cpus like you're doing for this class but they've actually been baked into hardware these days."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md`,
+  },
+  {
+    id: 46,
+    qid: `Q46`,
+    qtype: `HARDWARE`,
+    format: `mcq`,
+    timestamp: `48:08`,
+    question: `How does the lecturer describe a GPU architecturally?`,
+    options: [`A heterogeneous multi-core processor with both programmable cores and highly specialized fixed-function hardware`, `A single very fast processor optimized for floating-point operations`, `A collection of many identical CPU cores running in parallel`, `A purely software-based parallel compute system`],
+    answer: 0,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [48:08], the lecturer states: "A gpu is really a heterogeneous multi-core processor so it's not just a big bunch of cpus glued onto a single chip it also has some highly highly specialized hardware that does some of the operations that you now know and love."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md`,
+  },
+  {
+    id: 47,
+    qid: `Q47`,
+    qtype: `HARDWARE`,
+    format: `mcq`,
+    timestamp: `48:27`,
+    question: `What specific fixed-function hardware units does the lecturer say GPUs contain?`,
+    options: [`Hardware for bilinear texture filtering, triangle clipping, and blending operations like the "over" operator`, `Hardware for mesh tessellation and level-of-detail selection`, `Hardware neural network accelerators and SIMD vector units`, `Hardware for shadow map generation and ambient occlusion`],
+    answer: 0,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [48:27], the lecturer specifically lists: "It has hardware for doing bilinear filtering of textures it has hardware for clipping triangles it has hardware for doing blending operations like the over operation and so forth."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md`,
+  },
+  {
+    id: 48,
+    qid: `Q48`,
+    qtype: `EVOLUTION`,
+    format: `mcq`,
+    timestamp: `49:07`,
+    question: `How has GPU pipeline design evolved over time, according to the lecturer?`,
+    options: [`From parallel to sequential processing to simplify debugging`, `From large discrete chips toward fully integrated CPU designs`, `From fixed-function stages toward increasingly programmable, flexible stages — while still retaining specialized hardware components`, `From flexible programmable designs toward fixed-function hardware for maximum efficiency`],
+    answer: 2,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [49:07], the lecturer explains: "Okay so although gpus have gone more and more toward programmability toward flexibility they still benefit from having some very specialized components okay and so that's kind of the evolution of the modern rasterization pipeline there's been a trend toward more generic but still highly parallel computation the different stages have become more and more programmable."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md`,
+  },
+  {
+    id: 49,
+    qid: `Q49`,
+    qtype: `COMPARISON`,
+    format: `mcq`,
+    timestamp: `51:05`,
+    question: `What advantage of ray tracing over rasterization does the NVIDIA real-time demo illustrate?`,
+    options: [`Ray tracing produces physically accurate lighting, shadows, and reflections in real time — effects that rasterization can only approximate with tricks`, `Ray tracing is significantly faster than rasterization for all scene types`, `Ray tracing requires less GPU memory than rasterization`, `Ray tracing eliminates the need for texture mapping`],
+    answer: 0,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [51:05–51:22], the lecturer states: "The thing to realize is that all of these lighting effects all these shadows and the light bouncing off various surfaces is all being done in real time. And this is stuff that you really can't pull off very easily with rasterization you can pull various tricks to kind of get these effects but to get the true physically based appearance you really need this ray tracing technology."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md`,
+  },
+  {
+    id: 50,
+    qid: `Q50`,
+    qtype: `ROADMAP`,
+    format: `mcq`,
+    timestamp: `52:28`,
+    question: `In what order does the lecturer say the remaining course topics will be covered?`,
+    options: [`Geometry → materials and lighting and photorealistic rendering → animation`, `Materials and lighting → geometry → animation`, `Ray tracing → animation → geometry`, `Animation → geometry → materials and lighting`],
+    answer: 0,
+    answerText: ``,
+    intuition: ``,
+    explanation: `At [52:28], the lecturer outlines: "Next time we're going to start talking about geometry and then we're going to move on to materials and lighting and photorealistic rendering and finally near the end of the course we'll talk about animation."`,
+    code: ``,
+    images: [],
+    tags: [],
+    source: `lectures/cg-08-lecture-quiz.md`,
   },
 ]
 
@@ -294,7 +446,7 @@ export default function Lec8Part2Quiz() {
   useEffect(() => {
     if (screen !== 'results') return
     const s = answers.filter((a,i) => quizData[i].format==='mcq' && a===quizData[i].answer).length
-    const p = Math.round(s / (12 || 1) * 100)
+    const p = Math.round(s / (21 || 1) * 100)
     const entry = { date: new Date().toLocaleDateString(), score: s, pct: p, time: t }
     setHistory(prev => { const u = [entry, ...prev].slice(0,10); try { localStorage.setItem(STORE+'_hist', JSON.stringify(u)) } catch {} return u })
   }, [screen])
@@ -335,19 +487,19 @@ export default function Lec8Part2Quiz() {
           <Layers size={64} color={C.accent} style={{ display: 'inline-block', marginBottom: '1rem' }} />
           <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: C.accent, margin: '0 0 0.5rem' }}>Lecture 8: Depth & Transparency — Part 2</h1>
           <p style={{ color: C.muted, marginBottom: '0.25rem' }}>Z-buffer, painter's algorithm, alpha blending, order-independent</p>
-          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-08-lecture-quiz.md.md</p>
+          <p style={{ color: '#475569', fontSize: '0.78rem', fontFamily: 'monospace', marginBottom: '0.5rem' }}>lectures/cg-08-lecture-quiz.md</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
             <a key={1} href={`${BASE}/lec8/1`} style={{ color: C.muted, fontSize: "0.85rem" }}>Part 1</a>
           <a key={2} href={`${BASE}/lec8/2`} style={{ color: C.accent, fontSize: "0.85rem" }}>Part 2</a>
           </div>
-          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ41 · 12 questions (12 graded + 0 open)</p>
+          <p style={{ color: C.accent, fontWeight: 600 }}>QQ30–QQ50 · 21 questions (21 graded + 0 open)</p>
         </div>
 
         <div style={{ background: '#0d0d12', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', textAlign: 'center' }}>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>12</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>21</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Graded MCQ</div></div>
             <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>0</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Open / Reveal</div></div>
-            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~4min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
+            <div><div style={{ fontSize: '2rem', fontWeight: 700, color: C.accent }}>~7min</div><div style={{ color: C.muted, fontSize: '0.9rem' }}>Est. Time</div></div>
           </div>
         </div>
 
@@ -370,7 +522,7 @@ export default function Lec8Part2Quiz() {
         </div>
         <div style={{ background: '#0d0d12', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', textAlign: 'center', border: `1px solid ${C.border}` }}>
           <div style={{ fontSize: '4rem', fontWeight: 700, color: pct>=70?C.ok:pct>=50?C.warn:C.err, marginBottom: '0.5rem' }}>{pct}%</div>
-          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 12 MCQ correct</div>
+          <div style={{ fontSize: '1.2rem', color: C.muted, marginBottom: '0.75rem' }}>{score} / 21 MCQ correct</div>
           <div style={{ color: C.muted, marginTop: '0.5rem' }}>{pct>=90?'Excellent!':pct>=70?'Great work!':pct>=50?'Good progress!':'Keep studying!'}</div>
         </div>
         {/* Score history */}
@@ -415,12 +567,12 @@ export default function Lec8Part2Quiz() {
             </div>
             <div style={{ display: 'flex', gap: '1.25rem', color: C.muted, fontSize: '0.875rem', alignItems: 'center' }}>
               <span><Clock size={14} style={{ display:'inline', verticalAlign:'middle', marginRight:'0.25rem' }} />{formatTime(t)}</span>
-              <span>{qIdx+1}/12</span>
+              <span>{qIdx+1}/21</span>
               <span style={{ color: C.accent }}>✓ {score}</span>
             </div>
           </div>
           <div style={{ height: '5px', background: C.border, borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/12*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
+            <div style={{ height: '100%', width: `${Math.round((qIdx+1)/21*100)}%`, background: C.accent, transition: 'width 0.3s' }} />
           </div>
         </div>
 
@@ -505,7 +657,7 @@ export default function Lec8Part2Quiz() {
                     <p style={{ margin: '0 0 0.5rem', fontSize: '0.72rem', fontWeight: 700, color: C.accent, letterSpacing: '0.06em' }}>FIRST PRINCIPLES</p>
                     <p style={{ margin: 0, lineHeight: 1.8, color: C.text, fontSize: '0.95rem' }}>{q.intuition}</p>
                   </div>
-                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-08-lecture-quiz.md.md.</p>
+                : <p style={{ color: '#475569', margin: 0, fontSize: '0.875rem' }}>No intuition yet — add a <code style={{ color: C.accent }}>- INTUITION:</code> block in lectures/cg-08-lecture-quiz.md.</p>
             )}
             {expTab === 'explanation' && (
               q.explanation
@@ -561,7 +713,7 @@ export default function Lec8Part2Quiz() {
           )}
           {(showExp || revealed || reviewMode) && (
             <button onClick={handleNext} style={btn({ flex:1, justifyContent:'center' })}>
-              {qIdx < 12-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
+              {qIdx < 21-1 ? 'Next Question' : 'View Results'} <ChevronRight size={20} />
             </button>
           )}
         </div>
