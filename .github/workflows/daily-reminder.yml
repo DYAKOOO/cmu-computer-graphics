@@ -12,16 +12,27 @@ jobs:
   remind:
     runs-on: ubuntu-latest
     steps:
-      - name: Check it is 5:45 in Melbourne
+      - name: Match cron schedule to current Melbourne timezone
         id: check
         run: |
-          HOUR=$(TZ=Australia/Melbourne date +%H)
-          echo "Melbourne hour is $HOUR"
-          if [ "$HOUR" = "05" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "send=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "send=false" >> "$GITHUB_OUTPUT"
+          # Each cron fires daily, but only one matches the active timezone.
+          # AEST (winter, UTC+10) → UTC 19:45 = 5:45 local
+          # AEDT (summer, UTC+11) → UTC 18:45 = 5:45 local
+          # Matching by schedule (not local hour) tolerates GitHub Actions
+          # cron delays of up to ~30 min without missing the send.
+          OFFSET=$(TZ=Australia/Melbourne date +%z)
+          SCHEDULE="${{ github.event.schedule }}"
+          LOCAL=$(TZ=Australia/Melbourne date "+%Y-%m-%d %H:%M")
+          echo "Melbourne offset: $OFFSET   local time: $LOCAL   cron: $SCHEDULE"
+          SEND=false
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            SEND=true
+          elif [ "$OFFSET" = "+1000" ] && [ "$SCHEDULE" = "45 19 * * *" ]; then
+            SEND=true
+          elif [ "$OFFSET" = "+1100" ] && [ "$SCHEDULE" = "45 18 * * *" ]; then
+            SEND=true
           fi
+          echo "send=$SEND" >> "$GITHUB_OUTPUT"
 
       - name: Check streak status
         if: steps.check.outputs.send == 'true'
