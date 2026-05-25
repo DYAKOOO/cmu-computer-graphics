@@ -13,6 +13,7 @@ Usage:
 import re
 import sys
 import os
+import json
 import argparse
 import shutil
 import random
@@ -717,12 +718,27 @@ if __name__ == '__main__':
     base       = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     quiz_dir   = os.path.join(base, 'quiz')
     assets_dst = os.path.join(base, 'public', 'assets')
+    json_dir   = os.path.join(base, 'quiz_data')
 
     print(f"Parsing {args.markdown_file} ...")
     questions = parse_questions(args.markdown_file)
     n_mcq     = sum(1 for q in questions if q['format'] == 'mcq')
     n_reveal  = len(questions) - n_mcq
     print(f"Found {len(questions)} questions ({n_mcq} MCQ, {n_reveal} reveal)")
+
+    # Emit a single JSON file per lecture (un-split, all formats included) so
+    # the Telegram bot Worker can fetch a real file from GitHub raw. The .md
+    # source is a symlink outside the repo, so raw.githubusercontent.com only
+    # serves the symlink target string — unusable. JSON breaks that.
+    os.makedirs(json_dir, exist_ok=True)
+    json_out = os.path.join(json_dir, f'lec{int(args.lecture_num)}.json')
+    with open(json_out, 'w') as fh:
+        json.dump({
+            'lecture':   int(args.lecture_num),
+            'title':     cfg['title'],
+            'questions': questions,
+        }, fh, ensure_ascii=False, indent=2)
+    print(f"Written: quiz_data/lec{int(args.lecture_num)}.json  ({len(questions)} questions)")
 
     copied = copy_images(questions, assets_dst)
     if copied:
