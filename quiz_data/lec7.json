@@ -1,0 +1,2281 @@
+{
+  "lecture": 7,
+  "title": "Lecture 7: Texture Mapping",
+  "questions": [
+    {
+      "num": 1,
+      "sort_key": 0.01,
+      "qid": "QF1",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "The lecture opens with paintings spanning the 8th–20th century showing the history of perspective in art. What does this art-history detour accomplish for the technical content that follows?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "It establishes that perspective is a fundamental human perceptual phenomenon, not just a mathematical trick. Artists struggled for centuries to get it right — and Picasso deliberately broke it. This motivates why perspective projection must be treated carefully mathematically, and primes the viewer to notice perspective errors in renders. It also makes the upcoming \"perspective-correct interpolation\" problem feel concrete: incorrect perspective is instantly visible.",
+      "intuition": "History of perception → history of rendering. Both are about matching what we see to what we compute.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": [
+        "Projection/Perspective"
+      ]
+    },
+    {
+      "num": 2,
+      "sort_key": 0.02,
+      "qid": "QF2",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "After covering perspective projection, the lecture introduces texture mapping. What specific problem arises when you combine these two ideas, and what technique resolves it?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Barycentric coordinates are linear in 3D space but the perspective division (dividing by w) is nonlinear. Linearly interpolating texture coordinates in screen space (after projection) produces incorrect results — textures appear warped. Perspective-correct interpolation recovers the correct 3D interpolant by dividing by the interpolated 1/w before looking up the texture.",
+      "intuition": "Perspective \"bends\" the space that interpolation happens in. Correcting for that bend is the key insight.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 0.03,
+      "qid": "QF3",
+      "qtype": "ORDER",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "Put these lecture 7 topics in the order they are covered: perspective-correct texture interpolation / mipmap anti-aliasing / UV coordinate mapping / perspective projection matrix derivation",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Perspective projection matrix derivation → UV coordinate mapping → perspective-correct texture interpolation → mipmap anti-aliasing",
+      "intuition": "The lecture builds the rendering pipeline left-to-right: project first, then map texture coordinates, then fix the interpolation, then handle filtering artifacts.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 1,
+      "sort_key": 1.0,
+      "qid": "Q1",
+      "qtype": "INTRODUCTION",
+      "format": "mcq",
+      "timestamp": "00:00",
+      "question": "What are the two main topics covered in this lecture?",
+      "options": [
+        "Rasterization and ray tracing",
+        "Textures and colors",
+        "Lighting and shading",
+        "Perspective projection and texture mapping"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [00:06]: \"Welcome back to computer graphics. Today we're going to talk about perspective projection and texture mapping.\"",
+      "code": "",
+      "images": [
+        "lec7_slide_01.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 2.0,
+      "qid": "Q2",
+      "qtype": "RELATIONSHIP",
+      "format": "mcq",
+      "timestamp": "00:29",
+      "question": "How does the lecturer describe the relationship between the two main topics of the lecture?",
+      "options": [
+        "They are sequential steps in the graphics pipeline",
+        "They are two approaches that solve the same problem",
+        "They are two ideas that \"come crashing together\"",
+        "They are completely separate techniques"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [00:29], the lecturer says: \"Today we're going to see where these two ideas, these two perspectives, kind of come crashing together.\"",
+      "code": "",
+      "images": [
+        "lec7_slide_02.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 3.0,
+      "qid": "Q3",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "00:55",
+      "question": "What is perspective projection primarily concerned with?",
+      "options": [
+        "How lighting affects object appearance",
+        "How pixels are drawn on screen",
+        "How textures are mapped onto 3D surfaces",
+        "How objects appear smaller as they get farther away"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [01:00], the lecturer explains: \"Perspective is this effect that we're all familiar with, distant objects in the world appear smaller as they get further away from us.\"",
+      "code": "",
+      "images": [
+        "lec7_slide_04.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 4,
+      "sort_key": 4.0,
+      "qid": "Q4",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "01:07",
+      "question": "What happens to parallel lines in perspective projection?",
+      "options": [
+        "They remain parallel",
+        "They diverge at the horizon",
+        "They converge at the horizon",
+        "They become curved"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [01:07], the lecturer states: \"We notice especially in this image that parallel lines converge at the horizon.\"",
+      "code": "",
+      "images": [
+        "lec7_slide_04.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 5,
+      "sort_key": 5.0,
+      "qid": "Q5",
+      "qtype": "HISTORICAL",
+      "format": "mcq",
+      "timestamp": "01:24",
+      "question": "According to the lecture, what challenge did early painters face with perspective?",
+      "options": [
+        "They lacked proper materials to create depth",
+        "They only used orthographic projection",
+        "They struggled to get accurate perspective",
+        "They intentionally rejected perspective"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [01:24], the lecturer notes: \"If we go back for instance and look through the history of painting, we can see that people really struggled to get accurate perspective.\"",
+      "code": "",
+      "images": [
+        "lec7_slide_05.png"
+      ],
+      "tags": [
+        "perspective"
+      ]
+    },
+    {
+      "num": 6,
+      "sort_key": 6.0,
+      "qid": "Q6",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "02:08",
+      "question": "What did artists do after mastering perspective, according to the lecturer?",
+      "options": [
+        "They focused exclusively on orthographic projections",
+        "They only created photorealistic art",
+        "They rejected perspective to play with perception",
+        "They abandoned painting altogether"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [02:08], the lecturer explains: \"Later on as people mastered perspective, they said well actually we can reject perspective now that we can understand it, we can play all sorts of games with it.\"",
+      "code": "",
+      "images": [
+        "lec7_slide_07.png"
+      ],
+      "tags": [
+        "Perception"
+      ]
+    },
+    {
+      "num": 7,
+      "sort_key": 7.0,
+      "qid": "Q7",
+      "qtype": "COMPARISON",
+      "format": "mcq",
+      "timestamp": "02:46",
+      "question": "What is a primary advantage of orthographic projection according to the lecture?",
+      "options": [
+        "It's easier to implement in a graphics pipeline",
+        "It preserves sizes regardless of distance",
+        "It creates more realistic images",
+        "It adds artistic style to renderings"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [02:57], the lecturer states: \"Like an orthographic projection where sizes are more predictable or more preserved.\"",
+      "code": "",
+      "images": [
+        "image_1777877958173_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 8,
+      "sort_key": 8.0,
+      "qid": "Q8",
+      "qtype": "SEQUENCE",
+      "format": "mcq",
+      "timestamp": "03:10",
+      "question": "In the graphics transformation pipeline, what is the first stage described in the lecture?",
+      "options": [
+        "World coordinates",
+        "Screen transformation",
+        "Camera transformation",
+        "Clipping"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [03:21], the lecturer states: \"We'll start out with some object described in world coordinates, like you might remember from our first lecture we specified a cube by just giving the location of its vertices in some absolute global coordinate system.\"",
+      "code": "",
+      "images": [
+        "image_1777878006564_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 9,
+      "sort_key": 9.0,
+      "qid": "Q9",
+      "qtype": "TRANSFORMATION",
+      "format": "mcq",
+      "timestamp": "03:42",
+      "question": "What transformation is applied to input coordinates to effectively position the camera?",
+      "options": [
+        "Orthographic projection",
+        "The inverse of the camera transformation",
+        "The forward camera transformation",
+        "The identity transformation"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [03:42], the lecturer explains: \"If our camera is positioned and rotated in a certain way, we actually are going to apply the inverse translation and rotation to our input coordinates to effectively position the camera.\"",
+      "code": "",
+      "images": [
+        "image_1777878048771_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 10,
+      "sort_key": 10.0,
+      "qid": "Q10",
+      "qtype": "PURPOSE",
+      "format": "mcq",
+      "timestamp": "03:54",
+      "question": "What is the purpose of mapping coordinates into clip coordinates?",
+      "options": [
+        "To make calculations easier",
+        "To make throwing out objects that shouldn't be drawn easier",
+        "To reduce memory usage",
+        "To apply lighting calculations"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [03:54], the lecturer states: \"These coordinates are often then mapped into what are called clip coordinates, so into a sort of standard cube that's going to make it easy to throw out things that shouldn't get drawn.\"",
+      "code": "",
+      "images": [
+        "image_1777878066148_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 11,
+      "sort_key": 11.0,
+      "qid": "Q11",
+      "qtype": "CAMERA",
+      "format": "mcq",
+      "timestamp": "05:06",
+      "question": "In the camera transform example, what is the position of the camera?",
+      "options": [
+        "(0,0,0)",
+        "(0,0,-1)",
+        "(4,2,0)",
+        "(1,1,1)"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [05:06], the lecturer states: \"As a concrete example, let's imagine we have a camera centered at the position (4,2,0) and it's looking down the x-axis.\"",
+      "code": "",
+      "images": [
+        "image_1777878125272_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 12,
+      "sort_key": 12.0,
+      "qid": "Q12",
+      "qtype": "TRANSFORMATION",
+      "format": "mcq",
+      "timestamp": "06:09",
+      "question": "To transform object coordinates relative to a camera at position (4,2,0), what translation should be applied?",
+      "options": [
+        "(+2,+4,0)",
+        "(+4,+2,0)",
+        "(-4,-2,0)",
+        "(0,0,0)"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [06:09], the lecturer explains: \"One way of thinking about this is that we subtract the camera center (4,2,0) from the coordinates describing our object. In other words we translate the object vertex positions by (-4,-2,0).\"",
+      "code": "",
+      "images": [
+        "image_1777878137729_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 13,
+      "sort_key": 13.0,
+      "qid": "Q13",
+      "qtype": "ROTATION",
+      "format": "mcq",
+      "timestamp": "06:42",
+      "question": "If a camera is looking down the x-axis, what rotation aligns it with the standard convention (looking down the -z axis)?",
+      "options": [
+        "Rotation about z-axis by π/2",
+        "Rotation about y-axis by π/2",
+        "Rotation about y-axis by π",
+        "Rotation about x-axis by π/2"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [06:42], the lecturer states: \"In this case we can do this by just a simple rotation. We can rotate about the y-axis by π/2 and now we'll effectively have aligned the camera's view direction with the minus z-axis.\"",
+      "code": "",
+      "images": [
+        "image_1777878185517_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 14,
+      "sort_key": 14.0,
+      "qid": "Q14",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "07:47",
+      "question": "What property of rotation matrices makes them particularly easy to invert?",
+      "options": [
+        "They are always lower triangular",
+        "Their inverse is the same as their transpose",
+        "They are always symmetric",
+        "They always have determinant 1"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [10:48], the lecturer explains: \"There's something very special about rotation matrices that makes them particularly nice to invert, which is that the inverse of a rotation matrix is just its transpose.\"",
+      "code": "",
+      "images": [
+        "image_1777878253854_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 15,
+      "sort_key": 15.0,
+      "qid": "Q15",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "11:24",
+      "question": "What is the view frustum?",
+      "options": [
+        "The range of colors visible in the scene",
+        "The amount of distortion in the image",
+        "The region the camera can see",
+        "The boundary of what the user can see on screen"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [11:24], the lecturer defines: \"The view frustum is the region this final camera can see.\"",
+      "code": "",
+      "images": [
+        "image_1777878294269_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 16,
+      "sort_key": 16.0,
+      "qid": "Q16",
+      "qtype": "CONVENTION",
+      "format": "mcq",
+      "timestamp": "11:37",
+      "question": "What is the standard convention for camera orientation in the rasterization pipeline?",
+      "options": [
+        "Camera at origin looking down +x axis",
+        "Camera at origin looking down +y axis",
+        "Camera at origin looking down +z axis",
+        "Camera at origin looking down -z axis"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [11:37], the lecturer states: \"Just to keep things simple we always imagine that the camera is sitting at the origin and pointed down the minus z axis.\"",
+      "code": "",
+      "images": [
+        "image_1777878329132_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 17,
+      "sort_key": 17.0,
+      "qid": "Q17",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "12:04",
+      "question": "What do the sides of the view frustum correspond to?",
+      "options": [
+        "Different rendering priorities",
+        "The four sides of the image to be drawn",
+        "Different processing threads",
+        "Different levels of detail"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [12:04], the lecturer explains: \"We can think of the top, bottom, left, and right sides/planes of this box as the four sides of the image that we want to draw.\"",
+      "code": "",
+      "images": [
+        "image_1777878320696_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 18,
+      "sort_key": 18.0,
+      "qid": "Q18",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "12:55",
+      "question": "What is clipping in the context of the graphics pipeline?",
+      "options": [
+        "Reducing the resolution of distant objects",
+        "Removing parts of objects that are too small",
+        "Removing objects that are too complex",
+        "Eliminating triangles not inside the view frustum"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [12:55], the lecturer states: \"Clipping is the process of eliminating triangles not inside this view frustum.\"",
+      "code": "",
+      "images": [
+        "image_1777878386258_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 19,
+      "sort_key": 19.0,
+      "qid": "Q19",
+      "qtype": "EFFICIENCY",
+      "format": "mcq",
+      "timestamp": "13:19",
+      "question": "Why is clipping at the triangle level more efficient than at the pixel level?",
+      "options": [
+        "It uses less memory",
+        "It enables better anti-aliasing",
+        "It avoids wasting computation on primitives that won't be visible",
+        "It improves image quality"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [13:13], the lecturer explains: \"Why do we even bother with this clipping process? Well one answer is that we don't want to waste time rasterizing primitives that we can't see.\"",
+      "code": "",
+      "images": [
+        "image_1777878407909_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 20,
+      "sort_key": 20.0,
+      "qid": "Q20",
+      "qtype": "STRATEGY",
+      "format": "mcq",
+      "timestamp": "14:11",
+      "question": "What general graphics strategy does the lecturer highlight when discussing clipping?",
+      "options": [
+        "Avoid using specialized hardware",
+        "Always optimize for quality over performance",
+        "Always perform operations in screen space",
+        "Use coarse-to-fine testing to save effort"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [14:11], the lecturer states: \"This is generally a really useful strategy in computer graphics: try to go coarse to fine. Any time you can do a quick and dirty check to see if something's even worth doing, you've saved yourself a whole lot of effort.\"",
+      "code": "",
+      "images": [
+        "lec7_slide_68.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 21,
+      "sort_key": 21.0,
+      "qid": "Q21",
+      "qtype": "IMPLEMENTATION",
+      "format": "mcq",
+      "timestamp": "14:54",
+      "question": "How does a real rasterization pipeline handle triangles that are partially inside the view frustum?",
+      "options": [
+        "It draws the entire triangle",
+        "It splits the triangle into sub-triangles",
+        "It rejects the entire triangle",
+        "It reduces the triangle's resolution"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [14:54], the lecturer explains: \"Generally the way that clipping is done in a real rasterization pipeline is we take any partial triangle and we split it up into several sub-triangles.\"",
+      "code": "",
+      "images": [
+        "lec7_slide_68.png"
+      ],
+      "tags": [
+        "Implementation"
+      ]
+    },
+    {
+      "num": 22,
+      "sort_key": 22.0,
+      "qid": "Q22",
+      "qtype": "PIPELINE",
+      "format": "mcq",
+      "timestamp": "15:33",
+      "question": "Why does the rasterization pipeline focus on triangles specifically?",
+      "options": [
+        "Triangles are more realistic for modeling",
+        "Triangles require less memory than other primitives",
+        "Triangles are always convex",
+        "The pipeline is built to do one thing very well - draw triangles"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [15:33], the lecturer states: \"The reason goes back to something very important that we've discussed with the rasterization pipeline, which is that we're really trying to build a pipeline that does one thing really really well and really really fast, which is to draw triangles onto the screen.\"",
+      "code": "",
+      "images": [
+        "image_1777878440216_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 23,
+      "sort_key": 23.0,
+      "qid": "Q23",
+      "qtype": "REASONING",
+      "format": "mcq",
+      "timestamp": "16:28",
+      "question": "What is one reason for having a near clipping plane?",
+      "options": [
+        "To reduce memory usage",
+        "To handle triangles with vertices both in front of and behind the eye",
+        "To fix texture mapping issues",
+        "To improve image quality"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [16:28], the lecturer explains: \"One reason is that you could easily imagine primitives that have vertices both in front of and behind the eye. You get really close to an object and some of these triangles are going to be spanning positive and negative z values.\"",
+      "code": "",
+      "images": [
+        "image_1777878497278_0.png"
+      ],
+      "tags": [
+        "Clipping/near"
+      ]
+    },
+    {
+      "num": 24,
+      "sort_key": 24.0,
+      "qid": "Q24",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "17:05",
+      "question": "What is z-buffering (depth buffering)?",
+      "options": [
+        "A technique for compressing depth values",
+        "A technique for tracking the closest depth seen so far for occlusion",
+        "A technique for anti-aliasing",
+        "A technique for improving texture mapping"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [17:12], the lecturer describes: \"The idea is if I want to draw many primitives on the screen and have them occlude each other, I'm going to keep track in an additional image of the closest depth I've seen so far.\"",
+      "code": "",
+      "images": [
+        "image_1777878572601_0.png"
+      ],
+      "tags": [
+        "ZBuffer"
+      ]
+    },
+    {
+      "num": 25,
+      "sort_key": 25.0,
+      "qid": "Q25",
+      "qtype": "ARTIFACT",
+      "format": "mcq",
+      "timestamp": "18:32",
+      "question": "What causes z-fighting in rendering?",
+      "options": [
+        "Poor triangle mesh quality",
+        "Incorrect lighting calculations",
+        "Insufficient precision in depth values",
+        "Problems with texture coordinates"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [18:50], the lecturer explains: \"It's happening because the z values, the depth values that I'm storing in this buffer really are fighting because I don't have enough precision.\"\n\n-",
+      "code": "",
+      "images": [
+        "image_1777878593505_0.png"
+      ],
+      "tags": [
+        "PRECISION"
+      ]
+    },
+    {
+      "num": 26,
+      "sort_key": 26.0,
+      "qid": "Q26",
+      "qtype": "SITUATION",
+      "format": "mcq",
+      "timestamp": "19:13",
+      "question": "What visual problem occurs with z-fighting?",
+      "options": [
+        "Objects appear transparent",
+        "Objects appear inside out",
+        "Ugly jaggy artifacts appear as surfaces intersect",
+        "All colors become monochromatic"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [19:13], the lecturer states: \"From frame to frame I get these ugly jaggy artifacts. Actually even within a single frame I might have two planes overlapping and get this zigzag back and forth across where they meet.\"",
+      "code": "",
+      "images": [
+        "image_1777878627150_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 27,
+      "sort_key": 27.0,
+      "qid": "Q27",
+      "qtype": "TRANSFORMATION",
+      "format": "mcq",
+      "timestamp": "19:49",
+      "question": "What transformation is applied to the view frustum before 2D projection?",
+      "options": [
+        "Scaling to screen coordinates",
+        "Rotation to align with axes",
+        "Translation to origin",
+        "Mapping to a standard cube from -1 to 1"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [19:49], the lecturer explains: \"Before we go ahead and do the 2D projection, what we're going to do is map the view frustum, this gray box, to a standard cube, the cube between -1 and 1 in all three components.\"",
+      "code": "",
+      "images": [
+        "image_1777878681990_0.png"
+      ],
+      "tags": [
+        "Transformation"
+      ]
+    },
+    {
+      "num": 28,
+      "sort_key": 28.0,
+      "qid": "Q28",
+      "qtype": "BENEFIT",
+      "format": "mcq",
+      "timestamp": "20:04",
+      "question": "What benefit does mapping the view frustum to a standard cube provide?",
+      "options": [
+        "It improves image quality",
+        "It makes clipping easier",
+        "It reduces memory requirements",
+        "It makes rendering faster"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [20:04], the lecturer states: \"Why do we do this? Well for one thing it makes clipping a lot easier. We can just toss out any points that are outside the range minus one to one.\"",
+      "code": "",
+      "images": [
+        "image_1777878727105_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 29,
+      "sort_key": 29.0,
+      "qid": "Q29",
+      "qtype": "MATHEMATICAL",
+      "format": "mcq",
+      "timestamp": "21:07",
+      "question": "How can the mapping between the view frustum and standard cube be expressed?",
+      "options": [
+        "As a quaternion",
+        "As a Taylor series",
+        "As a matrix",
+        "As a nonlinear function"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [21:07], the lecturer confirms: \"Yes, so we can set up a linear transformation that maps vertices of the view frustum to a cube.\"",
+      "code": "",
+      "images": [
+        "image_1777878776015_0.png"
+      ],
+      "tags": [
+        "Mapping"
+      ]
+    },
+    {
+      "num": 30,
+      "sort_key": 30.0,
+      "qid": "Q30",
+      "qtype": "APPROACH",
+      "format": "mcq",
+      "timestamp": "22:36",
+      "question": "When solving the matrix equation for the view frustum transformation, what unusual aspect does the lecturer point out?",
+      "options": [
+        "The matrix must be inverted first",
+        "We're solving for the matrix entries, not the vector",
+        "The determinant must be calculated differently",
+        "The matrix is always singular"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [22:36], the lecturer explains: \"In this case I'm not solving for x. Normally with a matrix equation Ax = y you solve for x. In this case I'm actually solving for the unknown entries of the matrix A.\"",
+      "code": "",
+      "images": [
+        "image_1777878799982_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 31,
+      "sort_key": 31.0,
+      "qid": "Q31",
+      "qtype": "COMPONENTS",
+      "format": "mcq",
+      "timestamp": "23:42",
+      "question": "What are the two main components of the orthographic projection matrix?",
+      "options": [
+        "Shearing and scaling",
+        "Scaling and translation",
+        "Translation and rotation",
+        "Reflection and rotation"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [23:42], the lecturer states: \"We can break it up into kind of two pieces. One is that it applies a non-uniform scale to turn our original box into a box of size two, and then in the upper right we have this translation.\"",
+      "code": "",
+      "images": [
+        "image_1777878859438_0.png"
+      ],
+      "tags": [
+        "Scaling",
+        "translation"
+      ]
+    },
+    {
+      "num": 32,
+      "sort_key": 32.0,
+      "qid": "Q32",
+      "qtype": "HOMOGENEOUS",
+      "format": "mcq",
+      "timestamp": "23:58",
+      "question": "What benefit do homogeneous coordinates provide for spatial transformations?",
+      "options": [
+        "They simplify perspective division",
+        "They use less memory",
+        "They make rotation matrices orthogonal",
+        "They allow expressing translations as linear transformations"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [23:58], the lecturer explains: \"That was the whole idea behind using homogeneous coordinates for spatial transformations, is that we can express translations as linear transformations in homogeneous coordinates.\"\n\n- our full perspective matrix takes geometry of view frustum into account.",
+      "code": "",
+      "images": [
+        "image_1777878891870_0.png"
+      ],
+      "tags": [
+        "Homogeneous",
+        "disclaimer"
+      ]
+    },
+    {
+      "num": 33,
+      "sort_key": 33.0,
+      "qid": "Q33",
+      "qtype": "PERSPECTIVE",
+      "format": "mcq",
+      "timestamp": "25:22",
+      "question": "How is perspective division implemented in a perspective projection matrix?",
+      "options": [
+        "By copying z into the homogeneous coordinate",
+        "By setting the determinant to zero",
+        "By adding a row of ones at the bottom",
+        "By using quaternions"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [25:22], the lecturer states: \"If in the end I want to divide by z, then I'm going to construct a matrix that copies z into the homogeneous coordinate.\"",
+      "code": "",
+      "images": [
+        "image_1777878941002_0.png"
+      ],
+      "tags": [
+        "Homogeneous"
+      ]
+    },
+    {
+      "num": 34,
+      "sort_key": 34.0,
+      "qid": "Q34",
+      "qtype": "RESULT",
+      "format": "mcq",
+      "timestamp": "25:47",
+      "question": "After applying the perspective projection matrix and homogeneous divide, what happens to the coordinates (x,y,z,w)?",
+      "options": [
+        "They become (x/z,y/z,1,1)",
+        "They become (x,y,0,w)",
+        "They become (x,y,z,1)",
+        "They become (x/w,y/w,z/w,1)"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [25:47], the lecturer states: \"When we go to turn our vector (x,y,z,w) into the final vector by dividing, we just get (x/z, y/z, 1, 1).\"",
+      "code": "",
+      "images": [
+        "image_1777878985726_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 35,
+      "sort_key": 35.0,
+      "qid": "Q35",
+      "qtype": "COORDINATES",
+      "format": "mcq",
+      "timestamp": "27:00",
+      "question": "After projection, what is the range of normalized device coordinates?",
+      "options": [
+        "-1 to 1 in x and y",
+        "0 to width/height in x and y",
+        "-10 to 10 in x and y",
+        "0 to 1 in x and y"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [27:00], the lecturer explains: \"Our projection from 3D to 2D will always give us points in the square from minus one to one sitting on the z equals one plane.\"",
+      "code": "",
+      "images": [
+        "image_1777879005679_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 36,
+      "sort_key": 36.0,
+      "qid": "Q36",
+      "qtype": "DIFFERENCE",
+      "format": "mcq",
+      "timestamp": "27:29",
+      "question": "What key difference must be addressed when converting from mathematical to image coordinates?",
+      "options": [
+        "Mathematical coordinates are always positive while image coordinates can be negative",
+        "Mathematical coordinates use radians while image coordinates use degrees",
+        "Mathematical coordinates use floating point while image coordinates use integers",
+        "Mathematical coordinates have y pointing up while image coordinates have y pointing down"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [27:29], the lecturer states: \"In mathematics usually x points to the right and y points up. In image coordinate systems, for historical reasons, x points to the right and y points down.\"",
+      "code": "",
+      "images": [
+        "image_1777879036856_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 37,
+      "sort_key": 37.0,
+      "qid": "Q37",
+      "qtype": "SEQUENCE",
+      "format": "mcq",
+      "timestamp": "28:35",
+      "question": "What is the correct sequence of coordinate transformations in the rasterization pipeline?",
+      "options": [
+        "World → View → Screen → Clip",
+        "View → World → Clip → Screen",
+        "World → View → Clip → Screen",
+        "World → Clip → View → Screen"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [28:46-30:19], the lecturer explains the complete pipeline: from world coordinates, to view coordinates (via the inverse camera transform), to clip coordinates (mapping to a standard cube), and finally to screen coordinates.",
+      "code": "",
+      "images": [
+        "image_1777879135721_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 38,
+      "sort_key": 38.0,
+      "qid": "Q38",
+      "qtype": "BENEFIT",
+      "format": "mcq",
+      "timestamp": "29:32",
+      "question": "What are the two benefits of clip coordinates according to the lecture?",
+      "options": [
+        "They improve performance and image quality",
+        "They make it easy to toss out primitives and they encode the projection type",
+        "They simplify rotation and lighting calculations",
+        "They save memory and processing time"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [29:32-29:58], the lecturer explains that clip coordinates make it easy to toss out primitives we don't want to see, and they also encode the type of projection we're going to see (perspective or orthogonal).",
+      "code": "",
+      "images": [
+        "image_1777879154543_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 39,
+      "sort_key": 39.0,
+      "qid": "Q39",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "30:52",
+      "question": "In the context of drawing primitives, what is a basic test to determine if a point is inside a triangle?",
+      "options": [
+        "Angle measurement",
+        "Texture coordinate check",
+        "Distance from point to triangle centroid",
+        "Half-plane tests"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [30:52], the lecturer mentions: \"We do a few half plane tests, pretty straightforward, but this doesn't give us very interesting triangles.\"",
+      "code": "",
+      "images": [
+        "image_1777879186478_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 40,
+      "sort_key": 40.0,
+      "qid": "Q40",
+      "qtype": "PURPOSE",
+      "format": "mcq",
+      "timestamp": "31:24",
+      "question": "What is the purpose of interpolation in the context of triangle rendering?",
+      "options": [
+        "To blend attribute values across the triangle interior",
+        "To reduce the number of vertices",
+        "To implement anti-aliasing",
+        "To make triangles render faster"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [31:24], the lecturer explains: \"A standard strategy is to interpolate somehow the color values at vertices to get a smooth blend or smooth gradation of color or any other attribute that we might have stored at vertices.\"",
+      "code": "",
+      "images": [
+        "image_1777879244352_0.png"
+      ],
+      "tags": [
+        "Interpolation"
+      ]
+    },
+    {
+      "num": 41,
+      "sort_key": 41.0,
+      "qid": "Q41",
+      "qtype": "PARAMETER",
+      "format": "mcq",
+      "timestamp": "32:49",
+      "question": "In 1D linear interpolation, what parameter is created to blend between sample points?",
+      "options": [
+        "A parameter that is 0 at the first point and 1 at the second point",
+        "A parameter that is the distance between sample points",
+        "A parameter based on the viewing angle",
+        "A parameter that represents the slope between points"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [32:49], the lecturer explains: \"One way to do this is to cook up a parameter t that is zero when we're at x_i and one when we're at x_(i+1).\"",
+      "code": "",
+      "images": [
+        "image_1777879302571_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 42,
+      "sort_key": 42.0,
+      "qid": "Q42",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "34:35",
+      "question": "What type of function is used to interpolate values across a triangle?",
+      "options": [
+        "Logarithmic",
+        "Quadratic",
+        "Affine (linear plus constant)",
+        "Exponential"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [34:35], the lecturer states: \"What we want to do really is fit a linear or really affine function to these three values. Any such function has three unknown coefficients a, b, and c.\"",
+      "code": "",
+      "images": [
+        "image_1777879329890_0.png"
+      ],
+      "tags": [
+        "affine"
+      ]
+    },
+    {
+      "num": 43,
+      "sort_key": 43.0,
+      "qid": "Q43",
+      "qtype": "APPROACH",
+      "format": "mcq",
+      "timestamp": "36:43",
+      "question": "How does the lecturer reframe 1D linear interpolation?",
+      "options": [
+        "As a system of differential equations",
+        "As a Taylor series expansion",
+        "As a matrix multiplication",
+        "As a combination of basis functions"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [36:43], the lecturer explains: \"We can really think of this as a linear combination of two functions, of two sort of basis functions.\"",
+      "code": "",
+      "images": [
+        "image_1777879496989_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 44,
+      "sort_key": 44.0,
+      "qid": "Q44",
+      "qtype": "METHOD",
+      "format": "mcq",
+      "timestamp": "38:05",
+      "question": "What is one way to construct basis functions for a triangle?",
+      "options": [
+        "Calculating the triangle's perimeter",
+        "Using the angle at each vertex",
+        "Using the triangle's area",
+        "Measuring distance from a point to each edge, divided by the height"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [38:05], the lecturer states: \"One way is given a point x, we can measure the distance from x to each of the three edges and then divide those distances by the height of the triangle.\"",
+      "code": "",
+      "images": [
+        "image_1777879550363_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 45,
+      "sort_key": 45.0,
+      "qid": "Q45",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "39:02",
+      "question": "What happens to basis functions as you approach a vertex of the triangle?",
+      "options": [
+        "All basis functions go to zero",
+        "The basis function for that vertex approaches zero, others approach one",
+        "All basis functions go to one",
+        "The basis function for that vertex approaches one, others approach zero"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [39:27], the lecturer explains: \"As we approach vertex i, two of the basis functions fade away and go to zero, one of the basis functions φ_i gets towards one, and we just recover the sample value at i.\"",
+      "code": "",
+      "images": [
+        "image_1777879661784_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 46,
+      "sort_key": 46.0,
+      "qid": "Q46",
+      "qtype": "ALTERNATIVE",
+      "format": "mcq",
+      "timestamp": "42:03",
+      "question": "What alternative method for computing barycentric coordinates uses triangle areas?",
+      "options": [
+        "The product of the areas of all subtriangles",
+        "The difference between the overall triangle area and the subtriangle",
+        "The ratio of the areas of the whole triangle to a subtriangle",
+        "The ratio of the area of a subtriangle to the overall triangle"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [42:15], the lecturer explains: \"We're going to define the basis function φ_i as just the ratio of the area of this little subtriangle (x, x_j, x_k) divided by the overall area (x_i, x_j, x_k).\"",
+      "code": "",
+      "images": [
+        "image_1777879642343_0.png"
+      ],
+      "tags": [
+        "CG-Lecture-Question"
+      ]
+    },
+    {
+      "num": 47,
+      "sort_key": 47.0,
+      "qid": "Q47",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "43:30",
+      "question": "What are barycentric coordinates?",
+      "options": [
+        "The values of the three basis functions φ_i, φ_j, φ_k for a point x",
+        "The normalized coordinates of triangle vertices",
+        "The distances from a point to each triangle vertex",
+        "The angles formed at each vertex of a triangle"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [43:30], the lecturer defines: \"No matter how you compute them, the values of the three functions φ_i, φ_j, φ_k for a given point x are called the barycentric coordinates of x.\"",
+      "code": "",
+      "images": [
+        "image_1777879752322_0.png"
+      ],
+      "tags": [
+        "definition"
+      ]
+    },
+    {
+      "num": 48,
+      "sort_key": 48.0,
+      "qid": "Q48",
+      "qtype": "CONNECTION",
+      "format": "mcq",
+      "timestamp": "44:09",
+      "question": "How do barycentric coordinates relate to rasterization?",
+      "options": [
+        "They fall out of the half-plane tests already done in rasterization",
+        "They are only used for special effects in rasterization",
+        "They require extra computation that slows down rasterization",
+        "They make rasterization slower but more accurate"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [44:09], the lecturer states: \"Importantly, these same three values conveniently enough fall out of the half plane tests that you're already doing for triangle rasterization.\"",
+      "code": "",
+      "images": [
+        "image_1777879791424_0.png"
+      ],
+      "tags": [
+        "Coordinate/barycenteric",
+        "halfplane"
+      ]
+    },
+    {
+      "num": 49,
+      "sort_key": 49.0,
+      "qid": "Q49",
+      "qtype": "CHALLENGE",
+      "format": "mcq",
+      "timestamp": "45:41",
+      "question": "What issue arises when interpolating values on 3D triangles using perspective projection?",
+      "options": [
+        "The colors become too saturated",
+        "Barycentric interpolation in screen coordinates is not the same as in 3D space",
+        "The calculations become too complex for real-time rendering",
+        "The triangles change their orientation"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [45:41], the lecturer explains: \"Due to the fact that we're doing perspective projection, barycentric interpolation of values on a triangle with different depths is not an affine function of screen coordinates.\"",
+      "code": "",
+      "images": [
+        "image_1777879995584_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 50,
+      "sort_key": 50.0,
+      "qid": "Q50",
+      "qtype": "ARTIFACT",
+      "format": "mcq",
+      "timestamp": "47:11",
+      "question": "What visual artifact appears when using incorrect interpolation on a projected quadrilateral?",
+      "options": [
+        "A derivative discontinuity (bend) appears in the mapped pattern",
+        "The quadrilateral disappears at certain angles",
+        "The quadrilateral becomes transparent",
+        "The quadrilateral has incorrect colors"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [47:35], the lecturer describes: \"We wanted to map a checkerboard onto this quad, but because the rates of change are not quite right when we use the 2D coordinates rather than the 3D ones, we get this funky sort of bend in our checkerboard in this middle picture.\"",
+      "code": "",
+      "images": [
+        "image_1777880031286_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 51,
+      "sort_key": 51.0,
+      "qid": "Q51",
+      "qtype": "SOLUTION",
+      "format": "mcq",
+      "timestamp": "47:53",
+      "question": "What technique corrects improper interpolation across triangles in 3D?",
+      "options": [
+        "Anisotropic filtering",
+        "Bilinear filtering",
+        "Z-buffer correction",
+        "Perspective-correct interpolation"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [47:53], the lecturer states: \"So how do we correct this? Well we can do a perspective correct interpolation.\"",
+      "code": "",
+      "images": [
+        "image_1777880068619_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 52,
+      "sort_key": 52.0,
+      "qid": "Q52",
+      "qtype": "PROCESS",
+      "format": "mcq",
+      "timestamp": "48:05",
+      "question": "What values need to be computed for perspective-correct interpolation?",
+      "options": [
+        "1/z (capital Z) and φ/z (capital P) at each vertex",
+        "The screen-space coordinates and depth",
+        "The triangle normal and viewing angle",
+        "The depth value z and the attribute φ"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [48:05], the lecturer explains: \"The basic recipe is we're going to compute the depth value z at each vertex, we're going to evaluate 1/z (call that capital Z) and φ/z (call that capital P) at each vertex.\"",
+      "code": "",
+      "images": [
+        "image_1777880087243_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 53,
+      "sort_key": 53.0,
+      "qid": "Q53",
+      "qtype": "RECIPE",
+      "format": "mcq",
+      "timestamp": "48:37",
+      "question": "What is the final step in perspective-correct interpolation?",
+      "options": [
+        "Add the interpolated Z to the interpolated P",
+        "Divide the interpolated attribute P by the interpolated Z",
+        "Multiply the interpolated attribute by the depth",
+        "Use the interpolated values directly"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [48:37], the lecturer states: \"Finally to display the final result, we can divide the interpolated P by the interpolated Z and that gives us our final value.\"",
+      "code": "",
+      "images": [
+        "image_1777880100265_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 54,
+      "sort_key": 54.0,
+      "qid": "Q54",
+      "qtype": "ANALOGY",
+      "format": "mcq",
+      "timestamp": "49:19",
+      "question": "What analogy does the lecturer use to explain texture mapping?",
+      "options": [
+        "Wrapping a gift",
+        "Painting a picture",
+        "Applying wallpaper",
+        "Decorating a cake"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [49:19], the lecturer states: \"A really good analogy for texture mapping is wrapping a gift.\"",
+      "code": "",
+      "images": [
+        "image_1777880126283_0.png"
+      ],
+      "tags": [
+        "Analogy",
+        "TextureMapping"
+      ]
+    },
+    {
+      "num": 55,
+      "sort_key": 55.0,
+      "qid": "Q55",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "49:38",
+      "question": "At its most basic, what is texture mapping?",
+      "options": [
+        "Projecting 3D objects onto a 2D screen",
+        "Creating textures with a painting program",
+        "Generating procedural textures for different materials",
+        "Having 2D images and finding ways to wrap them around 3D surfaces"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [49:38], the lecturer explains: \"Essentially that's all texture mapping is. We're going to have two dimensional images and we want to find ways to wrap them around three-dimensional surfaces.\"",
+      "code": "",
+      "images": [
+        "image_1777880163977_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 56,
+      "sort_key": 56.0,
+      "qid": "Q56",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "50:19",
+      "question": "Besides color, what other surface property can be described using a texture map?",
+      "options": [
+        "Wetness/dryness",
+        "HTML content",
+        "Sound characteristics",
+        "Weight"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [50:19], the lecturer states: \"We might have a texture map that describes where the surface is wet and where the surface is dry, and that wet versus dry attribute will subsequently affect how we shade the surface.\"",
+      "code": "",
+      "images": [
+        "image_1777880251014_0.png"
+      ],
+      "tags": [
+        "Application"
+      ]
+    },
+    {
+      "num": 57,
+      "sort_key": 57.0,
+      "qid": "Q57",
+      "qtype": "TECHNIQUE",
+      "format": "mcq",
+      "timestamp": "50:57",
+      "question": "What technique uses textures to create the appearance of geometric detail without changing the actual geometry?",
+      "options": [
+        "Environment mapping",
+        "Ambient occlusion",
+        "Displacement mapping",
+        "Normal mapping"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [50:57], the lecturer explains: \"One common technique is something called normal mapping where the texture isn't describing color at all, it's actually telling us how to perturb the normal of the surface so that when we go to shade it it looks like there's actually geometric detail that's not there.\"",
+      "code": "",
+      "images": [
+        "image_1777880326948_0.png"
+      ],
+      "tags": [
+        "Technique",
+        "Mapping"
+      ]
+    },
+    {
+      "num": 58,
+      "sort_key": 58.0,
+      "qid": "Q58",
+      "qtype": "LIMITATION",
+      "format": "mcq",
+      "timestamp": "51:48",
+      "question": "What are two limitations of normal mapping mentioned in the lecture?",
+      "options": [
+        "The implementation is complex and requires special hardware",
+        "The silhouette remains smooth and the shadow remains smooth",
+        "The colors are incorrect and the surface appears shiny",
+        "The texture resolution is limited and memory usage is high"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [51:48], the lecturer points out: \"One is that the silhouette of the object is perfectly smooth even though it looks like it should be wrinkled and the other is that the shadow is perfectly smooth.\"",
+      "code": "",
+      "images": [
+        "image_1777880338139_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 59,
+      "sort_key": 59.0,
+      "qid": "Q59",
+      "qtype": "TECHNIQUE",
+      "format": "mcq",
+      "timestamp": "52:08",
+      "question": "What technique actually modifies geometry based on texture values?",
+      "options": [
+        "Displacement mapping",
+        "Environment mapping",
+        "Normal mapping",
+        "Bump mapping"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [52:08], the lecturer states: \"Displacement mapping is a technique that takes this idea all the way. We take that texture that's been wrapped around the surface and we use the values in that texture to actually displace or move the surface in different directions.\"",
+      "code": "",
+      "images": [
+        "image_1777880350315_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 60,
+      "sort_key": 60.0,
+      "qid": "Q60",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "52:54",
+      "question": "What does ambient occlusion represent in a scene?",
+      "options": [
+        "The view of the camera from each point",
+        "The amount of light directly hitting each point",
+        "The shadow patterns from specific light sources",
+        "The fraction of view that is sky versus surface at each point"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [52:54], the lecturer explains: \"We can imagine if we're a little bug sitting at any point on the surface, the ambient occlusion tells us what fraction of our view is of the sky and what fraction is of the surface itself.\"",
+      "code": "",
+      "images": [
+        "image_1777880408930_0.png"
+      ],
+      "tags": [
+        "definition"
+      ]
+    },
+    {
+      "num": 61,
+      "sort_key": 61.0,
+      "qid": "Q61",
+      "qtype": "TECHNIQUE",
+      "format": "mcq",
+      "timestamp": "53:39",
+      "question": "In environment mapping, what is used to determine the texture lookup direction?",
+      "options": [
+        "The camera direction",
+        "The reflected direction",
+        "The surface position",
+        "The surface normal"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [53:50], the lecturer states: \"We're not using the position of the surface, something more like the reflected direction - which direction did light bounce and where does that land in our texture map.\"",
+      "code": "",
+      "images": [
+        "image_1777883536580_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 62,
+      "sort_key": 62.0,
+      "qid": "Q62",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "54:15",
+      "question": "What are texture coordinates?",
+      "options": [
+        "The position of textures in memory",
+        "What define a mapping from the surface to points in the texture domain",
+        "The file paths to texture images",
+        "The resolution of texture images"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [54:15], the lecturer states: \"Texture coordinates are what we use to define a mapping from the surface to points in the texture domain.\"",
+      "code": "",
+      "images": [
+        "image_1777883583265_0.png"
+      ],
+      "tags": [
+        "texture",
+        "Coordinate/Texture"
+      ]
+    },
+    {
+      "num": 63,
+      "sort_key": 63.0,
+      "qid": "Q63",
+      "qtype": "PROCESS",
+      "format": "mcq",
+      "timestamp": "54:22",
+      "question": "How are texture coordinates typically handled across a triangle?",
+      "options": [
+        "They are computed from the triangle normal",
+        "They are linearly interpolated from the vertices",
+        "They are constant across each triangle",
+        "They are randomly generated for each pixel"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [54:22], the lecturer explains: \"Most commonly if we're working with triangle mesh, we might linearly interpolate texture coordinates at the triangle vertices over the interior of the triangle.\"",
+      "code": "",
+      "images": [
+        "lec7_slide_68.png"
+      ],
+      "tags": [
+        "Process"
+      ]
+    },
+    {
+      "num": 64,
+      "sort_key": 64.0,
+      "qid": "Q64",
+      "qtype": "VISUALIZATION",
+      "format": "mcq",
+      "timestamp": "55:54",
+      "question": "How can texture coordinates be visualized using colors?",
+      "options": [
+        "By using a gradient from dark to light",
+        "By using a checkerboard pattern",
+        "By assigning u to red and v to green",
+        "By using random colors for each coordinate"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [55:54], the lecturer states: \"One nice way to visualize texture coordinates is to associate them with colors. So if we think of u as red and v as green, then we get kind of a color map that looks like this.\"",
+      "code": "",
+      "images": [
+        "image_1777883637755_0.png",
+        "image_1777883659001_0.png"
+      ],
+      "tags": [
+        "Visualization"
+      ]
+    },
+    {
+      "num": 65,
+      "sort_key": 65.0,
+      "qid": "Q65",
+      "qtype": "TECHNIQUE",
+      "format": "mcq",
+      "timestamp": "57:42",
+      "question": "Why would you want periodic texture coordinates in a scene like a building?",
+      "options": [
+        "To cover the scene with a repeating pattern like bricks",
+        "To create geometric detail",
+        "To save memory by making all sides identical",
+        "To create a random pattern"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [58:20], the lecturer explains: \"One natural thing we might like to do with a building is to cover it with some regular pattern like bricks.\"",
+      "code": "",
+      "images": [
+        "image_1777883684771_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 66,
+      "sort_key": 66.0,
+      "qid": "Q66",
+      "qtype": "ALGORITHM",
+      "format": "mcq",
+      "timestamp": "58:59",
+      "question": "What is the basic algorithm for texture mapping a triangle?",
+      "options": [
+        "Pre-compute texels for every possible triangle",
+        "Apply the texture to each vertex and interpolate",
+        "For each pixel, interpolate UV coordinates, sample texture, set pixel color",
+        "Compute one texture sample per triangle and apply it uniformly"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [59:05], the lecturer outlines: \"For each pixel in the rasterized image, for each pixel on the screen, we're going to interpolate uv coordinates from vertices onto whatever pixel we're currently looking at.\"",
+      "code": "",
+      "images": [
+        "image_1777883779513_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 67,
+      "sort_key": 67.0,
+      "qid": "Q67",
+      "qtype": "CHALLENGE",
+      "format": "mcq",
+      "timestamp": "59:52",
+      "question": "What is the primary challenge in texture mapping according to the lecture?",
+      "options": [
+        "Color accuracy",
+        "Aliasing",
+        "Processing speed",
+        "Memory limitations"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [59:52], the lecturer states: \"The reason is this adversary that we keep on encountering in this class: aliasing.\"",
+      "code": "",
+      "images": [
+        "image_1777883787732_0.png"
+      ],
+      "tags": [
+        "Aliasing"
+      ]
+    },
+    {
+      "num": 68,
+      "sort_key": 68.0,
+      "qid": "Q68",
+      "qtype": "PROBLEM",
+      "format": "mcq",
+      "timestamp": "1:00:50",
+      "question": "What creates irregular sampling patterns in texture mapping?",
+      "options": [
+        "Hardware limitations",
+        "The projection of 3D triangles to 2D creates varying sample spacing",
+        "Incorrect UV coordinates",
+        "Poor texture quality"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:00:50], the lecturer explains: \"The key idea is that since triangles are projected from three dimensions to two dimensions, pixels in screen space will correspond to regions of varying size and location in the texture itself.\"",
+      "code": "",
+      "images": [
+        "image_1777883838891_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 69,
+      "sort_key": 69.0,
+      "qid": "Q69",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "1:01:51",
+      "question": "What is magnification in texture mapping?",
+      "options": [
+        "When a single texture pixel covers many screen pixels",
+        "When a single screen pixel covers many texture pixels",
+        "When the camera is close to a surface and a screen pixel covers a tiny region of texture",
+        "When textures appear larger than expected"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:01:51], the lecturer states: \"Magnification is somewhat the easier case. You can imagine that what's happened is the camera has gotten really close to an object... In this case a single pixel on the screen is going to cover just a tiny region of the texture.\"",
+      "code": "",
+      "images": [
+        "image_1777883852833_0.png"
+      ],
+      "tags": [
+        "TextureMapping"
+      ]
+    },
+    {
+      "num": 70,
+      "sort_key": 70.0,
+      "qid": "Q70",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "1:02:30",
+      "question": "What is minification in texture mapping?",
+      "options": [
+        "When textures appear smaller than expected",
+        "When a texture is compressed to save memory",
+        "When texture detail is lost",
+        "When the object is far away and a screen pixel covers a large region of texture"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:02:30], the lecturer explains: \"Minification is much harder. The example here is that the object is really really far away so that a single pixel on the screen covers a very large region in the texture.\"",
+      "code": "",
+      "images": [
+        "image_1777883927810_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 71,
+      "sort_key": 71.0,
+      "qid": "Q71",
+      "qtype": "TECHNIQUE",
+      "format": "mcq",
+      "timestamp": "1:03:38",
+      "question": "What is the simplest approach to texture sampling in magnification?",
+      "options": [
+        "Trilinear filtering",
+        "Anisotropic filtering",
+        "Bilinear filtering",
+        "Nearest neighbor (grabbing the nearest texel)"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:03:38], the lecturer states: \"The fast, simple but ugly solution is just grab the value of the nearest pixel, the nearest texture pixel or what's called a texel.\"",
+      "code": "",
+      "images": [
+        "image_1777883944380_0.png"
+      ],
+      "tags": [
+        "Sampling"
+      ]
+    },
+    {
+      "num": 72,
+      "sort_key": 72.0,
+      "qid": "Q72",
+      "qtype": "QUALITY",
+      "format": "mcq",
+      "timestamp": "1:03:50",
+      "question": "What is the visual result of nearest neighbor sampling?",
+      "options": [
+        "Very smooth transitions",
+        "Blurry appearance",
+        "Distorted perspective",
+        "Blocky appearance as you get closer to the surface"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:03:50], the lecturer explains: \"As we get closer and closer to the wall, the image gets blockier and blockier until we're really staring at these big color blocks. Doesn't look very nice.\"",
+      "code": "",
+      "images": [
+        "image_1777883980961_0.png"
+      ],
+      "tags": [
+        "Sampling"
+      ]
+    },
+    {
+      "num": 73,
+      "sort_key": 73.0,
+      "qid": "Q73",
+      "qtype": "TECHNIQUE",
+      "format": "mcq",
+      "timestamp": "1:04:08",
+      "question": "What improved technique is commonly used for magnification?",
+      "options": [
+        "Bilinear interpolation",
+        "Supersampling",
+        "Pre-filtering",
+        "Nearest neighbor"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:04:08], the lecturer states: \"We'd like to do something just a little bit better, and a very common idea is to use bilinear interpolation.\"",
+      "code": "",
+      "images": [
+        "image_1777883994818_0.png"
+      ],
+      "tags": [
+        "Interpolation"
+      ]
+    },
+    {
+      "num": 74,
+      "sort_key": 74.0,
+      "qid": "Q74",
+      "qtype": "PROCESS",
+      "format": "mcq",
+      "timestamp": "1:05:22",
+      "question": "What does bilinear interpolation do first?",
+      "options": [
+        "Average all four texels",
+        "Choose the best texel",
+        "Interpolate in the vertical direction",
+        "Interpolate in the horizontal direction"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:05:22], the lecturer explains: \"I'm going to first do linear interpolation in the horizontal direction just as we did before for our 1D function.\"",
+      "code": "",
+      "images": [
+        "image_1777884010828_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 75,
+      "sort_key": 75.0,
+      "qid": "Q75",
+      "qtype": "PROBLEM",
+      "format": "mcq",
+      "timestamp": "1:07:35",
+      "question": "Why is texture aliasing a problem in minification?",
+      "options": [
+        "It creates textures that are too dark",
+        "It makes textures appear too shiny",
+        "It distorts the shape of objects",
+        "A single pixel covers many texture pixels, causing sampling issues"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:07:35], the lecturer states: \"The thing to realize is that texture aliasing often occurs because a single pixel on the screen covers many pixels of the texture.\"\n\n- QUESTIONS (continued):",
+      "code": "",
+      "images": [
+        "image_1777884039336_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 76,
+      "sort_key": 76.0,
+      "qid": "Q76",
+      "qtype": "ISSUE",
+      "format": "mcq",
+      "timestamp": "1:08:00",
+      "question": "Why is using a single sample from the center of a screen pixel problematic in minification?",
+      "options": [
+        "It prevents the use of hardware acceleration",
+        "It produces colors that are too bright",
+        "It essentially grabs one random color from a region that might contain many colors",
+        "It's too computationally expensive"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:08:14], the lecturer explains: \"If we have lots of different colors covered by that screen pixel, we're essentially just grabbing one random color out of that region.\"",
+      "code": "",
+      "images": [
+        "image_1777884104458_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 77,
+      "sort_key": 77.0,
+      "qid": "Q77",
+      "qtype": "SOLUTION",
+      "format": "mcq",
+      "timestamp": "1:09:26",
+      "question": "What is the solution to the minification problem?",
+      "options": [
+        "Using nearest neighbor sampling",
+        "Using higher resolution textures",
+        "Pre-computing averages and looking them up at runtime",
+        "Disabling texture filtering entirely"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:09:26], the lecturer states: \"What we're going to do instead is pre-compute some of these averages just once and look up these averages at runtime. We're going to do a lot of the work ahead of time.\"",
+      "code": "",
+      "images": [
+        "image_1777884136923_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 78,
+      "sort_key": 78.0,
+      "qid": "Q78",
+      "qtype": "TECHNIQUE",
+      "format": "mcq",
+      "timestamp": "1:11:06",
+      "question": "What technique stores pre-filtered images at multiple scales?",
+      "options": [
+        "Mipmapping",
+        "Anisotropic filtering",
+        "Bilinear filtering",
+        "Supersampling"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:11:06], the lecturer explains: \"What we're really going to do is use a technique called mipmapping where the rough idea is to store a pre-filtered image at sort of every possible scale.\"",
+      "code": "",
+      "images": [
+        "image_1777884193446_0.png"
+      ],
+      "tags": [
+        "Mipmapping"
+      ]
+    },
+    {
+      "num": 79,
+      "sort_key": 79.0,
+      "qid": "Q79",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "1:11:13",
+      "question": "How are mipmaps organized in terms of resolution?",
+      "options": [
+        "In random order for better cache coherence",
+        "In powers of two, starting from the original image",
+        "Based on viewing distance",
+        "In linear steps for smoother transitions"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:11:13], the lecturer states: \"Actually we're gonna do this in powers of two. We're gonna start out with our original image at level zero, get the next smallest image, we're going to average four pixels together to get the next smallest one.\"",
+      "code": "",
+      "images": [
+        "image_1777884221316_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 80,
+      "sort_key": 80.0,
+      "qid": "Q80",
+      "qtype": "STORAGE",
+      "format": "mcq",
+      "timestamp": "1:12:50",
+      "question": "What is the approximate storage overhead of a mipmap?",
+      "options": [
+        "50% more than the original image",
+        "Doubles the storage of the original image",
+        "Ten times the original image",
+        "About a third of the storage of the original image"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:12:50], the lecturer notes: \"The entire storage cost of the mipmap is something like a third of the storage cost of the original image.\"",
+      "code": "",
+      "images": [
+        "image_1777884231702_0.png"
+      ],
+      "tags": [
+        "Storage"
+      ]
+    },
+    {
+      "num": 81,
+      "sort_key": 81.0,
+      "qid": "Q81",
+      "qtype": "SELECTION",
+      "format": "mcq",
+      "timestamp": "1:14:33",
+      "question": "Which pixels should sample from a coarser mipmap level?",
+      "options": [
+        "Pixels that cover a larger region in texture space",
+        "Pixels near the edge of the screen",
+        "Pixels in shadow regions",
+        "Pixels that appear brighter"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:14:33], the lecturer explains: \"The red pixel is going to cover a bigger region in texture space, so we want to effectively take an average over a larger region, which means we want to grab something from a coarser level of the mipmap hierarchy.\"",
+      "code": "",
+      "images": [
+        "image_1777884290351_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 82,
+      "sort_key": 82.0,
+      "qid": "Q82",
+      "qtype": "CALCULATION",
+      "format": "mcq",
+      "timestamp": "1:15:35",
+      "question": "How is the rate of change in texture coordinates calculated?",
+      "options": [
+        "By multiplying texture coordinates by the viewing angle",
+        "By computing differences between texture coordinate values in neighboring samples",
+        "By measuring the average color difference",
+        "By counting the number of pixels in the texture"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:15:35], the lecturer states: \"What we can do is ask how quickly are the uv coordinates changing as we go along the horizontal direction and along the vertical direction.\"",
+      "code": "",
+      "images": [
+        "image_1777884323208_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 83,
+      "sort_key": 83.0,
+      "qid": "Q83",
+      "qtype": "FORMULA",
+      "format": "mcq",
+      "timestamp": "1:16:57",
+      "question": "What formula determines the mipmap level to use?",
+      "options": [
+        "The average of all texture coordinates",
+        "The log base 2 of the longer length L",
+        "The square root of the texture area",
+        "The sum of the u and v coordinates"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:16:57], the lecturer explains: \"In particular we're going to let our mipmap level d be the log base 2 of the longer length capital L.\"",
+      "code": "",
+      "images": [
+        "image_1777884340300_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 84,
+      "sort_key": 84.0,
+      "qid": "Q84",
+      "qtype": "REASON",
+      "format": "mcq",
+      "timestamp": "1:17:12",
+      "question": "Why is a logarithm used in determining the mipmap level?",
+      "options": [
+        "Because each mipmap level divides the image size by two",
+        "To make calculations faster",
+        "To correct for gamma in the image",
+        "To match the sensitivity of human vision"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:17:12], the lecturer states: \"Why are we taking a logarithm here? Well because to generate our mipmaps, each time we divided the image size by two. So we want to know which of those levels we're on, we need to take the log base two.\"",
+      "code": "",
+      "images": [
+        "image_1777884355763_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 85,
+      "sort_key": 85.0,
+      "qid": "Q85",
+      "qtype": "PROBLEM",
+      "format": "mcq",
+      "timestamp": "1:19:10",
+      "question": "What artifact appears when using only the nearest mipmap level?",
+      "options": [
+        "Incorrect colors",
+        "Texture bleeding",
+        "Visible boundaries where the level jumps",
+        "Texture swimming"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:19:10], the lecturer explains: \"If we just use the nearest mipmap level, so if we take that number d and we just clamp it to the closest integer, then we're going to get artifacts where this level jumps.\" we want to combine the different mimamp levels. avergea them.",
+      "code": "",
+      "images": [
+        "image_1777884396061_0.png",
+        "image_1777884444647_0.png",
+        "image_1777884483135_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 86,
+      "sort_key": 86.0,
+      "qid": "Q86",
+      "qtype": "CONCEPT",
+      "format": "mcq",
+      "timestamp": "1:20:00",
+      "question": "Trilinear filtering extends bilinear filtering to 3D. Given a point (u, v, w) ∈ [0,1]³ with eight closest values f_ijk, how are the weights computed?",
+      "options": [
+        "Apply bilinear interpolation twice independently",
+        "Average all eight f_ijk values equally",
+        "Take the single nearest f_ijk value",
+        "Iterate linear interpolation: weighted average along u, then v, then w"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "Trilinear is just bilinear done one more time — the same idea stacked into the third dimension.",
+      "explanation": "The slide states \"Just iterate linear filtering: weighted average along u, weighted average along v, weighted average along w.\" Starting from four horizontal blends (g_ij), two vertical blends (h_0, h_1) are computed, then one final blend along w gives the result.\n\n- INTUITION: Trilinear is just bilinear done one more time — the same idea stacked into the third dimension.",
+      "code": "",
+      "images": [
+        "lec7_slide_64.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 87,
+      "sort_key": 87.0,
+      "qid": "Q87",
+      "qtype": "TECHNIQUE",
+      "format": "mcq",
+      "timestamp": "1:21:00",
+      "question": "How does MIP map lookup use trilinear filtering to interpolate between mipmap levels?",
+      "options": [
+        "It chooses the coarser level when d is not an integer to reduce bandwidth",
+        "It performs bilinear interpolation independently at levels ⌊d⌋ and ⌊d⌋+1, then blends using w = d - ⌊d⌋",
+        "It selects the nearest integer mipmap level d and applies bilinear interpolation once",
+        "It averages all mipmap levels weighted by their resolution"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "Trilinear MIP lookup = bilinear at level below + bilinear at level above + one more lerp between them. \"Trilinear\" literally means the same operation in the third (level) dimension.",
+      "explanation": "The slide explains that MIP map interpolation works the same as trilinear filtering: perform bilinear interpolation at each of the two nearest levels, then interpolate between those two results using fractional weight w = d − ⌊d⌋. This costs eight texel reads and seven linear interpolations.\n\n- INTUITION: Trilinear MIP lookup = bilinear at level below + bilinear at level above + one more lerp between them. \"Trilinear\" literally means the same operation in the third (level) dimension.",
+      "code": "",
+      "images": [
+        "lec7_slide_65.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 88,
+      "sort_key": 88.0,
+      "qid": "Q88",
+      "qtype": "PROBLEM",
+      "format": "mcq",
+      "timestamp": "1:23:00",
+      "question": "Why does trilinear (isotropic) filtering produce over-blurring at grazing angles, and what is the standard solution?",
+      "options": [
+        "Grazing angles increase the mipmap level computation error; the fix is to use a higher-resolution base texture",
+        "Isotropic filtering ignores the w component at shallow angles; anisotropic filtering uses a separate mipmap for each axis",
+        "At grazing angles the footprint in texture space is stretched differently along u vs v, so isotropic filtering blurs in the wrong direction; anisotropic filtering combines multiple MIP map samples to match the stretched footprint",
+        "Grazing angles cause perspective-correct interpolation to break down; the fix is to disable mipmapping at shallow view angles"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "Isotropic = same radius in all directions. Grazing angles break that assumption. Anisotropic filtering adapts the sample shape to the actual stretched footprint.",
+      "explanation": "The slide shows that at grazing angles the screen pixel's footprint in texture space is tall and narrow in one axis and wide in the other. Isotropic trilinear filtering uses a single square region, blurring too much in the narrow direction. Anisotropic filtering combines multiple MIP map samples to approximate the actual elongated footprint.\n\n- INTUITION: Isotropic = same radius in all directions. Grazing angles break that assumption. Anisotropic filtering adapts the sample shape to the actual stretched footprint.",
+      "code": "",
+      "images": [
+        "lec7_slide_66.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 89,
+      "sort_key": 89.0,
+      "qid": "Q89",
+      "qtype": "ALGORITHM",
+      "format": "mcq",
+      "timestamp": "1:25:00",
+      "question": "The texture sampling pipeline has 8 steps. What are the first three steps in order?",
+      "options": [
+        "Convert UV to pixel locations → Compute mip level → Perform bilinear interpolation",
+        "Compute mip level → Barycentric interpolation → Load texels",
+        "Compute UV from screen sample via barycentric interpolation → Approximate du/dx, dv/dx, du/dy, dv/dy via finite differences → Compute mip map level d",
+        "Load texels → Compute mip level → Convert UV to pixel locations"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "The pipeline is: where am I in texture space → how fast am I moving → which mip level → which texels → blend. Each step feeds the next.",
+      "explanation": "The slide lists the 8-step pipeline starting with: (1) compute u,v from screen sample (x,y) via barycentric interpolation, (2) approximate the four partial derivatives du/dx, dv/dx, du/dy, dv/dy by taking differences between screen-adjacent samples, (3) compute mip map level d. The pipeline ends with trilinear interpolation — requiring dedicated GPU hardware because of the arithmetic and bandwidth cost.\n\n- INTUITION: The pipeline is: where am I in texture space → how fast am I moving → which mip level → which texels → blend. Each step feeds the next.",
+      "code": "",
+      "images": [
+        "lec7_slide_67.png"
+      ],
+      "tags": [
+        "Algorithm"
+      ]
+    }
+  ]
+}

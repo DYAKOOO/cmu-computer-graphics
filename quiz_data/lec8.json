@@ -1,0 +1,1309 @@
+{
+  "lecture": 8,
+  "title": "Lecture 8: Depth & Transparency",
+  "questions": [
+    {
+      "num": 1,
+      "sort_key": 0.01,
+      "qid": "QF1",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "Lecture 8 is described as \"wrapping up the rasterization pipeline.\" What two remaining problems does it solve, and why were they deferred until after rasterization and texture mapping were established?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "(1) Depth (occlusion): which of multiple overlapping triangles is visible at each pixel sample? (2) Transparency (alpha blending): how do we composite semi-transparent surfaces? Both were deferred because they depend on earlier stages: depth requires interpolating a per-vertex attribute (depth value) using barycentric coordinates; transparency requires per-fragment alpha values that come from textures. Without rasterization and attribute interpolation in place, neither can be implemented.",
+      "intuition": "Depth and transparency are the last two entries in the pipeline diagram — they cap the rasterization unit, not start it.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 0.02,
+      "qid": "QF2",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "The lecture presents two solutions to the occlusion problem: the painter's algorithm and the Z-buffer. What fundamental limitation of the painter's algorithm motivates the Z-buffer?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "The painter's algorithm sorts triangles by depth and draws back-to-front. This fails when triangles intersect or cyclically overlap — no valid sort order exists. It also requires a global sort every frame. The Z-buffer solves this per-sample: for each sample, track the minimum depth seen so far and overwrite only if the new fragment is closer. No sort is required, and intersecting triangles are handled naturally because depth is compared sample-by-sample, not triangle-by-triangle.",
+      "intuition": "The painter's algorithm is a global ordering problem. The Z-buffer converts it to a local per-pixel comparison.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 0.03,
+      "qid": "QF3",
+      "qtype": "ORDER",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "Put these lecture 8 topics in the order they are covered: alpha compositing for transparency / Z-buffer algorithm / depth interpolation using barycentric coordinates / pre-multiplied alpha and its advantages",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Depth interpolation using barycentric coordinates → Z-buffer algorithm → alpha compositing for transparency → pre-multiplied alpha and its advantages",
+      "intuition": "The lecture builds from \"how do we compute depth at a sample?\" to \"which triangle wins?\" to \"what about transparent things?\" to \"how do we store colors to composite correctly?\"",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 1,
+      "sort_key": 1.0,
+      "qid": "Q1",
+      "qtype": "INTRODUCTION",
+      "format": "mcq",
+      "timestamp": "01:38",
+      "question": "What does lecture 8 cover to complete the rasterization pipeline?",
+      "options": [
+        "Depth (occlusion) and transparency (alpha blending)",
+        "Shading and antialiasing",
+        "Normal mapping and displacement mapping",
+        "Texture mapping and perspective projection"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [01:38], the lecturer states: \"The thing we want to do today is talk about how we take those samples generated from each individual primitive and combine them into the final image while taking into account effects like depth and transparency.\"\n\n#Occlusion #Transparency",
+      "code": "",
+      "images": [
+        "image_1777889473065_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 2.0,
+      "qid": "Q2",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "01:59",
+      "question": "What is the occlusion problem in rasterization?",
+      "options": [
+        "How to handle light bouncing between surfaces",
+        "Which of multiple overlapping triangles is visible at each sample point",
+        "How to make objects appear semi-transparent",
+        "How to remove objects that are behind the camera"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [01:59], the lecturer explains: \"The question of occlusion is okay we're rendering a bunch of different triangles into our image which of those triangles is visible at each sample point.\"",
+      "code": "",
+      "images": [
+        "image_1777889510065_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 3.0,
+      "qid": "Q3",
+      "qtype": "PROCESS",
+      "format": "mcq",
+      "timestamp": "03:27",
+      "question": "How is the depth value computed at interior sample points of a triangle?",
+      "options": [
+        "By interpolating vertex depths using barycentric coordinates",
+        "By using the depth of the nearest vertex",
+        "By shooting a ray from the camera through the pixel",
+        "By taking the average of the three vertex depths"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [03:27], the lecturer explains: \"Well something we discussed a lot in our last lecture was interpolating attributes using barycentric coordinates and that's exactly the right thing to do here because depth varies linearly over the triangle.\"",
+      "code": "",
+      "images": [
+        "image_1777889544847_0.png"
+      ],
+      "tags": [
+        "Coordinate/barycenteric"
+      ]
+    },
+    {
+      "num": 4,
+      "sort_key": 4.0,
+      "qid": "Q4",
+      "qtype": "CHALLENGE",
+      "format": "mcq",
+      "timestamp": "03:57",
+      "question": "Why does the one-triangle-at-a-time nature of the rasterization pipeline make occlusion challenging?",
+      "options": [
+        "It requires too much memory to store all triangles simultaneously",
+        "Once a triangle is processed and forgotten, there is no direct way to compare it with later triangles",
+        "Triangles cannot be projected without knowing all other triangles first",
+        "Texture coordinates are undefined without all triangles"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [03:57–04:16], the lecturer explains: \"A triangle comes down the pipeline we do some computation projection rasterization and so forth and then we forget about it we don't have to keep a list of all triangles in the scene... On the other hand that makes it challenging to figure out okay which thing should go in front if i only know about the current triangle how could i possibly figure out which ones should get drawn.\"",
+      "code": "",
+      "images": [
+        "image_1777889583231_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 5,
+      "sort_key": 5.0,
+      "qid": "Q5",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "04:36",
+      "question": "What does the depth buffer (Z-buffer) store at each sample point?",
+      "options": [
+        "The color of the nearest surface",
+        "The surface normal of the nearest triangle",
+        "The depth of the closest triangle seen so far at that sample",
+        "The number of triangles that cover that sample"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [04:36–04:42], the lecturer explains: \"The solution to this is a very nice idea called the depth buffer or the z buffer... at each sample point in addition to a color we're also going to keep track of the depth of the closest triangle or the closest primitive seen so far.\"",
+      "code": "",
+      "images": [
+        "image_1777889626876_0.png"
+      ],
+      "tags": [
+        "ZBuffer",
+        "definition"
+      ]
+    },
+    {
+      "num": 6,
+      "sort_key": 6.0,
+      "qid": "Q6",
+      "qtype": "INITIALIZATION",
+      "format": "mcq",
+      "timestamp": "05:02",
+      "question": "What value is the depth buffer initialized to before any triangles are drawn?",
+      "options": [
+        "Infinity (or the maximum representable depth value)",
+        "The average depth of the scene",
+        "The depth of the nearest expected object",
+        "Zero"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [05:02], the lecturer states: \"So you might imagine that initially we initialized the depth buffer to have very very large values you can imagine you set these all to infinity or the maximum possible value that you can represent.\"",
+      "code": "",
+      "images": [
+        "image_1777889656606_0.png"
+      ],
+      "tags": [
+        "Initialization"
+      ]
+    },
+    {
+      "num": 7,
+      "sort_key": 7.0,
+      "qid": "Q7",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "05:52",
+      "question": "What key property of the Z-buffer does the lecturer emphasize regarding triangle drawing order?",
+      "options": [
+        "Triangles must be drawn front-to-back for correct results",
+        "The order in which triangles are drawn does not matter",
+        "Triangles must be drawn back-to-front for correct results",
+        "Only the first triangle drawn at each pixel is kept"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [05:52], the lecturer states: \"And as we'll see very importantly it doesn't matter which one we pick,\" referring to which triangle to rasterize first.",
+      "code": "",
+      "images": [
+        "image_1777889862974_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 8,
+      "sort_key": 8.0,
+      "qid": "Q8",
+      "qtype": "ALGORITHM",
+      "format": "mcq",
+      "timestamp": "09:13",
+      "question": "What does the depth test check when rasterizing a new fragment?",
+      "options": [
+        "Whether the new fragment's texture coordinates are valid",
+        "Whether the new fragment falls inside the view frustum",
+        "Whether the new fragment's color is brighter than the stored color",
+        "Whether the new fragment's depth is less than the depth stored in the Z-buffer at that sample"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [09:13–09:32], the lecturer explains: \"The first thing we do is we check does this new sample pass the depth test so we compare the new depth d to the depth stored in the z buffer at x y... What does this depth test do it's very simple it just says if d1 is less than d2 return true otherwise return false.\"",
+      "code": "",
+      "images": [
+        "image_1777889891607_0.png"
+      ],
+      "tags": [
+        "Algorithm"
+      ]
+    },
+    {
+      "num": 9,
+      "sort_key": 9.0,
+      "qid": "Q9",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "10:49",
+      "question": "Why does the Z-buffer handle intersecting (interpenetrating) triangles correctly?",
+      "options": [
+        "It averages the colors of intersecting triangles",
+        "It makes occlusion decisions per-sample rather than per-triangle, so relative depth is evaluated exactly where it matters",
+        "It sorts triangles before rasterizing them",
+        "It splits intersecting triangles at their intersection line"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [10:49], the lecturer explains: \"This occlusion test is based on the depth of the triangles at a given sample point right so the relative depth of triangles can be different at different sample points we're considering things only on a sample by sample basis not on a triangle by triangle basis.\"",
+      "code": "",
+      "images": [
+        "image_1777889920851_0.png",
+        "image_1777889968946_0.png"
+      ],
+      "tags": [
+        "Property"
+      ]
+    },
+    {
+      "num": 10,
+      "sort_key": 10.0,
+      "qid": "Q10",
+      "qtype": "COMPARISON",
+      "format": "mcq",
+      "timestamp": "11:52",
+      "question": "What geometric complexity does the Z-buffer avoid compared to sorting-based approaches?",
+      "options": [
+        "Computing triangle normals",
+        "Finding and splitting triangles at their intersection lines before sorting",
+        "Projecting triangles into screen space",
+        "Computing barycentric coordinates"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [11:34–11:52], the lecturer explains: \"Probably what i'd have to do is actually find where these two triangles intersect each other split them up at that intersection point into other funky polygons right and then draw those polygons in sorted order actually do a sort. So the depth buffer avoids all of that complexity by just treating things on a sample by sample basis rather than a primitive by primitive basis.\"",
+      "code": "",
+      "images": [
+        "image_1777889980512_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 11,
+      "sort_key": 11.0,
+      "qid": "Q11",
+      "qtype": "INTERACTION",
+      "format": "mcq",
+      "timestamp": "12:51",
+      "question": "How does depth buffering interact with supersampling for antialiasing?",
+      "options": [
+        "Depth buffering is incompatible with supersampling and must be disabled",
+        "Supersampling requires doubling the depth buffer size separately from the color buffer",
+        "Depth is only stored at pixel centers, not at supersamples",
+        "It works correctly as long as there is one depth value per supersample in the buffer"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [12:51], the lecturer states: \"Well the key idea here is yeah this will work fine it'll work fine to do depth buffering with super sampling as long as we have one depth sample per sample in our super sample buffer again if we're doing things on a sample by sample basis well then we should have one depth sample for every color sample.\"",
+      "code": "",
+      "images": [
+        "image_1777890045243_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 12,
+      "sort_key": 12.0,
+      "qid": "Q12",
+      "qtype": "EFFICIENCY",
+      "format": "mcq",
+      "timestamp": "14:20",
+      "question": "What is the memory overhead of adding a Z-buffer compared to a color-only image?",
+      "options": [
+        "It requires a sorted list of depths at each sample",
+        "It doubles storage because depth and color are the same size",
+        "It adds one additional value per sample — constant space regardless of how many triangles overlap",
+        "It requires O(n) extra space proportional to the number of triangles"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [14:20–14:36], the lecturer explains: \"We used to be storing a color value which might be three values red green blue now we're adding just one additional value a depth so what that means is overall we're just adding constant space for our depth buffer this doesn't depend at all on the number of overlapping primitives there's no fancy data structure to keep track of ordering right just one value the minimum depth value at each sample point.\"",
+      "code": "",
+      "images": [
+        "image_1777890105312_0.png"
+      ],
+      "tags": [
+        "Efficiency",
+        "Memory"
+      ]
+    },
+    {
+      "num": 13,
+      "sort_key": 13.0,
+      "qid": "Q13",
+      "qtype": "EFFICIENCY",
+      "format": "mcq",
+      "timestamp": "14:49",
+      "question": "What is the time complexity of the depth test per sample?",
+      "options": [
+        "O(1) — just read the buffer, compare, and possibly write a new value",
+        "O(n) — must compare against all previously drawn triangles",
+        "O(n²) — requires comparing every pair of triangles",
+        "O(log n) — requires a binary search through stored depth values"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [14:49], the lecturer states: \"We're also adding something that only takes constant time to do an occlusion test per sample right we just read from the depth buffer we do a little check we might modify it and write back a new value or if the depth pass depth check fails we just read.\"",
+      "code": "",
+      "images": [],
+      "tags": [
+        "time_complexity"
+      ]
+    },
+    {
+      "num": 14,
+      "sort_key": 14.0,
+      "qid": "Q14",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "16:21",
+      "question": "In the alpha opacity model, what does the value alpha represent?",
+      "options": [
+        "The roughness of a surface for shading",
+        "The opacity of a surface — a value from 0 (fully transparent) to 1 (fully opaque)",
+        "The color saturation of a surface",
+        "The reflectivity of a surface"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [16:21], the lecturer defines: \"What is our model for semi-transparent surfaces the basic idea is that we're going to represent the opacity or transparency of a surface by a value alpha so just a real value between 0 and 1 that describes how opaque we are.\"",
+      "code": "",
+      "images": [
+        "image_1777890164602_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 15,
+      "sort_key": 15.0,
+      "qid": "Q15",
+      "qtype": "ARTIFACT",
+      "format": "mcq",
+      "timestamp": "18:25",
+      "question": "What common artifact arises when color and alpha are not handled correctly during compositing?",
+      "options": [
+        "Texture swimming as the camera moves",
+        "Fringing — dark or colored halos around semi-transparent objects",
+        "Z-fighting between overlapping surfaces",
+        "Aliased triangle edges"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [18:25], the lecturer explains: \"One of the most common ones is this thing called fringing so if you don't treat your color and alpha just right you get these nasty dark halos around the image... if you watch movies and tv especially if you watch older movies you'll often see this kind of artifact.\"",
+      "code": "",
+      "images": [
+        "image_1777890200120_0.png",
+        "image_1777890226070_0.png"
+      ],
+      "tags": [
+        "Artifacts"
+      ]
+    },
+    {
+      "num": 16,
+      "sort_key": 16.0,
+      "qid": "Q16",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "19:40",
+      "question": "What is the \"over\" operator?",
+      "options": [
+        "An operator that selects the brighter of two pixel colors",
+        "An operator that multiplies two color values together",
+        "An operator that blends two images by averaging pixel colors",
+        "An operator that composites a foreground image B over a background image A using their alpha values"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [19:40], the lecturer defines: \"Our basic operation is going to be something called the over operator so the idea of the over operator is to composite an image b that has opacity alpha b over or on top of an image a that has opacity alpha sub a.\"",
+      "code": "",
+      "images": [
+        "image_1777890258100_0.png"
+      ],
+      "tags": [
+        "Operator"
+      ]
+    },
+    {
+      "num": 17,
+      "sort_key": 17.0,
+      "qid": "Q17",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "20:24",
+      "question": "Is the \"over\" compositing operator commutative?",
+      "options": [
+        "Yes — \"B over A\" always equals \"A over B\"",
+        "It is commutative only when both images have alpha = 0.5",
+        "It is commutative only when both images have the same color",
+        "No — the order matters, and compositing in the wrong order produces incorrect colors"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [20:24], the lecturer states: \"Now what that tells you is that this over operator is not commutative right a over b is not in general the same as b over a and it's really important that you blend things in the right order to get the right color.\"",
+      "code": "",
+      "images": [
+        "image_1777890301463_0.png"
+      ],
+      "tags": [
+        "Property"
+      ]
+    },
+    {
+      "num": 18,
+      "sort_key": 18.0,
+      "qid": "Q18",
+      "qtype": "FORMULA",
+      "format": "mcq",
+      "timestamp": "21:20",
+      "question": "Using non-premultiplied alpha, what is the formula for the output color when compositing image B (opacity α_B) over image A (opacity α_A)?",
+      "options": [
+        "C_out = (C_A + C_B) / 2",
+        "C_out = C_B + C_A",
+        "C_out = α_B × C_B + (1 − α_B) × α_A × C_A",
+        "C_out = α_B × C_B × C_A"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [21:20], the lecturer derives: \"Then a simple way to composite would be to say the new color c is alpha b times b... plus 1 minus alpha b times alpha a times a.\" B contributes its color scaled by α_B; whatever light passes through B (1 − α_B) then sees A scaled by α_A.",
+      "code": "",
+      "images": [
+        "image_1777890430474_0.png"
+      ],
+      "tags": [
+        "Formula"
+      ]
+    },
+    {
+      "num": 19,
+      "sort_key": 19.0,
+      "qid": "Q19",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "22:42",
+      "question": "What is \"pre-multiplied alpha,\" and how does it change how colors are stored?",
+      "options": [
+        "Alpha is computed ahead of time and cached in a lookup table",
+        "The alpha value is squared to increase dynamic range in bright regions",
+        "The RGB color values are multiplied by alpha before storage, so transparent pixels store darker (attenuated) colors",
+        "Alpha is always set to 1 before compositing to avoid fringing"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [22:42], the lecturer defines: \"Rather than working with the color values directly, we're going to multiply or pre-multiply those color values by the alpha value so we're going to construct a new color a prime which is equal to alpha a a_r alpha a a_g alpha a a_b and we're going to tack on to the end of that the alpha value alpha a.\" A 50%-transparent bright red (1,0,0,0.5) becomes (0.5,0,0,0.5) in pre-multiplied form.",
+      "code": "",
+      "images": [
+        "image_1777890441032_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 20,
+      "sort_key": 20.0,
+      "qid": "Q20",
+      "qtype": "ADVANTAGE",
+      "format": "mcq",
+      "timestamp": "24:03",
+      "question": "What advantage does pre-multiplied alpha provide in terms of channel handling during compositing?",
+      "options": [
+        "It produces lower quality results at edges but is faster",
+        "It requires more arithmetic operations but produces higher quality results",
+        "It requires separate dedicated passes for color and alpha",
+        "It treats all channels — RGB and alpha — the same way, with no separate operations"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [24:03], the lecturer states: \"Notice by the way that this operation composites alpha in exactly the same way as how it composites the red green and blue channels right we don't have separate operations for color and alpha.\"",
+      "code": "",
+      "images": [
+        "image_1777890463897_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 21,
+      "sort_key": 21.0,
+      "qid": "Q21",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "25:10",
+      "question": "What mathematical framework from earlier in the course is pre-multiplied alpha related to?",
+      "options": [
+        "Taylor series expansion",
+        "Homogeneous coordinates",
+        "Barycentric coordinates",
+        "Fourier analysis"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [25:10], the lecturer states: \"Hopefully it reminds you of our discussion of homogeneous coordinates because that's exactly what this is we're expressing our colors and our alpha values in homogeneous coordinates.\"",
+      "code": "",
+      "images": [
+        "image_1777890476908_0.png"
+      ],
+      "tags": [
+        "Homogeneous"
+      ]
+    },
+    {
+      "num": 22,
+      "sort_key": 22.0,
+      "qid": "Q22",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "25:23",
+      "question": "In the homogeneous color model, what do different opacities of the same color represent geometrically?",
+      "options": [
+        "Different distances from the white point",
+        "Different angles in color space",
+        "Different planes in 3D color space",
+        "Different points along a ray through the origin in the direction of that color"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [25:23], the lecturer explains: \"Right so now we can think of colors as different directions and different opacities of those colors as points along the line in that direction.\"",
+      "code": "",
+      "images": [
+        "image_1777890519019_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 23,
+      "sort_key": 23.0,
+      "qid": "Q23",
+      "qtype": "VISUAL",
+      "format": "mcq",
+      "timestamp": "26:51",
+      "question": "What visual artifact appears when using non-premultiplied alpha during upsampling and compositing a blue blob on a gray background?",
+      "options": [
+        "Pixelation and blocky edges along the boundary",
+        "A green halo around the blob",
+        "The blob becomes completely transparent",
+        "A bright white halo around the blob"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [26:51], the lecturer demonstrates: \"And i get this result and you notice it looks almost right i have a blue blob on a gray background but there's this green halo around my blue blob that's no good.\"",
+      "code": "",
+      "images": [
+        "image_1777890536688_0.png"
+      ],
+      "tags": [
+        "CG-Lecture-Question"
+      ]
+    },
+    {
+      "num": 24,
+      "sort_key": 24.0,
+      "qid": "Q24",
+      "qtype": "PROBLEM",
+      "format": "mcq",
+      "timestamp": "26:51",
+      "question": "Why does non-premultiplied upsampling produce a colored halo at transparent edges?",
+      "options": [
+        "The depth buffer incorrectly clips edge pixels",
+        "The background color from the original image bleeds into the transparent border during filtering, before alpha is applied",
+        "The perspective projection distorts UV coordinates near edges",
+        "Bilinear filtering cannot handle alpha values below 0.5"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "When using non-premultiplied alpha, filtering blends raw color values (including transparent pixels that store the green background color) without regard to alpha. The background color bleeds into the border, producing a colored halo in the final composite.",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 25,
+      "sort_key": 25.0,
+      "qid": "Q25",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "28:13",
+      "question": "What practical rendering scenario motivates the need to correctly downsample textures that contain alpha?",
+      "options": [
+        "Terrain height-map displacement mapping",
+        "Character skin shading with subsurface scattering",
+        "Shadow map generation for point lights",
+        "Rendering tree leaves mapped as textured quads, where correct mipmap filtering of alpha edges matters"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [28:36], the lecturer explains: \"I want to render leaves in my scene i have trees made of polygons i want to draw as just quads with textures on them okay and to do this in a nice way i want to map my textures so i get nice filtering so i'd like to build mint maps like this.\"",
+      "code": "",
+      "images": [
+        "image_1777890625360_0.png"
+      ],
+      "tags": [
+        "Application"
+      ]
+    },
+    {
+      "num": 26,
+      "sort_key": 26.0,
+      "qid": "Q26",
+      "qtype": "PROCESS",
+      "format": "mcq",
+      "timestamp": "29:38",
+      "question": "When downsampling using pre-multiplied alpha, what happens to the colors at transparent pixels before averaging?",
+      "options": [
+        "They are set to white (1,1,1) to avoid color contamination",
+        "They are replaced with the background color of the scene",
+        "They are multiplied by alpha, making them dark/black at fully transparent regions",
+        "They are averaged with adjacent opaque pixels before premultiplying"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [29:38], the lecturer explains: \"If on the other hand we were to pre-multiply the color so we multiply color by alpha right so now we get just green and black,\" showing that fully transparent pixels become black, preventing their color from contaminating the average.",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 27,
+      "sort_key": 27.0,
+      "qid": "Q27",
+      "qtype": "PROCESS",
+      "format": "mcq",
+      "timestamp": "29:57",
+      "question": "After downsampling pre-multiplied colors, how is the final color recovered before compositing?",
+      "options": [
+        "By multiplying the averaged color by alpha again",
+        "By subtracting the background color from the result",
+        "By dividing the averaged pre-multiplied color by the averaged alpha",
+        "By clamping the color to the [0,1] range"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [29:57], the lecturer explains: \"So if we divide the dark green by this this medium gray that's actually going to multiply it it's going to make it brighter and then when we composite it over the white background we get this nice light green color kind of what we would expect to see at the edge of our composited leaf.\"",
+      "code": "",
+      "images": [
+        "image_1777897495730_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 28,
+      "sort_key": 28.0,
+      "qid": "Q28",
+      "qtype": "CALCULATION",
+      "format": "mcq",
+      "timestamp": "31:17",
+      "question": "When compositing a 50%-opaque bright red primitive over another 50%-opaque bright red primitive using non-premultiplied alpha, what is the resulting alpha?",
+      "options": [
+        "0.75",
+        "0.5",
+        "1.0",
+        "0.25"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [31:35], the lecturer calculates: \"And our alpha gets blended like this 0.5 plus 1 minus 0.5 times 0.5 is 0.75.\" Using α_B + (1 − α_B) × α_A = 0.5 + 0.5 × 0.5 = 0.75.",
+      "code": "",
+      "images": [
+        "image_1777897556003_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 29,
+      "sort_key": 29.0,
+      "qid": "Q29",
+      "qtype": "CALCULATION",
+      "format": "mcq",
+      "timestamp": "31:17",
+      "question": "When compositing two identical 50%-opaque bright red primitives using non-premultiplied alpha, what RGB value do you get before un-premultiplying?",
+      "options": [
+        "(0.75, 0, 0)",
+        "(1.0, 0, 0)",
+        "(0.5, 0, 0)",
+        "(0.25, 0, 0)"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [31:17], the lecturer calculates: α_B × C_B + (1 − α_B) × α_A × C_A = 0.5 × 1 + 0.5 × 0.5 × 1 = 0.75. The result is (0.75, 0, 0) — a dark red — which does not look like bright red even though both inputs were bright red.",
+      "code": "",
+      "images": [
+        "image_1777897572160_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 30,
+      "sort_key": 30.0,
+      "qid": "Q30",
+      "qtype": "ADVANTAGE",
+      "format": "mcq",
+      "timestamp": "32:56",
+      "question": "What does pre-multiplied alpha preserve that non-premultiplied compositing distorts?",
+      "options": [
+        "The depth value — pre-mult keeps depth consistent during compositing",
+        "The original color — blending two bright red things still gives bright red; only the alpha increases",
+        "The alpha value — pre-mult keeps alpha fixed at 1.0",
+        "The texture coordinates — pre-mult avoids UV distortion at edges"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [32:56], the lecturer states: \"I blended together two bright red things the color itself hasn't changed it's still bright red it's only the alpha that's changed it's increased to become more opaque.\" Pre-multiplied alpha separates color blending from opacity blending.",
+      "code": "",
+      "images": [
+        "image_1777897589661_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 31,
+      "sort_key": 31.0,
+      "qid": "Q31",
+      "qtype": "CALCULATION",
+      "format": "mcq",
+      "timestamp": "32:41",
+      "question": "When compositing two identical 50%-opaque bright red primitives using pre-multiplied alpha, what is the final recovered RGB color?",
+      "options": [
+        "(1.0, 0, 0)",
+        "(0.75, 0, 0)",
+        "(0.5, 0, 0)",
+        "(0.25, 0, 0)"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [32:41], the lecturer explains: \"But remember that to recover the original color i'm going to actually divide by alpha so the color i get is bright red 1 0 0 and the alpha i get is still that .75.\" Pre-multiplied alpha recovers the original bright red, while non-premultiplied gives the distorted dark red (0.75, 0, 0).",
+      "code": "",
+      "images": [
+        "image_1777897685627_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 32,
+      "sort_key": 32.0,
+      "qid": "Q32",
+      "qtype": "SUMMARY",
+      "format": "mcq",
+      "timestamp": "33:22",
+      "question": "Which of the following is NOT listed as an advantage of pre-multiplied alpha in the lecture?",
+      "options": [
+        "Fewer arithmetic operations for the \"over\" operation",
+        "Better representation for filtering (upsampling and downsampling)",
+        "Improved depth testing accuracy for transparent surfaces",
+        "Treating all channels (RGB and alpha) the same way"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [33:22–33:48], the lecturer lists advantages: treating all channels the same, fewer arithmetic operations, closure under composition, and better filtering. Improved depth testing is not mentioned as an advantage of pre-multiplied alpha.",
+      "code": "",
+      "images": [
+        "image_1777897690700_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 33,
+      "sort_key": 33.0,
+      "qid": "Q33",
+      "qtype": "ADVANTAGE",
+      "format": "mcq",
+      "timestamp": "34:02",
+      "question": "Why does pre-multiplied alpha \"fit naturally into the rasterization pipeline\"?",
+      "options": [
+        "The pipeline already uses homogeneous coordinates and 4×4 matrices, and pre-mult color is just a 4-vector in the same space",
+        "It reduces the number of triangles that need to be drawn",
+        "It eliminates the need for a depth buffer when rendering transparent objects",
+        "It allows texture coordinates to be omitted for transparent surfaces"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [34:02], the lecturer states: \"And also it fits naturally into the rasterization pipeline we've already built so we've already said homogeneous coordinates are a good idea we're going to work with 4x4 matrices our graphics card is built that way so it's pretty cool that our color blending works out the same way.\"",
+      "code": "",
+      "images": [
+        "image_1777897713233_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 34,
+      "sort_key": 34.0,
+      "qid": "Q34",
+      "qtype": "CHALLENGE",
+      "format": "mcq",
+      "timestamp": "35:04",
+      "question": "What fundamental question arises when trying to use the depth buffer with semi-transparent triangles?",
+      "options": [
+        "Should a semi-transparent triangle update the depth buffer, given that objects behind it should still be visible?",
+        "Should transparent triangles be rendered at a lower resolution to save time?",
+        "Should the depth buffer store a list of all depths at each sample instead of just the minimum?",
+        "Should the alpha value be stored in the depth buffer instead of a separate buffer?"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [35:04], the lecturer poses: \"But what about depth if i draw a semi-transparent triangle should i change the depth value is that the closest thing i've seen now can't i still see triangles that i've already drawn through that triangle and shouldn't i care about their depth.\"",
+      "code": "",
+      "images": [
+        "image_1777897754893_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 35,
+      "sort_key": 35.0,
+      "qid": "Q35",
+      "qtype": "REQUIREMENT",
+      "format": "mcq",
+      "timestamp": "35:57",
+      "question": "What ordering assumption must hold for the \"over\" operator to produce correct compositing results?",
+      "options": [
+        "Primitives must be drawn front-to-back so closer surfaces are composited first",
+        "Primitives must be sorted by color brightness before compositing",
+        "Primitives must be drawn back-to-front so the operator correctly places each new layer on top",
+        "Primitives can be drawn in any order — the \"over\" operator handles reordering internally"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [35:57], the lecturer states: \"The key word here is the word over because we're compositing our colors using this over operation we're assuming that a is over b right that we're drawing things in the right order and we're not worrying about occlusion only if things are drawn in back to front order.\"",
+      "code": "",
+      "images": [
+        "image_1777897779147_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 36,
+      "sort_key": 36.0,
+      "qid": "Q36",
+      "qtype": "CHALLENGE",
+      "format": "mcq",
+      "timestamp": "36:35",
+      "question": "Why does sorting transparent triangles back-to-front remain difficult on real GPUs?",
+      "options": [
+        "The sort must be redone at every mipmap level",
+        "GPUs cannot store depth values at higher than 16-bit precision",
+        "Transparent triangles must be tessellated before sorting",
+        "Sorting is annoying, GPUs are not well-suited to it, and intersecting triangles have no valid sort order"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [36:35], the lecturer explains: \"This is annoying for a couple reasons for one thing it's just annoying to have to do this sort all the time it's not something actually that's very easy to do on a on a graphics card and also we have to deal with these issues of primitives intersecting each other if we have two triangles intersecting each other there may be no ordering that gives us the right answer.\"",
+      "code": "",
+      "images": [
+        "image_1777897784462_0.png"
+      ],
+      "tags": [
+        "GPU",
+        "Sorting"
+      ]
+    },
+    {
+      "num": 37,
+      "sort_key": 37.0,
+      "qid": "Q37",
+      "qtype": "ALGORITHM",
+      "format": "mcq",
+      "timestamp": "38:05",
+      "question": "What two-pass approach handles scenes with both opaque and transparent primitives?",
+      "options": [
+        "Render transparent first, then opaque — so transparent surfaces always composite over the opaque ones",
+        "Render each primitive independently into a separate buffer and composite them all at the end",
+        "First render opaque primitives in any order using the depth buffer; then disable depth writes and render transparent primitives back-to-front",
+        "Render all primitives in one pass using a combined depth-and-alpha test"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [38:23–38:52], the lecturer describes: \"We can first render our opaque primitives in any order we want using the depth buffer... After we're done drawing all of our opaque triangles we're going to disable the depth buffer update we're no longer going to change the depth values we're just going to go ahead and render semi-transparent surfaces in back to front order we're still going to check if we pass the depth test.\"",
+      "code": "",
+      "images": [
+        "image_1777897833566_0.png"
+      ],
+      "tags": [
+        "Algorithm"
+      ]
+    },
+    {
+      "num": 38,
+      "sort_key": 38.0,
+      "qid": "Q38",
+      "qtype": "TECHNIQUE",
+      "format": "mcq",
+      "timestamp": "38:46",
+      "question": "In the two-pass approach, what happens to the depth buffer when rendering the transparent pass?",
+      "options": [
+        "It is preserved from the opaque pass, but depth writes are disabled — only depth reads occur",
+        "It is cleared completely so transparent triangles can write fresh depth values",
+        "It is replaced with a separate transparency depth buffer",
+        "It is inverted so that transparency appears in front of all opaque geometry"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [38:46], the lecturer states: \"After we're done drawing all of our opaque triangles we're going to disable the depth buffer update we're no longer going to change the depth values.\" Transparent triangles still test against opaque depth values to detect correct occlusion, but do not overwrite them.",
+      "code": "",
+      "images": [
+        "image_1777897844069_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 39,
+      "sort_key": 39.0,
+      "qid": "Q39",
+      "qtype": "GOAL",
+      "format": "mcq",
+      "timestamp": "40:03",
+      "question": "What is the most fundamental goal of the rasterization pipeline according to the lecture summary?",
+      "options": [
+        "To simulate physically accurate lighting in real time",
+        "To match the visual quality of offline ray tracing",
+        "To maximize GPU utilization by processing millions of triangles per second",
+        "To turn a list of triangles and associated data into a final bitmap image"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [40:03], the lecturer states: \"So the most important thing to remember is what is our goal what are we trying to do here we're trying to turn some inputs into a final image.\"",
+      "code": "",
+      "images": [
+        "image_1777897853516_0.png"
+      ],
+      "tags": [
+        "bitmap"
+      ]
+    },
+    {
+      "num": 40,
+      "sort_key": 40.0,
+      "qid": "Q40",
+      "qtype": "INPUT",
+      "format": "mcq",
+      "timestamp": "40:54",
+      "question": "Which of the following is NOT mentioned as an input to the rasterization pipeline?",
+      "options": [
+        "Texture coordinates (UV) per vertex",
+        "Lighting equations and light source positions",
+        "Perspective transform matrix",
+        "Triangle vertex positions (in homogeneous coordinates)"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "Between [40:14] and [41:12], the lecturer lists: triangle positions, UV coordinates, texture map, object-to-camera transform, perspective transform, and output image dimensions. Lighting equations are not listed as a pipeline input at this stage.",
+      "code": "",
+      "images": [
+        "image_1777897899238_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 41,
+      "sort_key": 41.0,
+      "qid": "Q41",
+      "qtype": "PROCESS",
+      "format": "mcq",
+      "timestamp": "41:51",
+      "question": "What is the first transformation applied to each triangle in the rasterization pipeline?",
+      "options": [
+        "Homogeneous divide to convert from 4D to 3D",
+        "Perspective projection to normalized device coordinates",
+        "Clipping against the view frustum",
+        "Transformation into camera space using the inverse camera transform"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [41:51], the lecturer states: \"Okay what do we do first to each triangle we transform the triangles into camera space by applying the inverse of the camera transform.\"",
+      "code": "",
+      "images": [
+        "image_1777897917524_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 42,
+      "sort_key": 42.0,
+      "qid": "Q42",
+      "qtype": "PROCESS",
+      "format": "mcq",
+      "timestamp": "42:17",
+      "question": "What happens during the clipping stage of the pipeline?",
+      "options": [
+        "Alpha values are quantized to 0 or 1 to simplify depth testing",
+        "Triangles are stretched to fill the screen boundaries",
+        "Triangles outside the normalized unit cube are discarded; partially visible triangles are cut into smaller triangles that fit inside",
+        "RGB color values are clamped to the [0,1] range"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [42:17], the lecturer explains: \"We perform clipping so we discard triangles that lie outside the unit cube if they're completely inside the unit cube we keep them and if they are partially contained in this cube well we have to do a little work to cut them up into smaller triangles that are contained inside the cube.\"",
+      "code": "",
+      "images": [
+        "image_1777897947681_0.png",
+        "image_1777897940052_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 43,
+      "sort_key": 43.0,
+      "qid": "Q43",
+      "qtype": "OPTIMIZATION",
+      "format": "mcq",
+      "timestamp": "43:44",
+      "question": "What is the purpose of \"triangle setup\" before iterating over individual sample points?",
+      "options": [
+        "To determine whether the triangle should be drawn at all",
+        "To compute the final pixel color once for the whole triangle",
+        "To compute the texture LOD level for the entire triangle",
+        "To pull computations out of the per-sample loop that only need to be done once per triangle — edge equations, barycentric coefficient setup, etc."
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [43:44], the lecturer explains: \"Basically look at our code that does the rasterization and say is there something that's getting recomputed over and over and over again for every sample that we could just pull out of that loop and compute once ahead of time.\"",
+      "code": "",
+      "images": [
+        "image_1777897972555_0.png",
+        "image_1777897994076_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 44,
+      "sort_key": 44.0,
+      "qid": "Q44",
+      "qtype": "DECISION",
+      "format": "mcq",
+      "timestamp": "44:39",
+      "question": "What determines whether a sample's color is written to the color buffer?",
+      "options": [
+        "Whether the sample's UV coordinates are within the valid texture range",
+        "Whether the sample falls within the center half of the triangle",
+        "Whether the sample has a non-zero alpha value",
+        "Whether the sample passes the depth test (its depth is less than what is stored in the Z-buffer)"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [44:39–45:01], the lecturer states: \"Once we know what color the sample should be we actually have to figure out should we even bother writing it into the color buffer so we perform a depth test if the thing that we're drawing is closer than anything we've seen before we write the new depth into the depth buffer we write the color into the color buffer otherwise we do nothing. Right so we update the color buffer if the depth buffer test passed.\"",
+      "code": "",
+      "images": [
+        "image_1777898021117_0.png",
+        "image_1777898032190_0.png",
+        "image_1777898051240_0.png",
+        "image_1777898069973_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 45,
+      "sort_key": 45.0,
+      "qid": "Q45",
+      "qtype": "HARDWARE",
+      "format": "mcq",
+      "timestamp": "47:24",
+      "question": "Why are real-world rasterizers implemented in hardware rather than software?",
+      "options": [
+        "Software rasterizers produce lower quality images due to floating-point limitations",
+        "Software rasterizers cannot support pre-multiplied alpha",
+        "Real-time rasterization demands — millions of triangles, complex shaders, 10+ megapixel output, hundreds of frames per second for VR — are far beyond what CPU software can deliver",
+        "Hardware is required by the OpenGL specification"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [46:52–47:24], the lecturer explains: \"The goal of these rasterization pipelines is to render scenes with extremely high complexity they need to render thousands and millions of triangles with complex transforms and shaders and you have really high resolution outputs right 10 megapixels with super sampling... And so these rasterizers are not going to be implemented in software people aren't writing them on their you know cpus like you're doing for this class but they've actually been baked into hardware these days.\"",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 46,
+      "sort_key": 46.0,
+      "qid": "Q46",
+      "qtype": "HARDWARE",
+      "format": "mcq",
+      "timestamp": "48:08",
+      "question": "How does the lecturer describe a GPU architecturally?",
+      "options": [
+        "A heterogeneous multi-core processor with both programmable cores and highly specialized fixed-function hardware",
+        "A single very fast processor optimized for floating-point operations",
+        "A collection of many identical CPU cores running in parallel",
+        "A purely software-based parallel compute system"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [48:08], the lecturer states: \"A gpu is really a heterogeneous multi-core processor so it's not just a big bunch of cpus glued onto a single chip it also has some highly highly specialized hardware that does some of the operations that you now know and love.\"",
+      "code": "",
+      "images": [
+        "image_1777898112272_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 47,
+      "sort_key": 47.0,
+      "qid": "Q47",
+      "qtype": "HARDWARE",
+      "format": "mcq",
+      "timestamp": "48:27",
+      "question": "What specific fixed-function hardware units does the lecturer say GPUs contain?",
+      "options": [
+        "Hardware for bilinear texture filtering, triangle clipping, and blending operations like the \"over\" operator",
+        "Hardware for mesh tessellation and level-of-detail selection",
+        "Hardware neural network accelerators and SIMD vector units",
+        "Hardware for shadow map generation and ambient occlusion"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [48:27], the lecturer specifically lists: \"It has hardware for doing bilinear filtering of textures it has hardware for clipping triangles it has hardware for doing blending operations like the over operation and so forth.\"",
+      "code": "",
+      "images": [
+        "image_1777898122716_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 48,
+      "sort_key": 48.0,
+      "qid": "Q48",
+      "qtype": "EVOLUTION",
+      "format": "mcq",
+      "timestamp": "49:07",
+      "question": "How has GPU pipeline design evolved over time, according to the lecturer?",
+      "options": [
+        "From parallel to sequential processing to simplify debugging",
+        "From large discrete chips toward fully integrated CPU designs",
+        "From fixed-function stages toward increasingly programmable, flexible stages — while still retaining specialized hardware components",
+        "From flexible programmable designs toward fixed-function hardware for maximum efficiency"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [49:07], the lecturer explains: \"Okay so although gpus have gone more and more toward programmability toward flexibility they still benefit from having some very specialized components okay and so that's kind of the evolution of the modern rasterization pipeline there's been a trend toward more generic but still highly parallel computation the different stages have become more and more programmable.\"",
+      "code": "",
+      "images": [
+        "image_1777898148700_0.png",
+        "image_1777898167204_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 49,
+      "sort_key": 49.0,
+      "qid": "Q49",
+      "qtype": "COMPARISON",
+      "format": "mcq",
+      "timestamp": "51:05",
+      "question": "What advantage of ray tracing over rasterization does the NVIDIA real-time demo illustrate?",
+      "options": [
+        "Ray tracing produces physically accurate lighting, shadows, and reflections in real time — effects that rasterization can only approximate with tricks",
+        "Ray tracing is significantly faster than rasterization for all scene types",
+        "Ray tracing requires less GPU memory than rasterization",
+        "Ray tracing eliminates the need for texture mapping"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [51:05–51:22], the lecturer states: \"The thing to realize is that all of these lighting effects all these shadows and the light bouncing off various surfaces is all being done in real time. And this is stuff that you really can't pull off very easily with rasterization you can pull various tricks to kind of get these effects but to get the true physically based appearance you really need this ray tracing technology.\"",
+      "code": "",
+      "images": [
+        "image_1777898222159_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 50,
+      "sort_key": 50.0,
+      "qid": "Q50",
+      "qtype": "ROADMAP",
+      "format": "mcq",
+      "timestamp": "52:28",
+      "question": "In what order does the lecturer say the remaining course topics will be covered?",
+      "options": [
+        "Geometry → materials and lighting and photorealistic rendering → animation",
+        "Materials and lighting → geometry → animation",
+        "Ray tracing → animation → geometry",
+        "Animation → geometry → materials and lighting"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [52:28], the lecturer outlines: \"Next time we're going to start talking about geometry and then we're going to move on to materials and lighting and photorealistic rendering and finally near the end of the course we'll talk about animation.\"",
+      "code": "",
+      "images": [
+        "image_1777898237523_0.png"
+      ],
+      "tags": []
+    }
+  ]
+}

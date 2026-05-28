@@ -1,0 +1,1664 @@
+{
+  "lecture": 4,
+  "title": "Lecture 4: Rasterization & Sampling",
+  "questions": [
+    {
+      "num": 1,
+      "sort_key": 0.01,
+      "qid": "QF1",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "The lecture opens by contrasting rasterization and ray tracing as \"two major techniques for getting stuff on the screen.\" What is the key loop-order difference between them, and why does that difference make rasterization faster for real-time applications?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Rasterization: for each primitive → for each covered sample (determine coverage). Ray tracing: for each sample → for each primitive (determine what's visible). Rasterization processes geometry in a fixed forward order that maps well to GPU parallelism — each triangle's pixels can be computed independently. Ray tracing requires a global scene query per pixel (which primitive does this ray hit?), demanding random memory access and a BVH data structure. Rasterization can achieve billions of triangles per second on GPU; ray tracing is orders of magnitude slower per frame.",
+      "intuition": "Rasterization asks \"where does this triangle go?\" once per triangle. Ray tracing asks \"what's in this direction?\" once per pixel — requiring scene-wide search.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 0.02,
+      "qid": "QF2",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "After coverage testing, the lecture introduces barycentric coordinates. What specific problem do barycentric coordinates solve that a simple binary point-in-triangle test cannot?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "A point-in-triangle test answers only yes/no: is this sample covered? Barycentric coordinates express the sample's position as a weighted combination of the three vertices (α, β, γ with α+β+γ=1). These weights directly interpolate any per-vertex attribute — color, texture coordinates, depth, normals — at the sample location. Without barycentric coordinates, we know a pixel is covered but have no way to determine its color, depth, or texture. The weights are the interpolation mechanism for the entire rasterization pipeline.",
+      "intuition": "Coverage says \"you're inside.\" Barycentric coordinates say \"you're inside, and here's how to blend the three corners at your exact location.\"",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 0.03,
+      "qid": "QF3",
+      "qtype": "ORDER",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "Put these rasterization topics in the order lecture 4 covers them: supersampling anti-aliasing (SSAA) / barycentric coordinates for attribute interpolation / rasterization vs. ray tracing comparison / point-in-triangle coverage test",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Rasterization vs. ray tracing comparison → Point-in-triangle coverage test → Barycentric coordinates → Supersampling anti-aliasing (SSAA)",
+      "intuition": "The lecture establishes the approach (rasterization), solves the core problem (coverage), adds interpolation for useful data (barycentric), then improves quality (anti-aliasing).",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 1,
+      "sort_key": 1.0,
+      "qid": "Q1",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "00:35",
+      "question": "What is the basic principle of rasterization according to the lecture?",
+      "options": [
+        "For each primitive, determine which pixels it covers",
+        "For each pixel, determine which primitive it contains",
+        "For each image, determine the viewing frustum",
+        "For each triangle, compute its barycentric coordinates"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [00:35], the lecturer states: \"Rasterization basically says for each primitive we want to draw each triangle or line segment or point which pixels of the image should get lit up.\"",
+      "code": "",
+      "images": [
+        "image_1771995310239_0.png"
+      ],
+      "tags": [
+        "rasterization",
+        "RayTracing"
+      ]
+    },
+    {
+      "num": 2,
+      "sort_key": 2.0,
+      "qid": "Q2",
+      "qtype": "COMPARISON",
+      "format": "mcq",
+      "timestamp": "00:42",
+      "question": "According to the lecture, what is a key advantage of rasterization?",
+      "options": [
+        "It handles transparency better",
+        "It works well with curved surfaces",
+        "It can be made extremely fast",
+        "It produces more photorealistic images"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [00:42], the lecturer explains: \"This technique is extremely popular extremely valuable because it can be made extremely fast. We can get billions of triangles on the screen every second if we're using modern graphics hardware.\"",
+      "code": "",
+      "images": [
+        "image_1771995625008_0.png"
+      ],
+      "tags": [
+        "rasterization"
+      ]
+    },
+    {
+      "num": 3,
+      "sort_key": 3.0,
+      "qid": "Q3",
+      "qtype": "COMPARISON",
+      "format": "mcq",
+      "timestamp": "01:35",
+      "question": "What is the main difference between rasterization and ray tracing described in the lecture?",
+      "options": [
+        "Ray tracing is pixel-centric while rasterization is primitive-centric",
+        "Rasterization can handle curved surfaces better",
+        "Rasterization takes longer to compute",
+        "Ray tracing is more common in video games"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [01:35], the lecturer explains that ray tracing asks \"for each pixel which primitives are seen through that pixel,\" contrasting with rasterization which asks \"for each primitive which pixels it covers.\"",
+      "code": "",
+      "images": [
+        "image_1771995779127_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 4,
+      "sort_key": 4.0,
+      "qid": "Q4",
+      "qtype": "LIMITATION",
+      "format": "mcq",
+      "timestamp": "01:58",
+      "question": "What is a significant limitation of ray tracing according to the lecture?",
+      "options": [
+        "It cannot handle transparent surfaces",
+        "It is much slower than rasterization",
+        "It requires specialized hardware",
+        "It cannot produce photorealistic images"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [01:58], the lecturer states: \"Ray tracing is a lot slower we might have to wait minutes or even hours to generate one image rather than drawing billions of triangles per second or having hundreds of frames per second on the gpu.\"",
+      "code": "",
+      "images": [
+        "image_1771995781860_0.png"
+      ],
+      "tags": [
+        "Limitation",
+        "Constraint"
+      ]
+    },
+    {
+      "num": 5,
+      "sort_key": 5.0,
+      "qid": "Q5",
+      "qtype": "PIPELINE",
+      "format": "mcq",
+      "timestamp": "02:26",
+      "question": "What is a key characteristic of stages in a graphics pipeline?",
+      "options": [
+        "They operate independently from each other",
+        "They are programmed in hardware",
+        "They all run in parallel",
+        "They have highly structured input and output data"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [02:38], the lecturer explains that \"each one of these stages is going to request data as input in a very structured way, some really simple regular description of the input data, and likewise it's going to have some simple regular structure for the output data.\"",
+      "code": "",
+      "images": [
+        "image_1771995841829_0.png"
+      ],
+      "tags": [
+        "Pipeline"
+      ]
+    },
+    {
+      "num": 6,
+      "sort_key": 6.0,
+      "qid": "Q6",
+      "qtype": "OPTIMIZATION",
+      "format": "mcq",
+      "timestamp": "02:57",
+      "question": "Why is having highly structured data in the graphics pipeline valuable?",
+      "options": [
+        "It enables simplified and optimized computation",
+        "It ensures compatibility with hardware",
+        "It allows for standardized protocols",
+        "It makes debugging easier"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [02:57], the lecturer states: \"Because this data is highly structured and highly predictable you can really go to town and simplify and optimize the computation within that stage.\"",
+      "code": "",
+      "images": [
+        "image_1771995932491_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 7,
+      "sort_key": 7.0,
+      "qid": "Q7",
+      "qtype": "EXAMPLE",
+      "format": "mcq",
+      "timestamp": "04:24",
+      "question": "What were the two main components used to represent a 3D shape in the first lecture example?",
+      "options": [
+        "Triangles and textures",
+        "Vertices and edges",
+        "Vertices and colors",
+        "Points and normals"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [04:24], the lecturer recalls: \"We said we could represent the cube or any other kind of three-dimensional shape as two things: a collection of vertices, vertex locations in space, and a collection of edges saying which of those vertices get connected together to make line segments.\"",
+      "code": "",
+      "images": [
+        "image_1771995940681_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 8,
+      "sort_key": 8.0,
+      "qid": "Q8",
+      "qtype": "HARDWARE",
+      "format": "mcq",
+      "timestamp": "06:59",
+      "question": "What specialized hardware is typically used to perform rasterization?",
+      "options": [
+        "APU (Accelerated Processing Unit)",
+        "FPGA (Field-Programmable Gate Array)",
+        "CPU (Central Processing Unit)",
+        "GPU (Graphics Processing Unit)"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [06:59], the lecturer explains: \"Real rasterization is typically performed by what's called a graphics processing unit or a GPU. So this is a real physical piece of hardware that sits inside your computer and it has a chip on it that's different from your CPU.\"",
+      "code": "",
+      "images": [
+        "image_1771995973214_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 9,
+      "sort_key": 9.0,
+      "qid": "Q9",
+      "qtype": "PRIMITIVE",
+      "format": "mcq",
+      "timestamp": "08:31",
+      "question": "What is one of the key advantages of using triangles for rasterization?",
+      "options": [
+        "They are faster to process than points or lines",
+        "They can represent curved surfaces perfectly",
+        "They require less memory than other primitives",
+        "They are always planar (have a well-defined plane)"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [09:16], the lecturer states: \"Another thing that's good about triangles is that they're always planar they always have a well-defined plane passing through the three vertices.\"",
+      "code": "",
+      "images": [
+        "image_1771995996932_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 10,
+      "sort_key": 10.0,
+      "qid": "Q10",
+      "qtype": "ADVANTAGE",
+      "format": "mcq",
+      "timestamp": "09:42",
+      "question": "Why is the planarity of triangles particularly important for shading?",
+      "options": [
+        "It makes texturing easier",
+        "It allows for faster processing",
+        "It simplifies memory storage",
+        "It ensures a well-defined normal direction"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [09:42], the lecturer explains: \"It's extremely important for shading. So if I want to shade a surface I often need to know what is the normal direction what is the direction orthogonal to the surface and so for a triangle that normal is always well defined.\"",
+      "code": "",
+      "images": [
+        "image_1771996003755_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 11,
+      "sort_key": 11.0,
+      "qid": "Q11",
+      "qtype": "ADVANTAGE",
+      "format": "mcq",
+      "timestamp": "09:56",
+      "question": "What advantage of triangles related to data at vertices is mentioned in the lecture?",
+      "options": [
+        "They allow for automatic level-of-detail",
+        "They support complex texturing operations",
+        "They provide better compression of vertex data",
+        "They enable easy interpolation of data across the triangle"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [09:56], the lecturer states: \"It'll also turn out to be very easy to interpolate data at corners so if I have three color values at the corners of a triangle and I want to smoothly blend those color values across the rest of the triangle, it's going to be really really simple and efficient.\"",
+      "code": "",
+      "images": [
+        "image_1771996850703_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 12,
+      "sort_key": 12.0,
+      "qid": "Q12",
+      "qtype": "PIPELINE",
+      "format": "mcq",
+      "timestamp": "11:28",
+      "question": "What is the first stage in the rasterization pipeline described in the lecture?",
+      "options": [
+        "Interpolating attributes at vertices",
+        "Projection onto the 2D screen",
+        "Sampling triangle coverage",
+        "Transformation and positioning in the world"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [11:28], the lecturer states: \"The first thing we're going to do once we have our list of triangles is we're going to transform and position these things in the world in the scene where we want them to be.\"",
+      "code": "",
+      "images": [
+        "image_1771996856893_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 13,
+      "sort_key": 13.0,
+      "qid": "Q13",
+      "qtype": "COVERAGE",
+      "format": "mcq",
+      "timestamp": "13:44",
+      "question": "What is the basic question of rasterization according to the lecture?",
+      "options": [
+        "For each vertex, which pixels should be affected?",
+        "For each triangle, which pixels are covered by it?",
+        "For each image, how many triangles are visible?",
+        "For each pixel, which triangle is closest to the camera?"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [13:44], the lecturer directly states: \"For a given triangle for this red triangle here what pixels does the triangle overlap that's the basic question of rasterization the question of coverage.\"",
+      "code": "",
+      "images": [
+        "image_1771996867247_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 14,
+      "sort_key": 14.0,
+      "qid": "Q14",
+      "qtype": "VISIBILITY",
+      "format": "mcq",
+      "timestamp": "14:01",
+      "question": "What is meant by the \"occlusion question\" in the lecture?",
+      "options": [
+        "When multiple triangles cover a pixel, which one is visible?",
+        "Which triangles are outside the viewing frustum?",
+        "Which triangles should be culled?",
+        "Which triangles are too small to be visible?"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [14:01], the lecturer explains: \"We know that the red triangle covers this pixel we might know that another triangle the blue triangle covers this pixel which one is closer to the camera which color value do we finally see and that's the question of occlusion.\"",
+      "code": "",
+      "images": [
+        "image_1771997084252_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 15,
+      "sort_key": 15.0,
+      "qid": "Q15",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "14:15",
+      "question": "What is another name for the occlusion problem mentioned in the lecture?",
+      "options": [
+        "The z-buffer problem",
+        "The visibility problem",
+        "The hidden surface problem",
+        "The culling problem"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [14:15], the lecturer states: \"This second question this question is called the visibility problem.\"",
+      "code": "",
+      "images": [
+        "image_1771997069120_0.png"
+      ],
+      "tags": [
+        "Visibility"
+      ]
+    },
+    {
+      "num": 16,
+      "sort_key": 16.0,
+      "qid": "Q16",
+      "qtype": "COVERAGE",
+      "format": "mcq",
+      "timestamp": "16:32",
+      "question": "When defining what it means for a pixel to be covered by a triangle, which case is straightforward according to the lecture?",
+      "options": [
+        "When the triangle's vertex is inside the pixel",
+        "When the triangle completely covers the pixel",
+        "When the triangle partially covers the pixel",
+        "When the triangle's edge passes through the pixel"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [17:03], the lecturer explains: \"Triangle four is also pretty easy, four covers the entire pixel so it's really easy to say yeah for sure the pixel is covered by triangle four.\"",
+      "code": "",
+      "images": [
+        "image_1771997185693_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 17,
+      "sort_key": 17.0,
+      "qid": "Q17",
+      "qtype": "APPROACH",
+      "format": "mcq",
+      "timestamp": "17:50",
+      "question": "What approach does the lecturer suggest for handling partial pixel coverage?",
+      "options": [
+        "Always treat partially covered pixels as fully covered",
+        "Never count partially covered pixels",
+        "Randomly decide whether to count partial coverage",
+        "Record the fraction of the pixel area covered by the triangle"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [17:50], the lecturer states: \"Instead of just recording a binary value yes or no maybe one option is to say really what we want to know is the fraction of the pixel area covered by the triangle.\"",
+      "code": "",
+      "images": [
+        "image_1771997211546_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 18,
+      "sort_key": 18.0,
+      "qid": "Q18",
+      "qtype": "COMPLEXITY",
+      "format": "mcq",
+      "timestamp": "18:52",
+      "question": "Why is it difficult to compute the exact coverage fraction when multiple triangles are involved?",
+      "options": [
+        "Triangles might have different depths",
+        "Triangles might have different colors",
+        "The math is too complex to compute in real-time",
+        "Complex regions of overlap can form non-convex shapes"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [18:57], the lecturer explains the challenge: \"We might have non-convex regions where they overlap and so forth.\"",
+      "code": "",
+      "images": [
+        "image_1771997219796_0.png"
+      ],
+      "tags": [
+        "Convex",
+        "Complexity"
+      ]
+    },
+    {
+      "num": 19,
+      "sort_key": 19.0,
+      "qid": "Q19",
+      "qtype": "APPROACH",
+      "format": "mcq",
+      "timestamp": "20:22",
+      "question": "What is the sampling approach to determining coverage?",
+      "options": [
+        "Calculate the area of triangle-pixel overlap analytically",
+        "Approximate the triangle with smaller primitives",
+        "Test several sample points and use statistics to estimate coverage",
+        "Use a lookup table for predetermined coverage patterns"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [20:22], the lecturer explains: \"We're not going to compute the exact or analytical answer but instead we're going to test a collection of sample points right and we're just going to say for each sample point which triangle do we see.\"",
+      "code": "",
+      "images": [
+        "image_1771997254170_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 20,
+      "sort_key": 20.0,
+      "qid": "Q20",
+      "qtype": "SAMPLING",
+      "format": "mcq",
+      "timestamp": "21:09",
+      "question": "What is the basic definition of sampling given in the lecture?",
+      "options": [
+        "Removing high-frequency components from a signal",
+        "Converting analog signals to digital values",
+        "Reducing the resolution of an image",
+        "Selecting values of a function at specific points"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [21:09], the lecturer states: \"Sampling all that means is I pick some values x naught x1 x2 x3 and so on and I ask what is the value of the function at those points.\"",
+      "code": "",
+      "images": [
+        "image_1771997323964_0.png"
+      ],
+      "tags": [
+        "Sampling"
+      ]
+    },
+    {
+      "num": 21,
+      "sort_key": 21.0,
+      "qid": "Q21",
+      "qtype": "EXAMPLE",
+      "format": "mcq",
+      "timestamp": "21:33",
+      "question": "What example of a common sampled signal is given in the lecture?",
+      "options": [
+        "Digital photographs",
+        "Vector graphics",
+        "Audio files",
+        "3D models"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [21:33], the lecturer gives this example: \"A great example of this would be an audio file so an audio file that you use to listen to music stores samples of a one-dimensional signal what is that signal it's the amplitude.\"",
+      "code": "",
+      "images": [
+        "image_1771997334974_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 22,
+      "sort_key": 22.0,
+      "qid": "Q22",
+      "qtype": "RATE",
+      "format": "mcq",
+      "timestamp": "21:52",
+      "question": "According to the lecture, at what rate is most consumer audio sampled?",
+      "options": [
+        "48,000 times per second",
+        "22,000 times per second",
+        "44,000 times per second",
+        "32,000 times per second"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [21:52], the lecturer states: \"In fact most consumer audio is sampled 44,000 times a second to get a realistic reproduction of sound.\"",
+      "code": "",
+      "images": [
+        "image_1771997342659_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 23,
+      "sort_key": 23.0,
+      "qid": "Q23",
+      "qtype": "RECONSTRUCTION",
+      "format": "mcq",
+      "timestamp": "22:33",
+      "question": "What is the reconstruction problem in signal processing?",
+      "options": [
+        "Creating a continuous function from discrete samples",
+        "Converting a digital signal back to analog form",
+        "Removing noise from a sampled signal",
+        "Finding the original signal from a degraded version"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [22:33], the lecturer defines the problem: \"How do you turn those numbers back into a continuous signal that you can listen to and that's the problem of reconstruction... given a set of samples how can we cook up some continuous function some function where we know the value at every point in time rather than just at the sample times.\"",
+      "code": "",
+      "images": [
+        "image_1771997354506_0.png"
+      ],
+      "tags": [
+        "Reconstruction"
+      ]
+    },
+    {
+      "num": 24,
+      "sort_key": 24.0,
+      "qid": "Q24",
+      "qtype": "METHOD",
+      "format": "mcq",
+      "timestamp": "23:21",
+      "question": "What is the most basic reconstruction approach described in the lecture?",
+      "options": [
+        "Linear interpolation",
+        "Piecewise constant approximation",
+        "Sine wave interpolation",
+        "Cubic splines"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [23:21], the lecturer explains: \"One really basic idea would be to use a piecewise constant approximation. I don't know what the function is equal to for every value of x so what I'm going to do is just say okay find the closest value of x where I do know the function value and just use that one.\"",
+      "code": "",
+      "images": [
+        "image_1771997377787_0.png"
+      ],
+      "tags": [
+        "Reconstruction"
+      ]
+    },
+    {
+      "num": 25,
+      "sort_key": 25.0,
+      "qid": "Q25",
+      "qtype": "PROBLEM",
+      "format": "mcq",
+      "timestamp": "24:27",
+      "question": "What issue with piecewise linear reconstruction is highlighted in the lecture?",
+      "options": [
+        "It uses too much memory",
+        "It requires too much computation",
+        "It can miss significant features between sample points",
+        "It creates artificial high frequencies"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [24:27], the lecturer points out: \"I've completely missed some of these big bumps in the function especially near the end I have these two huge bumps between x2 and x3 that don't show up at all in my piecewise linear approximation.\"",
+      "code": "",
+      "images": [
+        "image_1771997414620_0.png"
+      ],
+      "tags": [
+        "Approximation",
+        "Linear"
+      ]
+    },
+    {
+      "num": 26,
+      "sort_key": 26.0,
+      "qid": "Q26",
+      "qtype": "SOLUTION",
+      "format": "mcq",
+      "timestamp": "24:56",
+      "question": "What is the most basic solution to improve reconstruction quality?",
+      "options": [
+        "Use a more sophisticated interpolation method",
+        "Use frequency domain techniques",
+        "Apply a smoothing filter",
+        "Increase the sampling rate"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [24:56], the lecturer explains: \"The most basic thing we could do is we could just say how about we sample the signal more densely how about we just take more sample points if we missed certain features then we should just sample more frequently and we'll capture those features.\"\n\nThe next question skips this sldie",
+      "code": "",
+      "images": [
+        "image_1771997426297_0.png",
+        "image_1771997568372_0.png"
+      ],
+      "tags": [
+        "Reconstruction"
+      ]
+    },
+    {
+      "num": 27,
+      "sort_key": 27.0,
+      "qid": "Q27",
+      "qtype": "COVERAGE",
+      "format": "mcq",
+      "timestamp": "28:14",
+      "question": "How does the lecture define the coverage function for rasterization?",
+      "options": [
+        "A function that returns the depth of each pixel",
+        "A function that calculates triangle area",
+        "A binary function that indicates whether a point is inside a triangle (1) or not (0)",
+        "A function that determines pixel color based on triangle properties"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [28:14], the lecturer explains: \"The coverage function is a function defined at every single point in the entire plane... and it's equal to one if that point is contained inside the triangle and it's equal to zero otherwise.\"",
+      "code": "",
+      "images": [
+        "image_1771997491695_0.png"
+      ],
+      "tags": [
+        "coverage",
+        "rasterization",
+        "Function"
+      ]
+    },
+    {
+      "num": 28,
+      "sort_key": 28.0,
+      "qid": "Q28",
+      "qtype": "CHALLENGE",
+      "format": "mcq",
+      "timestamp": "29:06",
+      "question": "What challenge arises when an edge passes directly through a sample point?",
+      "options": [
+        "The pixel appears darker than it should",
+        "It's ambiguous which triangle covers the pixel",
+        "The algorithm fails completely",
+        "The computation becomes too slow"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [29:06], the lecturer asks: \"I have two triangles meeting at an edge and that edge passes exactly through my sample point. So what do I do? Is this sample point covered by triangle one or is it covered by triangle two or is it in some sense covered by both of them?\"",
+      "code": "",
+      "images": [
+        "image_1771997713972_0.png",
+        "image_1771997770145_0.png",
+        "image_1771997762595_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 29,
+      "sort_key": 29.0,
+      "qid": "Q29",
+      "qtype": "SOLUTION",
+      "format": "mcq",
+      "timestamp": "29:53",
+      "question": "What is one approach mentioned for handling edge cases when a sample point falls exactly on a triangle edge?",
+      "options": [
+        "Classify based on whether it's a top edge or left edge",
+        "Move the sample point slightly",
+        "Never count points exactly on edges",
+        "Always count both triangles sharing the edge"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [29:53], the lecturer explains: \"If an edge falls directly on a screen sample point for instance you could say the sample is classified within the triangle if the edge is a top edge or a left edge.\"",
+      "code": "",
+      "images": [
+        "image_1771997805702_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 30,
+      "sort_key": 30.0,
+      "qid": "Q30",
+      "qtype": "DISPLAY",
+      "format": "mcq",
+      "timestamp": "31:46",
+      "question": "In the context of displaying sampled image values, what does a pixel represent according to the lecture?",
+      "options": [
+        "A weighted average of surrounding points",
+        "A square of light with uniform color",
+        "A mathematical point with no area",
+        "A triangular region on screen"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [31:46], the lecturer states: \"Each image sample sent to the display is converted into roughly speaking a little square of light and maybe you get to specify the color of that light.\"",
+      "code": "",
+      "images": [
+        "image_1771997934002_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 31,
+      "sort_key": 31.0,
+      "qid": "Q31",
+      "qtype": "TERM",
+      "format": "mcq",
+      "timestamp": "31:57",
+      "question": "According to the lecture, what does the term \"pixel\" stand for?",
+      "options": [
+        "Pixelated image",
+        "Picture element",
+        "Picture cell",
+        "Point index location"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [31:57], the lecturer explains: \"The word pixel is just an abbreviation for picture element right you have a picture it's your entire screen one little element of that is a pixel.\"",
+      "code": "",
+      "images": [
+        "image_1771998071836_0.png"
+      ],
+      "tags": [
+        "pixel"
+      ]
+    },
+    {
+      "num": 32,
+      "sort_key": 32.0,
+      "qid": "Q32",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "33:47",
+      "question": "What is aliasing in the context of computer graphics?",
+      "options": [
+        "When colors look different on different displays",
+        "When one triangle is rendered on top of another",
+        "When triangles are too small to be visible",
+        "When a mismatch occurs between sampling and reconstruction"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [33:47], the lecturer introduces: \"This leads us into a discussion of something that's really core to computer graphics which is the phenomenon of aliasing,\" and throughout the lecture explains it as a mismatch between sampling and reconstruction causing misrepresentation of the original signal.",
+      "code": "",
+      "images": [
+        "image_1771998130102_0.png",
+        "image_1771998135778_0.png"
+      ],
+      "tags": [
+        "Aliasing",
+        "definition"
+      ]
+    },
+    {
+      "num": 33,
+      "sort_key": 33.0,
+      "qid": "Q33",
+      "qtype": "FREQUENCY",
+      "format": "mcq",
+      "timestamp": "35:34",
+      "question": "How does the lecture suggest we can understand signals like audio?",
+      "options": [
+        "As a superposition or sum of different frequencies",
+        "As a set of discrete events",
+        "As a sequence of amplitudes over time",
+        "As a series of waveforms"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [35:34], the lecturer states: \"A 1D signal like audio can be expressed as a superposition or a sum of different frequencies.\"",
+      "code": "",
+      "images": [
+        "image_1771998186382_0.png"
+      ],
+      "tags": [
+        "Reconstruction"
+      ]
+    },
+    {
+      "num": 34,
+      "sort_key": 34.0,
+      "qid": "Q34",
+      "qtype": "EXPERIMENT",
+      "format": "mcq",
+      "timestamp": "38:30",
+      "question": "In the pitch-rising experiment, what unexpected phenomenon was observed?",
+      "options": [
+        "The frequency remained constant",
+        "The sound became inaudible",
+        "The audio became distorted",
+        "The pitch appeared to rise and fall repeatedly"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [38:30], the lecturer describes: \"Rather than just going from low to high and higher and higher and higher it went from low to high back down to low back up to high back down to low what is going on there?\"",
+      "code": "",
+      "images": [
+        "image_1771998301424_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 35,
+      "sort_key": 35.0,
+      "qid": "Q35",
+      "qtype": "EXPLANATION",
+      "format": "mcq",
+      "timestamp": "38:50",
+      "question": "What explains the unexpected result in the pitch experiment?",
+      "options": [
+        "Interference between multiple sound waves",
+        "Incorrect frequency generation",
+        "Undersampling of the high-frequency signal",
+        "A bug in the audio playback system"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [38:50], the lecturer explains: \"If we under sample if we have too few points to capture all of the little wiggles in that sound wave then we're going to get aliasing we're going to get a sound that doesn't actually represent the original continuous signal.\"",
+      "code": "",
+      "images": [
+        "image_1771998474964_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 36,
+      "sort_key": 36.0,
+      "qid": "Q36",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "40:22",
+      "question": "How does the lecturer define aliasing in the audio example?",
+      "options": [
+        "When sound becomes too distorted to recognize",
+        "When audio frequencies exceed human hearing range",
+        "When digital audio cannot reproduce analog sounds",
+        "When high frequencies masquerade as low frequencies after reconstruction"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [40:22], the lecturer states: \"In this case this is what we mean by aliasing high frequencies in the original signal quickly oscillating waves masquerade as low frequencies after we perform the reconstruction because we've under sampled.\"\"",
+      "code": "",
+      "images": [
+        "image_1771998452042_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 37,
+      "sort_key": 37.0,
+      "qid": "Q37",
+      "qtype": "IMAGE",
+      "format": "mcq",
+      "timestamp": "41:44",
+      "question": "In the image frequency domain representation shown in the lecture, where are the low frequencies located?",
+      "options": [
+        "At the edges of the representation",
+        "At the corners only",
+        "Uniformly distributed throughout",
+        "At the dead center"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [41:44], the lecturer explains: \"This image that we see on the right is kind of like the analyzer the spectral analyzer for the image that we see on the left except this time all the low frequencies are dead center and as we go out in any direction... we're looking at higher and higher frequencies.\"",
+      "code": "",
+      "images": [
+        "image_1771998501567_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 38,
+      "sort_key": 38.0,
+      "qid": "Q38",
+      "qtype": "EXAMPLE",
+      "format": "mcq",
+      "timestamp": "44:10",
+      "question": "What function was used to create the synthetic aliasing example in the lecture?",
+      "options": [
+        "sin(x² + y²)",
+        "sin(x) + sin(y)",
+        "cos(x² - y²)",
+        "sin(x) * sin(y)"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [44:10], the lecturer describes: \"We're going to build a function intentionally that has crazy high frequencies in it and that function is sine of x squared plus y squared.\"",
+      "code": "",
+      "images": [
+        "image_1771998552981_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 39,
+      "sort_key": 39.0,
+      "qid": "Q39",
+      "qtype": "EXAMPLE",
+      "format": "mcq",
+      "timestamp": "45:32",
+      "question": "What real-world example of temporal aliasing is described in the lecture?",
+      "options": [
+        "Lens flare effects",
+        "Image pixelation when zooming",
+        "Motion blur in photographs",
+        "Spinning wagon wheels appearing to rotate backwards"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [45:32], the lecturer explains: \"If it's ever been nighttime you're looking out the car window at a car next to you and you stare at the hubcaps you'll see an effect like this. Maybe as the car leaves through the stop light the wheels start spinning faster and faster and rather than looking like they're spinning forward they start spinning backward.\"",
+      "code": "",
+      "images": [
+        "image_1771998614239_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 40,
+      "sort_key": 40.0,
+      "qid": "Q40",
+      "qtype": "THEOREM",
+      "format": "mcq",
+      "timestamp": "46:41",
+      "question": "What theorem establishes when a signal can be perfectly reconstructed from samples?",
+      "options": [
+        "The Sampling Law",
+        "The Nyquist-Shannon Theorem",
+        "The Signal Processing Theorem",
+        "The Fourier Transform Theorem"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [46:41], the lecturer states: \"So how can we be precise about when this phenomenon occurs this is something called the nyquist shannon theorem okay really important theorem in signal processing.\"",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 41,
+      "sort_key": 41.0,
+      "qid": "Q41",
+      "qtype": "CONDITION",
+      "format": "mcq",
+      "timestamp": "47:36",
+      "question": "According to the Nyquist-Shannon theorem, what condition allows perfect signal reconstruction?",
+      "options": [
+        "The signal must be sampled at least twice as frequently as its highest frequency",
+        "The signal must be continuous",
+        "The signal must be perfectly periodic",
+        "The signal must have limited amplitude"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [47:36], the lecturer explains: \"If your signal happens to be band limited then it can be perfectly reconstructed as long as you take samples at a rate that's twice as frequent as the highest frequency in the signal.\"",
+      "code": "",
+      "images": [
+        "image_1771998665800_0.png"
+      ],
+      "tags": [
+        "Nyquist"
+      ]
+    },
+    {
+      "num": 42,
+      "sort_key": 42.0,
+      "qid": "Q42",
+      "qtype": "FILTER",
+      "format": "mcq",
+      "timestamp": "47:56",
+      "question": "What filter is used for perfect reconstruction according to the Nyquist-Shannon theorem?",
+      "options": [
+        "Triangle filter",
+        "Gaussian filter",
+        "Sync filter",
+        "Box filter"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [47:56], the lecturer states: \"Once you have those samples you can reconstruct exactly the original signal by using something called a sync filter.\"",
+      "code": "",
+      "images": [
+        "image_1771998802412_0.png"
+      ],
+      "tags": [
+        "Filter"
+      ]
+    },
+    {
+      "num": 43,
+      "sort_key": 43.0,
+      "qid": "Q43",
+      "qtype": "LIMITATION",
+      "format": "mcq",
+      "timestamp": "48:38",
+      "question": "Why can't most graphics signals be perfectly reconstructed using the Nyquist-Shannon approach?",
+      "options": [
+        "The reconstruction filters are too complex",
+        "The sampling rate is too low",
+        "There's too much noise in the signals",
+        "The signals aren't band-limited due to features like hard edges"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [48:57], the lecturer explains: \"Here's our triangle our coverage function how do I express something like a hard edge as a sum of sinusoids? Well actually it turns out that what I have to do is add an infinite series of higher and higher and higher frequencies until I can eventually approximate something like a piecewise constant function.\"",
+      "code": "",
+      "images": [
+        "image_1771998941026_0.png"
+      ],
+      "tags": [
+        "Limitation"
+      ]
+    },
+    {
+      "num": 44,
+      "sort_key": 44.0,
+      "qid": "Q44",
+      "qtype": "ARTIFACTS",
+      "format": "mcq",
+      "timestamp": "50:39",
+      "question": "What common aliasing artifact appears in static images with straight lines?",
+      "options": [
+        "Banding",
+        "Pixel bleeding",
+        "Moire patterns",
+        "Jaggies (jagged edges)"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [50:39], the lecturer describes: \"Really really common artifacts in graphics or you have let's say jaggies in a in a static image if I draw a line segment it has these jagged edges.\"",
+      "code": "",
+      "images": [
+        "image_1771998975218_0.png"
+      ],
+      "tags": [
+        "Aliasing"
+      ]
+    },
+    {
+      "num": 45,
+      "sort_key": 45.0,
+      "qid": "Q45",
+      "qtype": "SOLUTION",
+      "format": "mcq",
+      "timestamp": "51:39",
+      "question": "What is the ideal goal when trying to reduce aliasing in pixel coverage?",
+      "options": [
+        "To remove all high frequencies from the scene",
+        "To randomize the sampling pattern",
+        "To match the total light in a pixel with the total light in the original signal",
+        "To use the minimum number of samples possible"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [51:39], the lecturer explains: \"If we think of a pixel as a little square of light then what we want is that the total light emitted from that pixel to be the same as the total light that we had in our original continuous signal in other words we want to integrate the input signal over the pixel to get the sample value.\"",
+      "code": "",
+      "images": [
+        "image_1771999074308_0.png"
+      ],
+      "tags": [
+        "Light"
+      ]
+    },
+    {
+      "num": 46,
+      "sort_key": 46.0,
+      "qid": "Q46",
+      "qtype": "TECHNIQUE",
+      "format": "mcq",
+      "timestamp": "53:02",
+      "question": "What anti-aliasing technique is described in the lecture?",
+      "options": [
+        "Anisotropic filtering",
+        "Gaussian blur",
+        "Adaptive sampling",
+        "Super sampling"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [53:02], the lecturer explains: \"So what we're really going to do is use a technique called super sampling rather than just taking one sample of the signal the coverage signal at each pixel we're going to take several samples.\"",
+      "code": "",
+      "images": [
+        "image_1771999129670_0.png"
+      ],
+      "tags": [
+        "AntiAliasing",
+        "Supersampling"
+      ]
+    },
+    {
+      "num": 47,
+      "sort_key": 47.0,
+      "qid": "Q47",
+      "qtype": "PROCESS",
+      "format": "mcq",
+      "timestamp": "53:54",
+      "question": "How are the multiple samples used in super sampling anti-aliasing?",
+      "options": [
+        "The samples are averaged to determine the pixel's coverage",
+        "The samples are combined using a weighted formula",
+        "The brightest sample is selected",
+        "The median value is used"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [53:54], the lecturer explains: \"If some fraction of the samples are covered let's say half of them are covered well then we say okay 50% of that pixel is covered right so we just use the fraction of sample values that are covered to get an approximation of the fraction of the pixel that's covered.\"",
+      "code": "",
+      "images": [
+        "image_1771999227390_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 48,
+      "sort_key": 48.0,
+      "qid": "Q48",
+      "qtype": "RESULTS",
+      "format": "mcq",
+      "timestamp": "55:16",
+      "question": "What improvement was observed when increasing from 4 samples per pixel to 16 samples per pixel?",
+      "options": [
+        "The image became smoother but still had some artifacts",
+        "The image became darker",
+        "There was no visible difference",
+        "The image became perfectly aliasing-free"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [55:16], the lecturer observes: \"So now in each pixel we have 4x4 or 16 samples things get a little bit smoother okay still not perfect.\"",
+      "code": "",
+      "images": [
+        "image_1771999256302_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 49,
+      "sort_key": 49.0,
+      "qid": "Q49",
+      "qtype": "OBSERVATION",
+      "format": "mcq",
+      "timestamp": "55:42",
+      "question": "Even with 1024 samples per pixel, what was observed about the anti-aliasing result?",
+      "options": [
+        "It still wasn't perfect",
+        "It became perfect with no visible artifacts",
+        "It became too blurry",
+        "It introduced new artifacts"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [55:30], the lecturer states: \"So now we do 32 by 32 we have 1024 samples taken for every single pixel and we average them back down so even though this looks a lot better you notice it's still not perfect.\"\n\n-",
+      "code": "",
+      "images": [
+        "image_1775353040809_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 50,
+      "sort_key": 50.0,
+      "qid": "Q50",
+      "qtype": "SPECIAL",
+      "format": "mcq",
+      "timestamp": "55:54",
+      "question": "What special case for perfect anti-aliasing is mentioned in the lecture?",
+      "options": [
+        "Circular shapes",
+        "Checkerboard patterns",
+        "Uniform color regions",
+        "Straight line segments"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [55:54], the lecturer notes: \"In this very very special case of the checkerboard there happens to be an exact solution you can analytically integrate the checkerboard over a pixel and get this beautifully smooth image.\"",
+      "code": "",
+      "images": [
+        "image_1771999301034_0.png"
+      ],
+      "tags": [
+        "Analysis",
+        "Integration"
+      ]
+    },
+    {
+      "num": 51,
+      "sort_key": 51.0,
+      "qid": "Q51",
+      "qtype": "ALGORITHM",
+      "format": "mcq",
+      "timestamp": "57:10",
+      "question": "What is the most basic operation needed for triangle rasterization?",
+      "options": [
+        "Finding the closest point on a triangle",
+        "Computing triangle area",
+        "Calculating triangle perimeter",
+        "Testing if a point is inside a triangle"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [57:10], the lecturer explains: \"The most basic thing that we need to do is say okay we have this triangle we have this pixel grid we want to know which pixels are covered by the triangle we can just break this down into an atomic query which is how do we check if a given point q is inside a triangle with vertices p0 p1 p2.\"",
+      "code": "",
+      "images": [
+        "image_1771999356654_0.png"
+      ],
+      "tags": [
+        "Algorithm"
+      ]
+    },
+    {
+      "num": 52,
+      "sort_key": 52.0,
+      "qid": "Q52",
+      "qtype": "TEST",
+      "format": "mcq",
+      "timestamp": "58:12",
+      "question": "How is the point-in-triangle test typically implemented?",
+      "options": [
+        "Using barycentric coordinates",
+        "Calculating angle sums",
+        "Testing if the point is inside the three half-planes defined by the edges",
+        "Computing distance to each edge"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [58:12], the lecturer explains: \"How do you test if a point's inside of a triangle? Well I know that if it's contained in the half plane made by the bottom edge and the right edge and the left edge then it must be inside the triangle.\"",
+      "code": "",
+      "images": [
+        "image_1771999387129_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 53,
+      "sort_key": 53.0,
+      "qid": "Q53",
+      "qtype": "APPROACH",
+      "format": "mcq",
+      "timestamp": "59:36",
+      "question": "What optimization is mentioned for incremental point-in-triangle testing?",
+      "options": [
+        "Pre-computing lookup tables",
+        "Reusing calculations between adjacent pixels",
+        "Using graphics hardware acceleration",
+        "Approximating triangles with rectangles"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [59:36], the lecturer describes: \"I can make this a little bit faster by noticing that the half plane check looks very similar for nearby points so I can save myself some arithmetic by not going through these points in a random order but by marching let's say along rows of the triangle and incrementally updating my calculations.\"",
+      "code": "",
+      "images": [
+        "image_1771999404785_0.png"
+      ],
+      "tags": [
+        "optimization"
+      ]
+    },
+    {
+      "num": 54,
+      "sort_key": 54.0,
+      "qid": "Q54",
+      "qtype": "BOTTLENECK",
+      "format": "mcq",
+      "timestamp": "1:00:04",
+      "question": "What does the lecturer identify as the primary bottleneck in modern hardware?",
+      "options": [
+        "Memory access",
+        "Arithmetic computations",
+        "Cache size",
+        "Power consumption"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:00:04], the lecturer states: \"In real modern hardware the bottleneck is typically not doing arithmetic doing math but the bottleneck is reading or writing to memory.\"",
+      "code": "",
+      "images": [
+        "image_1771999436931_0.png"
+      ],
+      "tags": [
+        "BottleNeck"
+      ]
+    },
+    {
+      "num": 55,
+      "sort_key": 55.0,
+      "qid": "Q55",
+      "qtype": "MODERN",
+      "format": "mcq",
+      "timestamp": "1:00:46",
+      "question": "What approach does modern hardware take to triangle rasterization?",
+      "options": [
+        "Processing one scan line at a time",
+        "Sequential processing of each pixel",
+        "Using a lookup table for common triangle shapes",
+        "Testing all samples in the triangle's bounding box in parallel"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:00:46], the lecturer explains: \"What we're going to do instead is just test all the samples in the bounding box around the triangles so it's kind of the tightest fitting box around the triangle we're going to test all those samples in parallel.\"",
+      "code": "",
+      "images": [
+        "image_1771999512661_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 56,
+      "sort_key": 56.0,
+      "qid": "Q56",
+      "qtype": "CASE",
+      "format": "mcq",
+      "timestamp": "1:02:09",
+      "question": "What shape of triangle was identified as problematic for the parallel bounding box approach?",
+      "options": [
+        "Long, skinny triangles",
+        "Triangles with curved edges",
+        "Triangles with obtuse angles",
+        "Very small triangles"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:02:09], the lecturer describes: \"You can imagine for instance that I had just one long skinny triangle that stretched all the way across the screen right and so now if I'm testing all the points in the bounding box almost none of them are going to be covered I'm wasting a lot of time.\"",
+      "code": "",
+      "images": [
+        "image_1771999527981_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 57,
+      "sort_key": 57.0,
+      "qid": "Q57",
+      "qtype": "OPTIMIZATION",
+      "format": "mcq",
+      "timestamp": "1:02:40",
+      "question": "What optimization technique tests larger blocks before individual pixels?",
+      "options": [
+        "Block-based optimization",
+        "Stochastic sampling",
+        "Hierarchical decomposition",
+        "Scan conversion"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:02:33], the lecturer introduces: \"I can take kind of a hybrid or course define approach and first ask if large blocks of pixels intersect the triangle so before testing any individual pixel I draw some kind of medium size square.\"",
+      "code": "",
+      "images": [
+        "image_1771999609505_0.png"
+      ],
+      "tags": [
+        "CG-Lecture-Question",
+        "optimization"
+      ]
+    },
+    {
+      "num": 58,
+      "sort_key": 58.0,
+      "qid": "Q58",
+      "qtype": "BENEFIT",
+      "format": "mcq",
+      "timestamp": "1:03:00",
+      "question": "What is the benefit of the early-out test with blocks?",
+      "options": [
+        "It simplifies the triangle intersection test",
+        "It improves cache coherence",
+        "It allows hardware acceleration",
+        "It avoids unnecessary work on pixels not covered by the triangle"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:03:00], the lecturer explains: \"If I know that this gray box in the upper left doesn't intersect the triangle at all then I don't need to do any more work none of those none of those pixels are covered.\"",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 59,
+      "sort_key": 59.0,
+      "qid": "Q59",
+      "qtype": "CONCEPT",
+      "format": "mcq",
+      "timestamp": "1:04:49",
+      "question": "What important graphics concept is introduced with the recursive block testing approach?",
+      "options": [
+        "Hierarchical strategy",
+        "Divide and conquer",
+        "Dynamic programming",
+        "Backtracking"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:04:49], the lecturer states: \"This leads to another really really important idea in all of computer graphics which is to take a hierarchical strategy.\"",
+      "code": "",
+      "images": [
+        "image_1771999662712_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 60,
+      "sort_key": 60.0,
+      "qid": "Q60",
+      "qtype": "REALITY",
+      "format": "mcq",
+      "timestamp": "1:06:16",
+      "question": "Why isn't hierarchical rasterization commonly used in real graphics hardware?",
+      "options": [
+        "It produces visual artifacts",
+        "The overhead of traversal is too high",
+        "It's patented and requires licensing",
+        "It requires too much memory"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:06:16], the lecturer explains: \"This is actually not what happens in real graphics hardware because there's still quite a bit of overhead to doing this hierarchical traversal so having just one course to find level is kind of a nice sweet spot.\"",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 61,
+      "sort_key": 61.0,
+      "qid": "Q61",
+      "qtype": "SUMMARY",
+      "format": "mcq",
+      "timestamp": "1:07:20",
+      "question": "What is one of the key frameworks mentioned in the summary for understanding graphics problems?",
+      "options": [
+        "Sampling and reconstruction",
+        "Linear algebra",
+        "Object-oriented programming",
+        "Calculus of variations"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:07:20], the lecturer summarizes: \"Overall today what we saw is that we can frame a lot of problems in computer graphics in terms of sampling and reconstruction.\"",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 62,
+      "sort_key": 62.0,
+      "qid": "Q62",
+      "qtype": "MCQ",
+      "format": "mcq",
+      "timestamp": "1:08:27",
+      "question": "What does the lecturer describe as the basic strategy for reducing aliasing in rasterization?",
+      "options": [
+        "Blurring the image",
+        "Decreasing the resolution",
+        "Using different primitive shapes",
+        "Using super sampling"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:08:27], the lecturer concludes: \"Our basic strategy for reducing aliasing at least for rasterization was to use super sampling.\"",
+      "code": "",
+      "images": [
+        "image_1775353150954_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 63,
+      "sort_key": 63.0,
+      "qid": "Q63",
+      "qtype": "FOUNDATION",
+      "format": "mcq",
+      "timestamp": "1:08:57",
+      "question": "According to the summary, what is the \"basic building block\" for the graphics pipeline?",
+      "options": [
+        "Texture mapping",
+        "Vertex transformation",
+        "Pixel shading",
+        "Triangle rasterization"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:08:57], the lecturer states: \"From a more system point of view we saw that triangle rasterization is the basic building block for the graphics pipeline.\"",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 64,
+      "sort_key": 64.0,
+      "qid": "Q64",
+      "qtype": "NEXT",
+      "format": "mcq",
+      "timestamp": "1:09:51",
+      "question": "What topic will be covered in the next lecture according to the professor?",
+      "options": [
+        "3D transformations",
+        "Texture mapping",
+        "Animation",
+        "Lighting models"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:09:51], the lecturer concludes: \"Next time we're going to talk about another important stage of the pipeline was how we actually do these 3D transformations.\"\n\n-\n-",
+      "code": "",
+      "images": [
+        "image_1775353176771_0.png"
+      ],
+      "tags": []
+    }
+  ]
+}

@@ -1,0 +1,903 @@
+{
+  "lecture": 20,
+  "title": "Lecture 20: Introduction to Animation",
+  "questions": [
+    {
+      "num": 1,
+      "sort_key": 1.0,
+      "qid": "Q1",
+      "qtype": "HISTORY",
+      "format": "mcq",
+      "timestamp": "01:28",
+      "question": "What is considered one of the earliest known examples of animation?",
+      "options": [
+        "The Phenakistoscope spinning disc device (1831)",
+        "Leonardo da Vinci's sketches of birds in flight (1510)",
+        "Muybridge's photographic sequence of a galloping horse (1878)",
+        "A pottery bowl from Shahr-e Sukhteh, Iran (~3200 BCE) showing a goat leaping"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [01:28], the lecturer explains that people have always been interested in depicting motion. The Shahr-e Sukhteh pottery bowl (~3200 BCE) is one of the oldest known animations — a sequence of images painted around the bowl showing a goat leaping toward a tree. When the bowl spins, the images animate.",
+      "code": "",
+      "images": [
+        "image_1777634299107_0.png",
+        "lec20_slide_04.png",
+        "image_1777634384324_0.png",
+        "image_1777634453807_0.png"
+      ],
+      "tags": [
+        "Iran"
+      ]
+    },
+    {
+      "num": 2,
+      "sort_key": 2.0,
+      "qid": "Q2",
+      "qtype": "HISTORY",
+      "format": "mcq",
+      "timestamp": "03:44",
+      "question": "What scientific question motivated Muybridge's 1878 photographic film \"Sallie Gardner\"?",
+      "options": [
+        "Whether animals moved differently when observed versus unobserved",
+        "Whether all four legs of a galloping horse ever leave the ground simultaneously",
+        "Whether a camera could capture motion faster than the human hand could draw it",
+        "Whether the human eye could perceive motion at more than 12 frames per second"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [03:44], the lecturer states: \"The first real film was done by Muybridge who was trying to resolve a very simple question: when a horse gallops, do all four legs ever leave the ground at the same time?\" He set up a series of cameras triggered by trip wires to capture the motion — and yes, all four legs do leave the ground.",
+      "code": "",
+      "images": [
+        "lec20_slide_09.png",
+        "image_1777634582363_0.png",
+        "image_1777634629332_0.png"
+      ],
+      "tags": [
+        "German",
+        "Animation"
+      ]
+    },
+    {
+      "num": 3,
+      "sort_key": 3.0,
+      "qid": "Q3",
+      "qtype": "HISTORY",
+      "format": "mcq",
+      "timestamp": "07:24",
+      "question": "What was historically significant about Ivan Sutherland's \"Sketchpad\" (1963)?",
+      "options": [
+        "It was the first digital computer animation and a landmark in human-computer interaction",
+        "It introduced the first physically-based simulation for character animation",
+        "It was the first feature-length computer-animated film",
+        "It was the first use of ray tracing in computer graphics"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [07:24], the lecturer says: \"The first digital computer animation was something called Sketchpad developed by Ivan Sutherland, and this was a really landmark development in not only computer graphics but also human-computer interaction.\" Like Muybridge's film, it started as a scientific/technical tool rather than entertainment.",
+      "code": "",
+      "images": [
+        "lec20_slide_15.png",
+        "image_1777634997716_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 4,
+      "sort_key": 4.0,
+      "qid": "Q4",
+      "qtype": "HISTORY",
+      "format": "mcq",
+      "timestamp": "05:21",
+      "question": "What was historically notable about Lotte Reiniger's \"Die Abenteuer des Prinzen Achmed\" (1926)?",
+      "options": [
+        "First use of computer-generated imagery in a film",
+        "First feature-length animation film",
+        "First film to use motion capture for character animation",
+        "First animation to use spline interpolation for smooth movement"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [05:21], the lecturer describes Reiniger's film as \"the first feature-length animation\" — made using silhouette cut-out puppet technique, predating Disney's Snow White by over a decade. It demonstrates that animation as an art form preceded digital tools by many decades.",
+      "code": "",
+      "images": [
+        "lec20_slide_11.png",
+        "image_1777634784145_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 5,
+      "sort_key": 5.0,
+      "qid": "Q5",
+      "qtype": "PERCEPTION",
+      "format": "mcq",
+      "timestamp": "13:54",
+      "question": "What is the \"beta phenomenon\" in the perception of motion?",
+      "options": [
+        "The eye retains an afterimage on the retina for ~1/24 second, creating perceived motion",
+        "The phi phenomenon where the brain fills in missing frames between sparse keyframes",
+        "The brain keeps a visual memory of recent motion, not the eyeball — creating perceived continuity",
+        "High frame rates cause the brain to interpret motion as unnaturally smooth (\"soap opera effect\")"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "The old \"persistence of vision\" theory said the eye itself acts like a slow camera with motion blur. That's wrong. The eye resets almost instantly. It's the BRAIN that holds the record of recent motion and uses it to create a sense of continuity — which is why movies work at 24fps even though real motion is continuous.",
+      "explanation": "At [13:54], the lecturer states: \"More modern psychological explanations are things like the beta phenomenon — you do have this kind of persistence of motion but that record of what was happening is kept not in the eyeball but in the brain.\" The original \"persistence of vision\" theory has been debunked.\n\napplied from camera doesn't really apply to our eye .",
+      "code": "",
+      "images": [
+        "lec20_slide_24.png"
+      ],
+      "tags": [
+        "Perception",
+        "phenomenon/beta",
+        "phenomenon/phi",
+        "Analogy"
+      ]
+    },
+    {
+      "num": 6,
+      "sort_key": 6.0,
+      "qid": "Q6",
+      "qtype": "PERCEPTION",
+      "format": "mcq",
+      "timestamp": "14:25",
+      "question": "What is the \"phi phenomenon\" in motion perception?",
+      "options": [
+        "The optical illusion where two adjacent static images appear to move toward each other",
+        "The perceived increase in brightness when objects move rapidly across the visual field",
+        "The brain anticipates motion based on visual cues, giving a sense that motion is about to occur",
+        "The minimum frame rate required for smooth motion perception (phi ≈ 24 fps)"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [14:25], the lecturer explains: \"There's also something called the phi phenomenon, which is that the brain anticipates motion — there are visual cues that you see in nature that make you feel like motion is going to occur.\" Together, beta and phi explain why animation works: the brain actively constructs the sense of motion rather than passively recording it.",
+      "code": "",
+      "images": [
+        "lec20_slide_24.png",
+        "image_1777635258475_0.png"
+      ],
+      "tags": [
+        "phenomenon/phi"
+      ]
+    },
+    {
+      "num": 7,
+      "sort_key": 7.0,
+      "qid": "Q7",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "16:03",
+      "question": "What is the traditional hand-drawn animation workflow?",
+      "options": [
+        "A senior artist draws keyframes; an apprentice draws the inbetweens (\"tweening\")",
+        "All frames are drawn by one artist in sequence from start to finish",
+        "Every animator draws every frame independently; no collaboration is used",
+        "Keyframes are drawn by computer; only inbetweens require human artists"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [16:03], the lecturer describes: \"To generate this motion, a senior artist sits down and draws keyframes — frames that highlight key events. Then an apprentice fills in the rest, drawing inbetweens.\" This is the origin of the word \"tweening\" and directly motivates computer animation: the inbetween work is tedious and perfect for automation.",
+      "code": "",
+      "images": [
+        "lec20_slide_26.png"
+      ],
+      "tags": [
+        "definition",
+        "KeyFraming"
+      ]
+    },
+    {
+      "num": 8,
+      "sort_key": 8.0,
+      "qid": "Q8",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "17:15",
+      "question": "What are the three basic techniques in computer animation?",
+      "options": [
+        "Artist-directed (keyframing), data-driven (motion capture), and procedural (simulation)",
+        "Spline interpolation, particle systems, and skeletal rigging",
+        "Rasterization, ray tracing, and path tracing",
+        "Forward kinematics, inverse kinematics, and physics simulation"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [17:15], the lecturer outlines: \"There are a lot of different basic techniques for computer animation: artist-directed (e.g., keyframing), data-driven (e.g., motion capture), and procedural (e.g., simulation).\" These map roughly to how much human artistic input vs. automated computation is involved.",
+      "code": "",
+      "images": [
+        "lec20_slide_28.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 9,
+      "sort_key": 9.0,
+      "qid": "Q9",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "18:30",
+      "question": "What is the core idea of keyframing in computer animation?",
+      "options": [
+        "Drawing every frame by hand and scanning them into the computer",
+        "Physically simulating all forces so the computer generates motion automatically",
+        "Capturing real motion data from actors using reflective markers",
+        "Specifying only important events; the computer fills in the rest via interpolation"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [18:30], the lecturer explains: \"Basic idea: specify important events only — computer fills in the rest via interpolation/approximation. 'Events' don't have to be position — could be color, light intensity, camera zoom...\" This is the digital version of the senior artist drawing keyframes, with the computer doing the apprentice's tweening work.",
+      "code": "",
+      "images": [
+        "lec20_slide_29.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 10,
+      "sort_key": 10.0,
+      "qid": "Q10",
+      "qtype": "PROBLEM",
+      "format": "mcq",
+      "timestamp": "22:10",
+      "question": "What is the problem with piecewise linear interpolation for animation?",
+      "options": [
+        "It requires too many keyframes to specify a smooth path",
+        "It produces infinite acceleration at keyframe joints, causing jerky motion",
+        "It is computationally too expensive for real-time applications",
+        "It cannot interpolate rotations, only positions"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "Velocity is the derivative of position. Piecewise linear means position has sharp corners at keyframes — the derivative (velocity) has discontinuous jumps there. A discontinuous velocity means infinite acceleration at that instant. Physically and visually, this is a sudden jerk — not smooth motion.",
+      "explanation": "At [22:10], from the slide: \"Piecewise linear interpolation: simple, but yields rather rough motion (infinite acceleration).\" The slope (velocity) changes instantaneously at each keyframe knot, which means infinite acceleration at those points. This motivates using smooth polynomial splines instead.",
+      "code": "",
+      "images": [
+        "lec20_slide_32.png"
+      ],
+      "tags": [
+        "Problem/CG"
+      ]
+    },
+    {
+      "num": 11,
+      "sort_key": 11.0,
+      "qid": "Q11",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "20:57",
+      "question": "What is a spline, and what is its historical origin?",
+      "options": [
+        "A mathematical function defined by Fourier series; originated in signal processing",
+        "A parametric curve defined by control points; originated from Bézier's work at Renault",
+        "A recursive subdivision curve; originated from de Casteljau's algorithm at Citroën",
+        "Any piecewise polynomial function; originated from thin flexible strips of wood/metal used by draftsmen"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [20:57], the lecturer states: \"Mathematical theory of interpolation arose from study of thin strips of wood or metal ('splines') under various forces.\" A spline is any piecewise polynomial function. The physical spline — a flexible strip bent by ducks (weights) placed along a drawing board — naturally produces the minimum-curvature curve that passes through the specified points.",
+      "code": "",
+      "images": [
+        "lec20_slide_31.png"
+      ],
+      "tags": [
+        "SplineInterpolation",
+        "Spline",
+        "Interpolation"
+      ]
+    },
+    {
+      "num": 12,
+      "sort_key": 12.0,
+      "qid": "Q12",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "24:00",
+      "question": "What does it mean for a spline to \"interpolate\" data?",
+      "options": [
+        "The spline uses the data only to determine tangent directions, not positions",
+        "The spline approximates the data with minimum error but doesn't pass through the points exactly",
+        "The spline passes exactly through all specified data values at the knot locations",
+        "The spline smoothly blends between data values using weighted averages"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 34: \"Interpolates just means that the function exactly passes through those values.\" This is the key distinction: interpolation (exact pass-through) vs. approximation (close but not exact, as in B-splines). Keyframe animation typically needs interpolation — the character must be in the exact specified pose at the specified time.",
+      "code": "",
+      "images": [
+        "lec20_slide_34.png"
+      ],
+      "tags": [
+        "definition"
+      ]
+    },
+    {
+      "num": 13,
+      "sort_key": 13.0,
+      "qid": "Q13",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "28:20",
+      "question": "Why are cubic polynomials (degree 3) the most common choice for splines?",
+      "options": [
+        "Among all interpolating curves, cubics minimize the norm of the second derivative (bending energy)",
+        "They are the lowest degree polynomials that can match position and derivative at both endpoints",
+        "They are the only polynomials that guarantee C2 continuity across multiple segments",
+        "They are the highest degree polynomials that can be evaluated in real time on a GPU"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "A physical spline (flexible wood strip) takes the shape that minimizes elastic bending energy — which mathematically is the integral of (curvature)² ≈ integral of (second derivative)². The exact solution under small-displacement assumptions is a piecewise cubic. Nature chose cubics to minimize bending; we choose them for the same reason.",
+      "explanation": "From slide 35: \"Piecewise cubics give the exact solution to the elastic spline problem under assumption of small displacements. More precisely: among all curves interpolating a set of data points, cubics minimize the norm of the second derivative.\" They also have 4 DOFs — exactly enough to match position and derivative at both endpoints of each segment.",
+      "code": "",
+      "images": [
+        "lec20_slide_35.png"
+      ],
+      "tags": [
+        "Spline/Cubic"
+      ]
+    },
+    {
+      "num": 14,
+      "sort_key": 14.0,
+      "qid": "Q14",
+      "qtype": "PROBLEM",
+      "format": "mcq",
+      "timestamp": "27:52",
+      "question": "What is the Runge phenomenon?",
+      "options": [
+        "The visual artifact where B-splines fail to interpolate their control points",
+        "The tendency of splines to overshoot between keyframes due to high tangent magnitudes",
+        "Numerical instability in spline evaluation caused by floating-point cancellation",
+        "A high-frequency oscillation that appears when using high-degree polynomials to interpolate data"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [27:52], the lecturer warns: \"It's really tempting to use a higher-degree polynomial for higher continuity, but this can lead to oscillation — ultimately a worse approximation.\" Slide 36 illustrates this: a high-degree polynomial fitted to uniformly spaced points oscillates wildly near the edges. This is why piecewise low-degree (cubic) splines are preferred over one high-degree polynomial.",
+      "code": "",
+      "images": [
+        "lec20_slide_36.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 15,
+      "sort_key": 15.0,
+      "qid": "Q15",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "31:00",
+      "question": "How many degrees of freedom does a cubic polynomial have, and what does that mean for fitting?",
+      "options": [
+        "6 DOFs — matching positions and derivatives at both ends is exactly determined",
+        "4 DOFs — the four coefficients (a, b, c, d); matching both endpoint positions uses only 2, leaving 2 free",
+        "3 DOFs — enough to match position and derivative at one end plus position at the other",
+        "2 DOFs — enough to match only one endpoint position and one derivative"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 38: \"Cubic polynomial has four degrees of freedom (DOFs), namely four coefficients (a,b,c,d). Only need two degrees of freedom to specify endpoints. Overall, four unknowns but only two equations — hence many solutions.\" The two remaining DOFs can be pinned by also specifying derivatives at the endpoints (Hermite) or by additional smoothness conditions (natural spline).",
+      "code": "",
+      "images": [
+        "lec20_slide_38.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 16,
+      "sort_key": 16.0,
+      "qid": "Q16",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "40:19",
+      "question": "What is a natural spline and how does it fix the remaining degrees of freedom?",
+      "options": [
+        "It requires the first and last segments to be linear rather than cubic",
+        "It uses the physical catenary curve (hanging chain) as its shape model",
+        "It constrains the tangents at endpoints to point toward the nearest neighbor keyframe",
+        "It sets the second derivative (curvature) to zero at both endpoints"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [40:19], the lecturer explains: \"One thing I could do is pin down the remaining degrees of freedom by setting the curvature to zero at the endpoints — just saying when I enter or exit the curve I'm going straight. Curvature here really means the second derivative, and that's why we call this a natural spline.\" Setting d²p/dt² = 0 at both ends adds 2 equations to close the system.",
+      "code": "",
+      "images": [
+        "lec20_slide_41.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 17,
+      "sort_key": 17.0,
+      "qid": "Q17",
+      "qtype": "COMPARISON",
+      "format": "mcq",
+      "timestamp": "42:00",
+      "question": "What are the three desirable properties of a spline, and how does the natural spline perform?",
+      "options": [
+        "Speed, accuracy, simplicity — natural splines excel at all three",
+        "Interpolation, continuity, locality — natural splines have continuity and locality but NOT interpolation",
+        "Interpolation, differentiability, efficiency — natural splines fail only at efficiency",
+        "Interpolation, continuity, locality — natural splines have interpolation and continuity but NOT locality"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "\"Locality\" means moving one keyframe only affects the nearby curve. Natural splines solve one global linear system for all segments simultaneously — so moving one keyframe reshapes the entire curve. That's nonlocal. This matters in animation: if you adjust a pose at frame 100, you don't want poses at frames 1-99 to change.",
+      "explanation": "From slide 42: \"INTERPOLATION: spline passes exactly through data points ✓. CONTINUITY: at least twice differentiable everywhere ✓. LOCALITY: moving one control point doesn't affect whole curve ✗.\" Natural splines solve a global system, so every segment is coupled — non-local behavior.",
+      "code": "",
+      "images": [
+        "lec20_slide_42.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 18,
+      "sort_key": 18.0,
+      "qid": "Q18",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "45:26",
+      "question": "What is a Hermite spline and how is it specified?",
+      "options": [
+        "Specified by curvature values at endpoints; tangents are derived by integration",
+        "Specified by knot positions only; tangents are computed automatically from neighbors",
+        "Specified by four control points per segment; passes through only the first and last",
+        "Specified by endpoint positions AND endpoint tangents; each cubic piece is fully determined by these four values"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 43: \"Each cubic 'piece' specified by endpoints and tangents (Hermite form). Equivalently: by four points (Bézier form) — just take the difference!\" The artist explicitly controls tangent directions at each keyframe, giving precise control over how the curve enters and exits each pose. 4 values (p0, p1, v0, v1) exactly determine the 4 cubic coefficients.",
+      "code": "",
+      "images": [
+        "lec20_slide_43.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 19,
+      "sort_key": 19.0,
+      "qid": "Q19",
+      "qtype": "COMPARISON",
+      "format": "mcq",
+      "timestamp": "47:00",
+      "question": "How does the Hermite spline differ from the natural spline at joints between segments?",
+      "options": [
+        "Hermite enforces C2 continuity (matching curvature) at joints; natural spline only enforces C1",
+        "Both enforce exactly C1 continuity — they differ only in how endpoint tangents are set",
+        "Natural spline enforces C2 continuity at joints automatically; Hermite only enforces C1 if tangents happen to match",
+        "Hermite enforces C0 continuity (position only) at joints; natural enforces C2"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 44: \"How is this different from our natural spline's tangent condition? There, tangents didn't have to match any prescribed value — they merely had to be the same on both sides (C1). Here, tangents must match given data.\" Natural splines additionally enforce C2 (curvature continuity) across joints; Hermite splines enforce only C1 (tangent continuity) since the user specifies potentially inconsistent tangents.",
+      "code": "",
+      "images": [
+        "lec20_slide_44.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 20,
+      "sort_key": 20.0,
+      "qid": "Q20",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "52:46",
+      "question": "What is a Catmull-Rom spline and what problem does it solve?",
+      "options": [
+        "A spline defined recursively via de Casteljau subdivision",
+        "A spline that sacrifices interpolation for C2 continuity and local control",
+        "A B-spline variant that always passes through its control points",
+        "A Hermite spline where tangents are automatically computed as differences of neighboring values"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "Hermite splines require the animator to specify both positions AND tangent directions at every keyframe — that's twice the work. Catmull-Rom removes that burden: it computes the tangent at each keyframe automatically as (next_value - prev_value)/2. The artist only specifies where to be; the algorithm figures out how fast to get there.",
+      "explanation": "At [52:46], the lecturer explains: \"Sometimes specifying tangents is annoying. Catmull-Rom: specialization of Hermite spline, determined by values alone. Basic idea: use difference of neighbors to define tangent.\" The tangent at point p_i is set to (p_{i+1} - p_{i-1})/2. This gives interpolation and C1 continuity with no extra input from the artist.",
+      "code": "",
+      "images": [
+        "lec20_slide_45.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 21,
+      "sort_key": 21.0,
+      "qid": "Q21",
+      "qtype": "TRADEOFF",
+      "format": "mcq",
+      "timestamp": "1:00:07",
+      "question": "What property does a B-spline sacrifice compared to natural and Hermite splines, and what does it gain?",
+      "options": [
+        "Sacrifices continuity; gains exact interpolation through control points",
+        "Sacrifices computational efficiency; gains C3 continuity at all joints",
+        "Sacrifices exact interpolation (curve passes near but not through control points); gains better continuity and local control",
+        "Sacrifices locality; gains exact interpolation and C2 continuity"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 47: \"Get better continuity and local control by sacrificing interpolation.\" B-splines don't pass through their control points — the curve is merely attracted to them. In exchange, they provide local control (moving one control point only affects nearby segments) and higher continuity. The tradeoff table on slide 48 shows: natural (interp ✓, continuity ✓, local ✗), Hermite (interp ✓, continuity ✗, local ✓), B-splines (interp ✗, continuity ✓, local ✓).",
+      "code": "",
+      "images": [
+        "lec20_slide_47.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 22,
+      "sort_key": 22.0,
+      "qid": "Q22",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "1:00:07",
+      "question": "What does the \"no free lunch\" principle mean for splines?",
+      "options": [
+        "Higher-degree splines are never worth using because of the Runge phenomenon",
+        "Every spline type requires the same computational cost regardless of its properties",
+        "Adding more control points always increases the computational cost superlinearly",
+        "No single spline type achieves all three desiderata (interpolation, continuity, locality) simultaneously"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 46/48, the comparison table shows: natural splines (interp ✓, continuity ✓, local ✗), Hermite (interp ✓, continuity ✓ only if tangents match, local ✓), B-splines (interp ✗, continuity ✓, local ✓). No row has all three checkmarks. The right choice depends on the application — illustration vs. animation vs. real-time rendering.",
+      "code": "",
+      "images": [
+        "lec20_slide_46.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 23,
+      "sort_key": 23.0,
+      "qid": "Q23",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "1:02:10",
+      "question": "What is being interpolated in a simple camera animation?",
+      "options": [
+        "The camera's projection matrix directly, as a 4×4 matrix spline",
+        "The camera's position, view direction, and \"up\" direction — each as a separate spline",
+        "Only the camera's focal length; position is fixed",
+        "Only the camera position; direction is always computed to look at a fixed target"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 50: \"Animate position, direction, 'up' direction of camera — each path is a function f(t) = (x(t), y(t), z(t)) — each component (x,y,z) is a spline.\" Each scalar component is independently spline-interpolated. This is the most direct application of keyframing: the animator sets camera pose at key moments, splines fill in the continuous path.",
+      "code": "",
+      "images": [
+        "lec20_slide_50.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 24,
+      "sort_key": 24.0,
+      "qid": "Q24",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "1:03:30",
+      "question": "What is a kinematic chain (scene graph) and how is it used in character animation?",
+      "options": [
+        "A chain of physics constraints linking rigid bodies; used for ragdoll simulation",
+        "A tree of transformations where child transformations are defined relative to parents; animated by interpolating each joint's rotation",
+        "A linked list of bones where each bone's position is independent of its neighbors",
+        "A sequence of keyframes linked by splines; the \"chain\" refers to temporal ordering"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "Think of your arm: your forearm rotation is defined relative to your upper arm, which is relative to your shoulder, which is relative to your torso. The scene graph encodes exactly this hierarchy. To animate a waving hand, you only need to specify shoulder and elbow rotations — the hand position is automatically computed by chaining those transforms.",
+      "explanation": "From slide 51: \"Scene graph/kinematic chain: scene as tree of transformations. E.g., in 'cube man,' configuration of a leg might be expressed as rotation relative to body. Animate by interpolating transformations.\" The animator keyframes joint rotations; the character's full pose is then computed by traversing the transformation tree.",
+      "code": "",
+      "images": [
+        "lec20_slide_51.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 25,
+      "sort_key": 25.0,
+      "qid": "Q25",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "1:05:00",
+      "question": "What is inverse kinematics (IK) and how does it differ from forward kinematics?",
+      "options": [
+        "Forward kinematics: used for rigid bodies. IK: used only for deformable bodies",
+        "Forward kinematics: set joint angles → compute end-effector position. IK: set end-effector goal → algorithm computes joint angles",
+        "Forward kinematics: physics drives joint motion. IK: artist specifies joint angles directly",
+        "Forward kinematics: works in 2D. IK: extends kinematics to 3D"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 52: \"Rather than adjust individual transformations, set 'goal' and use algorithm to come up with plausible motion. Many algorithms — basic idea: numerical optimization/descent.\" IK solves the inverse problem: given where you want the hand to be, find the shoulder/elbow/wrist angles that put it there. This is a numerical optimization problem (often nonlinear, with multiple solutions).",
+      "code": "",
+      "images": [
+        "lec20_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 26,
+      "sort_key": 26.0,
+      "qid": "Q26",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "1:06:00",
+      "question": "What is skeletal animation and what problem does it solve?",
+      "options": [
+        "Animating rigid skeleton pieces directly without any surface mesh",
+        "Procedurally generating skeleton structures from muscle simulation",
+        "Using a skeleton of bones to drive the deformation of a continuous surface mesh, with each vertex weighted by nearby bone influences",
+        "Capturing motion from a real actor's skeleton using reflective markers"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 53: \"Often use 'skeleton' to drive deformation of continuous surface mesh. Influence of each bone determined by, e.g., weighting function.\" Instead of animating every vertex of a mesh directly, the artist animates a sparse skeleton of bones. Each skin vertex moves as a weighted blend of its nearby bones' transformations — giving smooth, realistic deformation with far fewer controls.",
+      "code": "",
+      "images": [
+        "lec20_slide_53.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 27,
+      "sort_key": 27.0,
+      "qid": "Q27",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "1:07:00",
+      "question": "What are blend shapes and when are they used instead of skeletal animation?",
+      "options": [
+        "Procedural noise functions blended together to create organic surface textures",
+        "Blending motion capture data from multiple actors to create new animations",
+        "Directly interpolating between a set of pre-modeled surface shapes (e.g., facial expressions) using spline-controlled blend weights",
+        "Physics-based blending of rigid body and soft body simulations"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 54: \"Instead of skeleton, interpolate directly between surfaces. E.g., model a collection of facial expressions. Simplest scheme: take linear combination of vertex positions. Spline used to control choice of blending weights.\" Blend shapes are commonly used for facial animation where the deformations are too complex for a skeletal rig — an artist models \"happy,\" \"sad,\" \"surprised,\" etc., and the animator mixes between them.",
+      "code": "",
+      "images": [
+        "lec20_slide_54.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 28,
+      "sort_key": 28.0,
+      "qid": "Q28",
+      "qtype": "FORMULA",
+      "format": "mcq",
+      "timestamp": "33:00",
+      "question": "In a spline system, how does each constraint (e.g., matching a keyframe value) translate into a solvable system?",
+      "options": [
+        "Constraints are encoded as penalty terms in an optimization objective function",
+        "Each constraint adds one linear equality; m constraints with m DOFs yield an m×m linear system",
+        "Each constraint reduces the polynomial degree by one; enough constraints give a linear function",
+        "Each constraint adds a nonlinear equation; solved by Newton's method iteratively"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 40: \"Each condition on the spline leads to a linear equality. If we have m degrees of freedom, we need m (linearly independent) conditions. We can express this as a matrix equation Ax = b.\" This is the key insight: spline fitting is just linear algebra. Each keyframe position, tangent match, or curvature condition is one row in a linear system.",
+      "code": "",
+      "images": [
+        "lec20_slide_40.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 29,
+      "sort_key": 29.0,
+      "qid": "Q29",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "22:50",
+      "question": "Why is piecewise polynomial interpolation preferred over using one single high-degree polynomial?",
+      "options": [
+        "High-degree polynomials cannot satisfy C2 continuity conditions",
+        "The rendering pipeline only supports polynomials up to degree 3",
+        "A single high-degree polynomial risks the Runge phenomenon — wild oscillations between data points",
+        "High-degree polynomials can only be evaluated at integer time steps"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slides 33 and 36: \"Common interpolant: piecewise polynomial 'spline' — basic motivation: get better continuity than piecewise linear.\" And on Runge: \"Tempting to use higher-degree polynomials for higher continuity, but can lead to oscillation — ultimately worse approximation.\" Piecewise cubics achieve C2 continuity with local, stable behavior.",
+      "code": "",
+      "images": [
+        "lec20_slide_33.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 30,
+      "sort_key": 30.0,
+      "qid": "Q30",
+      "qtype": "HISTORY",
+      "format": "mcq",
+      "timestamp": "11:04",
+      "question": "What is a zoetrope and what principle does it demonstrate?",
+      "options": [
+        "A 3D printer that creates solid objects by layering cross-sections",
+        "A spinning cylinder with sequential images viewed through slits, creating the illusion of motion from static frames",
+        "A hand-cranked camera that captures motion at 24 frames per second",
+        "An early computer monitor that displayed animation by scanning electron beams"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [11:04], the lecturer describes: \"Here we have a solid object with pieces arranged on a spinning plate. A strobe light flashes, and you see the different stages of motion frozen in time, creating an animation.\" The zoetrope exploits the beta phenomenon — successive static images, presented quickly enough, are perceived as continuous motion by the brain.",
+      "code": "",
+      "images": [
+        "lec20_slide_22.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 31,
+      "sort_key": 31.0,
+      "qid": "Q31",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "09:45",
+      "question": "What pattern appears repeatedly in the history of both film and computer animation?",
+      "options": [
+        "Advances in animation technology always follow advances in hardware capability",
+        "Each new animation technology first emerged as a scientific tool, then was adopted for entertainment",
+        "New animation technologies are always developed by entertainment studios first",
+        "Animation techniques invented in Europe always took decades to reach the United States"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slides 9 and 14: Film — \"Originally used as scientific tool rather than for entertainment. Critical technology that accelerated development of animation.\" Computer animation — \"New technology, also developed as a scientific tool. Again turbo-charged the development of animation.\" Muybridge was settling a scientific bet; Sutherland was studying human-computer interaction; both tools became the foundation of modern animation.",
+      "code": "",
+      "images": [
+        "lec20_slide_14.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 32,
+      "sort_key": 32.0,
+      "qid": "Q32",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "48:00",
+      "question": "What distinguishes a Bézier spline from a Hermite spline, mathematically?",
+      "options": [
+        "Bézier enforces C2 continuity; Hermite enforces only C0 continuity",
+        "Bézier uses trigonometric basis functions; Hermite uses polynomial basis functions",
+        "Bézier interpolates all four control points; Hermite interpolates only the endpoints",
+        "Bézier specifies the curve by four control points (two endpoints + two \"pull\" points); Hermite specifies by endpoints and explicit tangent vectors — they encode the same information differently"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 43: \"Each cubic piece specified by endpoints and tangents (Hermite). Equivalently: by four points (Bézier form) — just take the difference!\" The Bézier \"handle\" control points encode the tangent direction and magnitude. Hermite tangent vector = 3 × (Bézier control point − endpoint). They're the same mathematical object, just written in different bases.",
+      "code": "",
+      "images": [
+        "lec20_slide_43.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 33,
+      "sort_key": 33.0,
+      "qid": "Q33",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "54:00",
+      "question": "Why are Catmull-Rom splines particularly useful for animation compared to Hermite splines?",
+      "options": [
+        "They require the animator to specify only keyframe values — tangents are computed automatically as neighbor differences",
+        "They are the only splines that can handle non-uniform time spacing between keyframes",
+        "They always produce C2-continuous curves, unlike Hermite splines which only guarantee C1",
+        "They use fewer control points per segment, making them faster to evaluate"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 45: \"Sometimes makes sense to specify tangents (e.g., illustration). Often more convenient to just specify values. Catmull-Rom: specialization of Hermite spline, determined by values alone. Basic idea: use difference of neighbors to define tangent.\" For character animation, Catmull-Rom means the animator just places poses at keyframes — no need to manually tune tangent handles.",
+      "code": "",
+      "images": [
+        "lec20_slide_45.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 34,
+      "sort_key": 34.0,
+      "qid": "Q34",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "1:04:30",
+      "question": "In character animation, why is interpolating joint rotations preferred over interpolating joint positions directly?",
+      "options": [
+        "The kinematic chain structure means child joint positions are implicit once parent rotations are set — only rotations need to be keyframed",
+        "Interpolating positions causes the Runge phenomenon; rotations are immune to this",
+        "Rotations are always easier to interpolate than positions",
+        "Positions can only be interpolated linearly; rotations support spline interpolation"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "From slide 51: \"Configuration of a leg might be expressed as rotation relative to body. Animate by interpolating transformations.\" In a kinematic chain, the world-space position of every joint is determined by the chain of parent rotations from the root. So to animate the whole character, you only need to keyframe rotations — positions follow automatically from the hierarchy.",
+      "code": "",
+      "images": [
+        "lec20_slide_51.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 35,
+      "sort_key": 35.0,
+      "qid": "Q35",
+      "qtype": "HISTORY",
+      "format": "mcq",
+      "timestamp": "02:53",
+      "question": "What was the Phenakistoscope and why was it significant?",
+      "options": [
+        "A spinning disc with sequential images viewed through slits — one of the first devices to create the illusion of motion from static images",
+        "An early projector that displayed animation on a wall for an audience",
+        "A zoetrope variant that used mirrors instead of slits to view the animation",
+        "The first motion picture camera, which recorded images at 12 frames per second"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [02:53], the lecturer describes: \"One of the first technological developments pushing toward animation was the Phenakistoscope — you have a sequence of images on a spinning disc, played back by spinning and watching through a small slit.\" It exploits the beta phenomenon to create perceived motion. Along with the zoetrope, it established the core principle of all film and animation: rapid sequential static images create perceived motion.",
+      "code": "",
+      "images": [
+        "lec20_slide_08.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 36,
+      "sort_key": 36.0,
+      "qid": "Q36",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "57:00",
+      "question": "What does the B-spline basis being \"defined recursively\" mean in practice?",
+      "options": [
+        "B-spline evaluation requires a recursive tree traversal with exponential time complexity",
+        "B-splines are defined by subdividing control polygons recursively, like Catmull-Clark surfaces",
+        "B-splines are computed by recursive neural networks that learn the optimal shape from data",
+        "Each degree-d B-spline basis function is a linear blend of two degree-(d-1) basis functions over shifted knot intervals"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "The recursion is: a degree-0 B-spline is just a box function (1 inside an interval, 0 outside). A degree-1 B-spline blends two adjacent box functions linearly — giving a tent function. A degree-2 blends two tent functions — giving a smoother bump. Each degree-up smooths the previous. This is why higher-degree B-splines are smoother: each recursion level adds one more convolution with a box, which smooths.",
+      "explanation": "From slide 47: \"B-spline basis defined recursively: linear interpolation [between shifted lower-degree bases]. B-spline itself is then a linear combination of these bases.\" The recursive definition ensures each basis function has compact support (affects only a local range of the parameter), which is what gives B-splines their locality property.",
+      "code": "",
+      "images": [
+        "lec20_slide_47.png"
+      ],
+      "tags": []
+    }
+  ]
+}

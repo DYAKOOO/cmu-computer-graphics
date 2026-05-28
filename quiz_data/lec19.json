@@ -1,0 +1,1464 @@
+{
+  "lecture": 19,
+  "title": "Lecture 19: Variance Reduction",
+  "questions": [
+    {
+      "num": 1,
+      "sort_key": 0.01,
+      "qid": "QF1",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "The lecture introduces variance reduction as necessary for practical rendering. What visual artifact does high variance produce, and why does simply adding more samples eventually become impractical?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "High variance produces noise — randomly bright or dark pixels scattered throughout the image (fireflies for high variance, dark patches for low). Variance decreases as 1/n (standard deviation as 1/√n): halving visible noise requires 4× more samples. For photorealistic scenes requiring hundreds of bounces and complex BRDFs, the sample budget needed to reach acceptable quality can be orders of magnitude beyond what hardware supports. Variance reduction reduces the constant factor, achieving the same quality with far fewer samples.",
+      "intuition": "More samples always helps but the returns diminish as 1/√n. Variance reduction is about getting more signal per sample, not just more samples.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 0.02,
+      "qid": "QF2",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "The lecture covers stratified sampling, importance sampling, MIS, and next-event estimation. What common principle underlies all of these techniques?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "All variance reduction techniques concentrate the sampling budget in regions of the integrand that contribute most to the integral. Stratified sampling prevents \"clumping\" of samples by forcing spatial spread. Importance sampling draws more samples where the BRDF or lighting is large (where the integrand matters most). Next-event estimation directly samples light sources so shadows and direct illumination are always estimated well. MIS combines multiple strategies to cover both glossy BRDFs (BRDF sampling) and bright light sources (light sampling) without missing either.",
+      "intuition": "Variance = wasted samples in unimportant regions. Every technique is a smarter allocation of the same total sample budget.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 0.03,
+      "qid": "QF3",
+      "qtype": "ORDER",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "Put these variance reduction techniques in the order lecture 19 introduces them: multiple importance sampling (MIS) / Russian roulette (unbiased path termination) / stratified sampling / next-event estimation (direct light sampling)",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Stratified sampling → Next-event estimation → Multiple importance sampling (MIS) → Russian roulette",
+      "intuition": "The lecture builds from the simplest improvement (spread samples evenly) to specific lighting tricks (target light sources directly) to combining tricks without bias (MIS) to handling path length without bias (Russian roulette).",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 1,
+      "sort_key": 1.0,
+      "qid": "Q1",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "00:00",
+      "question": "What is the main focus of the lecture on variance reduction in Monte Carlo rendering?",
+      "options": [
+        "Reducing noise in rendered images by applying variance reduction techniques",
+        "Improving the speed of ray tracing algorithms",
+        "Exploring how to create more detailed 3D models",
+        "Creating new ray tracing algorithms from scratch"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [00:07]: \"Today we're going to wrap up our discussion of physically based rendering with a discussion of techniques to reduce variance.\" The entire lecture focuses on methods to reduce noise (variance) in rendered images.",
+      "code": "",
+      "images": [
+        "lec19_slide_02.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 2.0,
+      "qid": "Q2",
+      "qtype": "RELATIONSHIP",
+      "format": "mcq",
+      "timestamp": "01:42",
+      "question": "In Monte Carlo integration, what is the relationship between the number of samples and the accuracy of the estimate?",
+      "options": [
+        "The accuracy is only affected by the choice of domain, not the number of samples",
+        "The accuracy increases with more samples",
+        "The number of samples has no effect on accuracy",
+        "The accuracy decreases with more samples"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [02:44]: \"Of course in practice we stopped at some point and the more samples we use the more accurate our estimate of the integral will be.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_03.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 3.0,
+      "qid": "Q3",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "03:02",
+      "question": "What is the expected value of a discrete random variable?",
+      "options": [
+        "The weighted average of all possible values, with weights being the probability of each value",
+        "The median of all possible values",
+        "The minimum possible value the variable can take",
+        "The maximum possible value the variable can take"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer defines at [03:31]: \"The expected value e of X is the sum over all the events of the probability of that event occurring times the value of that event essentially just the weighted average of all the events by their probabilities.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_04.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 4,
+      "sort_key": 4.0,
+      "qid": "Q4",
+      "qtype": "CALCULATION",
+      "format": "mcq",
+      "timestamp": "04:13",
+      "question": "If a fair coin (with probability 1/2 for heads and tails) gives a value of 1 for heads and 0 for tails, what is the expected value of a coin toss?",
+      "options": [
+        "0",
+        "1",
+        "0.5",
+        "0.25"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer calculates at [04:13]: \"What is the expected value for the coin toss? Okay hopefully this is pretty simple it's just 1/2 times 1 plus 1/2 times 0 is 1/2.\" This equals 0.5.",
+      "code": "",
+      "images": [
+        "lec19_slide_04.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 5,
+      "sort_key": 5.0,
+      "qid": "Q5",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "04:36",
+      "question": "What is a key difference between discrete and continuous random variables?",
+      "options": [
+        "Continuous random variables can only take a finite number of values",
+        "Continuous random variables cannot have an expected value",
+        "Discrete random variables have no probability density function",
+        "For a continuous random variable, the probability of any single exact value is zero"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer points out at [05:46]: \"One really important thing to appreciate about continuous random variables is that the probability that you fall asleep exactly at one given time T is 0.\" This is a fundamental property of continuous random variables.",
+      "code": "",
+      "images": [
+        "lec19_slide_05.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 6,
+      "sort_key": 6.0,
+      "qid": "Q6",
+      "qtype": "CALCULATION",
+      "format": "mcq",
+      "timestamp": "06:24",
+      "question": "How do you calculate the probability of a continuous random variable taking a value in a specific interval?",
+      "options": [
+        "By multiplying the length of the interval by the maximum value of the function",
+        "By taking the average of the probabilities at the endpoints",
+        "By integrating the probability density function over that interval",
+        "By counting the number of values in that interval"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [06:24]: \"In this example if I want to know what chance is there that I fall asleep between T0 and T1 then I should integrate from T0 to T1 this probability density to get the probability.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_05.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 7,
+      "sort_key": 7.0,
+      "qid": "Q7",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "06:42",
+      "question": "How is the expected value of a continuous random variable defined?",
+      "options": [
+        "As the most frequently occurring value",
+        "As the integral of the probability density times the value over the entire domain",
+        "As the midpoint of the domain",
+        "As the maximum value of the probability density function"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer defines at [06:54]: \"We could say that the expected value of a random variable X is the integral over the domain Omega of the probability density at each point times the event value.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_06.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 8,
+      "sort_key": 8.0,
+      "qid": "Q8",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "08:49",
+      "question": "What does the \"flaw of averages\" refer to in the context of probability distributions?",
+      "options": [
+        "That averages are mathematically incorrect for non-normal distributions",
+        "That the average is affected by outliers more than other statistics",
+        "The fact that the average is always higher than the median",
+        "That looking at just the average discards important information about the distribution's shape"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [08:49]: \"Looking at the average of a quantity is really throwing away a lot of information about that quantity if you just know about the average of a probability distribution it really doesn't tell you oh is that distribution fairly uniform or does it have lots of peaks and valleys.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_35.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 9,
+      "sort_key": 9.0,
+      "qid": "Q9",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "09:18",
+      "question": "What does the variance of a random variable measure?",
+      "options": [
+        "The range of possible values",
+        "How far the values tend to be from the expected value",
+        "The rate at which the random variable changes",
+        "The average value of the random variable"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer defines at [09:18]: \"Another important quantity when talking about random variables was the variance so if the expected value is the average value then the variance is how far we are from the average on average.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_35.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 10,
+      "sort_key": 10.0,
+      "qid": "Q10",
+      "qtype": "RELATIONSHIP",
+      "format": "mcq",
+      "timestamp": "10:30",
+      "question": "What is the relationship between variance and standard deviation?",
+      "options": [
+        "They are completely different measures with no relationship",
+        "The standard deviation is the square of the variance",
+        "The standard deviation is the log of the variance",
+        "The standard deviation is the square root of the variance"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [10:30]: \"There's a quantity very closely related to the variance which is the standard deviation the standard deviation which we usually write as Sigma is just the square root of the variance.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_61.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 11,
+      "sort_key": 11.0,
+      "qid": "Q11",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "11:28",
+      "question": "Why is variance reduction important in photorealistic rendering?",
+      "options": [
+        "To increase the speed of the rendering process",
+        "To simplify the mathematics of light transport",
+        "To reduce the amount of noise in the rendered image",
+        "To reduce the memory requirements of the rendering algorithm"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [11:34]: \"Different amounts of variants equate to different amounts of noise in the image because we're doing independent estimates at every different pixel of our image we're gonna have different random error at every pixel which shows up as this this noise.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 12,
+      "sort_key": 12.0,
+      "qid": "Q12",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "14:25",
+      "question": "When trying to reduce variance in Monte Carlo integration, which of the following can be reduced?",
+      "options": [
+        "Neither the integrand variance nor the estimator variance",
+        "The variance of the integrand (the function being integrated)",
+        "The variance of the estimator (the method used to approximate the integral)",
+        "Both the integrand variance and the estimator variance"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer emphasizes at [14:53]: \"It's really really important to realize you cannot reduce the variance of the integrand you can't reduce the variance of the function you're trying to integrate... The only thing we can do is reduce the variance of our estimate of the integral we can reduce the variance of the estimator.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 13,
+      "sort_key": 13.0,
+      "qid": "Q13",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "15:33",
+      "question": "What is an estimator in the context of numerical integration?",
+      "options": [
+        "A function that reduces the complexity of an integral",
+        "A formula used to approximate an integral",
+        "A method to simplify the domain of integration",
+        "A hardware device that measures integration speed"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer defines at [15:33]: \"An estimator in general is a formula used to approximate an integral our key example is a Monte Carlo estimate.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 14,
+      "sort_key": 14.0,
+      "qid": "Q14",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "16:38",
+      "question": "What does it mean for an estimator to be consistent?",
+      "options": [
+        "It is unbiased for any number of samples",
+        "It has a low computational cost",
+        "It converges to the correct answer as the number of samples increases",
+        "It gives the same result every time it's used"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer defines at [16:56]: \"Consistency means it converges to the correct answer if I have a consistent estimator I know that as I add more and more samples to my estimate I'll eventually get the right result.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 15,
+      "sort_key": 15.0,
+      "qid": "Q15",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "18:17",
+      "question": "What does it mean for an estimator to be unbiased?",
+      "options": [
+        "It always gives a result below the true value",
+        "It uses random sampling techniques",
+        "It is correct on average for any number of samples",
+        "It eventually converges to the correct result"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer defines at [18:17]: \"Bias is a different concept that a estimator is unbiased is saying that it is correct on average.\" He elaborates that \"an estimator is unbiased if the expected difference between the true integral and our estimator for any number of samples is equal to zero.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 16,
+      "sort_key": 16.0,
+      "qid": "Q16",
+      "qtype": "RELATIONSHIP",
+      "format": "mcq",
+      "timestamp": "18:54",
+      "question": "What is the relationship between consistency and unbiasedness?",
+      "options": [
+        "Consistency does not imply unbiasedness, and vice versa",
+        "Consistency and unbiasedness are the same property",
+        "All consistent estimators are unbiased",
+        "All unbiased estimators are consistent"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [18:54]: \"Importantly consistent does not imply on bias just because you're approaching the right value doesn't mean that at any moment your expected value for your estimate is the true value.\" The examples given later in the lecture further demonstrate this independence.",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 17,
+      "sort_key": 17.0,
+      "qid": "Q17",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "19:18",
+      "question": "In the example of estimating the total brightness of an image using a fixed grid of points, this estimator is:",
+      "options": [
+        "Consistent and unbiased",
+        "Unbiased but not consistent",
+        "Neither consistent nor unbiased",
+        "Consistent but not unbiased"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer concludes at [21:27]: \"Is it unbiased? ... Well no pretty clearly not right if I just keep M equals 4 and never increase M my first estimate will never be equal to the true value not even on average.\" But he had already established that it was consistent since as the grid gets finer, it converges to the correct value.",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 18,
+      "sort_key": 18.0,
+      "qid": "Q18",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "21:50",
+      "question": "In the example of estimating the total brightness of an image using a single random sample, this estimator is:",
+      "options": [
+        "Neither consistent nor unbiased",
+        "Consistent and unbiased",
+        "Consistent but not unbiased",
+        "Unbiased but not consistent"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [24:19]: \"So weirdly enough this is a strategy that is not consistent but is unbiased.\" This is because a single sample can never give the correct overall brightness, but on average (if the experiment is repeated many times), it gives the right result.",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 19,
+      "sort_key": 19.0,
+      "qid": "Q19",
+      "qtype": "BENEFIT",
+      "format": "mcq",
+      "timestamp": "25:03",
+      "question": "What is a key advantage of using unbiased estimators in rendering?",
+      "options": [
+        "They are always faster than biased estimators",
+        "They are easier to implement than biased estimators",
+        "They have more predictable behavior and error reduction rates",
+        "They require less memory than biased estimators"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [25:15]: \"Unbiased estimator tend to have more predictable behavior and you know especially with Monte Carlo estimator you really know that the error is decreasing at some predictable rate so you really know how much computation you need to do to get a result of a certain quality.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 20,
+      "sort_key": 20.0,
+      "qid": "Q20",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "26:04",
+      "question": "According to the lecture, which rendering algorithm is neither consistent nor unbiased?",
+      "options": [
+        "Metropolis light transport",
+        "Path tracing",
+        "Rasterization",
+        "Bidirectional path tracing"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [26:09]: \"One that we talked about a long time ago was rasterization or a really common way of generating images and rasterization is neither consistent nor unbiased why is that? Well, there's just no way for it to ever generate the correct image because it ignores all sorts of effects like shadows and reflections and so forth.\"\n- QUESTIONS (continued):",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 21,
+      "sort_key": 21.0,
+      "qid": "Q21",
+      "qtype": "CHALLENGE",
+      "format": "mcq",
+      "timestamp": "27:35",
+      "question": "What phenomenon makes it challenging for naive path tracing to render a caustic pattern created by a shiny coffee cup?",
+      "options": [
+        "The variance in the surface reflectivity",
+        "The limited number of available ray bounces",
+        "The extremely low probability of randomly sampling the correct reflection path",
+        "The computational complexity of simulating liquid in the cup"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [29:25]: \"What's the chance that in that process we just happened to find a ray from the mirrored surface to the point light that had an equal and opposite angle to the ray from the mirrored surface to the floor? Well it's basically zero right we picked this diffuse bounce completely randomly there's just no chance we got so lucky that we came in at the reflected direction.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 22,
+      "sort_key": 22.0,
+      "qid": "Q22",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "30:26",
+      "question": "According to the lecture, naive path tracing is:",
+      "options": [
+        "Neither consistent nor unbiased",
+        "Consistent and unbiased",
+        "Unbiased but not consistent",
+        "Consistent but biased"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [30:26]: \"So formally the result of path tracing is biased it's not correct, ok?\" He had previously mentioned that path tracing is \"more or less consistent\" though it may miss certain types of light paths.",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 23,
+      "sort_key": 23.0,
+      "qid": "Q23",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "30:51",
+      "question": "Why is the disco ball example used to illustrate challenges in path tracing?",
+      "options": [
+        "Because it demonstrates color bleeding effects",
+        "Because it involves complex light behavior with small light sources and highly reflective surfaces",
+        "Because it shows how different materials interact with each other",
+        "Because disco balls are particularly difficult to model geometrically"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [30:51]: \"Let's think about this scenario we have a disco ball lit by a small directional light source and a near perfect mirror it's not a point source and it's not a perfect mirror but it's pretty close to the situation we described.\" This is challenging because of the small probability of finding relevant light paths.",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 24,
+      "sort_key": 24.0,
+      "qid": "Q24",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "31:38",
+      "question": "In the disco ball example, why does the probability of finding important light paths get worse with more bounces?",
+      "options": [
+        "Because the disco ball absorbs most of the light",
+        "Because the camera doesn't have sufficient resolution",
+        "Because the rendering equation becomes unstable with many bounces",
+        "Because each bounce requires finding an increasingly small percentage of directions that carry light"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [33:19]: \"The light that ultimately arrives at the camera is a very small percentage of a very small percentage of the light source and you can imagine this gets worse the more bounces we take you can have a very small percentage of a very small percentage of a very small percentage if you're naive about how you sample.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 25,
+      "sort_key": 25.0,
+      "qid": "Q25",
+      "qtype": "COMPUTATION",
+      "format": "mcq",
+      "timestamp": "34:03",
+      "question": "In the brute force approach to rendering the disco ball scene, approximately how many samples per pixel were required to start seeing the caustics clearly?",
+      "options": [
+        "8,192 samples",
+        "16 samples",
+        "128 samples",
+        "1,024 samples"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [34:56]: \"So now I'm gonna do 8,192 samples per pixel holy this is a lot of work this is a lot of sampling and finally I start to see okay there's this ball this kind of noisy disco ball and it looks like it's shining kind of caustics on the walls.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 26,
+      "sort_key": 26.0,
+      "qid": "Q26",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "35:46",
+      "question": "What is importance sampling in Monte Carlo integration?",
+      "options": [
+        "Using more important pixels in the image for sampling",
+        "Biasing the estimator to focus on important features",
+        "Sampling the domain according to how much the integrand is expected to contribute to the integral",
+        "Taking more samples in areas with high computational complexity"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer defines at [35:46]: \"Just try to sample the integrand according to how much we expected to contribute to the integral.\" This means concentrating samples in regions where the function value is large.",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 27,
+      "sort_key": 27.0,
+      "qid": "Q27",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "36:14",
+      "question": "Why is uniform sampling inefficient for functions with large variations?",
+      "options": [
+        "It requires more computational resources",
+        "It makes the algorithm inconsistent",
+        "It places many samples in regions that contribute little to the integral",
+        "It introduces bias into the estimator"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [36:14]: \"As we do this what we notice is there's really not much reason to put samples in this flat region of the integrand or at least not many samples because most of the time they're not contributing much I mean I'm putting lots and lots of samples in this flat region they're just adding 0 0 0 or some small epsilon to my estimate.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 28,
+      "sort_key": 28.0,
+      "qid": "Q28",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "37:16",
+      "question": "In importance sampling, how are samples from regions with higher probability density weighted?",
+      "options": [
+        "They are weighted the same as all other samples",
+        "They are given less weight to compensate for their higher sampling frequency",
+        "Their weight depends on the total number of samples taken",
+        "They are given more weight to emphasize their importance"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [37:16]: \"We say if this region was sampled more often we're gonna wait it less if this region was sampled less often we're gonna wait it more so that everything balances out. If I sample X more frequently each sample should count for less if I sample X less frequently each sample should account for more.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 29,
+      "sort_key": 29.0,
+      "qid": "Q29",
+      "qtype": "IDEAL",
+      "format": "mcq",
+      "timestamp": "37:50",
+      "question": "What would be the ideal importance sampling distribution?",
+      "options": [
+        "Distribution proportional to the integrand itself",
+        "Distribution that concentrates all samples at the maximum of the integrand",
+        "Distribution proportional to the derivative of the integrand",
+        "Uniform distribution across the domain"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer asks at [37:50] what happens if the probability distribution P is proportional to the function F directly, and explains that with just one sample you would get the exact right answer. Later at [39:33] he states: \"The closer and closer P gets to F the closer and closer this quotient just looks like the integral that we're looking for.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 30,
+      "sort_key": 30.0,
+      "qid": "Q30",
+      "qtype": "PRACTICAL",
+      "format": "mcq",
+      "timestamp": "39:21",
+      "question": "Why can't we use the ideal importance sampling distribution in practice?",
+      "options": [
+        "It would make the algorithm inconsistent",
+        "It would make the estimator biased",
+        "It would require too much computation",
+        "It creates a chicken-and-egg problem as we need to know the integral we're trying to compute"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [39:21]: \"So this would be a perfect important sampling strategy just sample proportional to the integrand itself as you might guess that's not something we could do in practice it's a little bit of a chicken and egg problem.\" To create this distribution, we would need to know the integral we're trying to compute.",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 31,
+      "sort_key": 31.0,
+      "qid": "Q31",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "40:09",
+      "question": "What are the two important classes of local importance sampling strategies in rendering?",
+      "options": [
+        "Sampling according to camera position and sampling according to object complexity",
+        "Sampling according to materials and sampling according to lights",
+        "Sampling according to image brightness and sampling according to scene geometry",
+        "Sampling according to color and sampling according to depth"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [40:09]: \"There's two important classes of local important sampling strategies we talked a little bit about last time one is too important sample according to materials... We can also do important sampling of lights.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 32,
+      "sort_key": 32.0,
+      "qid": "Q32",
+      "qtype": "EXAMPLE",
+      "format": "mcq",
+      "timestamp": "40:45",
+      "question": "For what type of material should you only sample the reflection direction?",
+      "options": [
+        "Perfect mirror",
+        "Diffuse material",
+        "Rough material",
+        "Translucent material"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [40:45]: \"An important special case kind of a limit case is a perfect mirror right if we if we know that the only light that gets reflected is along this reflection direction then we should really only sample that direction.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 33,
+      "sort_key": 33.0,
+      "qid": "Q33",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "41:43",
+      "question": "What is the path space formulation of light transport?",
+      "options": [
+        "A perspective that considers the entire space of possible light paths as the domain of integration",
+        "A technique for visualizing light paths in 3D space",
+        "A method for optimizing the recursive rendering equation",
+        "A mathematical model for simulating light refraction"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [41:43]: \"Here's a really valuable perspective on rendering is to think about things rather than in terms of sampling the current Hemisphere around our point we can think about the whole space of all possible paths of light through our scene we think about that as the domain that we're integrating over.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 34,
+      "sort_key": 34.0,
+      "qid": "Q34",
+      "qtype": "REPRESENTATION",
+      "format": "mcq",
+      "timestamp": "43:31",
+      "question": "How are paths represented in the unit hypercube view of path space?",
+      "options": [
+        "As vectors pointing from the light to the eye",
+        "As trees showing ray splitting at each bounce",
+        "As points in a unit cube with dimension equal to the number of random decisions",
+        "As matrices describing light interactions"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [43:31]: \"Here's a nice way to visualize this path space is to say well look no matter how we're doing our our paths however however parameterizing our paths at the end they're always determined by a sequence of random values in zero one... A little more geometrically we can think about those that sequence of points as describing points in a unit cube of dimension K.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 35,
+      "sort_key": 35.0,
+      "qid": "Q35",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "46:58",
+      "question": "What is bidirectional path tracing?",
+      "options": [
+        "A method that combines paths traced from both the eye and the light source",
+        "An approach that separates direct and indirect illumination",
+        "A strategy that uses two different integration techniques simultaneously",
+        "A technique that traces paths from two different camera positions"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer defines at [46:58]: \"So one nice idea is the idea of bi-directional path tracing so far we've been always tracing paths from the AI hoping that we'll hit a light source now we're gonna go D we're gonna think about going the other way... Well what about starting from the light source and and seeing if we hit the eye well what about combining those two strategies somehow.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 36,
+      "sort_key": 36.0,
+      "qid": "Q36",
+      "qtype": "ADVANTAGE",
+      "format": "mcq",
+      "timestamp": "49:31",
+      "question": "What advantage does bidirectional path tracing have over standard path tracing?",
+      "options": [
+        "It produces less noisy images with the same number of samples",
+        "It's always faster computationally",
+        "It can capture light paths that standard path tracing would miss",
+        "It requires less memory"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [49:31]: \"And these upper left and bottom right strategies correspond to two kind of important failure cases one is well if I just do this to bounce thing I'm gonna fail always to see point light sources there's just no chance this balance actually bounces into a point light source likewise if I do this backward path tracing it's gonna fail completely for a pinhole camera.\" By combining strategies, bidirectional path tracing can handle cases where either forward or backward tracing alone would fail.",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 37,
+      "sort_key": 37.0,
+      "qid": "Q37",
+      "qtype": "CHALLENGE",
+      "format": "mcq",
+      "timestamp": "51:21",
+      "question": "What makes the \"door crack\" example particularly challenging for path tracing methods?",
+      "options": [
+        "The door material is difficult to simulate",
+        "The crack changes position over time",
+        "Finding the tiny crack that lets light through is extremely improbable with random sampling",
+        "The crack is too small to be represented in the scene geometry"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [51:44]: \"So we shoot out a path from the ayat bounces our on-the-scene even after multiple bounces it fails to find this little crack this little place where the door is just barely open and the light is shining from the other room right so in this scene there's no light anywhere except in that other room.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 38,
+      "sort_key": 38.0,
+      "qid": "Q38",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "52:50",
+      "question": "What is Metropolis Light Transport (MLT)?",
+      "options": [
+        "A method that perturbs good paths slightly to find nearby good paths",
+        "A technique that models light as particles with mass",
+        "A strategy that traces paths from multiple light sources simultaneously",
+        "An approach that uses physics-based simulation of light waves"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [53:01]: \"So what we're gonna do is once we find a good path rather than throwing it away and starting over again we're gonna perturb it a little bit we're gonna just move our degrees of freedom a little bit maybe change the angles ever so slightly to find nearby good paths and that's the idea behind something called metropolis light transport.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 39,
+      "sort_key": 39.0,
+      "qid": "Q39",
+      "qtype": "ALGORITHM",
+      "format": "mcq",
+      "timestamp": "54:21",
+      "question": "In the Metropolis-Hastings algorithm, what determines whether to accept a move to a new point?",
+      "options": [
+        "The distance between the new point and the old point",
+        "The derivative of the function at the current point",
+        "The absolute value of the function at the new point",
+        "The ratio of the function value at the new point to the function value at the old point"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [54:39]: \"I could say that alpha is the ratio of the function value the integrand value at the new point divided by the integrand value at the previous point that value is something I'm going to call the transition probability.\" This ratio determines the probability of accepting the move.",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 40,
+      "sort_key": 40.0,
+      "qid": "Q40",
+      "qtype": "REQUIREMENT",
+      "format": "mcq",
+      "timestamp": "55:55",
+      "question": "What property must mutations in the Metropolis-Hastings algorithm have to ensure correct results?",
+      "options": [
+        "They must be ergodic, allowing the algorithm to reach everywhere in the domain",
+        "They must decrease in size as the algorithm runs",
+        "They must be symmetric around the current point",
+        "They must be large enough to cover the entire domain"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [55:55]: \"One thing we have to be very careful about is to make sure that the mutations are air ghatak which is just a fancy way of saying make sure that our paths can actually reach everywhere in the domain of integration.\"\n- QUESTIONS (continued):",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 41,
+      "sort_key": 41.0,
+      "qid": "Q41",
+      "qtype": "STRATEGY",
+      "format": "mcq",
+      "timestamp": "57:26",
+      "question": "In the Metropolis-Hastings algorithm, what strategy is used to ensure ergodicity?",
+      "options": [
+        "Occasionally jumping to a completely random new point",
+        "Increasing the step size over time",
+        "Using a predetermined path through the domain",
+        "Always accepting moves to regions with zero value"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [57:26]: \"Every once in a while I'm also gonna jump to a completely random new point to make sure I'm exploring the whole space so that is a really simple strategy for making sure that my random walk is ergodic is just every once in a while I'll say okay I do kind of more like the original Monte Carlo thing just pick a completely random sample.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 42,
+      "sort_key": 42.0,
+      "qid": "Q42",
+      "qtype": "VISUAL",
+      "format": "mcq",
+      "timestamp": "58:44",
+      "question": "What image gradually appears in the Metropolis-Hastings demonstration?",
+      "options": [
+        "The probability density function graph",
+        "A portrait of a famous mathematician",
+        "A cityscape of Pittsburgh with bridges",
+        "A fractal pattern"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer identifies at [59:35]: \"So what is this well you see a lot of bridges so this must be downtown Pittsburgh.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 43,
+      "sort_key": 43.0,
+      "qid": "Q43",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "1:01:01",
+      "question": "What example is used to demonstrate the effectiveness of Metropolis Light Transport compared to path tracing?",
+      "options": [
+        "A disco ball with caustics",
+        "A mirror-filled room",
+        "A forest scene with complex shadows",
+        "A swimming pool with light refractions"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer describes at [1:01:01]: \"But just to show the payoff this is a example of a swimming pool you know light coming into the swimming pool it has to hit the surface refract in hit the bottom bounce out refract out hit the eye right and with path tracing it's super noisy with metropolis light transport for the same amount of time you get a much clearer image of what's going on.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 44,
+      "sort_key": 44.0,
+      "qid": "Q44",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "1:01:21",
+      "question": "What is Multiple Importance Sampling?",
+      "options": [
+        "Using multiple images to improve sampling accuracy",
+        "Taking samples in multiple rendering passes",
+        "Taking multiple samples from the same distribution",
+        "A technique to automatically combine different importance sampling strategies to preserve the strengths of all"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [1:02:15]: \"So there's this idea of multiple importance sampling which is a automatic way to combine different important sampling strategies to preserve the strengths of all of them.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 45,
+      "sort_key": 45.0,
+      "qid": "Q45",
+      "qtype": "FORMULA",
+      "format": "mcq",
+      "timestamp": "1:02:50",
+      "question": "In the balanced heuristic for Multiple Importance Sampling, how are samples weighted?",
+      "options": [
+        "By the value of the integrand at that sample",
+        "By the inverse of the total number of samples",
+        "By the probability density of all strategies at that sample point",
+        "Equally regardless of which strategy generated them"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer describes at [1:03:02]: \"I'm going to divide by the sum over all strategies of the fraction of samples taken with a cait strategy times the Kate importance density.\" This weighting mechanism balances the contributions from different strategies.",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 46,
+      "sort_key": 46.0,
+      "qid": "Q46",
+      "qtype": "EXAMPLE",
+      "format": "mcq",
+      "timestamp": "1:04:07",
+      "question": "What scene features were used to demonstrate Multiple Importance Sampling?",
+      "options": [
+        "Different sizes of light sources and materials ranging from mirror-like to diffuse",
+        "Water and glass with different refraction indices",
+        "Different camera angles and exposures",
+        "Various tree models with different leaf densities"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer describes at [1:04:07]: \"So we have this really kind of clever scene where we have lights of different sizes at the top going from small to large and on the bottom we have these four panels that have different materials on them going from really really almost perfectly mirror like at the top to almost a few Slyke at the bottom these kind of glossy materials in between.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 47,
+      "sort_key": 47.0,
+      "qid": "Q47",
+      "qtype": "PROBLEM",
+      "format": "mcq",
+      "timestamp": "1:06:17",
+      "question": "What problem occurs with uniformly random samples?",
+      "options": [
+        "They require too much computation",
+        "They cannot handle discontinuous functions",
+        "They create patterns that are too regular",
+        "They tend to clump up and create gaps"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer points out at [1:06:17]: \"So I believe that in this array of three by two boxes in the bottom left the bottom right most one is actually uniformly random and what you notice is that samples kind of clump up in an ugly way if you call R and many times you'll see this kind of behavior.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 48,
+      "sort_key": 48.0,
+      "qid": "Q48",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "1:07:53",
+      "question": "What is stratified sampling?",
+      "options": [
+        "Using multiple different sampling techniques",
+        "Sampling according to a predefined pattern",
+        "Dividing the domain into bins and sampling uniformly within each bin",
+        "Sampling more frequently in important regions"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [1:07:53]: \"A different idea is to say no no I want these to be nicely spread out so I'm gonna split the domain into n bins and then pick uniformly in each bin.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 49,
+      "sort_key": 49.0,
+      "qid": "Q49",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "1:08:19",
+      "question": "What can be proven about the variance of stratified sampling compared to uniform sampling?",
+      "options": [
+        "It is always exactly the same",
+        "It is always higher",
+        "It is never larger and typically lower",
+        "It depends entirely on the function being integrated"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [1:08:19]: \"The stratified estimate can never have larger variance than the original estimator and typically lower often much lower.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 50,
+      "sort_key": 50.0,
+      "qid": "Q50",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "1:09:49",
+      "question": "What is discrepancy as a measure of sample quality?",
+      "options": [
+        "The deviation from an ideal distribution where the number of samples in a region is proportional to its area",
+        "The variance of the sample distribution",
+        "The maximum distance between any two samples",
+        "The average distance between samples"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [1:10:14]: \"And discrepancy the notion of discrepancy is the measurement of a deviation from this ideal distribution of samples.\" Further at [1:09:49] he clarifies the ideal: \"The number of samples in a given region should be proportional to the area of that region.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 51,
+      "sort_key": 51.0,
+      "qid": "Q51",
+      "qtype": "THEOREM",
+      "format": "mcq",
+      "timestamp": "1:12:06",
+      "question": "What does Koksma's theorem state about quasi-Monte Carlo methods?",
+      "options": [
+        "The error is bounded by the product of the discrepancy and the total variation of the function",
+        "They always have higher variance than regular Monte Carlo methods",
+        "They only work in two dimensions or fewer",
+        "They cannot be used for discontinuous functions"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [1:12:20]: \"The deviation of our estimator from the true integral is bounded from above by the discrepancy of the sample X and the total variation of the function or integrating.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 52,
+      "sort_key": 52.0,
+      "qid": "Q52",
+      "qtype": "TECHNIQUE",
+      "format": "mcq",
+      "timestamp": "1:14:09",
+      "question": "What is the radical inverse function used for?",
+      "options": [
+        "Finding the maximum value of the integrand",
+        "Determining the optimal bin size for stratified sampling",
+        "Computing the gradient of the function",
+        "Generating low discrepancy sample points"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [1:14:09]: \"So just to sketch this out I won't go into gross detail about everything but first what we're gonna do is define something called the radical inverse,\" and then at [1:14:50]: \"So I can get a certain kind of low discrepancy sample called Halton points x1 through xn in K dimensions by taking this radical inverse function.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 53,
+      "sort_key": 53.0,
+      "qid": "Q53",
+      "qtype": "PROBLEM",
+      "format": "mcq",
+      "timestamp": "1:16:50",
+      "question": "What problem can occur with regular grid sampling patterns?",
+      "options": [
+        "They cannot handle 3D integrals",
+        "They can miss entire features of the function if aligned with certain frequencies",
+        "They are too computationally intensive",
+        "They introduce too much bias into the estimator"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer demonstrates at [1:16:50]: \"So just to really put the finger where it hurts let's consider this function this kind of sinusoidal function and let's say we want to integrate that over the square well if I put down a regular grid of samples in just the wrong place... depending on exactly how the grid lines up with the function I could get completely different estimates on the left I'm get one if the grid shifts a little bit or the function shifts a little bit on the right I get zero.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 54,
+      "sort_key": 54.0,
+      "qid": "Q54",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "1:18:01",
+      "question": "What is blue noise sampling inspired by?",
+      "options": [
+        "The distribution of cells on the retina of mammals",
+        "Ocean wave patterns",
+        "Atmospheric interference patterns",
+        "Quantum mechanical phenomena"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [1:18:01]: \"One type of sampling pattern that does a pretty good job at this is something called blue noise and this is got some biological motivation that if you look at the retina of a mammal like a rhesus monkey then you'll see that the cells on the retina have a nice distribution.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 55,
+      "sort_key": 55.0,
+      "qid": "Q55",
+      "qtype": "ANALYSIS",
+      "format": "mcq",
+      "timestamp": "1:19:12",
+      "question": "How is the quality of sampling patterns analyzed in the Fourier domain?",
+      "options": [
+        "By calculating the entropy of the pattern",
+        "By measuring the maximum amplitude",
+        "By comparing the pattern to a Gaussian distribution",
+        "By checking for preferred frequencies or directions in the pattern"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [1:19:56]: \"If we look at the Fourier transform for the regular pattern what we see is that the Fourier transform looks really kind of ugly there's some frequencies that really line up really well with the pattern... If we look at this blue noise pattern on the right it looks a lot more uniform... we notice especially for higher frequencies there's not much of a preference in direction or in frequency.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 56,
+      "sort_key": 56.0,
+      "qid": "Q56",
+      "qtype": "ALGORITHM",
+      "format": "mcq",
+      "timestamp": "1:23:02",
+      "question": "What is the basic idea behind Poisson disk sampling?",
+      "options": [
+        "Iteratively adding random non-overlapping disks until there's no space left",
+        "Using the Poisson probability distribution to determine sample locations",
+        "Placing samples on a slightly jittered grid",
+        "Randomly adding samples anywhere in the domain"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [1:23:02]: \"Well one of the earliest algorithms is something called poisson disk sampling and the basic idea is to just iteratively add random non-overlapping disks of some fixed size until there's no space left.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 57,
+      "sort_key": 57.0,
+      "qid": "Q57",
+      "qtype": "TECHNIQUE",
+      "format": "mcq",
+      "timestamp": "1:27:39",
+      "question": "What is the basic concept behind alias tables?",
+      "options": [
+        "Sorting the domain into regions of equal probability",
+        "Using multiple probability distributions simultaneously",
+        "Creating a lookup table to speed up function evaluation",
+        "\"Robbing from the rich and giving to the poor\" to make the distribution more uniform"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [1:27:39]: \"The basic idea is rather than build a inverse CDF or rather than building a CDF and inverting it we're going to Rob from the rich and give to the poor we're going to turn our probability distribution into something in some sense more uniform.\"",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 58,
+      "sort_key": 58.0,
+      "qid": "Q58",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "1:32:07",
+      "question": "According to the lecture, photon mapping is:",
+      "options": [
+        "Neither consistent nor unbiased",
+        "Consistent and unbiased",
+        "Consistent but biased",
+        "Unbiased but not consistent"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [1:32:07]: \"Photon mapping interestingly enough is consistent but biased so as we add more and more and more photons to the scene will approach the correct answer but for a given set of photons the expected image we generate is not the same as the true image.\"\n\n#MonteCarloIntegration #VarianceReduction #ImportanceSampling #PathTracing #MetropolisLightTransport #BidirectionalPathTracing #StratifiedSampling #LowDiscrepancy #BlueNoise #PhotonMapping",
+      "code": "",
+      "images": [
+        "lec19_slide_63.png"
+      ],
+      "tags": []
+    }
+  ]
+}

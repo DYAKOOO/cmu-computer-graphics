@@ -1,0 +1,1684 @@
+{
+  "lecture": 22,
+  "title": "Lecture 22: Introduction to Optimization",
+  "questions": [
+    {
+      "num": 1,
+      "sort_key": 0.01,
+      "qid": "QF1",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "The lecture opens with Dido's problem (800 BCE) and modern graphics examples (motion synthesis, symmetrization, spin balance). What does this framing accomplish for the technical content?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "It establishes that optimization is domain-agnostic — the same mathematical framework applies to ancient land enclosure, motion capture retargeting, and 3D printing. This means the algorithms (gradient descent, Newton's method) are general-purpose tools. Any problem where you can write an objective function f(x) to minimize — and graphics produces many such problems — immediately benefits from the same machinery. The historical example also makes the key insight concrete: unconstrained isoperimetric optimization gives a circle, but the boundary constraint (coastline) changes the answer.",
+      "intuition": "\"Find the best x\" is one problem regardless of domain. Gradient descent doesn't care whether x is a flight price or a joint angle.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 0.02,
+      "qid": "QF2",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "The lecture introduces gradient descent before Newton's method. What fundamental limitation of gradient descent motivates adding second-order information?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Gradient descent uses only the gradient ∇f (first derivative — \"which direction is downhill?\"). Near the optimum, the gradient is small, so it takes many tiny steps — slow convergence. It also ignores curvature: it takes the same step size in all directions regardless of whether the landscape is steep or flat in that direction. Newton's method uses the Hessian ∇²f (second derivative — \"how curved is the landscape here?\"). It adjusts step sizes per direction, taking large steps where the curvature is low and small steps where it's high. This achieves quadratic convergence near the optimum vs. linear convergence for gradient descent.",
+      "intuition": "Gradient descent uses a map of current slope. Newton's method uses a map of current slope AND terrain curvature — far better navigation.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 0.03,
+      "qid": "QF3",
+      "qtype": "ORDER",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "Put these optimization topics in the order lecture 22 introduces them: inverse kinematics formulated as optimization / Newton's method / gradient descent / constrained optimization and Lagrange multipliers",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Gradient descent → Newton's method → Constrained optimization and Lagrange multipliers → Inverse kinematics as optimization",
+      "intuition": "Simple unconstrained descent → faster unconstrained descent → handle constraints → apply the full machinery to a graphics problem (IK).",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 1,
+      "sort_key": 1.0,
+      "qid": "Q1",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "0:00",
+      "question": "What connection did the professor make between the current lecture on optimization and the previous lecture?",
+      "options": [
+        "Both involve solving systems of linear equations",
+        "Both topics involve rendering algorithms",
+        "Both involve hardware acceleration techniques",
+        "Both involve numerical approaches to animation"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [0:12], the professor states: \"Last time we started talking about physically-based animation and saying that if we use dynamics to just to drive motion then we can get a lot of complexity... Today in very much the same way we're gonna see another very general powerful tool that lets us do various kinds of animation and that's numerical optimization.\"\n\n\"From f=ma , we can get complexity\"",
+      "code": "",
+      "images": [
+        "image_1777601876104_0.png",
+        "lec22_slide_02.png"
+      ],
+      "tags": [
+        "Complexity"
+      ]
+    },
+    {
+      "num": 2,
+      "sort_key": 2.0,
+      "qid": "Q2",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "2:27",
+      "question": "How does the professor define an optimization problem?",
+      "options": [
+        "Finding a way to approximate an otherwise intractable problem",
+        "Finding the most efficient algorithm for a given task",
+        "Finding the best possible solution among all possibilities, possibly subject to constraints",
+        "Finding any possible solution to a set of equations"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [2:35], the professor explains: \"Before getting ahead of ourselves we have to really say what what is an optimization problem... you have some task at hand some problem you want to solve and what you'd like to do is get the best possible solution among all possibilities. In reality you typically also have some kind of constraints.\"",
+      "code": "",
+      "images": [
+        "image_1777602016902_0.png",
+        "lec22_slide_03.png"
+      ],
+      "tags": [
+        "Constraint"
+      ]
+    },
+    {
+      "num": 3,
+      "sort_key": 3.0,
+      "qid": "Q3",
+      "qtype": "HISTORICAL",
+      "format": "mcq",
+      "timestamp": "3:14",
+      "question": "What was the solution to the isoperimetric problem faced by Princess Dido?",
+      "options": [
+        "A circular shape",
+        "An elliptical shape",
+        "A triangular shape",
+        "A square shape"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [4:48], the professor confirms: \"This is indeed what what princess Dido did she made a circular path with this strip and closed a bunch of land and really made out well... in general if you want the most land encircled by a curve of fixed length that would be a circle.\"",
+      "code": "",
+      "images": [
+        "image_1777602022098_0.png",
+        "lec22_slide_03.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 4,
+      "sort_key": 4.0,
+      "qid": "Q4",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "5:36",
+      "question": "What example of optimization in character animation did the professor discuss?",
+      "options": [
+        "Facial expression generation",
+        "Character balancing and placing hands for support",
+        "Cloth simulation",
+        "Hair dynamics"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [5:36], the professor describes: \"Bipedal characters can be easily made to balance on one side... when receiving a strong pleasure use the character decide lay some hand on the wall for a consultant's about yourself kind of not when the wall is too far she has to take a step before.\"",
+      "code": "",
+      "images": [
+        "image_1777602081641_0.png",
+        "lec22_slide_02.png"
+      ],
+      "tags": [
+        "Robotics"
+      ]
+    },
+    {
+      "num": 5,
+      "sort_key": 5.0,
+      "qid": "Q5",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "6:27",
+      "question": "In the dragon mesh example, what property was being optimized?",
+      "options": [
+        "Texture quality",
+        "Vertex count",
+        "Rendering speed",
+        "Symmetry"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [6:27], the professor explains: \"In geometry you know very natural thing is to say I want a model that has a lot of symmetry so here we start with this dragon model right that's just a triangle mesh with no clear notion of symmetry and you do some computation to figure out kind of where not only where the symmetries are but how to deform the model to make it more and more symmetrical.\"\n\n- what are the  next two examples in optimizatoin? #card\n-",
+      "code": "",
+      "images": [
+        "image_1777602143106_0.png",
+        "image_1777602194616_0.png",
+        "image_1777602200466_0.png",
+        "lec22_slide_02.png"
+      ],
+      "tags": [
+        "Symmetry"
+      ]
+    },
+    {
+      "num": 6,
+      "sort_key": 6.0,
+      "qid": "Q6",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "8:25",
+      "question": "What defines a discrete optimization problem according to the professor?",
+      "options": [
+        "When the constraints are discrete",
+        "When only integer solutions are acceptable",
+        "When the domain is a discrete set (finite or countable)",
+        "When the objective function is discontinuous"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [8:40], the professor states: \"In a discrete optimization problem the domain is a discrete set what does that word mean discrete well to be precise about it a set that's discrete either has finitely many elements right or at least elements that can be put into correspondence with the integers.\"",
+      "code": "",
+      "images": [
+        "image_1777602351211_0.png",
+        "lec22_slide_08.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 7,
+      "sort_key": 7.0,
+      "qid": "Q7",
+      "qtype": "EXAMPLE",
+      "format": "mcq",
+      "timestamp": "9:07",
+      "question": "What simple example of discrete optimization did the professor mention?",
+      "options": [
+        "Determining the best vegetable for a stew",
+        "Minimizing the cost of a manufacturing process",
+        "Finding the shortest path between cities",
+        "Finding the optimal number of processors"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [9:07], the professor offers: \"A concrete kind of silly example is what's the best vegetable to put in a stew right the the set of possible vegetables is a discrete set what is an optimization strategy that might work here.\"\n\n- what is the optimization problem in standard form?\n- you have a function that you need a minimize (satisfy) and that it has to satisfy the constraints as well, it means the minimized function has to been less the constraint.\n\n- Philosophical question , does a local minimum \"solve\" the problem? #card\n-  The reason local minimum work is because it satisfies some conditions on the derivative that will get you a good behaviour , not the best but good enough.",
+      "code": "",
+      "images": [
+        "image_1777602389117_0.png",
+        "image_1777602717629_0.png",
+        "image_1777602966736_0.png",
+        "lec22_slide_19.png"
+      ],
+      "tags": [
+        "ProteinFolding"
+      ]
+    },
+    {
+      "num": 8,
+      "sort_key": 8.0,
+      "qid": "Q8",
+      "qtype": "ALGORITHMIC",
+      "format": "mcq",
+      "timestamp": "10:22",
+      "question": "What graph optimization problem did the professor describe that has efficient algorithms like Prim's and Kruskal's?",
+      "options": [
+        "Minimum spanning tree",
+        "Maximum clique",
+        "Shortest path",
+        "Maximum flow"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [10:42], the professor explains: \"Maybe if you've heard of a minimal spanning tree I have a graph and I want to pick a set of edges that touch all vertices a tree of edges that touch all vertices and such that the sum of all those edge weights is as small as possible that's a minimal spanning tree... for this problem people have figured out clever algorithms prims algorithm kruskal's algorithm.\"",
+      "code": "",
+      "images": [
+        "image_1777603072991_0.png",
+        "lec22_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 9,
+      "sort_key": 9.0,
+      "qid": "Q9",
+      "qtype": "COMPLEXITY",
+      "format": "mcq",
+      "timestamp": "11:20",
+      "question": "Which optimization problem did the professor specifically identify as NP-hard?",
+      "options": [
+        "Minimum spanning tree",
+        "Traveling Salesman Problem",
+        "Linear programming",
+        "Convex quadratic programming"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [11:33], the professor states: \"More often when somebody throws a just completely new and arbitrary discrete optimization problem at you chances are it's gonna be pretty hard a lot of discrete optimization problems like the Traveling Salesman problem is our np-hard.\"",
+      "code": "",
+      "images": [
+        "image_1777603082785_0.png",
+        "lec22_slide_08.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 10,
+      "sort_key": 10.0,
+      "qid": "Q10",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "12:16",
+      "question": "What characterizes continuous optimization problems?",
+      "options": [
+        "The variables can only take discrete values",
+        "The variables can take any real value within the domain",
+        "The constraints must be linear",
+        "The objective function must be differentiable"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [12:16], the professor explains: \"What about continuous optimization problems what does that mean well that now means that the domain is no longer a discrete set so rather than values or variables that take values in a discrete set and you might have something like real numbers they can take any real value.\"",
+      "code": "",
+      "images": [
+        "image_1777603100893_0.png",
+        "lec22_slide_09.png"
+      ],
+      "tags": [
+        "definition"
+      ]
+    },
+    {
+      "num": 11,
+      "sort_key": 11.0,
+      "qid": "Q11",
+      "qtype": "EXAMPLE",
+      "format": "mcq",
+      "timestamp": "12:36",
+      "question": "What example did the professor give to illustrate a continuous optimization problem?",
+      "options": [
+        "Finding the best three vegetables for a stew",
+        "Finding the cheapest flight",
+        "Finding the shortest route through cities",
+        "Finding the best temperature to cook an egg"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [12:36], the professor provides this example: \"A kind of again silly example would be what's the best temperature to cook an egg right so there I can't try all the possibilities I simply can't write there's an infinitely many or uncountably many different temperatures I could try to cook the egg at and check which one is the best.\"",
+      "code": "",
+      "images": [
+        "image_1777603151969_0.png",
+        "lec22_slide_03.png"
+      ],
+      "tags": [
+        "vs/continuousvsDiscrete"
+      ]
+    },
+    {
+      "num": 12,
+      "sort_key": 12.0,
+      "qid": "Q12",
+      "qtype": "TRACTABILITY",
+      "format": "mcq",
+      "timestamp": "13:28",
+      "question": "Which class of optimization problems did the professor identify as typically solvable in polynomial time?",
+      "options": [
+        "All NP-hard problems",
+        "All linear programming problems",
+        "All quadratic programming problems",
+        "All convex optimization problems"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [13:28], the professor states: \"One good example is so-called convex problems so most convex optimization problems are things that you can reasonably solve you can solve in polynomial time and get the optimal answer.\"",
+      "code": "",
+      "images": [
+        "image_1777603202379_0.png",
+        "lec22_slide_20.png"
+      ],
+      "tags": [
+        "ConvexOptimization"
+      ]
+    },
+    {
+      "num": 13,
+      "sort_key": 13.0,
+      "qid": "Q13",
+      "qtype": "MCQ",
+      "format": "mcq",
+      "timestamp": "14:39",
+      "question": "In the standard form of optimization problems, what is the general structure presented by the professor?",
+      "options": [
+        "Find the roots of a function subject to boundary conditions",
+        "Minimize a function subject to inequality constraints",
+        "Solve a system of equations with unknown variables",
+        "Maximize a function subject to equality constraints"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [14:39], the professor describes: \"This standard form looks something like this it says I want to minimize a function f not with respect to a set of parameters X so if we have n distinct parameters we could think of that as a point in RN and we also have some constraints that need to be satisfied. The functions F sub I of X need to always evaluate to less than or equal to B sub I for any X that we consider.\"\n\nyou have a function that you need a minimize (satisfy) and that it has to satisfy the constraints as well, it means the minimized function has to been less the constraint.",
+      "code": "",
+      "images": [
+        "image_1777603299473_0.png",
+        "lec22_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 14,
+      "sort_key": 14.0,
+      "qid": "Q14",
+      "qtype": "OBJECTIVE",
+      "format": "mcq",
+      "timestamp": "15:54",
+      "question": "According to the professor, what does the objective function in an optimization problem represent?",
+      "options": [
+        "The time required to reach the solution",
+        "The computational cost of solving the problem",
+        "How \"bad\" the solution is or how much it costs",
+        "The physical energy of the system"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [15:54], the professor explains: \"What does this objective represent it represents basically how much does the solution cost or maybe another way of saying this is how bad is X all right we want the best X given  how bad is this X.\"",
+      "code": "",
+      "images": [
+        "image_1777603344978_0.png",
+        "lec22_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 15,
+      "sort_key": 15.0,
+      "qid": "Q15",
+      "qtype": "TRANSFORMATION",
+      "format": "mcq",
+      "timestamp": "17:29",
+      "question": "How can a maximization problem be converted to a minimization problem?",
+      "options": [
+        "By applying the KKT conditions",
+        "By using the dual of the problem",
+        "By flipping the sign of the objective function",
+        "By taking the reciprocal of the objective function"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [17:55], the professor says: \"It's pretty straightforward all who do you have to do is change the definition of f not we just flip the sign on the definition of f naught and now we've turned our maximization problem into a minimization problem.\"",
+      "code": "",
+      "images": [
+        "image_1777603483434_0.png",
+        "lec22_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 16,
+      "sort_key": 16.0,
+      "qid": "Q16",
+      "qtype": "EQUALITY",
+      "format": "mcq",
+      "timestamp": "18:13",
+      "question": "How can equality constraints be represented using inequality constraints?",
+      "options": [
+        "By introducing slack variables",
+        "By introducing complementary constraints (≤ c and ≤ -c)",
+        "By replacing each equality with a quadratic inequality",
+        "By using the KKT conditions"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [18:43], the professor explains: \"One answer is we could just add equality constraints to our list but actually we don't need to do that we can just include two complementary constraints... G of X is less than or equal to C and G of X is also less than or equal to minus C if both of these constraints are satisfied then we've satisfied something with equality right.\"",
+      "code": "",
+      "images": [
+        "image_1777603488641_0.png",
+        "lec22_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 17,
+      "sort_key": 17.0,
+      "qid": "Q17",
+      "qtype": "SOFTWARE",
+      "format": "mcq",
+      "timestamp": "19:27",
+      "question": "According to the lecture, how do optimization packages typically handle problems that aren't in standard form?",
+      "options": [
+        "They reject the problem and ask for reformulation",
+        "They solve each constraint separately",
+        "They use machine learning to determine the best approach",
+        "They transform the problem into standard form and hand it to a solver"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [19:27], the professor explains: \"This is how some optimization packages will work you'll state an optimization problem and it'll transform that problem into a standard form and then hand that transformed problem off to a solver that can handle any problem in standard form.\"",
+      "code": "",
+      "images": [
+        "image_1777603503106_0.png",
+        "lec22_slide_09.png"
+      ],
+      "tags": [
+        "mindset"
+      ]
+    },
+    {
+      "num": 18,
+      "sort_key": 18.0,
+      "qid": "Q18",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "19:54",
+      "question": "What is the difference between a global minimum and a local minimum?",
+      "options": [
+        "Global minima require constraints while local minima don't",
+        "Global minima are always unique while local minima can be multiple",
+        "Global minima are always harder to compute than local minima",
+        "A global minimum is the absolute best among all possibilities, while a local minimum is the best among immediate neighbors"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [20:17], the professor states: \"The global minimum is something that's absolutely the best among all possibilities right... In contrast a local minimum is the best among immediate neighbors or maybe another way of saying that is a local minimum is something where I can't improve the solution by just perturbing it a little bit I would have to make a big jump to ever find a better solution.\"\n\n- QUESTIONS (continued):",
+      "code": "",
+      "images": [
+        "image_1777603591210_0.png",
+        "lec22_slide_10.png"
+      ],
+      "tags": [
+        "definition"
+      ]
+    },
+    {
+      "num": 19,
+      "sort_key": 19.0,
+      "qid": "Q19",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "21:09",
+      "question": "In what situations might local minima be preferred over global minima according to the lecture?",
+      "options": [
+        "When computation time is limited",
+        "When working with convex functions",
+        "When the global minimum is difficult to find",
+        "When the local minimum has better physical meaning for the system"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [21:49], the professor explains this with a protein example: \"The proteins that you end up producing are often local minima rather than global minima they're in some configuration that's a local minimum and it's actually really important that they're in that local minimum because that shape is what causes healthy cell function if you went to a global minimum you might get a different shape that would behave in a different way.\"",
+      "code": "",
+      "images": [
+        "image_1777603665568_0.png",
+        "lec22_slide_17.png"
+      ],
+      "tags": [
+        "Concept"
+      ]
+    },
+    {
+      "num": 20,
+      "sort_key": 20.0,
+      "qid": "Q20",
+      "qtype": "EXAMPLE",
+      "format": "mcq",
+      "timestamp": "22:52",
+      "question": "What example did the professor give of when a local minimum could be \"really bad\"?",
+      "options": [
+        "Numerical weather prediction",
+        "Designing machine learning models",
+        "Protein folding simulations",
+        "Plotting a path through a city that gets caught on obstacles"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [23:16], the professor states: \"In some cases local minima can be really bad alright if you're trying to plot a path through the city and you take some crazy crazy route... when you end up at your destination you might say okay I could make that path a little bit shorter by pulling the string tight... then I'm kind of at a local minimum for that path I took... if I take a crazy route through the city right I wind around every city block to get to my destination this local minimum could be really awful.\"",
+      "code": "",
+      "images": [
+        "lec22_slide_10.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 21,
+      "sort_key": 21.0,
+      "qid": "Q21",
+      "qtype": "VISUALIZATION",
+      "format": "mcq",
+      "timestamp": "24:15",
+      "question": "What mathematical function was being visualized in the 2D optimization example with a \"potato chip\" shape?",
+      "options": [
+        "x₁² + x₂²",
+        "sin(x₁) + x₂²",
+        "x₁² - x₂²",
+        "x₁⁴ - x₂⁴"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [24:15], the professor describes: \"Let's think about this problem I want to just minimize over two parameters X1 and X2 the function X1 squared minus X2 squared subject to the condition that X1 squared plus X2 squared minus 1 is less than or equal to 0.\"",
+      "code": "",
+      "images": [
+        "image_1777603817734_0.png",
+        "lec22_slide_09.png"
+      ],
+      "tags": [
+        "Visualization"
+      ]
+    },
+    {
+      "num": 22,
+      "sort_key": 22.0,
+      "qid": "Q22",
+      "qtype": "CONSTRAINT",
+      "format": "mcq",
+      "timestamp": "25:54",
+      "question": "In the 2D optimization example, what shape was described by the constraint x₁² + x₂² - 1 ≤ 0?",
+      "options": [
+        "An ellipse",
+        "A line",
+        "A unit disk",
+        "A parabola"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [25:54], the professor states: \"The constraint I can think of as a set of allowable points a set of points over which I want to plot this graph so what shape does this describe all the points such that x1 squared plus x2 squared minus 1 is less than or equal to 0 this is an implicit description of a shape and that shape is of course a circle or really the unit disk.\"",
+      "code": "",
+      "images": [
+        "image_1777603839672_0.png",
+        "lec22_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 23,
+      "sort_key": 23.0,
+      "qid": "Q23",
+      "qtype": "MCQ",
+      "format": "mcq",
+      "timestamp": "27:17",
+      "question": "What notable property of global minima did the \"potato chip\" example demonstrate?",
+      "options": [
+        "Global minima always occur at boundary points",
+        "Global minima can be non-unique (multiple points with same minimum value)",
+        "Global minima only exist for convex functions",
+        "Global minima can sometimes be saddle points"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [27:17], the professor notes: \"Even for this simple problem we see something interesting there can be more than one global minimum here there are two both the point 0 1 and the point 0 -1 both have the smallest value they're both at the point where this potato chip touches the ground.\"",
+      "code": "",
+      "images": [
+        "image_1777603885743_0.png",
+        "lec22_slide_17.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 24,
+      "sort_key": 24.0,
+      "qid": "Q24",
+      "qtype": "EXISTENCE",
+      "format": "mcq",
+      "timestamp": "29:29",
+      "question": "What simple optimization problem did the professor use to demonstrate that not all problems have global minimizers?",
+      "options": [
+        "Minimize e^x",
+        "Minimize x",
+        "Minimize log(x)",
+        "Minimize 1/x"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [29:29], the professor gives this example: \"Let's think about minimizing the function X that's it right I have one variable in my problem it's X X is a real value can take any value on the real line and I want to find the point X that minimizes the objective function f of x equals x where's the global minimum... I could keep moving X further and further to the left and the value will go down and down and down and down right.\"",
+      "code": "",
+      "images": [
+        "image_1777604253779_0.png",
+        "lec22_slide_12.png"
+      ],
+      "tags": [
+        "uniqueness"
+      ]
+    },
+    {
+      "num": 25,
+      "sort_key": 25.0,
+      "qid": "Q25",
+      "qtype": "BOUNDED",
+      "format": "mcq",
+      "timestamp": "30:31",
+      "question": "Why doesn't the function f(x) = x have a minimizer on the real line?",
+      "options": [
+        "Because the domain is not compact",
+        "Because the function is not differentiable",
+        "Because the function is not bounded from below",
+        "Because the constraints are not feasible"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [30:31], the professor explains: \"We set up a perfectly reasonable optimization problem it doesn't involve any crazy objective functions or any crazy constraints but it clearly has no solution we can always pick a smaller X right so we cannot always find a global minimizer we can't always just take the smallest value or the smallest input because not all objective functions are bounded from below.\"",
+      "code": "",
+      "images": [
+        "image_1777604307270_0.png",
+        "lec22_slide_12.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 26,
+      "sort_key": 26.0,
+      "qid": "Q26",
+      "qtype": "FEASIBILITY",
+      "format": "mcq",
+      "timestamp": "31:29",
+      "question": "In an optimization problem where the objective function is simply f(x) = 0, what does the problem reduce to?",
+      "options": [
+        "Finding the point closest to the origin",
+        "Finding the maximum entropy solution",
+        "Finding the global minimum",
+        "Finding any point that satisfies all the constraints"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [32:40], the professor states: \"So what the objective doesn't depend at all on the choice of X any feasible solution is equally good our problem now reduces to simply finding points actually any point at all that satisfies all the constraints.\"",
+      "code": "",
+      "images": [
+        "image_1777604427812_0.png",
+        "lec22_slide_13.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 27,
+      "sort_key": 27.0,
+      "qid": "Q27",
+      "qtype": "EXAMPLE",
+      "format": "mcq",
+      "timestamp": "34:32",
+      "question": "What simple example did the professor give of an optimization problem with no feasible points?",
+      "options": [
+        "Minimizing x² + y² subject to x = 1 and x = 2",
+        "Minimizing e^(-x) over all real numbers",
+        "Minimizing 0 subject to x = 1 and x = -1",
+        "Maximizing x subject to x ≤ 0"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [34:32], the professor provides: \"A stupidly simple example of this would be minimize 0 subject to x equals 1 and x equals minus 1 okay that is a problem in standard form it doesn't have a solution and so therefore it doesn't have a globally optimal solution.\"\n\"I hope you remember that you can't always solve ax=b , if the matrix is not full rank.\"",
+      "code": "",
+      "images": [
+        "image_1777604435276_0.png",
+        "lec22_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 28,
+      "sort_key": 28.0,
+      "qid": "Q28",
+      "qtype": "GEOMETRIC",
+      "format": "mcq",
+      "timestamp": "35:37",
+      "question": "In the geometric example with a shifted disk and half-plane, why was the problem infeasible?",
+      "options": [
+        "The two constraint regions had no common points (no overlap)",
+        "The constraints were contradictory",
+        "The objective function had no minimum on the domain",
+        "The objective function was unbounded"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [37:18], the professor concludes: \"So it looks like this ok so is this problem feasible what's it asking us to do it's asking us to minimize this interesting-looking objective function over points that are both in the blue disc and in the blue half plane are there any such points? No right these two sets what I'm gonna call sublevel sets have no common points they don't overlap.\"",
+      "code": "",
+      "images": [
+        "image_1777604519223_0.png",
+        "lec22_slide_14.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 29,
+      "sort_key": 29.0,
+      "qid": "Q29",
+      "qtype": "BOUNDED",
+      "format": "mcq",
+      "timestamp": "39:03",
+      "question": "Why doesn't the function f(x) = e^(-x) have a minimizer on the real line?",
+      "options": [
+        "Because the domain is not compact",
+        "Because the function has multiple local minima",
+        "Because the function approaches 0 as x approaches infinity but never reaches it",
+        "Because the function is not continuous"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [39:25], the professor explains: \"No matter how big X gets we never actually achieve the lower bound of the function we never actually achieved the value 0 which is the value we approach as X goes to infinity and so this function does not have a minimizer on the real line.\"",
+      "code": "",
+      "images": [
+        "image_1777604628525_0.png",
+        "lec22_slide_15.png"
+      ],
+      "tags": [
+        "BoundaryConditions"
+      ]
+    },
+    {
+      "num": 30,
+      "sort_key": 30.0,
+      "qid": "Q30",
+      "qtype": "SUFFICIENT",
+      "format": "mcq",
+      "timestamp": "40:49",
+      "question": "What does the extreme value theorem require to guarantee existence of a minimizer?",
+      "options": [
+        "A coercive objective function with no constraints",
+        "A continuous objective function and a compact domain",
+        "A convex objective function and convex constraints",
+        "A differentiable objective function with bounded derivatives"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [40:49], the professor states: \"We want to have a continuous objective an objective that doesn't jump in value as we change X by a small amount and a compact domain meaning the set of feasible points is a closed and bounded set closed and bounded subset of RN.\"",
+      "code": "",
+      "images": [
+        "image_1777604639814_0.png",
+        "lec22_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 31,
+      "sort_key": 31.0,
+      "qid": "Q31",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "41:21",
+      "question": "What does \"coercivity\" mean for an objective function?",
+      "options": [
+        "The function has unique minima",
+        "The function approaches infinity as variables get farther from the origin",
+        "The function is bounded from below",
+        "The function is continuously differentiable"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [41:21], the professor explains: \"Coercivity means that the objective function loosely speaking goes to positive infinity as we travel far far away in any direction right... coercivity is kind of saying there's gonna be a global minimum because if you allow yourself to get too big too far from the origin things are just gonna keep going up.\"\n\ne(x) is not because its not going to positive infinity.",
+      "code": "",
+      "images": [
+        "image_1777604881232_0.png",
+        "lec22_slide_12.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 32,
+      "sort_key": 32.0,
+      "qid": "Q32",
+      "qtype": "TESTING",
+      "format": "mcq",
+      "timestamp": "43:22",
+      "question": "According to the professor, which is typically harder to verify?",
+      "options": [
+        "Whether a point is a global minimum",
+        "Whether a function is convex",
+        "Whether a function is coercive",
+        "Whether a point is a local minimum"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [43:22], the professor states: \"In general I'll actually say that checking if a point is a global minimizer is typically hard if I just hand you a point X and I say I claim this is the global minimum and you want to go check is it or isn't it the global minimum do I believe that this is actually the optimal solution that's usually hard actually checking that a given point is the global minimum maybe as hard as solving the original problem.\"",
+      "code": "",
+      "images": [
+        "image_1777604944073_0.png",
+        "lec22_slide_16.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 33,
+      "sort_key": 33.0,
+      "qid": "Q33",
+      "qtype": "CALCULUS",
+      "format": "mcq",
+      "timestamp": "45:11",
+      "question": "What condition does the first derivative test check for in identifying critical points?",
+      "options": [
+        "The second derivative is negative",
+        "The first derivative equals zero",
+        "The second derivative is positive",
+        "The function is bounded"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [45:11], the professor explains: \"We want to find points where the derivative of the function is equal to zero we want to find points x star where the derivative is equal to zero.\"",
+      "code": "",
+      "images": [
+        "image_1777605050183_0.png",
+        "lec22_slide_17.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 34,
+      "sort_key": 34.0,
+      "qid": "Q34",
+      "qtype": "CALCULUS",
+      "format": "mcq",
+      "timestamp": "46:26",
+      "question": "What additional condition must be satisfied beyond having a zero first derivative for a point to be a local minimum?",
+      "options": [
+        "The second derivative must be positive",
+        "The function must be bounded",
+        "The second derivative must equal zero",
+        "The first derivative must be defined"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [46:26], the professor states: \"We also need to look at the second derivative we need a second derivative test in particular we want to make sure that the second derivative is positive right it has this convex behavior at the critical point.\"",
+      "code": "",
+      "images": [
+        "image_1777605094021_0.png",
+        "lec22_slide_17.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 35,
+      "sort_key": 35.0,
+      "qid": "Q35",
+      "qtype": "MULTIVARIABLE",
+      "format": "mcq",
+      "timestamp": "48:28",
+      "question": "In multivariable calculus, what does the gradient of a function represent?",
+      "options": [
+        "The direction of steepest ascent",
+        "The volume under the function",
+        "The second-order behavior",
+        "The curvature of the function"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [48:28], the professor explains: \"The gradient of the funk grad F kind of describes the slope of the function or the direction of steepest ascent that was a good way of looking at it.\"",
+      "code": "",
+      "images": [
+        "image_1777605332423_0.png",
+        "lec22_slide_18.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 36,
+      "sort_key": 36.0,
+      "qid": "Q36",
+      "qtype": "MULTIVARIABLE",
+      "format": "mcq",
+      "timestamp": "49:18",
+      "question": "What is the Hessian of a function?",
+      "options": [
+        "The determinant of the Jacobian",
+        "A vector of first derivatives",
+        "A third-order tensor",
+        "A matrix of second partial derivatives"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [49:18], the professor defines: \"The Hessian is our generalization of the second derivative to multi variable functions and the way you usually learn this is it's a big matrix of all possible second partial derivatives so if I have variables x1 through xn then I take the second derivative of F with respect to X1 and then X1 then I do it again with respect to X1 and X2 X1 and X3 and so forth.\"\n\n- QUESTIONS (continued):",
+      "code": "",
+      "images": [
+        "image_1777605341768_0.png",
+        "lec22_slide_13.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 37,
+      "sort_key": 37.0,
+      "qid": "Q37",
+      "qtype": "OPTIMALITY",
+      "format": "mcq",
+      "timestamp": "50:27",
+      "question": "What are the necessary conditions for a point to be a local minimum of a twice-differentiable function?",
+      "options": [
+        "The gradient equals zero, and the Hessian is negative definite",
+        "The gradient equals the identity matrix, and the Hessian is zero",
+        "The gradient equals zero, and the Hessian is positive semi-definite",
+        "The gradient equals zero, and the Hessian is positive definite"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [50:27], the professor states: \"They really don't look any different once we've generalized the first and second derivative we say to be at a local minimum of a function f not as long as it is twice differentiable as long as we can define the gradient of the Hessian gradient imagine then we'll be at an optimal point if the gradient at that point is zero and if the Hessian of the point is positive semi-definite.\"",
+      "code": "",
+      "images": [
+        "image_1777605346119_0.png",
+        "lec22_slide_18.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 38,
+      "sort_key": 38.0,
+      "qid": "Q38",
+      "qtype": "CONSTRAINTS",
+      "format": "mcq",
+      "timestamp": "52:34",
+      "question": "For the \"potato chip\" function example with constraints, what did the professor note about the gradient at the global minima?",
+      "options": [
+        "The gradient is perpendicular to the constraint surface",
+        "The gradient equals zero",
+        "The gradient is tangent to the constraint surface",
+        "The gradient is not zero at these constrained minima"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [52:45], the professor points out: \"Is the gradient of the function zero at these black points? No right if I was standing at that point the direction of steepest ascent is taking me upward it's a non zero vector okay.\"",
+      "code": "",
+      "images": [
+        "image_1777605427262_0.png",
+        "lec22_slide_19.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 39,
+      "sort_key": 39.0,
+      "qid": "Q39",
+      "qtype": "KKT",
+      "format": "mcq",
+      "timestamp": "53:44",
+      "question": "What are the conditions that characterize constrained optimization problems?",
+      "options": [
+        "Bellman equations",
+        "Hamilton-Jacobi equations",
+        "Euler-Lagrange equations",
+        "Karush-Kuhn-Tucker (KKT) conditions"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [53:44], the professor states: \"In general any local or global minimizer must satisfy the so called Karush-Kuhn-Tucker conditions or what people always abbreviate as the KKT conditions.\"",
+      "code": "",
+      "images": [
+        "image_1777605512302_0.png",
+        "lec22_slide_19.png"
+      ],
+      "tags": [
+        "KKTConditions"
+      ]
+    },
+    {
+      "num": 40,
+      "sort_key": 40.0,
+      "qid": "Q40",
+      "qtype": "CONVEX",
+      "format": "mcq",
+      "timestamp": "55:28",
+      "question": "According to the professor, which property makes convex optimization problems generally easier to solve?",
+      "options": [
+        "They can be solved in polynomial time",
+        "They have unique global minima",
+        "They can all be reduced to linear programming",
+        "They always have a feasible region"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [55:28], the professor explains: \"Convex problems are a special class of problems that are almost always easy to solve in polynomial time.\"",
+      "code": "",
+      "images": [
+        "image_1777605650078_0.png",
+        "lec22_slide_20.png"
+      ],
+      "tags": [
+        "ConvexOptimization"
+      ]
+    },
+    {
+      "num": 41,
+      "sort_key": 41.0,
+      "qid": "Q41",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "56:29",
+      "question": "How do you test whether a set is convex?",
+      "options": [
+        "Verify that any line segment between two points in the set lies entirely within the set",
+        "Check that the boundary has continuous derivatives",
+        "Test if the set is symmetric about some axis",
+        "Confirm that the set contains the origin"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [56:29], the professor describes: \"How do I know it's convex how do I test whether whether or not a set is convex the basic idea is I should be able to if it's convex I should be able to take any two points inside the set and connect them by a straight line segment that doesn't leave that set.\"",
+      "code": "",
+      "images": [
+        "image_1777605660443_0.png",
+        "lec22_slide_03.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 42,
+      "sort_key": 42.0,
+      "qid": "Q42",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "57:25",
+      "question": "How do you test whether a function is convex?",
+      "options": [
+        "The function must have a unique minimum",
+        "The function must be differentiable everywhere",
+        "Any line segment between two points on the graph must lie above the graph",
+        "The function must be bounded"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [57:25], the professor explains: \"What does it mean for a objective or a function to be convex kind of a similar idea if I look at the graph of the function here it is graph of f of X and I take any two points and connect them by straight line segment I want that line segment to be above the graph of the function for all possible pairs of points.\"",
+      "code": "",
+      "images": [
+        "image_1777605669728_0.png",
+        "lec22_slide_17.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 43,
+      "sort_key": 43.0,
+      "qid": "Q43",
+      "qtype": "BENEFIT",
+      "format": "mcq",
+      "timestamp": "58:16",
+      "question": "What key benefit of convex optimization problems did the professor highlight in terms of initial guesses?",
+      "options": [
+        "The initial guess doesn't affect the computation time",
+        "They work with any initial guess and still reach the global optimum",
+        "The initial guess must be within the feasible region",
+        "They require fewer initial guesses than non-convex problems"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [58:31], the professor states: \"Because we don't have little local minima all over the place we know that the result we get won't depend on finding a good initial guess... with convex problems strongly convex problems we don't have to worry about this at all we can start with whatever random guess we want and we'll always get the same optimal solution.\"",
+      "code": "",
+      "images": [
+        "image_1777605749519_0.png",
+        "lec22_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 44,
+      "sort_key": 44.0,
+      "qid": "Q44",
+      "qtype": "GRAPHICS",
+      "format": "mcq",
+      "timestamp": "1:00:24",
+      "question": "According to the lecture, what type of convex optimization problems frequently appear in computer graphics?",
+      "options": [
+        "Convex quadratic problems",
+        "Geometric programming problems",
+        "Linear programming problems",
+        "Semidefinite programming problems"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:00:09], the professor says: \"So let's take a look at one really important class of convex optimization problems that show up all the time day and night in computer graphics both in animation and in geometry processing and an image processing all over the place which are convex quadratic objectives.\"",
+      "code": "",
+      "images": [
+        "image_1777608590620_0.png",
+        "lec22_slide_02.png"
+      ],
+      "tags": [
+        "optimization",
+        "ddg",
+        "ImageProcessing"
+      ]
+    },
+    {
+      "num": 45,
+      "sort_key": 45.0,
+      "qid": "Q45",
+      "qtype": "MATHEMATICAL",
+      "format": "mcq",
+      "timestamp": "1:01:23",
+      "question": "What is the mathematical form of a convex quadratic objective function?",
+      "options": [
+        "f(x) = x^T A x + b^T x + c, where A is positive semi-definite",
+        "f(x) = (1/2) ||Ax - b||^2, where A is symmetric",
+        "f(x) = (1/2) x^T A x - x^T b, where A is positive semi-definite",
+        "f(x) = ||Ax - b||^2, where A is full rank"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:01:23], the professor says: \"How do we write one of these down we can express it via a positive semi-definite matrix okay so if we have an objective that looks like this F naught of x equals 1/2 X transpose ax minus X transpose B where a is a positive semi definite matrix then that is a convex quadratic objective.\"",
+      "code": "",
+      "images": [
+        "image_1777608595232_0.png",
+        "lec22_slide_21.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 46,
+      "sort_key": 46.0,
+      "qid": "Q46",
+      "qtype": "OPTIMALITY",
+      "format": "mcq",
+      "timestamp": "1:04:15",
+      "question": "What is the first-order optimality condition for the quadratic objective function f(x) = (1/2) x^T A x - x^T b?",
+      "options": [
+        "A^T x = b",
+        "x = A^-1 b",
+        "Ax = 0",
+        "Ax = b"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:04:15], the professor derives: \"So putting that all together we get a first order optimality condition of hey ax equals B so that's interesting if I'm ever solving a linear system involving a positive semi definite matrix a I could also think about that as minimizing this quadratic function as trying to find the bottom of a bowl-shaped function.\"",
+      "code": "",
+      "images": [
+        "image_1777608753623_0.png",
+        "lec22_slide_21.png"
+      ],
+      "tags": [
+        "OptimialityCondition"
+      ]
+    },
+    {
+      "num": 47,
+      "sort_key": 47.0,
+      "qid": "Q47",
+      "qtype": "VISUALIZATION",
+      "format": "mcq",
+      "timestamp": "1:05:55",
+      "question": "How did the professor visually describe a positive semi-definite quadratic function?",
+      "options": [
+        "As a cylinder sheet",
+        "As a plane with no critical points",
+        "As a valley with a unique minimum",
+        "As a mountain with a single peak"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:05:55], the professor illustrates: \"If my matrix a is positive semi-definite then the graph looks like this cylinder in the middle it's going up in some directions it's maybe straight in some other directions... if it's strongly convex function then it looks like this bowl on the rat on the far left.\"",
+      "code": "",
+      "images": [
+        "lec22_slide_21.png"
+      ],
+      "tags": [
+        "Visualization"
+      ]
+    },
+    {
+      "num": 48,
+      "sort_key": 48.0,
+      "qid": "Q48",
+      "qtype": "ANALOGY",
+      "format": "mcq",
+      "timestamp": "1:06:48",
+      "question": "What skiing analogy did the professor use to explain optimizing convex functions?",
+      "options": [
+        "Skiing across a flat plateau to find an exit",
+        "Skiing uphill to reach a viewpoint",
+        "Skiing down a bowl to the bottom",
+        "Skiing around a mogul field to find the lowest point"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:06:48], the professor uses this analogy: \"This kind of gives a sense of why should it be that convex problems are easy to solve well if I have this bowl and I'm looking for the minimum of the bowl I can imagine just kind of skiing down to the bottom if I keep just going down down down following the gradient I'll get to the bottom.\"",
+      "code": "",
+      "images": [
+        "image_1777608844041_0.png",
+        "lec22_slide_27.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 49,
+      "sort_key": 49.0,
+      "qid": "Q49",
+      "qtype": "GENERAL",
+      "format": "mcq",
+      "timestamp": "1:08:02",
+      "question": "What did the professor say about the optimization problems that typically appear in graphics applications?",
+      "options": [
+        "They are usually well-structured convex problems",
+        "They are usually linear systems that can be solved directly",
+        "They are usually more complicated and often not convex",
+        "They are usually small enough to be solved by brute force"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:08:02], the professor states: \"The reality is the kinds of optimization problems that show up in graphics are way more complicated and sadly aren't often not convex even if that's a good of getting our head around optimization problems.\"",
+      "code": "",
+      "images": [
+        "image_1777608862406_0.png",
+        "image_1777608888150_0.png",
+        "lec22_slide_27.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 50,
+      "sort_key": 50.0,
+      "qid": "Q50",
+      "qtype": "ALGORITHM",
+      "format": "mcq",
+      "timestamp": "1:08:31",
+      "question": "What basic algorithm did the professor describe as following the direction of steepest descent?",
+      "options": [
+        "Simulated annealing",
+        "Gradient descent",
+        "Interior point method",
+        "Newton's method"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:09:27], the professor explains: \"So the most basic version of this descent method is something called gradient descent okay and the basic idea is to follow the gradient downhill until the gradient is 0 so follow the direction that's minus the gradient right.\"",
+      "code": "",
+      "images": [
+        "image_1777608964675_0.png",
+        "lec22_slide_27.png"
+      ],
+      "tags": [
+        "GradientDescent"
+      ]
+    },
+    {
+      "num": 51,
+      "sort_key": 51.0,
+      "qid": "Q51",
+      "qtype": "MATHEMATICAL",
+      "format": "mcq",
+      "timestamp": "1:11:42",
+      "question": "How did the professor relate gradient descent to concepts from the previous lecture?",
+      "options": [
+        "Gradient descent can be viewed as an ordinary differential equation",
+        "Gradient descent uses rendering equations similar to ray tracing",
+        "Gradient descent uses the same spatial data structures as collision detection",
+        "Gradient descent is a form of numerical integration similar to simulations"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:12:04], the professor points out: \"One thing that maybe you noticed after our last lecture is that the gradient descent equation the gradient descent evolution is an ordinary differential equation it says the change over time of the quantity X of T is minus the derivative of that function evaluated at X of T.\"\n\"don't pick timestep that are too big and too small\".",
+      "code": "",
+      "images": [
+        "image_1777609065058_0.png",
+        "lec22_slide_25.png"
+      ],
+      "tags": [
+        "ODE"
+      ]
+    },
+    {
+      "num": 52,
+      "sort_key": 52.0,
+      "qid": "Q52",
+      "qtype": "CHALLENGE",
+      "format": "mcq",
+      "timestamp": "1:17:13",
+      "question": "What geometric challenge did the professor identify with gradient descent in higher dimensions?",
+      "options": [
+        "The gradient can sometimes disappear due to numerical errors",
+        "The step size must increase exponentially with dimension",
+        "The computation of the gradient becomes too expensive",
+        "The algorithm can oscillate back and forth in long, narrow valleys"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:17:20], the professor describes: \"Here's a very very common phenomenon where our objective function in the vicinity of a local minimum looks like a long slender Valley and so if I start at a point and I walk for a little while along the gradient at that initial point and then I stop I update the Greg find a new gradient I walk a little bit along that direction and then I do it again and again and again the solution can oscillate back and forth right.\"",
+      "code": "",
+      "images": [
+        "image_1777609145705_0.png",
+        "lec22_slide_17.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 53,
+      "sort_key": 53.0,
+      "qid": "Q53",
+      "qtype": "SOLUTION",
+      "format": "mcq",
+      "timestamp": "1:18:58",
+      "question": "What approach did the professor suggest to address the \"valley problem\" in gradient descent?",
+      "options": [
+        "Using higher-order derivatives like the Hessian",
+        "Using momentum terms",
+        "Using smaller step sizes",
+        "Using random restarts"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:18:58], the professor suggests: \"One technique is to consider higher-order derivatives of the function not only the gradient but perhaps the Hessian okay and the general idea what we want to achieve intuitively is to sort of apply a transformation to our function or really to apply a transformation to the domain over which the function is defined so that the local energy landscape doesn't look like this long skinny Valley but instead looks like a nice round bowl.\"\n\n\"some friend will tell you about some new nonconvex optimization such as SGD but nothing is without problems.\"",
+      "code": "",
+      "images": [
+        "image_1777609303061_0.png",
+        "lec22_slide_27.png"
+      ],
+      "tags": [
+        "sgd"
+      ]
+    },
+    {
+      "num": 54,
+      "sort_key": 54.0,
+      "qid": "Q54",
+      "qtype": "METHOD",
+      "format": "mcq",
+      "timestamp": "1:20:50",
+      "question": "How does Newton's method for optimization modify the basic gradient descent update?",
+      "options": [
+        "It applies the inverse of the Hessian to the gradient",
+        "It adds a momentum term to avoid oscillations",
+        "It dynamically adjusts the step size based on progress",
+        "It adds random noise to escape local minima"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:20:50], the professor explains: \"Our new position X K plus 1 is equal to our current position XK minus the time step times well no longer just the gradient right before in gradient ascent we would have just moved along the direction of the gradient now what we're gonna do is instead apply the inverse of the Hessian to the gradient before we take this step.\"",
+      "code": "",
+      "images": [
+        "image_1777609378541_0.png",
+        "lec22_slide_25.png"
+      ],
+      "tags": [
+        "NewtonsMethod",
+        "Hessian"
+      ]
+    },
+    {
+      "num": 55,
+      "sort_key": 55.0,
+      "qid": "Q55",
+      "qtype": "ADVANTAGE",
+      "format": "mcq",
+      "timestamp": "1:22:29",
+      "question": "What advantage of Newton's method did the professor highlight for convex optimization?",
+      "options": [
+        "It never gets stuck in local minima",
+        "It requires less memory than gradient descent",
+        "It converges in very few steps (about 5-6) once near the minimum",
+        "It avoids the need to compute derivatives"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:22:29], the professor states: \"This is particularly great for convex problems in fact they're even proof showing that in general you're gonna take only about five or six Newton steps to get to a local minimizer once you're kind of in the bowl-like region around the minimizer.\"",
+      "code": "",
+      "images": [
+        "image_1777609387791_0.png",
+        "lec22_slide_27.png"
+      ],
+      "tags": [
+        "Proof"
+      ]
+    },
+    {
+      "num": 56,
+      "sort_key": 56.0,
+      "qid": "Q56",
+      "qtype": "CHALLENGE",
+      "format": "mcq",
+      "timestamp": "1:22:53",
+      "question": "What challenge does Newton's method face with non-convex optimization?",
+      "options": [
+        "The method can only work with twice-differentiable functions",
+        "The inverse Hessian might not exist",
+        "The algorithm becomes computationally too expensive",
+        "The Hessian might not be positive definite, leading to saddle points"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:22:53], the professor explains: \"The reason we need to be more careful is that the Hessian is not always positive definite and so the point that we find with Newton's method might not be kind of a local minimum but it might be more like a saddle point it's not really making progress towards the minimizer.\"",
+      "code": "",
+      "images": [
+        "image_1777609497987_0.png",
+        "lec22_slide_27.png"
+      ],
+      "tags": [
+        "PSD"
+      ]
+    },
+    {
+      "num": 57,
+      "sort_key": 57.0,
+      "qid": "Q57",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "1:25:16",
+      "question": "What animation technique did the professor describe as an optimization application in graphics?",
+      "options": [
+        "Inverse kinematics",
+        "Procedural animation",
+        "Motion capture",
+        "Physics simulation"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:25:35], the professor introduces: \"So here's here's a great example from animation something called inverse kinematics... the idea behind inverse kinematics is to say actually I just have a simple goal for my character in this case I simply want the robot arm to go and touch one of the dinosaurs.\"",
+      "code": "",
+      "images": [
+        "image_1777609512954_0.png",
+        "lec22_slide_02.png"
+      ],
+      "tags": [
+        "InverseKinematics"
+      ]
+    },
+    {
+      "num": 58,
+      "sort_key": 58.0,
+      "qid": "Q58",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "1:27:34",
+      "question": "What is a kinematic chain according to the lecture?",
+      "options": [
+        "A path finding algorithm for characters",
+        "A sequence of animation keyframes",
+        "A collection of rigid bodies connected by joints",
+        "A series of mathematical transformations"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:27:34], the professor explains: \"So a lot of systems a lot of characters in an animation or robots or vehicles or whatever are well described by a kinematic chain which just means I have a collection of objects when your rigid bodies and they're connected by joints right.\"\n\nThe goal is not to set all the variables in the robot arm yourself ,  therefore formulate it as optimization problem. You are trying to minimize the difference between robot arm and the location of the object trying to pick up . In addition we use gradient descent to move to the goal.",
+      "code": "",
+      "images": [
+        "image_1777609560722_0.png",
+        "lec22_slide_29.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 59,
+      "sort_key": 59.0,
+      "qid": "Q59",
+      "qtype": "HIERARCHY",
+      "format": "mcq",
+      "timestamp": "1:28:42",
+      "question": "What hierarchical property of kinematic chains did the professor emphasize?",
+      "options": [
+        "The configuration of child components depends on parent components",
+        "The animation timeline must proceed in hierarchical steps",
+        "Joint constraints must be satisfied in a specific order",
+        "Larger components must be animated before smaller ones"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:28:42], the professor states: \"For a kinematic chain we also have kind of a hierarchical structure the configuration of the leg depends on the configuration of the body if I rotate the whole body the leg rotates along with it if I rotate the leg the foot rotates along with it and so forth.\"",
+      "code": "",
+      "images": [
+        "image_1777609765299_0.png",
+        "lec22_slide_29.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 60,
+      "sort_key": 60.0,
+      "qid": "Q60",
+      "qtype": "REPRESENTATION",
+      "format": "mcq",
+      "timestamp": "1:31:23",
+      "question": "What mathematical tool did the professor suggest for elegantly representing rotations in the 2D kinematic chain example?",
+      "options": [
+        "Quaternions",
+        "Complex numbers",
+        "Homogeneous coordinates",
+        "Euler angles"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:31:23], the professor states: \"We could also do this remember we talked about how complex numbers are really nice way to write down rotations simplifies conceptually a lot what's going on we could just write this down as p1 equals p0 plus e to the I theta naught u0.\"",
+      "code": "",
+      "images": [
+        "image_1777609866228_0.png",
+        "lec22_slide_09.png"
+      ],
+      "tags": [
+        "Representation"
+      ]
+    },
+    {
+      "num": 61,
+      "sort_key": 61.0,
+      "qid": "Q61",
+      "qtype": "OBJECTIVE",
+      "format": "mcq",
+      "timestamp": "1:33:42",
+      "question": "What objective function did the professor propose for inverse kinematics?",
+      "options": [
+        "The length of the kinematic chain",
+        "One-half the squared distance between the end effector and target",
+        "The sum of all joint angles",
+        "The product of all link lengths"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:33:42], the professor proposes: \"Let's say that for endpoint or for for point P n we want it to get as close as possible to a given point P n tilde then we can just say that the function the objective function f naught of theta is equal to one-half P n tilde minus P n norm squared just the distance between those two points squared.\"",
+      "code": "",
+      "images": [
+        "image_1777609986735_0.png",
+        "image_1777609975031_0.png",
+        "lec22_slide_31.png"
+      ],
+      "tags": [
+        "Objective"
+      ]
+    },
+    {
+      "num": 62,
+      "sort_key": 62.0,
+      "qid": "Q62",
+      "qtype": "NEXT",
+      "format": "mcq",
+      "timestamp": "1:35:21",
+      "question": "What topic did the professor preview for the next lecture?",
+      "options": [
+        "Monte Carlo methods",
+        "Character animation techniques",
+        "Physically-based rendering",
+        "Partial differential equations"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:35:21], the professor previews: \"Next time we're gonna go back to our discussion of differential equations but this time talk about partial differential equations talking about things that have derivatives in both space and time.\"\n-",
+      "code": "",
+      "images": [
+        "lec22_slide_02.png"
+      ],
+      "tags": []
+    }
+  ]
+}

@@ -1,0 +1,1537 @@
+{
+  "lecture": 6,
+  "title": "Lecture 6: 3D Rotations",
+  "questions": [
+    {
+      "num": 1,
+      "sort_key": 0.01,
+      "qid": "QF1",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "The lecture opens with \"what is a rotation, intuitively?\" rather than starting with matrix formulas. Why does defining transformations by their invariants (not formulas) matter for understanding everything that follows?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Starting from invariants (length preserved, orientation preserved, origin fixed) gives a conceptual test that any representation must pass. This means each subsequent representation — Euler angles, rotation matrices, quaternions — can be evaluated by whether it captures all three invariants and whether it's convenient. Without this framing, the parade of formulas has no organizing principle.",
+      "intuition": "\"What does it preserve?\" is the master question. Every representation is just a different answer to that question.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 0.02,
+      "qid": "QF2",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "The lecture covers three major representation families for 3D rotations: Euler angles/rotation matrices, complex numbers → quaternions, and exponential maps. What specific failure of each motivates the next?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Euler angles → rotation matrices work but can suffer gimbal lock (two axes align, losing a DOF). Rotation matrices are 9 numbers for 3 DOF (overconstrained, orthogonality must be enforced). Complex numbers generalize to quaternions: a 4-number representation that avoids gimbal lock and is closed under composition. Exponential maps encode a rotation as a 3-vector (axis × half-angle), useful for interpolation and optimization.",
+      "intuition": "Each step fixes the previous representation's weakest point at the cost of more abstraction.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 0.03,
+      "qid": "QF3",
+      "qtype": "ORDER",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "Put these rotation topics in the order the lecture introduces them, from first to last: quaternion rotation formula / 3D rotation matrices and Euler angles / 2D rotation matrix derived from first principles / complex numbers as 90° rotations",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "2D rotation matrix derived from first principles → 3D rotation matrices and Euler angles → complex numbers as 90° rotations → quaternion rotation formula",
+      "intuition": "The lecture builds from the simplest case (2D) outward, using complex numbers as a bridge to quaternions.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 1,
+      "sort_key": 1.0,
+      "qid": "Q1",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "00:41",
+      "question": "What defines a transformation as a rotation according to the lecture?",
+      "options": [
+        "The invariants that are preserved by the transformation",
+        "The specific matrix properties that form a rotation matrix",
+        "The mathematical formula used to compute the rotation",
+        "The axis of rotation and the angle of rotation"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [00:41]: \"What is a rotation intuitively how do you know a rotation when you see it... transformations are not defined by some formula or matrix property but really they're defined by the invariants that are preserved by a transformation which quantities stay the same.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_02.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 2.0,
+      "qid": "Q2",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "01:08",
+      "question": "What properties are preserved when applying a rotation?",
+      "options": [
+        "Coordinates of all points in the space",
+        "Lengths, distances, but not orientation",
+        "Orientation, but not lengths or distances",
+        "Lengths, distances, and orientation"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [01:08], the lecturer explains: \"For rotations we said what we said that you know something is a rotation like this spinning book because for one thing lengths and distances are preserved... also orientation is preserved so text remains readable i can still read the text from left to right and it makes sense.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_02.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 3.0,
+      "qid": "Q3",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "01:47",
+      "question": "What distinguishes a pure rotation from a rotation combined with a translation?",
+      "options": [
+        "A pure rotation fixes the origin (a center point remains fixed)",
+        "A pure rotation must occur around one of the principal axes",
+        "The angle of rotation must be less than 180 degrees",
+        "The speed at which the transformation is applied"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [01:47]: \"When we use the word rotation we really mean something that fixes the origin right some center point remains fixed otherwise what we're doing is performing a rotation and a translation.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_02.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 4,
+      "sort_key": 4.0,
+      "qid": "Q4",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "02:15",
+      "question": "How many degrees of freedom are there in 3D rotations?",
+      "options": [
+        "2 degrees of freedom",
+        "3 degrees of freedom",
+        "6 degrees of freedom",
+        "9 degrees of freedom"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [05:08], the lecturer concludes: \"Hence we must have three degrees of freedom we have two degrees of freedom to take any point on the sphere to any other and for any such motion we have a whole family of rotations a third number we can specify.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_03.png"
+      ],
+      "tags": [
+        "DOF"
+      ]
+    },
+    {
+      "num": 5,
+      "sort_key": 5.0,
+      "qid": "Q5",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "02:32",
+      "question": "Why might someone initially think 3D rotations have three degrees of freedom?",
+      "options": [
+        "Because there are three coordinates (x, y, z) in 3D space",
+        "Because a rotation vector has three components",
+        "Because you can specify the angle of rotation around the x-axis, y-axis, and z-axis",
+        "Because a rotation matrix has three rows"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [02:32]: \"One really natural idea that i think a lot of people gravitate toward is to say well it's got to be 3 because you specify the angle of rotation around the x-axis and around the y-axis and around the z-axis.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_03.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 6,
+      "sort_key": 6.0,
+      "qid": "Q6",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "03:22",
+      "question": "What analogy does the lecturer use to explain the degrees of freedom in 3D rotations?",
+      "options": [
+        "Rotating the Earth to move cities to different positions",
+        "A gyroscope in motion",
+        "Rotating a cube in your hands",
+        "A spinning top on a table"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [03:22], the lecturer presents the analogy: \"Let's imagine that we want to perform a rotation of the earth that takes our beautiful city of pittsburgh to another city let's say sao paulo.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_03.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 7,
+      "sort_key": 7.0,
+      "qid": "Q7",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "05:32",
+      "question": "What is the relationship between 2D rotations regarding their order of application?",
+      "options": [
+        "2D rotations are commutative",
+        "2D rotations must be applied in a specific order to work correctly",
+        "2D rotations are associative but not commutative",
+        "2D rotations cannot be combined"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [06:43]: \"We'd say that 2D rotations commute or if you want to be really fancy you could say 2D rotations are a billion [abelian].\" This is after demonstrating that rotating by 40° then 20° gives the same result as rotating by 20° then 40°.",
+      "code": "",
+      "images": [
+        "lec6_slide_04.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 8,
+      "sort_key": 8.0,
+      "qid": "Q8",
+      "qtype": "RELATIONSHIP",
+      "format": "mcq",
+      "timestamp": "06:50",
+      "question": "How do 3D rotations behave regarding their order of application?",
+      "options": [
+        "3D rotations do not commute; the order matters",
+        "3D rotations commute only when applied around the same axis",
+        "3D rotations always commute, like 2D rotations",
+        "3D rotations sometimes commute, depending on the angle"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [09:36], after the water bottle experiment, the lecturer confirms: \"In 3D rotations really do not commute same rotations different order different result.\"",
+      "code": "",
+      "images": [
+        "image_1777866004015_0.png"
+      ],
+      "tags": [
+        "Relationship"
+      ]
+    },
+    {
+      "num": 9,
+      "sort_key": 9.0,
+      "qid": "Q9",
+      "qtype": "IMPLEMENTATION",
+      "format": "mcq",
+      "timestamp": "07:13",
+      "question": "What physical experiment does the lecturer suggest to demonstrate the non-commutativity of 3D rotations?",
+      "options": [
+        "Observing a rotating bicycle wheel",
+        "Throwing a ball in the air with spin",
+        "Spinning a toy gyroscope",
+        "Rotating a water bottle around different axes"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer describes at [07:19]: \"Grab a water bottle then what we're going to do is associate a coordinate system with this water bottle\" and then proceeds to describe rotating it around different axes in different orders.\n{:height 569, :width 748}\n- [Q10] [APPLICATION] [09:49] Why is understanding the non-commutativity of 3D rotations important in practical applications?\nA) It makes mathematical computations more elegant\nB) It's required for computer graphics rendering\nC) It can lead to serious errors in fields like aircraft control systems\nD) It's only relevant for theoretical physics\n- ANSWER: C\n- EXPLANATION: The lecturer warns at [09:49]: \"If you imagine you're designing a control system for an aircraft or writing code involving rotations for some other thing that really happens in the world this can be a big deal you can get things very very wrong and cause a lot of trouble just by putting your rotations out of order.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_05.png"
+      ],
+      "tags": [
+        "Implementation"
+      ]
+    },
+    {
+      "num": 11,
+      "sort_key": 11.0,
+      "qid": "Q11",
+      "qtype": "DERIVATION",
+      "format": "mcq",
+      "timestamp": "10:52",
+      "question": "In deriving the 2D rotation matrix, what function does the lecturer define to help with the derivation?",
+      "options": [
+        "A function that takes a vector and returns its rotated version",
+        "A function that converts between coordinate systems",
+        "A function that computes the sine and cosine of an angle",
+        "A function s(θ) that gives the point on the circle after rotating counterclockwise by θ"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [10:52], the lecturer defines: \"Let's imagine i have a function which for now i'll just call s of theta s of theta takes as input and angle theta and as output gives me the point x y on the circle that i get by going counterclockwise around the circle by theta starting at the x axis starting at e1.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_06.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 12,
+      "sort_key": 12.0,
+      "qid": "Q12",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "13:24",
+      "question": "How are the columns of a 2D rotation matrix determined?",
+      "options": [
+        "They represent the sine and cosine of the rotation angle",
+        "They are arbitrary as long as they are orthogonal",
+        "They represent the rotated versions of the standard basis vectors",
+        "They are the eigenvectors of the rotation"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [13:24]: \"The columns of the matrix must be equal to s of theta and s of theta plus [pi/2] because the columns are telling me what happened to the basis vectors e1 and e2.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_06.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 13,
+      "sort_key": 13.0,
+      "qid": "Q13",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "14:24",
+      "question": "What are Euler angles as described in the lecture?",
+      "options": [
+        "A method that uses quaternions for 3D rotations",
+        "A way to represent rotations using complex numbers",
+        "A system that uses four parameters to represent rotations",
+        "A scheme where rotations are applied around the three principal axes x, y, and z"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer describes at [14:24]: \"How do you think we express rotations in 3d well one idea is we know how to do rotations in 2d already so why don't we just simply apply rotations around the three axes x y and z and this is a scheme called euler angles.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_07.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 14,
+      "sort_key": 14.0,
+      "qid": "Q14",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "14:52",
+      "question": "What is the primary advantage of Euler angles according to the lecture?",
+      "options": [
+        "They allow for smooth interpolation between rotations",
+        "They avoid all singularities in representing rotations",
+        "They're conceptually easy to understand",
+        "They provide the most efficient computations"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [14:52]: \"The good things about euler angles are they're really really conceptually easy to understand that's it that's basically the only good thing about euler angles.\"",
+      "code": "",
+      "images": [
+        "image_1777866204877_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 15,
+      "sort_key": 15.0,
+      "qid": "Q15",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "15:18",
+      "question": "What is gimbal lock as described in the lecture?",
+      "options": [
+        "When two rotation axes become perfectly aligned",
+        "When a rotation causes the system to lock up computationally",
+        "A phenomenon where changing certain Euler angles has no effect",
+        "A hardware failure in mechanical gyroscopes"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [15:31], the lecturer explains: \"You're adjusting theta x theta y and theta z and then you reach a moment where everything locks up meaning you change the value of theta y and nothing happens or you change the value of theta z and nothing happens.\"",
+      "code": "",
+      "images": [
+        "image_1777866217752_0.png",
+        "image_1777866267066_0.png"
+      ],
+      "tags": [
+        "definition"
+      ]
+    },
+    {
+      "num": 16,
+      "sort_key": 16.0,
+      "qid": "Q16",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "16:02",
+      "question": "What is the fundamental cause of gimbal lock?",
+      "options": [
+        "Approximation errors in floating-point calculations",
+        "The fundamental way rotations are parameterized by three Euler angles",
+        "A computational error in the rotation matrix calculation",
+        "The loss of a degree of freedom due to alignment of rotation axes"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [15:49]: \"Actually gimple lock has to do with the fundamental way we've parameterized the rotations by these three euler angles.\" Further adding at [16:02]: \"When you're using euler angles you might reach a configuration where there is no way to actually rotate around one of the three axes.\"",
+      "code": "",
+      "images": [
+        "image_1777866297953_0.png"
+      ],
+      "tags": [
+        "Concept"
+      ]
+    },
+    {
+      "num": 17,
+      "sort_key": 17.0,
+      "qid": "Q17",
+      "qtype": "ANALYSIS",
+      "format": "mcq",
+      "timestamp": "17:03",
+      "question": "In the gimbal lock analysis, what special case does the lecturer examine?",
+      "options": [
+        "When all three Euler angles are equal",
+        "When all three Euler angles are zero",
+        "When theta x equals theta z",
+        "When theta y equals 90 degrees (π/2)"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [17:03], the lecturer states: \"Let's consider a very special case where theta y is pi over 2 so we've rotated by a quarter turn around the y axis.\"",
+      "code": "",
+      "images": [
+        "image_1777866329151_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 18,
+      "sort_key": 18.0,
+      "qid": "Q18",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "18:46",
+      "question": "What problematic situation arises in the gimbal lock example?",
+      "options": [
+        "The rotation becomes undefined mathematically",
+        "The rotation matrix becomes singular and cannot be inverted",
+        "The system requires more than three parameters to define the rotation",
+        "Two different parameters (theta x and theta z) only allow rotation around a single axis"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [18:46]: \"Only the angles theta x and theta z show up right so this is a really funny situation we have these two different parameters these two different angles of rotation theta x and theta z but we only are able to rotate in one plane around one axis.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_32.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 19,
+      "sort_key": 19.0,
+      "qid": "Q19",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "19:20",
+      "question": "What practical example does the lecturer give where gimbal lock could be problematic?",
+      "options": [
+        "Virtual reality headset tracking",
+        "Robot arm movement",
+        "Control of an airplane or fighter jet",
+        "Satellite orientation systems"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [19:20], the lecturer states: \"This would be a really poor design for uh control of an airplane or or maybe some i don't know fighter jet or vehicle that really is supposed to be able to rotate in every possible direction.\"",
+      "code": "",
+      "images": [
+        "image_1777866407777_0.png"
+      ],
+      "tags": [
+        "Application"
+      ]
+    },
+    {
+      "num": 20,
+      "sort_key": 20.0,
+      "qid": "Q20",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "20:02",
+      "question": "What alternative representation for 3D rotations does the lecturer mention after discussing Euler angles?",
+      "options": [
+        "Direction cosine matrices",
+        "Quaternions",
+        "Axis-angle representation",
+        "Rotation vectors"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [20:02], the lecturer introduces: \"There is a general expression for a matrix that performs a rotation around a given axis u by an angle theta.\"",
+      "code": "",
+      "images": [
+        "image_1777866453457_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 21,
+      "sort_key": 21.0,
+      "qid": "Q21",
+      "qtype": "MOTIVATION",
+      "format": "mcq",
+      "timestamp": "20:47",
+      "question": "Why does the lecturer introduce complex numbers in the context of rotations?",
+      "options": [
+        "To make the mathematics more complicated",
+        "To prepare for quaternion algebra",
+        "As a way to encode geometric transformations in two dimensions",
+        "Because they're computationally faster than matrices"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [20:47]: \"We want to use complex numbers not because we're doing algebra but because they're going to be a really nice way to encode geometric transformations in two dimensions.\"",
+      "code": "",
+      "images": [
+        "image_1777866516306_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 22,
+      "sort_key": 22.0,
+      "qid": "Q22",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "22:19",
+      "question": "How does the lecturer ask students to think about complex numbers?",
+      "options": [
+        "As extensions of real numbers",
+        "As abstract mathematical objects defined by the square root of -1",
+        "As points on the complex plane",
+        "As ordinary two-dimensional vectors with additional operations"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [22:19], the lecturer emphasizes: \"I really really want you to not think of these numbers as complex they're not special entities that are weird and different they're just ordinary two-dimensional vectors and we happen to be defining additional operations on these vectors.\"",
+      "code": "",
+      "images": [
+        "image_1777866533632_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 23,
+      "sort_key": 23.0,
+      "qid": "Q23",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "23:39",
+      "question": "What approach to understanding complex numbers does the lecturer explicitly reject?",
+      "options": [
+        "The algebraic approach",
+        "The idea of i as the square root of -1",
+        "The vector space approach",
+        "The geometric approach"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states strongly at [23:39]: \"I want you to completely forget this idea about i being the square root of negative one this is just gonna mess with your brain and more importantly it completely obscures the fact that the imaginary unit and complex numbers have a very very simple and very very intuitive geometric meaning.\"",
+      "code": "",
+      "images": [
+        "image_1777866555838_0.png"
+      ],
+      "tags": [
+        "ComplexNumber",
+        "definition"
+      ]
+    },
+    {
+      "num": 24,
+      "sort_key": 24.0,
+      "qid": "Q24",
+      "qtype": "GEOMETRIC",
+      "format": "mcq",
+      "timestamp": "24:20",
+      "question": "What geometric interpretation does the lecturer give for the imaginary unit i?",
+      "options": [
+        "A reflection across the x-axis",
+        "A scaling operation that doubles the length",
+        "A projection onto the y-axis",
+        "A quarter turn (90°) in the counterclockwise direction"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer defines at [24:20]: \"The imaginary unit is just another name for a quarter turn in the counterclockwise direction.\"",
+      "code": "",
+      "images": [
+        "image_1777866619531_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 25,
+      "sort_key": 25.0,
+      "qid": "Q25",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "25:13",
+      "question": "Why is i² equal to -1 according to the lecturer's geometric interpretation?",
+      "options": [
+        "Because the Euler formula dictates this relationship",
+        "Because of a fundamental algebraic property",
+        "Because applying the imaginary unit twice makes a half turn (180°)",
+        "Because complex numbers have special mathematical properties"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [25:55]: \"I squared is equal to negative one why well because two quarter turns make a flip that's it.\"",
+      "code": "",
+      "images": [
+        "image_1777866632488_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 26,
+      "sort_key": 26.0,
+      "qid": "Q26",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "26:25",
+      "question": "How does the lecturer describe complex numbers in terms of vector spaces?",
+      "options": [
+        "As one-dimensional vectors over the complex field",
+        "As two-dimensional vectors using bases named 1 and i instead of e₁ and e₂",
+        "As four-dimensional vectors with special properties",
+        "As extensions of real numbers with imaginary components"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [26:25], the lecturer states: \"The only change we're going to make is that instead of using bases like i don't know e1 and e2 we're just going to give those bases different names we're just going to call them 1 and i they're literally just different names 1 is a pseudonym for e1 and i is a pseudonym for e2.\"",
+      "code": "",
+      "images": [
+        "image_1777866690963_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 27,
+      "sort_key": 27.0,
+      "qid": "Q27",
+      "qtype": "GEOMETRIC",
+      "format": "mcq",
+      "timestamp": "28:28",
+      "question": "What does complex multiplication do geometrically according to the lecture?",
+      "options": [
+        "It adds the angles and multiplies the magnitudes of the complex numbers",
+        "It reflects one vector across the other",
+        "It adds the real parts and multiplies the imaginary parts",
+        "It rotates one vector around the other"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [28:28]: \"If i have two vectors in the plane z1 and z2 and i take their complex product then what's going to happen is the angles are going to add... and magnitudes multiply.\"\n\na disclaimer is that the angles wrap around but essentially same as a vector.",
+      "code": "",
+      "images": [
+        "image_1777866745307_0.png"
+      ],
+      "tags": [
+        "Complexity",
+        "disclaimer"
+      ]
+    },
+    {
+      "num": 28,
+      "sort_key": 28.0,
+      "qid": "Q28",
+      "qtype": "FORMULA",
+      "format": "mcq",
+      "timestamp": "31:22",
+      "question": "What is the formula for the product of two complex numbers z₁ = a + bi and z₂ = c + di in Cartesian coordinates?",
+      "options": [
+        "(ac + bd) + (ad - bc)i",
+        "(ac - bd) + (ad + bc)i",
+        "(a + c) + (b + d)i",
+        "(ac) + (bd)i"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [31:22], the lecturer derives: \"We can write our final expression as ac minus bd that's the magnitude in the horizontal direction plus ad plus bci the magnitude in the vertical direction.\"\n\nthink of exponenetial as theta away from axis and not power series.",
+      "code": "",
+      "images": [
+        "image_1777866816879_0.png",
+        "image_1777866898837_0.png"
+      ],
+      "tags": [
+        "Series",
+        "mindset",
+        "Exponetial"
+      ]
+    },
+    {
+      "num": 29,
+      "sort_key": 29.0,
+      "qid": "Q29",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "33:09",
+      "question": "What is Euler's formula as presented in the lecture?",
+      "options": [
+        "sin²(θ) + cos²(θ) = 1",
+        "e^(iθ) = i·sin(θ) - cos(θ)",
+        "e^(iθ) = cos(θ) + i·sin(θ)",
+        "e^(iπ) + 1 = 0"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [33:09], the lecturer states: \"Euler's formula because it's named after this funny looking guy oiler by the way this is pronounced euler not euler which says that e to the i theta equals cosine theta plus i sine theta.\"",
+      "code": "",
+      "images": [
+        "image_1777867000381_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 30,
+      "sort_key": 30.0,
+      "qid": "Q30",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "34:04",
+      "question": "How should e^(iθ) be interpreted according to the lecturer?",
+      "options": [
+        "As a rotation matrix in disguise",
+        "As a power series expansion",
+        "As a complex exponential function",
+        "As the point on the unit circle at angle θ from the x-axis"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer advises at [34:04]: \"Whenever you see e to the i theta don't think about exponentials don't think about some power series you can just think about this as please give me the point on the circle theta away from the x-axis.\"",
+      "code": "",
+      "images": [
+        "image_1777867041094_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 31,
+      "sort_key": 31.0,
+      "qid": "Q31",
+      "qtype": "COMPARISON",
+      "format": "mcq",
+      "timestamp": "38:20",
+      "question": "What advantage does the lecturer highlight when comparing complex number representation with matrices for 2D rotations?",
+      "options": [
+        "Complex numbers lead to simpler expressions without trig identities",
+        "Complex numbers produce more accurate results",
+        "Complex numbers are computationally faster",
+        "Complex numbers work in higher dimensions"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [38:00], the lecturer states: \"This was easier to do on pen and paper it's somehow easier conceptually there's no trig identities involved it's a much more compact expression.\"",
+      "code": "",
+      "images": [
+        "image_1777867156300_0.png"
+      ],
+      "tags": [
+        "Rotation",
+        "vs/polarvsrectangular",
+        "Comparisons"
+      ]
+    },
+    {
+      "num": 32,
+      "sort_key": 32.0,
+      "qid": "Q32",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "39:02",
+      "question": "What is the lecturer's key principle regarding different mathematical representations?",
+      "options": [
+        "Matrices are generally better than other representations",
+        "Always use the simplest representation",
+        "Complex numbers should always be used for 2D problems",
+        "Identify which representation will help simplify and solve the problem at hand"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [39:02], the lecturer emphasizes: \"The point is to be able to identify at any given moment which representation should you use which representation is going to really help you simplify and solve the problem at hand.\"",
+      "code": "",
+      "images": [
+        "image_1777867197678_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 33,
+      "sort_key": 33.0,
+      "qid": "Q33",
+      "qtype": "HISTORICAL",
+      "format": "mcq",
+      "timestamp": "40:09",
+      "question": "According to the lecture, who discovered quaternions?",
+      "options": [
+        "Euler",
+        "Hamilton",
+        "Gauss",
+        "Lagrange"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [40:03]: \"The person who figured this out is a mathematician named hamilton\" and continues with the story of Hamilton's discovery.",
+      "code": "",
+      "images": [
+        "image_1777867240473_0.png"
+      ],
+      "tags": [
+        "quaternions",
+        "Hamilton"
+      ]
+    },
+    {
+      "num": 34,
+      "sort_key": 34.0,
+      "qid": "Q34",
+      "qtype": "HISTORICAL",
+      "format": "mcq",
+      "timestamp": "40:50",
+      "question": "What was Hamilton's key insight about representing 3D rotations?",
+      "options": [
+        "That 4 components, not 3, are needed to represent 3D rotations like complex numbers",
+        "That 3D rotations can be reduced to a series of 2D rotations",
+        "That 3D rotations can be represented by 3×3 matrices",
+        "That Euler angles are the best representation"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [40:50], the lecturer explains Hamilton's insight: \"In order to represent rotations like complex numbers i actually need four components and not just three.\"",
+      "code": "",
+      "images": [
+        "image_1777867335712_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 35,
+      "sort_key": 35.0,
+      "qid": "Q35",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "41:37",
+      "question": "How should the four components of a quaternion be conceptualized according to the lecturer?",
+      "options": [
+        "As the four corners of a tetrahedron",
+        "As homogeneous coordinates in projective space",
+        "As one real component and three imaginary components that encode points in 3D space",
+        "As four separate rotation angles"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [41:37]: \"The right way to think about these if you want to get your head around using quaternions for three-dimensional geometry is to imagine that the last three components the so-called imaginary components are used to encode points in three-dimensional space.\"",
+      "code": "",
+      "images": [
+        "image_1777867357143_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 36,
+      "sort_key": 36.0,
+      "qid": "Q36",
+      "qtype": "ALGEBRAIC",
+      "format": "mcq",
+      "timestamp": "43:44",
+      "question": "What are the basic algebraic rules for quaternion multiplication presented in the lecture?",
+      "options": [
+        "i² = -1, j² = 1, k² = -1, ijk = 1",
+        "i² = j² = k² = ijk = -1",
+        "i² = j² = k² = 1, ijk = -1",
+        "i² = j² = k² = ijk = 1"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [43:44], the lecturer states: \"We have this rule i squared is equal to minus 1 j squared is equal to minus 1 k squared is equal to -1 and then the interesting part i times j times k is also going to give us back this minus one direction.\"",
+      "code": "",
+      "images": [
+        "image_1777867384054_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 37,
+      "sort_key": 37.0,
+      "qid": "Q37",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "44:23",
+      "question": "What important property of quaternion multiplication distinguishes it from rotation (not complex multiplication?) ?",
+      "options": [
+        "Quaternion multiplication is not associative",
+        "Quaternion multiplication does not preserve norms",
+        "Quaternion multiplication is not distributive",
+        "Quaternion multiplication is not commutative"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explicitly states at [44:23]: \"With quaternions not the case if i have two quaternions q and p then qp is not generally equal to pq.\"",
+      "code": "",
+      "images": [
+        "image_1777867433101_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 38,
+      "sort_key": 38.0,
+      "qid": "Q38",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "45:28",
+      "question": "Why does it make sense that quaternion multiplication is not commutative?",
+      "options": [
+        "Because quaternions use three imaginary units",
+        "Because quaternions represent four-dimensional objects",
+        "Because Hamilton defined them that way",
+        "Because 3D rotations are not commutative"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [45:28]: \"Rotations are not commutative and so if the whole point is that quaternions are supposed to represent rotations boy they had better not be commutative either right so it's it's really natural that this this happens.\"",
+      "code": "",
+      "images": [
+        "image_1777867454100_0.png",
+        "image_1777867516003_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 39,
+      "sort_key": 39.0,
+      "qid": "Q39",
+      "qtype": "FORMULA",
+      "format": "mcq",
+      "timestamp": "48:54",
+      "question": "What simplified form does the quaternion product take when applied to two vectors in R³?",
+      "options": [
+        "The cross product minus the dot product (as a quaternion)",
+        "The cross product plus the dot product (as a quaternion)",
+        "Only the dot product of the vectors",
+        "Only the cross product of the vectors"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [48:54], the lecturer states: \"For vectors in r3 this gets even simpler... the quaternion product of u and v is u cross v minus u dot v.\"",
+      "code": "",
+      "images": [
+        "image_1777867552157_0.png"
+      ],
+      "tags": [
+        "Formula"
+      ]
+    },
+    {
+      "num": 40,
+      "sort_key": 40.0,
+      "qid": "Q40",
+      "qtype": "FORMULA",
+      "format": "mcq",
+      "timestamp": "50:33",
+      "question": "How does the lecture express a 3D rotation using quaternions?",
+      "options": [
+        "q̄ × x × q",
+        "q × x × q̄",
+        "q⁻¹ × x × q",
+        "q × x × q⁻¹"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [50:33], the lecturer states: \"Consider a vector x from r3 a vector that just has these three imaginary components and a unit quaternion q meaning a quaternion where the four components a b c d have norm one... then we can express a rotation as q bar x q.\"",
+      "code": "",
+      "images": [
+        "image_1777867596578_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 41,
+      "sort_key": 41.0,
+      "qid": "Q41",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "51:29",
+      "question": "What does q̄ (q bar) represent for a quaternion?",
+      "options": [
+        "The quaternion with unchanged real part and negated imaginary parts",
+        "The quaternion with negated real part and unchanged imaginary parts",
+        "The transpose of the quaternion matrix",
+        "The multiplicative inverse of the quaternion"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [51:29]: \"Q bar means i keep the real component as is and i negate the three imaginary components another kind of reflection.\"",
+      "code": "",
+      "images": [
+        "image_1777867616347_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 42,
+      "sort_key": 42.0,
+      "qid": "Q42",
+      "qtype": "FORMULA",
+      "format": "mcq",
+      "timestamp": "52:14",
+      "question": "How do you construct a quaternion that represents a rotation around axis u by angle θ?",
+      "options": [
+        "sin(θ/2)·u",
+        "cos(θ) + sin(θ)·u",
+        "cos(θ) + u",
+        "cos(θ/2) + sin(θ/2)·u"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [52:14], the lecturer provides the formula: \"The quaternion q representing rotation around the axis u by the angle theta is nothing more than q is equal to cosine theta over two plus sine theta over two times the axis u.\"",
+      "code": "",
+      "images": [
+        "image_1777867663802_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 43,
+      "sort_key": 43.0,
+      "qid": "Q43",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "54:01",
+      "question": "What does SLERP stand for in the context of quaternions?",
+      "options": [
+        "Spherical Linear Interpolation",
+        "Spherical Linear Extrapolation",
+        "Special Linear Representation",
+        "Smooth Linear Rotation Procedure"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [54:01]: \"What we can do instead with our quaternions is use the formula which for some reason has become known as slurp spherical linear interpolation.\"",
+      "code": "",
+      "images": [
+        "image_1777867698790_0.png"
+      ],
+      "tags": [
+        "SLERP"
+      ]
+    },
+    {
+      "num": 44,
+      "sort_key": 44.0,
+      "qid": "Q44",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "55:30",
+      "question": "What advantage does the lecturer highlight about quaternion interpolation using SLERP?",
+      "options": [
+        "It requires less memory than matrix interpolation",
+        "It can represent rotations larger than 360 degrees",
+        "It's computationally faster than other methods",
+        "It provides nice smooth interpolation with minimal wiggling between poses"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [55:30], the lecturer states: \"If you do this you'll get nice smooth interpolation kind of the interpolation between the two poses that wiggles the least as you rotate from one to the other.\"",
+      "code": "",
+      "images": [
+        "image_1777867759476_0.png"
+      ],
+      "tags": [
+        "Application",
+        "SLERP"
+      ]
+    },
+    {
+      "num": 45,
+      "sort_key": 45.0,
+      "qid": "Q45",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "55:55",
+      "question": "What graphics application of complex numbers does the lecturer highlight?",
+      "options": [
+        "Animation of 2D characters",
+        "Rendering transparent objects",
+        "Lighting calculations",
+        "Texture mapping on curved surfaces"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [55:55], the lecturer explains: \"One that they show up over and over and over again is generating coordinates for texture maps so if you have a curved surface and you want to map a image onto it a texture or a pattern what you need to do is find some way of laying it out and it's flattening it out in the plane.\"",
+      "code": "",
+      "images": [
+        "image_1777867781224_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 46,
+      "sort_key": 46.0,
+      "qid": "Q46",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "56:12",
+      "question": "What property makes complex numbers particularly useful for texture mapping?",
+      "options": [
+        "They minimize distortion of straight lines",
+        "They guarantee no overlap in the mapping",
+        "They preserve areas during mapping",
+        "They preserve angles (conformal mapping)"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [56:35], the lecturer states: \"Complex numbers are the natural language for talking about these kinds of conformal texture maps\" after explaining at [56:18] that: \"You'd like things like okay if i have two right angles on my pattern on my texture those should also show up as right angles on my curved surface.\"",
+      "code": "",
+      "images": [
+        "image_1777867808953_0.png"
+      ],
+      "tags": [
+        "Property",
+        "ComplexNumber",
+        "TextureMapping",
+        "Mapping"
+      ]
+    },
+    {
+      "num": 47,
+      "sort_key": 47.0,
+      "qid": "Q47",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "57:19",
+      "question": "What mathematical visualization technique involving complex numbers does the lecturer describe as \"beautiful\"?",
+      "options": [
+        "Fractal generation through iterative processes",
+        "Phase portraits of differential equations",
+        "Streamline visualization of vector fields",
+        "Contour plots of complex functions"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [57:19], the lecturer describes: \"The classic version of this is to use complex numbers you iterate some process on a complex number to determine is that initial point in the plane inside or outside the fractal set.\"",
+      "code": "",
+      "images": [
+        "image_1777867865404_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 48,
+      "sort_key": 48.0,
+      "qid": "Q48",
+      "qtype": "ADVANCED",
+      "format": "mcq",
+      "timestamp": "58:13",
+      "question": "What advanced representation of rotations does the lecturer mention but not cover in detail?",
+      "options": [
+        "Dual quaternions",
+        "Homogeneous matrices",
+        "Lie algebras and Lie groups",
+        "Spin groups"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [58:13]: \"One that we won't cover today because it takes a while to really get into is the perspective of lead algebras and lead groups.\"",
+      "code": "",
+      "images": [
+        "image_1777867878941_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 49,
+      "sort_key": 49.0,
+      "qid": "Q49",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "58:42",
+      "question": "What capability do Lie algebras have that quaternions don't, according to the lecture?",
+      "options": [
+        "They can encode very large angles (much larger than 2π)",
+        "They can represent rotations in dimensions higher than 3",
+        "They don't suffer from gimbal lock",
+        "They require fewer parameters"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [58:42], the lecturer explains: \"Something that is different from quaternions is it lets you encode very large angles angles much larger than 2 pi.\"",
+      "code": "",
+      "images": [
+        "image_1777867897795_0.png"
+      ],
+      "tags": [
+        "Property"
+      ]
+    },
+    {
+      "num": 50,
+      "sort_key": 50.0,
+      "qid": "Q50",
+      "qtype": "STATISTICAL",
+      "format": "mcq",
+      "timestamp": "58:48",
+      "question": "What statistical application of rotation representations does the lecturer mention?",
+      "options": [
+        "Clustering rotations into similar groups",
+        "Finding the most likely rotation given noisy data",
+        "Calculating the standard deviation of rotations",
+        "Computing the mean or average of multiple rotations"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [58:54], the lecturer asks: \"Let's say i've taken a measurement of some object and i have some noise i have several different candidates for what its rotation look like what does it even mean to talk about the mean rotation.\"",
+      "code": "",
+      "images": [
+        "image_1777867953541_0.png"
+      ],
+      "tags": [
+        "Statistical",
+        "Rotation"
+      ]
+    },
+    {
+      "num": 51,
+      "sort_key": 51.0,
+      "qid": "Q51",
+      "qtype": "IMPLEMENTATION",
+      "format": "mcq",
+      "timestamp": "59:20",
+      "question": "What operations does the lecture mention are used to convert between rotation representations?",
+      "options": [
+        "Exponential and logarithmic maps",
+        "Congruency and similarity transformations",
+        "Projection and embedding",
+        "Factorization and normalization"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [59:20]: \"You have something called the exponential map that takes you from basically an axis angle rotation to a rotation matrix and you have an inverse operation called the logarithmic map that takes you from a rotation matrix to its axis angle form.\"",
+      "code": "",
+      "images": [
+        "image_1777868021213_0.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 52,
+      "sort_key": 52.0,
+      "qid": "Q52",
+      "qtype": "PHILOSOPHICAL",
+      "format": "mcq",
+      "timestamp": "1:00:40",
+      "question": "What is the lecturer's position on the \"right\" way to represent rotations?",
+      "options": [
+        "Quaternions are always the best representation",
+        "Euler angles should be avoided at all costs",
+        "There is no single right or best way to work with rotations",
+        "Matrices are more fundamental and should be preferred"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:00:40], the lecturer emphasizes: \"The most important thing is to acknowledge that there is no right or best way to work with rotations or honestly anything else people can get really really religious about this.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_32.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 53,
+      "sort_key": 53.0,
+      "qid": "Q53",
+      "qtype": "ADVICE",
+      "format": "mcq",
+      "timestamp": "1:00:51",
+      "question": "What advice does the lecturer give regarding different rotation representations?",
+      "options": [
+        "Only use quaternions for professional graphics work",
+        "Learn about all of them to increase your capabilities",
+        "Focus only on the one representation that makes most sense to you",
+        "Avoid complex representations unless absolutely necessary"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer advises at [1:00:51]: \"The answer is you want to know about all of them the more you know the more you'll be able to do the more viewpoints you have the more people you'll be able to talk to plus all this stuff is super cool and really fun to learn about.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_32.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 54,
+      "sort_key": 54.0,
+      "qid": "Q54",
+      "qtype": "PREVIEW",
+      "format": "mcq",
+      "timestamp": "1:01:11",
+      "question": "What topic does the lecturer preview for the next lecture?",
+      "options": [
+        "Perspective and texture mapping",
+        "Quaternion algebras",
+        "Ray tracing algorithms",
+        "Mesh generation techniques"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:01:11], the lecturer states: \"Next time we will talk about perspective and texture mapping which is kind of the next chapter in our saga of the rasterization pipeline.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_33.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 55,
+      "sort_key": 55.0,
+      "qid": "Q55",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "47:15",
+      "question": "How does the lecturer suggest encoding a 3D point as a quaternion?",
+      "options": [
+        "As x + yi + zj + k",
+        "As 1 + xi + yj + zk",
+        "As xi + yj + zk",
+        "As 0 + xi + yj + zk"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [47:15], the lecturer specifies: \"If i start out with a point in three-dimensional space just x y z to encode that as a quaternion i'm just going to write 0 plus x i plus yj plus zk i'm not going to have any component in the real direction in the direction 1.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_33.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 56,
+      "sort_key": 56.0,
+      "qid": "Q56",
+      "qtype": "MCQ",
+      "format": "mcq",
+      "timestamp": "47:45",
+      "question": "How does the lecturer suggest conceptualizing quaternions for simplicity?",
+      "options": [
+        "As a scalar-vector pair",
+        "As a point in 4D space",
+        "As an angle and a direction vector",
+        "As four separate components"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [47:45]: \"Rather than writing out the three components every time i could just imagine that a quaternion is a pair involving a scalar and a three-dimensional vector.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_33.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 57,
+      "sort_key": 57.0,
+      "qid": "Q57",
+      "qtype": "RELATIONSHIP",
+      "format": "mcq",
+      "timestamp": "49:32",
+      "question": "What relationship between standard vector operations does the quaternion product reveal?",
+      "options": [
+        "It combines the dot product and cross product",
+        "It combines vector projection and rejection",
+        "It combines addition and subtraction",
+        "It combines scalar multiplication and vector addition"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [49:32], the lecturer points out: \"What that means is that the quaternion product actually includes or subsumes both the dot product and the cross product.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_33.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 58,
+      "sort_key": 58.0,
+      "qid": "Q58",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "59:56",
+      "question": "How does the lecturer characterize the difference between 2D and 3D rotations?",
+      "options": [
+        "2D rotations are unique while 3D rotations are ambiguous",
+        "2D rotations are continuous while 3D rotations are discrete",
+        "2D rotations are trivial while 3D rotations are extremely rich",
+        "2D rotations are linear while 3D rotations are non-linear"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [59:56], the lecturer states: \"You hopefully get the feeling that rotations are surprisingly complicated once we go from 2d to 3d 2d is pretty trivial 3d is extremely rich.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_33.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 59,
+      "sort_key": 59.0,
+      "qid": "Q59",
+      "qtype": "INVARIANT",
+      "format": "mcq",
+      "timestamp": "01:21",
+      "question": "What distinguishes a rotation from a reflection according to the lecturer?",
+      "options": [
+        "Rotations preserve orientation while reflections reverse it",
+        "Rotations preserve the origin while reflections don't",
+        "Rotations preserve lengths but reflections don't",
+        "Rotations preserve angles but reflections don't"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [01:21], the lecturer explains: \"Also orientation is preserved so text remains readable i can still read the text from left to right and it makes sense this is different from what happens if i hold up the book in the mirror right if i hold it in a mirror the text is flipped around this is a reflection in the mirror.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_33.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 60,
+      "sort_key": 60.0,
+      "qid": "Q60",
+      "qtype": "EXAMPLE",
+      "format": "mcq",
+      "timestamp": "26:02",
+      "question": "What happens when the imaginary unit i is applied four times in sequence?",
+      "options": [
+        "The result is a 360° rotation, returning to the original vector",
+        "The result becomes undefined",
+        "The result becomes a pure imaginary number",
+        "The result is a diagonal reflection"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [26:02], the lecturer states: \"If we apply i again then we get i cubed is equal to minus i and if we do it again we get back to one and around and around we go.\"",
+      "code": "",
+      "images": [
+        "lec6_slide_33.png"
+      ],
+      "tags": []
+    }
+  ]
+}

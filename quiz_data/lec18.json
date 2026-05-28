@@ -1,0 +1,1176 @@
+{
+  "lecture": 18,
+  "title": "Lecture 18: Monte Carlo Ray Tracing",
+  "questions": [
+    {
+      "num": 1,
+      "sort_key": 0.01,
+      "qid": "QF1",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "The lecture identifies two key differences between ray tracing and rasterization. What are they, and why do those differences make ray tracing better for photorealism but worse for real-time performance?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "(1) Loop order: rasterization iterates primitives → samples (easy to batch-process geometry on GPU); ray tracing iterates samples → primitives (each ray independently queries all geometry). (2) Illumination model: rasterization uses local shading (one primitive at a time, hard to access other geometry); ray tracing uses global shading (each ray knows the full scene, enabling shadows, reflections, indirect light). The global nature requires expensive BVH traversal per ray — orders of magnitude slower than rasterization for the same scene.",
+      "intuition": "Ray tracing trades speed for the ability to ask \"what does the rest of the scene look like from here?\"",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 0.02,
+      "qid": "QF2",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "Lecture 18 claims to \"put together many ideas we've studied.\" Trace the chain: which prior-lecture topics does a single path-traced pixel sample depend on?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "(1) Spatial data structures (BVH, lecture 13) — to find which geometry the ray hits. (2) Geometry / transformations (lec 5-9) — to represent and transform the scene. (3) Color + radiometry (lec 14-15) — to define what \"light\" means and what quantity to track. (4) The rendering equation (lec 16) — to know what integral to estimate at each surface. (5) Numerical integration / Monte Carlo (lec 17) — to estimate that integral with random samples. (6) BRDFs — to scatter the ray at surfaces and importance-sample directions.",
+      "intuition": "Monte Carlo ray tracing is not one algorithm — it's the combination of every prior algorithm in the course.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 0.03,
+      "qid": "QF3",
+      "qtype": "ORDER",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "Put these steps of a single path-traced sample in execution order: evaluate BRDF and scatter the ray to the next bounce / generate primary ray from camera through pixel / test ray against scene geometry using BVH / evaluate direct illumination via shadow ray to a light source",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Generate primary ray from camera through pixel → Test ray against scene geometry using BVH → Evaluate direct illumination via shadow ray → Evaluate BRDF and scatter ray to next bounce",
+      "intuition": "Camera → scene → light → scatter. Each step builds on the intersection point found by the previous step.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 1,
+      "sort_key": 1.0,
+      "qid": "Q1",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "00:10",
+      "question": "What is the primary goal of Monte Carlo rendering according to the lecture?",
+      "options": [
+        "To generate photorealistic images",
+        "To generate images as quickly as possible",
+        "To simulate camera optics",
+        "To optimize mesh geometry"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [00:10]: \"Welcome to computer graphics today we're gonna talk about Monte Carlo rendering so we're really getting to this final core question of how do we render how do we generate photorealistic images.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_02.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 2.0,
+      "qid": "Q2",
+      "qtype": "COMPARISON",
+      "format": "mcq",
+      "timestamp": "01:36",
+      "question": "What is the main trade-off of Monte Carlo rendering compared to rasterization?",
+      "options": [
+        "Simplicity versus scalability",
+        "Image quality versus speed",
+        "Flexibility versus portability",
+        "Memory usage versus computation time"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [01:36], the lecturer explains: \"The benefit of doing Monte Carlo rendering is we can generate things that are a lot more realistic a lot more like a photograph usually at much greater cost right so we have a big quality versus speed trade-off.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_02.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 3.0,
+      "qid": "Q3",
+      "qtype": "INPUT",
+      "format": "mcq",
+      "timestamp": "01:56",
+      "question": "What are the required inputs for a photorealistic rendering algorithm?",
+      "options": [
+        "Only a scene description file",
+        "Mesh geometry, animation, and shader code",
+        "Only mesh geometry and a camera",
+        "Geometry, materials, lights, and a camera"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer describes at [01:56]: \"The inputs are going to be a complete description of the scene so not just the geometry of the scene not just where things are but also what material each object is made out of also a set of light sources and some description of how they emit light right in which directions in which colors and so forth and also a camera.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_03.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 4,
+      "sort_key": 4.0,
+      "qid": "Q4",
+      "qtype": "ALGORITHM",
+      "format": "mcq",
+      "timestamp": "03:27",
+      "question": "What fundamental algorithmic difference exists between rasterization and ray tracing?",
+      "options": [
+        "Ray tracing simulates physical light, rasterization doesn't",
+        "Rasterization is always hardware accelerated, ray tracing isn't",
+        "The order in which they process samples (primitives first vs. samples first)",
+        "Ray tracing operates only on triangles, rasterization works with any primitive"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [03:27]: \"From an algorithmic point of view one basic difference is the order in which we do our computation the order in which we process samples.\" He then explains that rasterization loops over primitives first, while ray tracing loops over samples (pixels) first.",
+      "code": "",
+      "images": [
+        "lec18_slide_04.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 5,
+      "sort_key": 5.0,
+      "qid": "Q5",
+      "qtype": "VISUAL",
+      "format": "mcq",
+      "timestamp": "07:19",
+      "question": "Which visual effect is notably missing in the rasterized image compared to the ray traced image?",
+      "options": [
+        "Motion blur",
+        "Texture mapping",
+        "Shadows",
+        "Color correction"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [07:19], the lecturer points out: \"There are no shadows in the image on the left and that makes it really hard to determine for instance how far above the plane these objects are.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_05.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 6,
+      "sort_key": 6.0,
+      "qid": "Q6",
+      "qtype": "ILLUMINATION",
+      "format": "mcq",
+      "timestamp": "07:48",
+      "question": "Besides shadows, reflections, and transparency, what other illumination effect is present in ray tracing but not basic rasterization?",
+      "options": [
+        "Depth of field",
+        "Lens flare",
+        "Indirect illumination",
+        "Ambient occlusion"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer mentions at [07:48]: \"There are other more subtle things going on we'll talk about indirect illumination the image on the right is just slightly brighter than the one on the left due to light bouncing around the scene and eventually entering the camera.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_05.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 7,
+      "sort_key": 7.0,
+      "qid": "Q7",
+      "qtype": "INTEGRATION",
+      "format": "mcq",
+      "timestamp": "09:25",
+      "question": "What mathematical technique must be applied to the rendering equation to develop a full-blown photorealistic ray tracer?",
+      "options": [
+        "Singular value decomposition",
+        "Monte Carlo integration",
+        "Numerical differentiation",
+        "Finite element analysis"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [09:25], the lecturer states: \"To develop a full-blown photorealistic ray tracer, will need to apply Monte Carlo integration to the rendering equation.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_06.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 8,
+      "sort_key": 8.0,
+      "qid": "Q8",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "10:12",
+      "question": "In the context of Monte Carlo rendering, what constitutes a \"sample\"?",
+      "options": [
+        "A whole path of light from source to camera",
+        "A point on a 3D model's surface",
+        "A single pixel in the output image",
+        "A single ray shot from the camera"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [10:12]: \"When we talk about a sample in this context if we're really thinking about this whole picture of light traveling from light sources to the camera a single sample is actually a whole path of light.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_06.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 9,
+      "sort_key": 9.0,
+      "qid": "Q9",
+      "qtype": "EQUATION",
+      "format": "mcq",
+      "timestamp": "10:30",
+      "question": "In the rendering equation, what does the left side of the equation represent?",
+      "options": [
+        "The amount of light being absorbed by a point",
+        "The amount of light leaving a point in a certain direction",
+        "The amount of light being emitted from a point",
+        "The amount of light being reflected off a point"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [10:42], the lecturer explains: \"This something on the left is how much illumination how much radiance is leaving the point P in the direction of Omega naught.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_06.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 10,
+      "sort_key": 10.0,
+      "qid": "Q10",
+      "qtype": "COMPONENTS",
+      "format": "mcq",
+      "timestamp": "10:56",
+      "question": "What are the two terms on the right side of the rendering equation?",
+      "options": [
+        "Reflection and refraction",
+        "Emission and reflection",
+        "Direct and indirect illumination",
+        "Specular and diffuse components"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [10:56]: \"The two terms on the right are how much light is being emitted from that point plus how much light was getting reflected off that point.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_51.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 11,
+      "sort_key": 11.0,
+      "qid": "Q11",
+      "qtype": "ADVANTAGE",
+      "format": "mcq",
+      "timestamp": "12:51",
+      "question": "What are two advantages of Monte Carlo integration mentioned in the lecture?",
+      "options": [
+        "Mathematical elegance and analytical solutions",
+        "Low memory usage and parallelization potential",
+        "Fast convergence and deterministic results",
+        "Works in any scenario and avoids the curse of dimensionality"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [12:51], the lecturer explains: \"The cool thing about Monte Carlo is it works in basically any scenario you can throw at it the other cool thing that we saw about Monte Carlo is it gets around the so-called curse of dimensionality.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_51.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 12,
+      "sort_key": 12.0,
+      "qid": "Q12",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "14:52",
+      "question": "What is the \"expected value\" of a random variable?",
+      "options": [
+        "The median of all possible values",
+        "The most common value it takes",
+        "The highest possible value it can take",
+        "The value it takes on average"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [14:52]: \"Basic concept in probability is the expected value the intuitive idea to remember whenever somebody says expected value is what value does the random variable take on average if I keep getting values out of this random variable what will the average value be.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_51.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 13,
+      "sort_key": 13.0,
+      "qid": "Q13",
+      "qtype": "CALCULATION",
+      "format": "mcq",
+      "timestamp": "16:22",
+      "question": "What is the expected value of a fair coin flip where heads=1 and tails=0?",
+      "options": [
+        "1",
+        "0.5",
+        "2",
+        "0"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer calculates at [16:22]: \"The expected value is then going to be just the sum of the probability of landing heads times 1 plus the probability of landing tails times 0 1/2 times 1 plus 1/2 times 0 is 1/2.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_51.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 14,
+      "sort_key": 14.0,
+      "qid": "Q14",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "16:41",
+      "question": "Which of the following is a property of expected value?",
+      "options": [
+        "The expected value is always the median value",
+        "The expected value of a sum equals the sum of the expected values",
+        "The expected value is always positive",
+        "The expected value of a product equals the product of the expected values"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [16:41], the lecturer states: \"Important properties of expectation one is that it's linear so if I take the expected value of a sum of random variables that's the same as the sum of the expected values of those random variables.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_51.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 15,
+      "sort_key": 15.0,
+      "qid": "Q15",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "17:32",
+      "question": "What does the \"variance\" of a random variable measure?",
+      "options": [
+        "How much the random variable is affected by other variables",
+        "How much the random variable changes over time",
+        "How much the random variable deviates from its average value",
+        "How much the random variable deviates from zero"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [17:32]: \"The intuition the thing to remember when somebody says variance is how far off is our random variable from its average on average how much does it deviate from average.\"\n- # Monte Carlo Rendering Quiz - Part 2\n- ## QUESTIONS (continued):",
+      "code": "",
+      "images": [
+        "lec18_slide_51.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 16,
+      "sort_key": 16.0,
+      "qid": "Q16",
+      "qtype": "MCQ",
+      "format": "mcq",
+      "timestamp": "19:22",
+      "question": "When comparing two probability distributions, which typically has higher variance?",
+      "options": [
+        "The distribution with the most values",
+        "The distribution with the highest peak",
+        "The distribution with more uniform probabilities",
+        "The distribution with less uniform probabilities"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [21:13]: \"On the other hand in the example on the right the probabilities are nearly uniform so the values that are coming up are spread out all over the place and so on average they're going to be far from their average so the distribution on the right the random variable on the right has higher variance.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 17,
+      "sort_key": 17.0,
+      "qid": "Q17",
+      "qtype": "FORMULA",
+      "format": "mcq",
+      "timestamp": "21:42",
+      "question": "What alternative formula can be used to calculate the variance of a random variable Y?",
+      "options": [
+        "E[Y²] - (E[Y])²",
+        "E[Y] - (E[Y²])",
+        "E[Y] × E[Y²]",
+        "E[Y²] + (E[Y])²"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [21:42], the lecturer states: \"The variance of a random variable Y is equal to the expected value of the square of that variable minus the square of its expected value.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 18,
+      "sort_key": 18.0,
+      "qid": "Q18",
+      "qtype": "THEOREM",
+      "format": "mcq",
+      "timestamp": "22:32",
+      "question": "According to the Law of Large Numbers, what happens as we take more and more samples?",
+      "options": [
+        "The probability distribution becomes more uniform",
+        "The variance increases linearly",
+        "The expected value approaches the median",
+        "The average value approaches the expected value"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [22:32]: \"For any random variable, the average value of all random variables that you ever encounter as we do more and more trials as we look at more and more values of this random variable the average value that we get approaches the expected value.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 19,
+      "sort_key": 19.0,
+      "qid": "Q19",
+      "qtype": "RELATIONSHIP",
+      "format": "mcq",
+      "timestamp": "22:55",
+      "question": "How does variance decrease as the number of samples n increases?",
+      "options": [
+        "Quadratically (1/n²)",
+        "Exponentially (e^-n)",
+        "Linearly (1/n)",
+        "Logarithmically (1/log(n))"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [22:55]: \"The just the decrease in variance is always linear in n\" and calculates: \"that's equal to one over N squared times the sum of the variances... so that's just n times the variance of Y times 1 over N squared or 1 over n times the variance of Y.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 20,
+      "sort_key": 20.0,
+      "qid": "Q20",
+      "qtype": "EXAMPLE",
+      "format": "mcq",
+      "timestamp": "24:22",
+      "question": "In the coconut island example, what mathematical constant is being estimated?",
+      "options": [
+        "γ (Euler-Mascheroni constant)",
+        "e (Euler's number)",
+        "φ (golden ratio)",
+        "π (pi)"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [25:01]: \"And that fraction because you know that the area of a unit circle is while it's PI R squared but R is one so it's just pi so you're gonna get a good estimate of Pi as you drop more and more and more coconuts into this square.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 21,
+      "sort_key": 21.0,
+      "qid": "Q21",
+      "qtype": "METHOD",
+      "format": "mcq",
+      "timestamp": "24:47",
+      "question": "In the coconut island example, how is π estimated?",
+      "options": [
+        "By counting the ratio of coconuts in the circle to those in the square",
+        "By calculating the diagonal of the square",
+        "By measuring the circumference and diameter of coconuts",
+        "By counting the total number of coconuts"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [25:01], the lecturer describes: \"What you're going to do is count what fraction of the coconuts lands that land in the square also land in the circle right and that fraction because you know that the area of a unit circle is while it's PI R squared but R is one so it's just pi.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 22,
+      "sort_key": 22.0,
+      "qid": "Q22",
+      "qtype": "CONVERGENCE",
+      "format": "mcq",
+      "timestamp": "26:21",
+      "question": "What is the primary advantage of Monte Carlo rendering for complex scenes?",
+      "options": [
+        "It is always faster than rasterization",
+        "It always produces the most artistically pleasing results",
+        "It will always converge to the correct image with enough samples",
+        "It requires less memory than other methods"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [26:21]: \"No matter how hard the integrals are if you have crazy lighting you have crazy weird geometry strange materials it might take you a while to get there but you know you'll always get the right image by just taking more and more samples.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 23,
+      "sort_key": 23.0,
+      "qid": "Q23",
+      "qtype": "ACCELERATION",
+      "format": "mcq",
+      "timestamp": "27:19",
+      "question": "What is the main challenge with Monte Carlo integration that needs to be addressed?",
+      "options": [
+        "It cannot model certain physical phenomena",
+        "It is slow to converge and requires many samples",
+        "It requires too much memory",
+        "It cannot handle scenes with transparency"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [27:19], the lecturer states: \"We've talked a little bit about how Monte Carlo can be slow to converge you have to take a lot of samples to get an accurate estimate so how can we do a better job how can we accelerate this estimation strategy.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 24,
+      "sort_key": 24.0,
+      "qid": "Q24",
+      "qtype": "STRATEGY",
+      "format": "mcq",
+      "timestamp": "27:42",
+      "question": "What sampling strategy does the lecture first discuss to improve Monte Carlo estimation?",
+      "options": [
+        "Stratified sampling",
+        "Biased sampling (non-uniform distribution)",
+        "Multiple importance sampling",
+        "Quasi-Monte Carlo sampling"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer introduces at [27:42]: \"So far we've done something very simple we've picked samples uniformly from the entire domain every point is equally likely. Now suppose we play a little game suppose that we pick samples from some other distribution other than the uniform distribution.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 25,
+      "sort_key": 25.0,
+      "qid": "Q25",
+      "qtype": "ESTIMATOR",
+      "format": "mcq",
+      "timestamp": "28:36",
+      "question": "When using a non-uniform distribution P for sampling, how must the Monte Carlo estimator be modified?",
+      "options": [
+        "No modification is needed",
+        "The function value must be multiplied by P",
+        "The function value must be divided by P",
+        "The function value must be added to P"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [28:36], the lecturer explains: \"The integral of F over the whole domain is approximated by 1 over the number of samples times the sum over all samples of the function value at sample I divided by the probability that we picked that sample point X I.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 26,
+      "sort_key": 26.0,
+      "qid": "Q26",
+      "qtype": "INTUITION",
+      "format": "mcq",
+      "timestamp": "29:26",
+      "question": "In the red and blue square example, why do we divide by P rather than multiply?",
+      "options": [
+        "To ensure we get the correct expected value",
+        "To simplify the calculations",
+        "To minimize variance",
+        "To compensate for regions being sampled more or less frequently"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [30:15]: \"Because we know we have so many more in the red region they're going to overwhelm our average if we don't do anything we really need to divide by this bigger factor in the red region and divide by this smaller factor in the blue region. Every sample that lands in the blue region should count for more because we know we're gonna have fewer of them.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 27,
+      "sort_key": 27.0,
+      "qid": "Q27",
+      "qtype": "CONCEPT",
+      "format": "mcq",
+      "timestamp": "30:59",
+      "question": "What is the goal of importance sampling?",
+      "options": [
+        "To sample more from regions where the function is large",
+        "To eliminate all variance in the estimator",
+        "To sample equally from all regions",
+        "To minimize the number of samples needed"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [33:00]: \"Another way maybe simpler way of looking at that is to just say we want to take more samples where the function is large because large values are going to contribute more to the integral.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 28,
+      "sort_key": 28.0,
+      "qid": "Q28",
+      "qtype": "PRINCIPLE",
+      "format": "mcq",
+      "timestamp": "32:41",
+      "question": "What property should the quotient f(x)/p(x) ideally have for good importance sampling?",
+      "options": [
+        "It should be relatively uniform",
+        "It should be as small as possible",
+        "It should be proportional to x",
+        "It should be as large as possible"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [32:41], the lecturer explains: \"One way of thinking about this is we want to find a P that makes the quotient look relatively uniform we're putting about the same amount of work into all the different areas under the curve.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 29,
+      "sort_key": 29.0,
+      "qid": "Q29",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "33:33",
+      "question": "What is a BRDF in computer graphics?",
+      "options": [
+        "A binary representation of differential functions",
+        "A brightness reduction density formula",
+        "A bi-directional reflectance distribution function that describes how light reflects",
+        "A basic rendering data format"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [33:33]: \"If we think about the scattering function the bi-directional reflectance distribution function or brdf remember that's a function that says if I have light coming in from a certain direction how much of it gets reflected out in a different direction.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 30,
+      "sort_key": 30.0,
+      "qid": "Q30",
+      "qtype": "STRATEGY",
+      "format": "mcq",
+      "timestamp": "34:14",
+      "question": "When importance sampling a BRDF, where should samples be concentrated?",
+      "options": [
+        "Primarily in shadow regions",
+        "Only in the specular reflection direction",
+        "Uniformly across the hemisphere",
+        "Around the lobe where most light is scattered"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [34:14], the lecturer states: \"I really shouldn't waste time putting a lot of samples where there's essentially no reflection occurring where nothing is getting contributed to the integral I should really try to lump all of my samples around this lobe of the brdf where all the light is getting scattered out.\"\n- # Monte Carlo Rendering Quiz - Part 3\n- ## QUESTIONS (continued):",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 31,
+      "sort_key": 31.0,
+      "qid": "Q31",
+      "qtype": "VISUAL",
+      "format": "mcq",
+      "timestamp": "53:15",
+      "question": "What was the key improvement when using light source sampling instead of uniform hemisphere sampling?",
+      "options": [
+        "The image had better color accuracy",
+        "The image had much less noise with the same number of samples",
+        "The image rendered much faster",
+        "The image had improved shadow detail"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [53:23], the lecturer observes: \"Here we're doing the exact same scene we're using the same number of sample rays just a hundred sample rays per pixel per point on the plane but the image is way smoother.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 32,
+      "sort_key": 32.0,
+      "qid": "Q32",
+      "qtype": "EFFICIENCY",
+      "format": "mcq",
+      "timestamp": "54:55",
+      "question": "According to the lecture, what two factors determine the efficiency of a Monte Carlo estimator?",
+      "options": [
+        "Convergence rate and memory usage",
+        "Speed and accuracy",
+        "Sample count and distribution type",
+        "Variance and cost"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [55:08]: \"Efficiency is basically inversely proportional to both the variance of the estimator... but also you need to care about the cost... you do have to balance these things variance from end cost.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 33,
+      "sort_key": 33.0,
+      "qid": "Q33",
+      "qtype": "SAMPLING",
+      "format": "mcq",
+      "timestamp": "56:24",
+      "question": "What is the purpose of cosine weighted sampling?",
+      "options": [
+        "To allocate more samples to directions where cosine theta is large",
+        "To reduce the total number of samples needed",
+        "To allocate more samples to directions that contribute less to the integral",
+        "To eliminate the need for light source sampling"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [58:53], the lecturer states: \"Why cosine theta well we want to say if the angle is shallow if the angle is small we want to sample there less if theta is close to zero it's close to the normal direction we want to sample they're more.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 34,
+      "sort_key": 34.0,
+      "qid": "Q34",
+      "qtype": "PROBABILITY",
+      "format": "mcq",
+      "timestamp": "57:54",
+      "question": "In the cosine weighted sampling implementation, what is the new probability density function?",
+      "options": [
+        "cosine theta / π",
+        "cosine² theta / π",
+        "cosine theta / 2π",
+        "1 / 2π"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [58:47]: \"Our probability distribution let's let's try using one that looks like cosine theta over PI.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 35,
+      "sort_key": 35.0,
+      "qid": "Q35",
+      "qtype": "SIMPLIFICATION",
+      "format": "mcq",
+      "timestamp": "59:18",
+      "question": "What happens to the estimator when using cosine weighted sampling?",
+      "options": [
+        "It remains the same as with uniform sampling",
+        "It requires additional normalization",
+        "The cosine terms cancel out, making it simpler",
+        "It becomes more complex with additional terms"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [59:41], the lecturer explains: \"Now actually interestingly enough our important sampling strategy is even simpler than our original estimator now we're just can do PI over n times the sum of the incident radiance.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 36,
+      "sort_key": 36.0,
+      "qid": "Q36",
+      "qtype": "ILLUMINATION",
+      "format": "mcq",
+      "timestamp": "1:00:54",
+      "question": "What type of illumination is discussed after direct lighting techniques?",
+      "options": [
+        "Volumetric illumination",
+        "Ambient illumination",
+        "Caustic illumination",
+        "Indirect illumination"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer introduces at [1:00:54]: \"So far we've considered light coming from light sources just scattered once meaning it comes from the light source it hits a surface like our plane and then it bounces into our eyeball or into the camera how can we go further.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 37,
+      "sort_key": 37.0,
+      "qid": "Q37",
+      "qtype": "ALGORITHM",
+      "format": "mcq",
+      "timestamp": "1:02:13",
+      "question": "What algorithm is described for estimating the radiance values from the rendering equation?",
+      "options": [
+        "Photon mapping",
+        "Bidirectional path tracing",
+        "Metropolis light transport",
+        "Path tracing"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [1:02:13]: \"Because the rendering equation is recursive we're also going to have a recursive algorithm for estimating the radiance values that come out of the rendering equation and this algorithm is called path tracing.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 38,
+      "sort_key": 38.0,
+      "qid": "Q38",
+      "qtype": "APPROACH",
+      "format": "mcq",
+      "timestamp": "1:04:03",
+      "question": "What unusual sampling approach is used in the recursive path tracing algorithm?",
+      "options": [
+        "Using exactly 16 samples at each bounce point",
+        "Using only one sample (ray) at each bounce point",
+        "Using samples only in the specular direction",
+        "Using a variable number of samples based on surface reflectivity"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:04:15], the lecturer explains: \"Usually we're gonna just do a single sample we want to estimate this whole integral but at a given moment we're just gonna trace one ray we're gonna follow one incoming direction back towards the point that it came from.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 39,
+      "sort_key": 39.0,
+      "qid": "Q39",
+      "qtype": "VISUALIZATION",
+      "format": "mcq",
+      "timestamp": "1:05:05",
+      "question": "What became visible in shadow areas when single-bounce indirect illumination was added?",
+      "options": [
+        "Shadow areas became completely black",
+        "Caustic patterns appeared in the shadows",
+        "Nothing changed in shadow areas",
+        "Objects previously hidden in shadow became visible"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer points out at [1:05:45]: \"What do you notice here you notice that things that were previously in shadow well they actually weren't in shadow right if you were really there you'd see all the hidden stuff because you'd have this indirect illumination.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 40,
+      "sort_key": 40.0,
+      "qid": "Q40",
+      "qtype": "MATERIAL",
+      "format": "mcq",
+      "timestamp": "1:06:20",
+      "question": "What material property was revealed when increasing from two to four light bounces?",
+      "options": [
+        "The lanterns were made of glass",
+        "The lanterns were made of plastic",
+        "The lanterns were made of paper",
+        "The lanterns were made of metal"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:06:25], the lecturer observes: \"If we now go from two bounces to let's say four balances Wow okay that made a big difference look at the top of the image right what we actually see now is that thing that used to look black we realize is actually glass.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 41,
+      "sort_key": 41.0,
+      "qid": "Q41",
+      "qtype": "CHALLENGE",
+      "format": "mcq",
+      "timestamp": "1:07:36",
+      "question": "What challenge arises when determining how many bounces to trace in a path tracing algorithm?",
+      "options": [
+        "It's difficult to know if you've captured all important light paths",
+        "Longer paths increase memory usage exponentially",
+        "The algorithm becomes unstable with more than 16 bounces",
+        "GPUs cannot handle more than 8 bounces efficiently"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer asks at [1:07:36]: \"At some point you say okay I think I've done a good job of exploring the space of paths and I'm sending out a lots of rays and I think that I've captured all the important illumination in this scene but how do you know.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 42,
+      "sort_key": 42.0,
+      "qid": "Q42",
+      "qtype": "TECHNIQUE",
+      "format": "mcq",
+      "timestamp": "1:08:47",
+      "question": "What technique is introduced to probabilistically terminate ray paths?",
+      "options": [
+        "Path pruning",
+        "Depth clamping",
+        "Russian Roulette",
+        "Importance culling"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [1:08:03]: \"A strategy that is more principled is something called Russian roulette.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 43,
+      "sort_key": 43.0,
+      "qid": "Q43",
+      "qtype": "PRINCIPLE",
+      "format": "mcq",
+      "timestamp": "1:10:33",
+      "question": "Why is randomized path termination used instead of simply discarding low-contribution paths?",
+      "options": [
+        "To ensure the estimator remains unbiased",
+        "To make the algorithm run faster",
+        "To improve visual quality in dark areas",
+        "To reduce memory usage"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:10:33], the lecturer explains: \"So instead we're going to again use randomness to help us out and say we're going to randomly discard low contribution samples in a way that leaves this estimator unbiased.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 44,
+      "sort_key": 44.0,
+      "qid": "Q44",
+      "qtype": "RESULTS",
+      "format": "mcq",
+      "timestamp": "1:12:12",
+      "question": "What happens to rendering time and image quality when using Russian Roulette?",
+      "options": [
+        "Rendering time increases while noise decreases",
+        "Both rendering time and noise decrease",
+        "Both rendering time and noise increase",
+        "Rendering time decreases while noise increases"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer observes at [1:13:41]: \"So what you notice each time is the amount of time it took goes down the amount of noise goes up.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 45,
+      "sort_key": 45.0,
+      "qid": "Q45",
+      "qtype": "BALANCE",
+      "format": "mcq",
+      "timestamp": "1:13:48",
+      "question": "What balance must be considered when using variance reduction techniques?",
+      "options": [
+        "Memory usage versus computational complexity",
+        "Algorithm simplicity versus implementation complexity",
+        "Efficiency versus accuracy",
+        "CPU versus GPU utilization"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [1:13:48], the lecturer states: \"As with all variance reduction strategies this is something where you need to figure out what's the right balance between efficiency and accuracy.\"",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 46,
+      "sort_key": 46.0,
+      "qid": "Q46",
+      "qtype": "PREVIEW",
+      "format": "mcq",
+      "timestamp": "1:15:16",
+      "question": "What topic does the lecturer preview for the next lecture?",
+      "options": [
+        "Variance reduction techniques",
+        "Animation with Monte Carlo rendering",
+        "GPU acceleration for ray tracing",
+        "Advanced material models"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer concludes at [1:15:16]: \"Next time we're going to talk more generally about this question of variance reduction how do we get the most out of our samples and how can we go beyond the basic important sampling strategies that we talked about this time.\"\n-",
+      "code": "",
+      "images": [
+        "lec18_slide_52.png"
+      ],
+      "tags": []
+    }
+  ]
+}

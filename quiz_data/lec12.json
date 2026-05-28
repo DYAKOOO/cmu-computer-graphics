@@ -1,0 +1,1056 @@
+{
+  "lecture": 12,
+  "title": "Lecture 12: Geometric Queries",
+  "questions": [
+    {
+      "num": 1,
+      "sort_key": 0.01,
+      "qid": "QF1",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "Lecture 12 is titled \"Geometric Queries.\" What are the three core query types it covers, and why do each appear repeatedly across different graphics algorithms?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "(1) Ray-triangle intersection: used in ray tracing, picking (click-select in a scene), shadow testing, and collision detection. (2) Closest-point queries: used in collision detection (contact response), mesh-to-mesh distance (for animation retargeting), and point-cloud processing. (3) Inside/outside tests: used in CSG Boolean operations, sampling procedures, and physics collision detection. These three are the atomic building blocks that spatial data structures (lecture 13) accelerate — nearly every geometric algorithm reduces to many instances of one of these queries.",
+      "intuition": "Ray cast = \"what's in this direction?\" Closest point = \"how near is this surface?\" Inside/outside = \"am I contained?\" These three questions cover most of geometric computation.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 0.02,
+      "qid": "QF2",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "After ray-triangle intersection, the lecture introduces barycentric coordinates as a unified formulation. What advantage does solving for (u, v, t) simultaneously give over the \"intersect plane, then test inside triangle\" approach?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "The two-step approach requires: (1) find where the ray hits the plane (solve one linear equation for t), then (2) run a separate point-in-triangle test (check sign of three edge cross products). The barycentric formulation combines both: solve for u, v, t in one 3×3 linear system. u≥0, v≥0, u+v≤1 guarantees the point is inside the triangle; t gives the distance. One matrix solve instead of two tests. The (u, v) values are also free for attribute interpolation (texture, normals), so the formulation produces everything needed for shading at once.",
+      "intuition": "Two separate tests → one solve that gives intersection, inside/outside, and interpolation weights simultaneously.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 0.03,
+      "qid": "QF3",
+      "qtype": "ORDER",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "Put these geometric query topics in the order lecture 12 introduces them: BVH (bounding volume hierarchy) preview / inside-outside test / closest-point query on a mesh / ray-triangle intersection",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Ray-triangle intersection → Closest-point query → Inside-outside test → BVH preview",
+      "intuition": "Each query type builds from the previous: hit testing → distance testing → containment testing → acceleration structure that speeds up all three.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 1,
+      "sort_key": 1.0,
+      "qid": "Q1",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "00:00",
+      "question": "What is the primary focus of this lecture on geometric queries?",
+      "options": [
+        "Finding relationships between geometric objects such as closest points and intersections",
+        "Creating new geometric objects in space",
+        "Mathematical proofs about geometric objects",
+        "Different ways to render geometric objects"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [00:24] the lecturer explains: \"Today we want to talk more about how do we answer specific queries about geometry things like the distance to a point or the intersection with array.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_10.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 2.0,
+      "qid": "Q2",
+      "qtype": "MOTIVATION",
+      "format": "mcq",
+      "timestamp": "01:04",
+      "question": "What problem in geometry processing motivates the study of closest point queries?",
+      "options": [
+        "Converting between different file formats",
+        "The desire to create smoother surfaces",
+        "Signal degradation during mesh processing operations",
+        "The need to reduce polygon count"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [01:24] the lecturer states: \"Even if we're very careful about how we implement each of these operations what happens over time is that the signal degrades so it becomes something that looks very different from what we started with we get aliasing.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_16.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 3.0,
+      "qid": "Q3",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "01:56",
+      "question": "What solution is proposed to help preserve shape fidelity after mesh processing?",
+      "options": [
+        "Pushing processed vertices back onto the original surface via closest point projection",
+        "Using specialized file formats that preserve geometric information",
+        "Using implicit instead of explicit surfaces",
+        "Storing higher-resolution versions of the mesh"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [02:16] the lecturer describes: \"What I could try doing is taking every vertex of my newly processed mesh right the one where I'm starting to lose signal fidelity and I could take each vertex and I could try to push it back onto the original surface.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_17.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 4,
+      "sort_key": 4.0,
+      "qid": "Q4",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "03:02",
+      "question": "What is the core problem of closest point queries?",
+      "options": [
+        "How to determine if a point is inside or outside a surface",
+        "How to find the point on a surface that is closest to a given query point",
+        "How to measure the surface area of a mesh",
+        "How to determine if two meshes intersect"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [03:02] the lecturer states: \"Given a point in space let's say we have a sample point P how do we find the closest point on the surface.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 5,
+      "sort_key": 5.0,
+      "qid": "Q5",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "04:45",
+      "question": "What types of geometric queries beyond closest point are mentioned in the lecture?",
+      "options": [
+        "Only triangulation queries",
+        "Intersection, inside/outside, and containment queries",
+        "Only surface smoothing queries",
+        "Only mesh simplification queries"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [04:51] the lecturer mentions: \"We might like to know other things like do two triangles intersect and if they do intersect where and how do they intersect we might want to know are we inside of an object or outside the object we might want to know does one object contain another.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_10.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 6,
+      "sort_key": 6.0,
+      "qid": "Q6",
+      "qtype": "BASIC",
+      "format": "mcq",
+      "timestamp": "06:07",
+      "question": "In the \"closest point on point\" warm-up exercise, what is the answer to finding the closest point to P on point A?",
+      "options": [
+        "There is no unique answer",
+        "The origin of the coordinate system",
+        "Point A itself",
+        "The midpoint between P and A"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [06:38] the lecturer states: \"This is a vacuous question right the obviously the only point there is is the point a so the closest point to P is a.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_06.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 7,
+      "sort_key": 7.0,
+      "qid": "Q7",
+      "qtype": "MATHEMATICAL",
+      "format": "mcq",
+      "timestamp": "07:28",
+      "question": "How is a line described implicitly in the lecture?",
+      "options": [
+        "As a parametric equation",
+        "As an equation n^T x = C, where n is the unit normal",
+        "As a set of two endpoints",
+        "As a set of connected vertices"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [07:35] the lecturer describes a line as: \"A line described by the implicit equation and transpose x equals C where n is the unit normal vector for this line.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_20.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 8,
+      "sort_key": 8.0,
+      "qid": "Q8",
+      "qtype": "DERIVATION",
+      "format": "mcq",
+      "timestamp": "09:19",
+      "question": "What is the key insight used to derive the closest point on a line?",
+      "options": [
+        "Finding the midpoint between the query point and the line",
+        "Applying the cross product between vectors",
+        "Moving in the normal direction from the query point until hitting the line",
+        "Computing the intersection of two lines"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [09:41] the lecturer explains: \"If I start at P and I move in the normal direction by some distance or I move in - the normal direction by some distance T then eventually I'll get to the line.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_18.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 9,
+      "sort_key": 9.0,
+      "qid": "Q9",
+      "qtype": "FORMULA",
+      "format": "mcq",
+      "timestamp": "11:06",
+      "question": "What is the expression for the closest point on a line to a given point P?",
+      "options": [
+        "n^T P",
+        "P + Cn",
+        "P + (C - n^T P)n",
+        "P - (C - n^T P)n"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [11:06] the lecturer gives the final formula: \"Start at P move this particular distance T in the direction N and I get P plus C minus n transpose P n.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 10,
+      "sort_key": 10.0,
+      "qid": "Q10",
+      "qtype": "ALGORITHM",
+      "format": "mcq",
+      "timestamp": "11:36",
+      "question": "When finding the closest point on a line segment, what two problems is this broken down into?",
+      "options": [
+        "Finding closest points to the two endpoints only",
+        "Finding closest point to the line and checking if it's on the segment",
+        "Checking if the point is collinear with the segment",
+        "Finding whether the point is above or below the line"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [12:24] the lecture explains: \"We know how to find the closest point to a point like the end points we know how to find the closest point to a line okay and we just have to do a little more work to combine these two steps.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_13.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 11,
+      "sort_key": 11.0,
+      "qid": "Q11",
+      "qtype": "MCQ",
+      "format": "mcq",
+      "timestamp": "13:30",
+      "question": "What are the two main cases identified when finding the closest point on a line segment?",
+      "options": [
+        "Points above the line and points below the line",
+        "Points with positive parameter values and points with negative parameter values",
+        "Points where the closest point is an endpoint and points where it's on the interior",
+        "Points closer to the start of the segment and points closer to the end"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [13:30] the lecture identifies: \"What you notice is there really are these two different cases points that are kind of off one end of the line segment or the other for those query points it's pretty clear the closest point is an end point of the line for points in the middle the closest point is some interior point of the segment.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_13.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 12,
+      "sort_key": 12.0,
+      "qid": "Q12",
+      "qtype": "PARAMETER",
+      "format": "mcq",
+      "timestamp": "15:49",
+      "question": "What does the parameter T represent when used for testing whether a point on a line is within a segment?",
+      "options": [
+        "The normal distance to the line",
+        "The angle between the line and the x-axis",
+        "The distance from the query point to the line",
+        "How far along the line we walk from point A toward point B"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [15:49] the lecturer clarifies: \"T in this case is just a parameter that tells us how far along the line do we walk from A to B or from a toward B.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_15.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 13,
+      "sort_key": 13.0,
+      "qid": "Q13",
+      "qtype": "CONTAINMENT",
+      "format": "mcq",
+      "timestamp": "16:01",
+      "question": "What range of T values indicates that a point is contained within a line segment?",
+      "options": [
+        "0 ≤ T ≤ 1",
+        "T > 1",
+        "-1 ≤ T ≤ 1",
+        "T < 0"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [16:01] the lecturer states: \"What we know is that as long as T is between 0 and 1 this point is inside the segment right if the closest point on the line has a T value between 0 and 1 it's inside the segment.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_13.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 14,
+      "sort_key": 14.0,
+      "qid": "Q14",
+      "qtype": "PROGRESSION",
+      "format": "mcq",
+      "timestamp": "16:53",
+      "question": "What strategy does the lecture use to build up complexity in geometric queries?",
+      "options": [
+        "Beginning with meshes and breaking them down into components",
+        "Starting with simple elements (points) and building up to more complex ones (triangles, meshes)",
+        "Starting with ray tracing and moving to closest point problems",
+        "Starting with complex 3D cases and simplifying to 2D"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [16:53] the lecturer explains: \"We're going to keep building this up more and more and more basically you start to see the strategy that we answer a very very stupidly simple question what is the closest point to a point then we say what's the closest point to an edge and we use our closest point to a point and line to figure out that and then we can say well what's the closest point to a triangle.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_30.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 15,
+      "sort_key": 15.0,
+      "qid": "Q15",
+      "qtype": "MCQ",
+      "format": "mcq",
+      "timestamp": "17:37",
+      "question": "What are the possible locations for the closest point on a triangle to a query point in 2D?",
+      "options": [
+        "On a vertex, on an edge, or in the interior if the query point is inside the triangle",
+        "Only in the interior of the triangle",
+        "Only on the edges of the triangle",
+        "Only at the vertices of the triangle"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [17:54] and [18:16] the lecturer identifies all cases: \"The closest point on the triangle might be a vertex of the triangle or it might be an edge of the triangle... we could have a query point that is actually inside the triangle.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_10.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 16,
+      "sort_key": 16.0,
+      "qid": "Q16",
+      "qtype": "CONNECTION",
+      "format": "mcq",
+      "timestamp": "19:01",
+      "question": "What connection does the lecturer make between the point-in-triangle test and earlier assignments?",
+      "options": [
+        "It's unrelated to previous assignments",
+        "It's the same test used in the rasterization assignment",
+        "It's identical to the mesh simplification algorithm",
+        "It's the inverse of the ray-tracing algorithm"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [19:01] the lecturer states: \"How would I check if a points inside of a triangle hopefully you have a pretty good answer to that question because it's exactly what you implemented in a1 right every time you rasterized a triangle you were checking if sample points were inside a triangle.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 17,
+      "sort_key": 17.0,
+      "qid": "Q17",
+      "qtype": "MCQ",
+      "format": "mcq",
+      "timestamp": "19:44",
+      "question": "What is the first step in finding the closest point on a triangle in 3D?",
+      "options": [
+        "Checking if the query point is one of the triangle vertices",
+        "Projecting the query point onto the plane of the triangle",
+        "Transforming the triangle into 2D coordinates",
+        "Computing the distance to each edge"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [20:36] the lecturer explains: \"First I'm gonna do something that's very similar to how I found the closest point on a line segment I'm gonna first take that point and I'm gonna project it on to the plane of the triangle.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_15.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 18,
+      "sort_key": 18.0,
+      "qid": "Q18",
+      "qtype": "MCQ",
+      "format": "mcq",
+      "timestamp": "21:24",
+      "question": "What method does the lecturer suggest for testing if a projected point is inside a 3D triangle?",
+      "options": [
+        "Using a specialized triangle-point distance formula",
+        "Using a 2D coordinate transformation",
+        "Using half-space tests",
+        "Using the Möller–Trumbore algorithm"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [21:36] the lecturer states: \"Rather than doing half plane tests like you did in your rasterizer I can now do half space tests alright so given the the query point I can see if is it on the intersection of three half spaces whose intersection is this solid wedge that looks like the triangle kind of extruded up and down.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 19,
+      "sort_key": 19.0,
+      "qid": "Q19",
+      "qtype": "GENERALIZATION",
+      "format": "mcq",
+      "timestamp": "22:28",
+      "question": "How does the closest point on a plane calculation relate to the closest point on a line?",
+      "options": [
+        "They use completely different formulas",
+        "The plane case is a special case of the line calculation",
+        "The plane case requires a complex 3D transformation",
+        "The expression is exactly the same, just with 3D vectors instead of 2D"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [23:41] the lecturer notes: \"From then on all the calculations we did for the line immediately generalize to the plane right the line was just a linear subspace of the plane the plane in this case is a linear subspace of three-dimensional space they're both one dimension smaller than the space they sit in everything works out the same.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_15.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 20,
+      "sort_key": 20.0,
+      "qid": "Q20",
+      "qtype": "ALGORITHM",
+      "format": "mcq",
+      "timestamp": "24:23",
+      "question": "What is the naive algorithm for finding the closest point on a triangle mesh?",
+      "options": [
+        "Use a specialized data structure to avoid checking all triangles",
+        "Use a binary search tree to find the closest triangle",
+        "Only check triangles in the approximate region of the query point",
+        "Project the point onto each triangle and keep track of the closest result"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [25:12] the lecture explains: \"For each closest point on each triangle we compute the distance from P to the closest point if the new distance is smaller than the previous distance then that becomes our new closest point.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_16.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 21,
+      "sort_key": 21.0,
+      "qid": "Q21",
+      "qtype": "COMPLEXITY",
+      "format": "mcq",
+      "timestamp": "25:38",
+      "question": "What is the computational complexity of the naive closest point on mesh algorithm?",
+      "options": [
+        "O(log n) where n is the number of triangles",
+        "O(n²) where n is the number of triangles",
+        "O(n) where n is the number of triangles",
+        "O(1) constant time"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [25:44] the lecturer states: \"If I have n triangles in my mesh how much computation am i doing well hopefully it's pretty clear that it's order n right it's big o of n I have to check every single triangle in this algorithm.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_10.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 22,
+      "sort_key": 22.0,
+      "qid": "Q22",
+      "qtype": "REPRESENTATION",
+      "format": "mcq",
+      "timestamp": "26:52",
+      "question": "What alternative representation does the lecturer suggest for closest point queries?",
+      "options": [
+        "Bounding volume hierarchies",
+        "Octrees",
+        "Point clouds",
+        "Implicit surfaces, particularly distance fields"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [27:49] the lecturer explains: \"Now actually we're going to be a little more specialized here and we're going to say the value at any point is not just one or zero the value is actually going to give us the distance to the surface.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_17.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 23,
+      "sort_key": 23.0,
+      "qid": "Q23",
+      "qtype": "APPROACH",
+      "format": "mcq",
+      "timestamp": "28:50",
+      "question": "What method does the lecturer suggest for finding the closest point on an implicit surface?",
+      "options": [
+        "Marching cubes",
+        "Gradient descent using the distance field",
+        "Monte Carlo sampling",
+        "Bisection search"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [29:17] the lecturer describes: \"I'm going to compute the gradient of the distance or minus the gradient of the distance I could do this using any technique like I could use finite differences on my grid and then I could take a little step in the gradient direction that'll bring me closer to the surface.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_17.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 24,
+      "sort_key": 24.0,
+      "qid": "Q24",
+      "qtype": "MCQ",
+      "format": "mcq",
+      "timestamp": "30:30",
+      "question": "What trade-off does the lecturer discuss regarding closest point queries on distance fields?",
+      "options": [
+        "Accuracy versus speed",
+        "Speed versus memory (precomputation)",
+        "Implementation difficulty versus quality",
+        "Robustness versus complexity"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [30:30] the lecturer says: \"So we can make a trade-off between speed and memory do we just want to store the Distin values and run a little algorithm to get the closest point or do we want to just store the cached result directly but now we have to store more data.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_17.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 25,
+      "sort_key": 25.0,
+      "qid": "Q25",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "31:52",
+      "question": "What is a ray in the context of geometric queries?",
+      "options": [
+        "A light source with a specific intensity",
+        "A line without any particular direction",
+        "A line segment with a specific length",
+        "An oriented line or oriented line segment with a starting point and direction"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [32:13] the lecturer defines: \"When I say array I just mean an oriented line or oriented line segment starting at a point so you could really think about a ray of light traveling from the Sun it's not like a line but a line is this whole infinite line that goes in both directions whereas array has a definite starting point and a definite direction.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_18.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 26,
+      "sort_key": 26.0,
+      "qid": "Q26",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "33:33",
+      "question": "What is one way ray-mesh intersection can be used for inside-outside testing?",
+      "options": [
+        "By measuring the total distance traveled by the ray",
+        "By determining if the ray is reflected or refracted",
+        "By counting the number of intersections with the surface (even vs. odd)",
+        "By measuring the angle between the ray and the surface"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [33:50] the lecturer explains: \"If I'm inside a surface the Ray has to pierce the surface an odd number of times to leave it if I'm outside the surface it has to pierce an even number of times.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_10.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 27,
+      "sort_key": 27.0,
+      "qid": "Q27",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "34:31",
+      "question": "How are ray-mesh intersections used for shadow testing?",
+      "options": [
+        "By measuring the intensity of light at the intersection point",
+        "By tracking the reflections off multiple surfaces",
+        "By counting the number of surfaces between light and a point",
+        "By determining if a ray from a point to a light source hits anything along the way"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [34:37] the lecturer explains: \"If I want to see is a point in shadow or is it visible from the Sun well I just have to shoot a ray to the Sun or from the Sun to the point and see did it hit anything or not if it didn't hit anything then there's a lot of light shining on that point if it hits something that that point is in shadow.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_18.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 28,
+      "sort_key": 28.0,
+      "qid": "Q28",
+      "qtype": "EQUATION",
+      "format": "mcq",
+      "timestamp": "36:02",
+      "question": "How is a ray mathematically expressed in the lecture?",
+      "options": [
+        "R(t) = O · D where · is the dot product",
+        "R(t) = O × D where × is the cross product",
+        "R(t) = |O - D| where | | is the magnitude",
+        "R(t) = O + tD where D is a unit vector"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [36:24] the lecturer gives the equation: \"What is R of T well it's we start at the origin and for time T we walk in the direction D o plus TD okay so that's our Ray equation.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_19.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 29,
+      "sort_key": 29.0,
+      "qid": "Q29",
+      "qtype": "STRATEGY",
+      "format": "mcq",
+      "timestamp": "37:22",
+      "question": "What is the general strategy for finding where a ray intersects an implicit surface?",
+      "options": [
+        "Use numerical integration along the ray path",
+        "Apply the closest point algorithm repeatedly",
+        "Substitute the ray equation into the implicit surface equation and solve for t",
+        "Convert the implicit surface to an explicit representation first"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [37:22] the lecturer explains: \"What we can do is just replace our with X and then solve for T values such that f of X is equal to zero right our implicit function f is a test that asks is the point x on the surface.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_20.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 30,
+      "sort_key": 30.0,
+      "qid": "Q30",
+      "qtype": "EQUATION",
+      "format": "mcq",
+      "timestamp": "38:15",
+      "question": "What is the implicit equation for a unit sphere?",
+      "options": [
+        "|x| - 1 = 0",
+        "|x|² - 1 = 0",
+        "|x|² = 1",
+        "|x| = 1"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [38:22] the lecturer states: \"The function f is just f of X is the norm of x squared minus 1 any point that has unit norm will evaluate to 0 those points are on the sphere.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_20.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 31,
+      "sort_key": 31.0,
+      "qid": "Q31",
+      "qtype": "MCQ",
+      "format": "mcq",
+      "timestamp": "39:32",
+      "question": "What type of equation results from finding the intersection of a ray with a sphere?",
+      "options": [
+        "Cubic equation",
+        "Quadratic equation",
+        "Linear equation",
+        "Exponential equation"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [39:32] the lecturer states: \"If we call norm of d squared a to OD is B and norm of o squared minus one is C then we have a quadratic equation for T we just have a T squared plus BT plus C is equal to zero.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_20.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 32,
+      "sort_key": 32.0,
+      "qid": "Q32",
+      "qtype": "CASES",
+      "format": "mcq",
+      "timestamp": "40:47",
+      "question": "When considering ray-sphere intersection, what is the geometric meaning of having two solutions to the quadratic equation?",
+      "options": [
+        "The ray pierces the sphere twice (entering and exiting)",
+        "The ray completely misses the sphere",
+        "There's an error in the calculation",
+        "The ray is tangent to the sphere"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [41:29] the lecturer explains: \"In the case that we show here on the bottom right it's pretty clear that the Ray pierces the sphere twice it goes into the sphere and then back out of the sphere ah those must be the two solutions to the quadratic equation.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_20.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 33,
+      "sort_key": 33.0,
+      "qid": "Q33",
+      "qtype": "CASE",
+      "format": "mcq",
+      "timestamp": "42:04",
+      "question": "What is the geometric meaning when a ray-sphere intersection equation has exactly one solution?",
+      "options": [
+        "The ray passes through the center of the sphere",
+        "The ray is tangent to the sphere at a single point",
+        "The ray misses the sphere entirely",
+        "The ray starts inside the sphere"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [42:04] the lecturer states: \"What does it mean if there's only one solution to this equation well there's something very very special that can happen which is the rate might just graze the sphere so rather than going in and then back out again it's just tangent to the sphere at a single point that's when the quadratic formula has only one solution.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_20.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 34,
+      "sort_key": 34.0,
+      "qid": "Q34",
+      "qtype": "MEANING",
+      "format": "mcq",
+      "timestamp": "42:50",
+      "question": "What does a negative t value signify in ray-object intersection calculations?",
+      "options": [
+        "The ray misses the object entirely",
+        "The ray is inside the object",
+        "The ray passes through the object's center",
+        "The intersection point is in the opposite direction of the ray"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [42:57] the lecturer explains: \"If T is negative that really is telling us that actually the Ray also doesn't hit the sphere at least not for that T value right it means I'm moving along a line that intersects the sphere but not for the half of the line that I care about.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_18.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 35,
+      "sort_key": 35.0,
+      "qid": "Q35",
+      "qtype": "EQUATION",
+      "format": "mcq",
+      "timestamp": "44:34",
+      "question": "How is a plane implicitly described in the lecture?",
+      "options": [
+        "As n^T x = C where n is the unit normal",
+        "As the cross product of two vectors",
+        "As a parametric equation with two parameters",
+        "As a set of three points"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [44:34] the lecturer says: \"We say suppose we think of a plane as the set of all points X such that n transpose X is equal to C for some constant C n is again the unit normal C is some offset in the normal direction.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_20.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 36,
+      "sort_key": 36.0,
+      "qid": "Q36",
+      "qtype": "MCQ",
+      "format": "mcq",
+      "timestamp": "47:12",
+      "question": "What is the geometric meaning when n^T D = 0 in a ray-plane intersection calculation?",
+      "options": [
+        "The ray is perpendicular to the plane",
+        "The ray originates from the plane",
+        "The ray is traveling parallel to the plane",
+        "The ray passes through the origin"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [47:12] the lecturer describes: \"A funny case for me is if the if the Ray is traveling parallel to the plane right so it's flying above the plane and it never never intersects the plane it's not getting closer and it's not getting further away.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_30.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 37,
+      "sort_key": 37.0,
+      "qid": "Q37",
+      "qtype": "APPROACH",
+      "format": "mcq",
+      "timestamp": "49:01",
+      "question": "What two-step approach does the lecturer suggest for ray-triangle intersection?",
+      "options": [
+        "First test each vertex, then test each edge",
+        "First check if the ray is facing the triangle, then compute the intersection",
+        "First conduct a bounding box test, then do detailed intersection",
+        "First check if the ray intersects the plane of the triangle, then check if the hit point is inside the triangle"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [49:43] the lecturer explains: \"Maybe a first good step for finding a ray triangle intersection is to just first figure out where does the Ray intersect the plane containing the triangle... from there there's not a whole lot more to say.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_30.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 38,
+      "sort_key": 38.0,
+      "qid": "Q38",
+      "qtype": "TEST",
+      "format": "mcq",
+      "timestamp": "51:15",
+      "question": "What method does the lecturer suggest for determining if a point is inside a triangle?",
+      "options": [
+        "Using the triangle's medians",
+        "Checking if the point is visible from all three vertices",
+        "Measuring the area of the triangle with the point included",
+        "Computing barycentric coordinates and checking if they're all positive"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [51:15] the lecturer suggests: \"So I compute the signed area of the three little triangles made by connecting the hit point this white point to the three vertices of the triangle I divide those signed areas by the area of the triangle and I get the Bary centric coordinates... if all the very central coordinates are positive if all of them are positive then it's a point in the Triangle.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_22.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 39,
+      "sort_key": 39.0,
+      "qid": "Q39",
+      "qtype": "PRINCIPLE",
+      "format": "mcq",
+      "timestamp": "52:18",
+      "question": "What problem-solving principle does the lecturer emphasize for geometric queries?",
+      "options": [
+        "Use analytical solutions instead of numerical approaches",
+        "Focus on memory efficiency over computational efficiency",
+        "Always create new algorithms for each problem",
+        "Reduce problems to smaller atomic problems you already know how to solve"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [52:18] the lecturer states: \"Try to think when you're doing computer graphics about whether you can reduce a problem you're about to solve to a smaller more atomic problem that you already know how to solve.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_20.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 40,
+      "sort_key": 40.0,
+      "qid": "Q40",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "52:52",
+      "question": "Why is optimizing ray-triangle intersection so important in practice?",
+      "options": [
+        "Because photorealistic rendering requires millions of ray-triangle intersections",
+        "Because it's used in user interface design",
+        "Because game engines can only process a limited number of triangles",
+        "Because triangles are difficult to represent in computers"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [52:52] the lecturer explains: \"If you want to make photorealistic imagery here's a here's a beautiful shot from Pixar's Koko right this image is made by shooting Ray's around the scene millions and millions of rays that intersect with extremely complicated geometry.\"",
+      "code": "",
+      "images": [
+        "lec12_slide_10.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 41,
+      "sort_key": 41.0,
+      "qid": "Q41",
+      "qtype": "HARDWARE",
+      "format": "mcq",
+      "timestamp": "55:23",
+      "question": "What recent hardware development has advanced ray tracing capabilities?",
+      "options": [
+        "Dedicated ray tracing hardware in GPUs (RTX pipeline)",
+        "Specialized CPU instruction sets",
+        "Multi-core processors",
+        "New RAM architectures"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "At [55:23] the lecturer mentions: \"Just in the last few years NVIDIA has started putting what's called our TX pipeline into their a ray tracing pipeline into their GPU hardware and so this has really enabled a lot of things that weren't possible before.\"\n-",
+      "code": "",
+      "images": [
+        "lec12_slide_10.png"
+      ],
+      "tags": []
+    }
+  ]
+}

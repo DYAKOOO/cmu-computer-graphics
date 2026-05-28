@@ -1,0 +1,720 @@
+{
+  "lecture": 11,
+  "title": "Lecture 11: Geometry Processing",
+  "questions": [
+    {
+      "num": 1,
+      "sort_key": 0.01,
+      "qid": "QF1",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "Lecture 11 frames geometry processing as \"digital signal processing applied to geometry.\" What does this analogy concretely mean, and why is it useful beyond just being a metaphor?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "In 1D signal processing: upsampling (add samples), downsampling (remove samples), filtering (blur/sharpen). In geometry: subdivision (add vertices/faces = upsample), simplification (remove faces = downsample), Laplacian smoothing (blur high-frequency detail = low-pass filter). The analogy is mathematically precise — mesh Laplacian is the discrete analog of the 1D Laplace operator, and the same theory (Fourier analysis, aliasing, Nyquist) applies to geometry. This lets you import results from a century of signal processing directly into geometry processing algorithms.",
+      "intuition": "A mesh is a 2D signal sampled on an irregular grid. Everything you know about processing 1D audio signals applies — you just need the right \"Fourier transform\" for the mesh.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 0.02,
+      "qid": "QF2",
+      "qtype": "FLOW",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "The lecture covers Laplacian smoothing, then subdivision (Catmull-Clark), then simplification. Why is Laplacian smoothing discussed before the other two, even though subdivision and simplification seem more fundamental?",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Laplacian smoothing introduces the key operator — the discrete Laplacian — that underlies all of geometry processing. Subdivision uses a weighted-Laplacian mask to compute new vertex positions (Catmull-Clark rule = average of neighbors, which is Laplacian-based). Simplification uses edge collapse, but the error metric (quadric error) measures how much removing an edge changes the local curvature — again Laplacian-related. Understanding the Laplacian first makes subdivision and simplification both instances of the same underlying principle rather than ad-hoc algorithms.",
+      "intuition": "The Laplacian is the geometry processing operator. All other operations are specializations of it.",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 0.03,
+      "qid": "QF3",
+      "qtype": "ORDER",
+      "format": "reveal",
+      "timestamp": "00:00",
+      "question": "Put these geometry processing tasks in the order lecture 11 introduces them: mesh simplification via edge collapse / Laplacian smoothing / Catmull-Clark subdivision / parameterization (UV unwrapping)",
+      "options": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "answer": -1,
+      "answerText": "Laplacian smoothing → Catmull-Clark subdivision → Mesh simplification via edge collapse → Parameterization (UV unwrapping)",
+      "intuition": "Introduce the core operator (Laplacian) → apply it to add resolution (subdivision) → remove resolution (simplification) → flatten the surface (parameterization).",
+      "explanation": "",
+      "code": "",
+      "images": [],
+      "tags": []
+    },
+    {
+      "num": 1,
+      "sort_key": 1.0,
+      "qid": "Q1",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "00:19",
+      "question": "What was the main simplifying assumption about shapes discussed at the beginning of the lecture?",
+      "options": [
+        "That shapes are manifold and can be locally stretched into the Euclidean plane",
+        "That all shapes can be represented as quadrilaterals",
+        "That shapes must be convex",
+        "That all shapes must have regular vertex degree"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [00:40]: \"Our main assumption was to assume that the shapes we're working with are manifold that in some sense each little tiny piece of our shape can be stretched out into the euclidean plane.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_21.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 2,
+      "sort_key": 2.0,
+      "qid": "Q2",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "00:58",
+      "question": "What defines a manifold polygon mesh in terms of its connectivity?",
+      "options": [
+        "It consists only of triangular faces",
+        "It has no boundary edges",
+        "It has fans but not fins",
+        "It has exactly six edges per vertex"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [00:58]: \"The connectivity of a polygon mesh is manifold if it has fans but not fins. So if we have just a single loop of polygons around every vertex and for every interior edge we just have two polygons containing that edge...\"",
+      "code": "",
+      "images": [
+        "lec11_slide_02.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 3,
+      "sort_key": 3.0,
+      "qid": "Q3",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "03:08",
+      "question": "What technological developments make digital geometry processing particularly relevant now, according to the lecture?",
+      "options": [
+        "Affordable hardware for 3D scanning and printing",
+        "Advancements in virtual reality interfaces",
+        "New visualization techniques for scientific data",
+        "Decreasing computational costs and cloud computing"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer highlights at [03:08]: \"Right now is an especially exciting time for geometry and geometry processing because we're starting to see all sorts of interesting and affordable hardware for dealing with geometry. So both bringing it into the computer and also taking digital geometry and turning it into real physical geometry.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_04.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 4,
+      "sort_key": 4.0,
+      "qid": "Q4",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "04:43",
+      "question": "What are the main stages of the geometry processing pipeline as described in the lecture?",
+      "options": [
+        "Modeling, rendering, and animation",
+        "Acquisition, processing, and fabrication",
+        "Subdivision, simplification, and remeshing",
+        "Scanning, filtering, and visualization"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer describes at [04:55]: \"Acquire it sample it turn it into a digital representation then process it in an algorithmic way and so edit it transform it analyze it. And then when we're happy with the changes we've made we print it back out again to give it some new function.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_03.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 5,
+      "sort_key": 5.0,
+      "qid": "Q5",
+      "qtype": "COMPARISON",
+      "format": "mcq",
+      "timestamp": "06:01",
+      "question": "According to the lecture, what distinguishes geometry reconstruction from image reconstruction?",
+      "options": [
+        "Geometry reconstruction only works on manifold shapes",
+        "Geometry reconstruction is only concerned with surface appearance",
+        "Geometry reconstruction has more diverse input types, including point clouds, normals, and line density integrals",
+        "Geometry reconstruction produces only triangular meshes"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [06:14]: \"What are samples could be points or quite often what you have is a little richer information you might have points and normals at that point...You might have yet richer information...or line density integrals so in medical imaging if you're trying to image bone and tissue you have let's say MRI or CT scans which measure things like what is the total density of that material along a line through space.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_07.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 6,
+      "sort_key": 6.0,
+      "qid": "Q6",
+      "qtype": "RELATIONSHIP",
+      "format": "mcq",
+      "timestamp": "07:53",
+      "question": "How does the lecture relate upsampling in geometry processing to a similar concept in image processing?",
+      "options": [
+        "Both are forms of increasing resolution, like zooming in on a texture map",
+        "Both produce artifacts that cannot be removed",
+        "Both focus on noise reduction first",
+        "Both use the same algorithms for implementation"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [08:11]: \"We've already looked at this a little bit for images right if I have a low resolution image and I want to up sample it that's kind of the same as zooming in on a texture map right.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_26.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 7,
+      "sort_key": 7.0,
+      "qid": "Q7",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "08:49",
+      "question": "What is the goal of downsampling in geometry processing according to the lecture?",
+      "options": [
+        "To remove noise from scanned geometry",
+        "To flatten irregular surfaces for texture mapping",
+        "To create simplified meshes for faster rendering that still preserve appearance",
+        "To create a uniform triangle distribution"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [08:54]: \"You want to find a coarser simpler mesh that's stored in a smaller file but in that process you still want to preserve the basic shape and appearance of the model.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_09.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 8,
+      "sort_key": 8.0,
+      "qid": "Q8",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "10:09",
+      "question": "How does the lecture distinguish resampling from upsampling and downsampling?",
+      "options": [
+        "Resampling applies only to quad meshes",
+        "Resampling is used exclusively for texture coordinates",
+        "Resampling focuses on surface reconstruction",
+        "Resampling maintains the same number of elements but improves their quality"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [10:23]: \"We do this not to decrease the file size or increase the resolution but rather to improve the quality of individual polygons individual elements.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_10.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 9,
+      "sort_key": 9.0,
+      "qid": "Q9",
+      "qtype": "APPLICATION",
+      "format": "mcq",
+      "timestamp": "10:59",
+      "question": "According to the lecture, when does the shape of individual triangles matter most?",
+      "options": [
+        "When visualizing the mesh",
+        "When solving equations on surfaces (like PDEs or simulations)",
+        "During subdivision",
+        "When doing texture mapping"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [10:59]: \"If I want to do rendering if I just want to visualize the surface then I want to use those polygons to get as much geometric detail as possible I don't really care so much about how the individual triangles in a mesh are shaped for instance but if I'm solving equations on a surface again if I'm solving partial differential equations for instance I'm doing simulation of some kind then I care very very much about what the shape of each polygon looks like.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_34.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 10,
+      "sort_key": 10.0,
+      "qid": "Q10",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "11:41",
+      "question": "What filtering operations are available for polygon meshes as mentioned in the lecture?",
+      "options": [
+        "Only Gaussian blurring",
+        "Only edge-preserving filters",
+        "Only median filtering",
+        "Curvature flow, bilateral filters, and spectral filtering"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [12:10]: \"We have things like curvature flow there are generalizations of things like bilateral filters we can do spectral filterings to enhance features.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_11.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 11,
+      "sort_key": 11.0,
+      "qid": "Q11",
+      "qtype": "COMPARISON",
+      "format": "mcq",
+      "timestamp": "12:27",
+      "question": "According to the lecture, why is mesh compression more complicated than image compression?",
+      "options": [
+        "Meshes cannot be compressed without loss",
+        "Meshes are always larger than images",
+        "Meshes require specialized hardware for decompression",
+        "Meshes have both position data and connectivity data"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [13:24]: \"Now for geometry say for polygon meshes compression gets a little more complicated because it's not just that we have to compress the positions right where things are in space but we also have this connectivity data that we don't have with images.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_12.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 12,
+      "sort_key": 12.0,
+      "qid": "Q12",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "14:34",
+      "question": "What challenge of shape analysis did the lecturer highlight?",
+      "options": [
+        "Determining the optimal compression rate",
+        "Identifying which parts of a mesh correspond to specific real-world features",
+        "Converting between different mesh formats",
+        "Finding algorithms that work on non-manifold meshes"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [15:13]: \"I might take a raw list of polygons and try to break it up into meaningful pieces like oh these polygons correspond to the legs of the chair these correspond to the back of the chair.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_13.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 13,
+      "sort_key": 13.0,
+      "qid": "Q13",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "16:34",
+      "question": "What is aliasing in the context of geometry as described in the lecture?",
+      "options": [
+        "When polygons have incorrect normal vectors",
+        "When a bad sampling and reconstruction makes a signal appear different than it actually is",
+        "When vertex colors don't match the original model",
+        "When mesh elements have incorrect materials assigned"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer defines at [16:34]: \"It means that a bad sampling and then reconstruction of a signal can make it appear different than it actually is.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_15.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 14,
+      "sort_key": 14.0,
+      "qid": "Q14",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "17:56",
+      "question": "According to the lecture, why is approximation of position alone insufficient for a good mesh?",
+      "options": [
+        "It makes animation impossible",
+        "It prevents proper texture mapping",
+        "Even with perfect vertex positions, you can get wrong appearance, normals, surface area, and curvatures",
+        "It causes rendering artifacts when using GPU acceleration"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [19:14]: \"What can happen is we get even though we have these perfect vertex positions we get the wrong appearance the wrong surface area the wrong normals the wrong curvatures we can get everything wrong about the geometry even if the vertices are on the surface.\"\n- QUESTIONS (continued):",
+      "code": "",
+      "images": [
+        "lec11_slide_17.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 15,
+      "sort_key": 15.0,
+      "qid": "Q15",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "20:53",
+      "question": "What property, beyond position approximation, does the lecturer emphasize as being important to preserve in a mesh?",
+      "options": [
+        "The triangle aspect ratio",
+        "The normal vectors of the smooth surface",
+        "The regularity of vertex degree",
+        "The number of triangles"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [20:53]: \"When we think about getting a good approximation of geometry we really need to consider other factors beyond the basic question of are the positions close for instance we'd like it to be the case that the normals of our polygon mesh are also close to the normals of the smooth surface.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_17.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 16,
+      "sort_key": 16.0,
+      "qid": "Q16",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "22:24",
+      "question": "What is the Delaunay property of a triangle mesh as described in the lecture?",
+      "options": [
+        "All edges have equal length",
+        "All triangles have equal area",
+        "Every vertex has exactly six neighbors",
+        "Each triangle's circumcircle contains no other vertices inside it"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [22:30]: \"If I have a triangle mesh in the plane then I can look at the circum circle of every triangle so for each triangle I have a unique circle passing through the three vertices and a mesh is delaunay if the circles are empty meaning they have no vertices on their interior.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_18.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 17,
+      "sort_key": 17.0,
+      "qid": "Q17",
+      "qtype": "THEOREM",
+      "format": "mcq",
+      "timestamp": "23:23",
+      "question": "What property does Rippa's theorem state about Delaunay triangulations according to the lecture?",
+      "options": [
+        "They maximize the minimum angle in the mesh",
+        "They contain the minimum number of triangles possible",
+        "They guarantee manifold connectivity",
+        "They provide the smoothest interpolation of data on vertices"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [23:35]: \"They're going to provide the smoothest interpolation of data on vertices so if I use barycentric coordinates or linear functions to interpolate data at vertices a delaunay mesh is going to give me the smoothest interpolation of any triangulation of those points that's something called Rippa's theorem.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_18.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 18,
+      "sort_key": 18.0,
+      "qid": "Q18",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "24:59",
+      "question": "What does the lecturer define as \"regular vertex degree\" for a triangle mesh?",
+      "options": [
+        "When no vertex has degree greater than 12",
+        "When all vertices have the same degree",
+        "When most vertices have degree 6",
+        "When the vertex degree distribution follows a power law"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer defines at [24:59]: \"The degree of a vertex is the number of edges touching that vertex what does it mean for that degree to be regular well if I have a triangle mesh we're going to say I have a regular vertex degree if all the vertices are degree 6.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_42.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 19,
+      "sort_key": 19.0,
+      "qid": "Q19",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "27:28",
+      "question": "What problem arises during subdivision when starting with high-degree vertices?",
+      "options": [
+        "The subdivision process becomes too slow",
+        "The resulting mesh is no longer manifold",
+        "The mesh cannot be subdivided further",
+        "The limit surface develops wrinkles and shading artifacts"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [27:28]: \"If on the other hand I start with a really high degree vertex degree 20 and I run my subdivision I'll often get nasty artifacts like this so rather than having this smooth bump I get these little wrinkles all over the surface... In general what I'm going to get is shading artifacts normals are going to look wrong reflections are going to look wrong and so forth.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_19.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 20,
+      "sort_key": 20.0,
+      "qid": "Q20",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "28:23",
+      "question": "What are the two aspects of subdivision that need to be addressed according to the lecture?",
+      "options": [
+        "Polygon type and mesh boundary",
+        "Vertex position and edge length",
+        "Connectivity updates and vertex position updates",
+        "Material properties and texture coordinates"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [28:23]: \"The basic idea of subdivision is we're going to repeatedly split each element into smaller pieces so that's a statement about the connectivity of the mesh once we've subdivided the connectivity we're going to replace the vertex positions with a weighted average of the neighboring vertex positions.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_21.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 21,
+      "sort_key": 21.0,
+      "qid": "Q21",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "30:22",
+      "question": "What is Catmull-Clark subdivision primarily designed for, according to the lecture?",
+      "options": [
+        "Triangle meshes",
+        "Quadrilateral meshes",
+        "Point clouds",
+        "Tetrahedral meshes"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [30:09]: \"The most common for quadrilateral meshes is something called Catmull-Clark subdivision perhaps the most common for triangle meshes is something called Loop subdivision but there are other schemes like butterfly square root three and so forth.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_21.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 22,
+      "sort_key": 22.0,
+      "qid": "Q22",
+      "qtype": "IMPLEMENTATION",
+      "format": "mcq",
+      "timestamp": "31:51",
+      "question": "In Catmull-Clark subdivision, what is the formula for updating an original vertex of degree n?",
+      "options": [
+        "(Q + R + (n-2)S) / n, where Q is the average of face points, R is the average of edge midpoints, and S is the original position",
+        "The average of all neighboring vertices",
+        "(Q + 2R + (n-3)S) / n, where Q is the average of face points, R is the average of edge midpoints, and S is the original position",
+        "The average of all face points"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer gives the formula at [32:12]: \"The new vertex coordinate is q plus 2r plus n minus 3 times s over n.\" Where Q is the average of face points, R is the average of edge coordinates, and S is the original vertex position.",
+      "code": "",
+      "images": [
+        "lec11_slide_22.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 23,
+      "sort_key": 23.0,
+      "qid": "Q23",
+      "qtype": "CONCEPTUAL",
+      "format": "mcq",
+      "timestamp": "34:21",
+      "question": "Why does Catmull-Clark subdivision produce artifacts when applied to triangle meshes?",
+      "options": [
+        "Triangle vertices typically have degree 6, which is irregular for quad meshes that expect degree 4",
+        "Triangles are not flexible enough to be subdivided",
+        "The formulas were derived only for quadrilaterals",
+        "Triangle meshes are not manifold"
+      ],
+      "answer": 0,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [34:21]: \"Because all of our vertices are degree 6 they're not regular from the perspective of a quad mesh a quad mesh wants to have vertices of degree four so when we subdivide this mesh with catmull clark we get irregular vertices all over the place.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_21.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 24,
+      "sort_key": 24.0,
+      "qid": "Q24",
+      "qtype": "PROPERTY",
+      "format": "mcq",
+      "timestamp": "35:46",
+      "question": "What important property of Loop subdivision vertex rules did the lecturer highlight?",
+      "options": [
+        "They always preserve sharp features",
+        "They form a convex combination, keeping points within the convex hull",
+        "They work equally well on quad meshes",
+        "They result in a C3 continuous surface"
+      ],
+      "answer": 1,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [35:46]: \"You notice something interesting here 1/8 plus 1/8 plus 3/8 plus 3/8 is equal to 1. So that means this new vertex is a convex combination of the neighboring vertices in general points on the subdivision surface are going to be in the convex hull of the points used to generate them.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_19.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 25,
+      "sort_key": 25.0,
+      "qid": "Q25",
+      "qtype": "IMPLEMENTATION",
+      "format": "mcq",
+      "timestamp": "38:51",
+      "question": "What approach does the lecture describe for mesh simplification?",
+      "options": [
+        "Remeshing the entire surface with fewer elements",
+        "Randomly removing vertices until reaching the target count",
+        "Using a greedy algorithm based on edge collapses with a quadric error metric",
+        "Uniform subdivision followed by clustering"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [39:01]: \"We're going to do a greedy algorithm we're going to give some kind of cost to each edge then we're going to just figure out of all edges which one has the smallest cost which one basically changes our surface the least okay and then we're going to keep on collapsing edges until we reach some target number of mesh elements.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_28.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 26,
+      "sort_key": 26.0,
+      "qid": "Q26",
+      "qtype": "DEFINITION",
+      "format": "mcq",
+      "timestamp": "40:35",
+      "question": "What is the quadric error metric measuring in the context of mesh simplification?",
+      "options": [
+        "The distance from a vertex to the center of the mesh",
+        "The maximum edge length in the mesh",
+        "The distance to a collection of triangles (or their planes)",
+        "The change in surface area after an operation"
+      ],
+      "answer": 2,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer states at [40:35]: \"The basic idea is to store keep track of something called a quadric which intuitively keeps track of the distance to some collection of triangles so for instance we might have a quadratic that tells us how far are we from all the triangles around a point.\"",
+      "code": "",
+      "images": [
+        "lec11_slide_36.png"
+      ],
+      "tags": []
+    },
+    {
+      "num": 27,
+      "sort_key": 27.0,
+      "qid": "Q27",
+      "qtype": "MATHEMATICAL",
+      "format": "mcq",
+      "timestamp": "1:17:35",
+      "question": "What solution does the lecture propose for preventing signal degradation during repeated mesh processing?",
+      "options": [
+        "Using higher-order numerical methods",
+        "Using a different mesh representation entirely",
+        "Limiting the number of operations to three",
+        "Projecting processed vertices back onto the original surface"
+      ],
+      "answer": 3,
+      "answerText": "",
+      "intuition": "",
+      "explanation": "The lecturer explains at [1:17:35]: \"We might have changed the triangulation and then connectivity and all this stuff but we still have the original input mesh right so we could play a trick we could do all our processing and then we could say at the end we still want maybe these vertices to sit on the original surface so why don't we just take the vertices of the process mesh and project them back onto the closest point on the original mesh.\"\n-",
+      "code": "",
+      "images": [
+        "lec11_slide_46.png"
+      ],
+      "tags": []
+    }
+  ]
+}
