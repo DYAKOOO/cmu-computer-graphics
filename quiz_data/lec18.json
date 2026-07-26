@@ -77,10 +77,10 @@
       "timestamp": "00:10",
       "question": "What is the primary goal of Monte Carlo rendering according to the lecture?",
       "options": [
-        "To generate photorealistic images",
-        "To generate images as quickly as possible",
-        "To simulate camera optics",
-        "To optimize mesh geometry"
+        "Photorealistic image generation",
+        "Fastest possible rendering speed",
+        "Camera optics simulation only",
+        "Mesh geometry optimization"
       ],
       "answer": 0,
       "answerText": "",
@@ -101,10 +101,10 @@
       "timestamp": "01:36",
       "question": "What is the main trade-off of Monte Carlo rendering compared to rasterization?",
       "options": [
-        "Simplicity versus scalability",
-        "Image quality versus speed",
-        "Flexibility versus portability",
-        "Memory usage versus computation time"
+        "Scalability versus simplicity",
+        "Speed versus image quality",
+        "Portability versus flexibility",
+        "Computation time versus memory"
       ],
       "answer": 1,
       "answerText": "",
@@ -197,10 +197,10 @@
       "timestamp": "07:48",
       "question": "Besides shadows, reflections, and transparency, what other illumination effect is present in ray tracing but not basic rasterization?",
       "options": [
-        "Depth of field",
-        "Lens flare",
-        "Indirect illumination",
-        "Ambient occlusion"
+        "Depth of field simulation",
+        "Lens flare rendering technique",
+        "Indirect illumination modeling",
+        "Ambient occlusion approximation"
       ],
       "answer": 2,
       "answerText": "",
@@ -222,9 +222,9 @@
       "question": "What mathematical technique must be applied to the rendering equation to develop a full-blown photorealistic ray tracer?",
       "options": [
         "Singular value decomposition",
-        "Monte Carlo integration",
-        "Numerical differentiation",
-        "Finite element analysis"
+        "Monte Carlo integration method",
+        "Numerical differentiation scheme",
+        "Finite element analysis approach"
       ],
       "answer": 1,
       "answerText": "",
@@ -245,7 +245,7 @@
       "timestamp": "10:12",
       "question": "In the context of Monte Carlo rendering, what constitutes a \"sample\"?",
       "options": [
-        "A whole path of light from source to camera",
+        "A light path",
         "A point on a 3D model's surface",
         "A single pixel in the output image",
         "A single ray shot from the camera"
@@ -293,10 +293,10 @@
       "timestamp": "10:56",
       "question": "What are the two terms on the right side of the rendering equation?",
       "options": [
-        "Reflection and refraction",
-        "Emission and reflection",
-        "Direct and indirect illumination",
-        "Specular and diffuse components"
+        "Reflection and refraction terms",
+        "Emission and reflection components",
+        "Direct and indirect lighting",
+        "Specular and diffuse contributions"
       ],
       "answer": 1,
       "answerText": "",
@@ -341,10 +341,10 @@
       "timestamp": "14:52",
       "question": "What is the \"expected value\" of a random variable?",
       "options": [
-        "The median of all possible values",
-        "The most common value it takes",
-        "The highest possible value it can take",
-        "The value it takes on average"
+        "Median of all possible values",
+        "Most frequent value observed",
+        "Maximum possible value attained",
+        "Average value over many trials"
       ],
       "answer": 3,
       "answerText": "",
@@ -365,10 +365,10 @@
       "timestamp": "16:22",
       "question": "What is the expected value of a fair coin flip where heads=1 and tails=0?",
       "options": [
-        "1",
-        "0.5",
-        "2",
-        "0"
+        "Value one exactly",
+        "Half or 0.5",
+        "Double or two",
+        "Zero value only"
       ],
       "answer": 1,
       "answerText": "",
@@ -389,10 +389,10 @@
       "timestamp": "16:41",
       "question": "Which of the following is a property of expected value?",
       "options": [
-        "The expected value is always the median value",
-        "The expected value of a sum equals the sum of the expected values",
-        "The expected value is always positive",
-        "The expected value of a product equals the product of the expected values"
+        "Expected value equals median",
+        "Expectation of sum is sum of expectations",
+        "Expected value always positive",
+        "Expectation of product is product of expectations"
       ],
       "answer": 1,
       "answerText": "",
@@ -437,10 +437,10 @@
       "timestamp": "19:22",
       "question": "When comparing two probability distributions, which typically has higher variance?",
       "options": [
-        "The distribution with the most values",
-        "The distribution with the highest peak",
-        "The distribution with more uniform probabilities",
-        "The distribution with less uniform probabilities"
+        "Distribution with most values",
+        "Distribution with highest peak",
+        "More uniform probability dist",
+        "Less uniform probability dist"
       ],
       "answer": 2,
       "answerText": "",
@@ -485,10 +485,10 @@
       "timestamp": "22:32",
       "question": "According to the Law of Large Numbers, what happens as we take more and more samples?",
       "options": [
-        "The probability distribution becomes more uniform",
-        "The variance increases linearly",
-        "The expected value approaches the median",
-        "The average value approaches the expected value"
+        "Distribution becomes more uniform",
+        "Variance increases linearly",
+        "Mean approaches median asymptotically",
+        "Sample average nears expected value"
       ],
       "answer": 3,
       "answerText": "",
@@ -509,10 +509,10 @@
       "timestamp": "22:55",
       "question": "How does variance decrease as the number of samples n increases?",
       "options": [
-        "Quadratically (1/n²)",
-        "Exponentially (e^-n)",
-        "Linearly (1/n)",
-        "Logarithmically (1/log(n))"
+        "Quadratic decay 1/n²",
+        "Exponential decay e⁻ⁿ",
+        "Linear decay 1/n",
+        "Logarithmic decay 1/log n"
       ],
       "answer": 2,
       "answerText": "",
@@ -533,10 +533,10 @@
       "timestamp": "24:22",
       "question": "In the coconut island example, what mathematical constant is being estimated?",
       "options": [
-        "γ (Euler-Mascheroni constant)",
-        "e (Euler's number)",
-        "φ (golden ratio)",
-        "π (pi)"
+        "Euler-Mascheroni constant",
+        "Euler's number e",
+        "Golden ratio φ",
+        "Pi π constant"
       ],
       "answer": 3,
       "answerText": "",
@@ -557,10 +557,10 @@
       "timestamp": "24:47",
       "question": "In the coconut island example, how is π estimated?",
       "options": [
-        "By counting the ratio of coconuts in the circle to those in the square",
-        "By calculating the diagonal of the square",
-        "By measuring the circumference and diameter of coconuts",
-        "By counting the total number of coconuts"
+        "Coconuts in circle vs square",
+        "Square diagonal calculation",
+        "Coconut circumference/diameter",
+        "Total coconut count only"
       ],
       "answer": 0,
       "answerText": "",
@@ -581,10 +581,10 @@
       "timestamp": "26:21",
       "question": "What is the primary advantage of Monte Carlo rendering for complex scenes?",
       "options": [
-        "It is always faster than rasterization",
-        "It always produces the most artistically pleasing results",
-        "It will always converge to the correct image with enough samples",
-        "It requires less memory than other methods"
+        "Always faster than rasterization",
+        "Most artistically pleasing results",
+        "Converges to correct image",
+        "Uses less memory than alternatives"
       ],
       "answer": 2,
       "answerText": "",
@@ -605,10 +605,10 @@
       "timestamp": "27:19",
       "question": "What is the main challenge with Monte Carlo integration that needs to be addressed?",
       "options": [
-        "It cannot model certain physical phenomena",
-        "It is slow to converge and requires many samples",
-        "It requires too much memory",
-        "It cannot handle scenes with transparency"
+        "Cannot model some phenomena",
+        "Slow convergence, many samples",
+        "Excessive memory requirements",
+        "Fails with transparent objects"
       ],
       "answer": 1,
       "answerText": "",
@@ -629,8 +629,8 @@
       "timestamp": "27:42",
       "question": "What sampling strategy does the lecture first discuss to improve Monte Carlo estimation?",
       "options": [
-        "Stratified sampling",
-        "Biased sampling (non-uniform distribution)",
+        "Stratified sampling method",
+        "Biased non-uniform sampling",
         "Multiple importance sampling",
         "Quasi-Monte Carlo sampling"
       ],
@@ -653,10 +653,10 @@
       "timestamp": "28:36",
       "question": "When using a non-uniform distribution P for sampling, how must the Monte Carlo estimator be modified?",
       "options": [
-        "No modification is needed",
-        "The function value must be multiplied by P",
-        "The function value must be divided by P",
-        "The function value must be added to P"
+        "No modification required",
+        "Multiply function by P",
+        "Divide function by P",
+        "Add function to P"
       ],
       "answer": 2,
       "answerText": "",
@@ -701,10 +701,10 @@
       "timestamp": "30:59",
       "question": "What is the goal of importance sampling?",
       "options": [
-        "To sample more from regions where the function is large",
-        "To eliminate all variance in the estimator",
-        "To sample equally from all regions",
-        "To minimize the number of samples needed"
+        "Sample more where f is large",
+        "Eliminate all estimator variance",
+        "Sample uniformly everywhere",
+        "Minimize total sample count"
       ],
       "answer": 0,
       "answerText": "",
@@ -725,10 +725,10 @@
       "timestamp": "32:41",
       "question": "What property should the quotient f(x)/p(x) ideally have for good importance sampling?",
       "options": [
-        "It should be relatively uniform",
-        "It should be as small as possible",
-        "It should be proportional to x",
-        "It should be as large as possible"
+        "Should be relatively uniform",
+        "Should be as small as possible",
+        "Should be proportional to x",
+        "Should be as large as possible"
       ],
       "answer": 0,
       "answerText": "",
@@ -845,10 +845,10 @@
       "timestamp": "56:24",
       "question": "What is the purpose of cosine weighted sampling?",
       "options": [
-        "To allocate more samples to directions where cosine theta is large",
-        "To reduce the total number of samples needed",
-        "To allocate more samples to directions that contribute less to the integral",
-        "To eliminate the need for light source sampling"
+        "More samples where cos θ large",
+        "Reduce total sample count",
+        "More samples where contribution low",
+        "Eliminate light source sampling"
       ],
       "answer": 0,
       "answerText": "",
@@ -893,10 +893,10 @@
       "timestamp": "59:18",
       "question": "What happens to the estimator when using cosine weighted sampling?",
       "options": [
-        "It remains the same as with uniform sampling",
-        "It requires additional normalization",
-        "The cosine terms cancel out, making it simpler",
-        "It becomes more complex with additional terms"
+        "Same as uniform sampling",
+        "Requires extra normalization",
+        "Cosine terms cancel out",
+        "Becomes more complex"
       ],
       "answer": 2,
       "answerText": "",
@@ -941,10 +941,10 @@
       "timestamp": "1:02:13",
       "question": "What algorithm is described for estimating the radiance values from the rendering equation?",
       "options": [
-        "Photon mapping",
+        "Photon mapping algorithm",
         "Bidirectional path tracing",
         "Metropolis light transport",
-        "Path tracing"
+        "Standard path tracing"
       ],
       "answer": 3,
       "answerText": "",
@@ -965,10 +965,10 @@
       "timestamp": "1:04:03",
       "question": "What unusual sampling approach is used in the recursive path tracing algorithm?",
       "options": [
-        "Using exactly 16 samples at each bounce point",
-        "Using only one sample (ray) at each bounce point",
-        "Using samples only in the specular direction",
-        "Using a variable number of samples based on surface reflectivity"
+        "Fixed 16 samples per bounce",
+        "One sample per bounce point",
+        "Samples only in specular dir",
+        "Variable samples by reflectivity"
       ],
       "answer": 1,
       "answerText": "",
@@ -989,10 +989,10 @@
       "timestamp": "1:05:05",
       "question": "What became visible in shadow areas when single-bounce indirect illumination was added?",
       "options": [
-        "Shadow areas became completely black",
-        "Caustic patterns appeared in the shadows",
-        "Nothing changed in shadow areas",
-        "Objects previously hidden in shadow became visible"
+        "Shadows turned completely black",
+        "Caustics appeared in shadows",
+        "No change in shadow areas",
+        "Hidden objects became visible"
       ],
       "answer": 3,
       "answerText": "",
@@ -1013,10 +1013,10 @@
       "timestamp": "1:06:20",
       "question": "What material property was revealed when increasing from two to four light bounces?",
       "options": [
-        "The lanterns were made of glass",
-        "The lanterns were made of plastic",
-        "The lanterns were made of paper",
-        "The lanterns were made of metal"
+        "Glass lantern material",
+        "Plastic lantern material",
+        "Paper lantern material",
+        "Metal lantern material"
       ],
       "answer": 0,
       "answerText": "",
@@ -1037,10 +1037,10 @@
       "timestamp": "1:07:36",
       "question": "What challenge arises when determining how many bounces to trace in a path tracing algorithm?",
       "options": [
-        "It's difficult to know if you've captured all important light paths",
-        "Longer paths increase memory usage exponentially",
-        "The algorithm becomes unstable with more than 16 bounces",
-        "GPUs cannot handle more than 8 bounces efficiently"
+        "Hard to capture all important light paths",
+        "Longer paths increase memory usage exponentially due to recursive ray spawning and storage of intermediate states",
+        "The algorithm becomes numerically unstable with more than 16 bounces because of floating-point precision loss and variance explosion",
+        "GPUs cannot handle more than 8 bounces efficiently due to stack depth limits and lack of tail recursion support"
       ],
       "answer": 0,
       "answerText": "",
@@ -1085,10 +1085,10 @@
       "timestamp": "1:10:33",
       "question": "Why is randomized path termination used instead of simply discarding low-contribution paths?",
       "options": [
-        "To ensure the estimator remains unbiased",
-        "To make the algorithm run faster",
-        "To improve visual quality in dark areas",
-        "To reduce memory usage"
+        "To keep the estimator unbiased",
+        "To make the algorithm run faster by skipping expensive low-contribution samples",
+        "To improve visual quality in dark areas by reducing noise through better sampling distribution",
+        "To reduce memory usage by avoiding storage of auxiliary path data for each sample"
       ],
       "answer": 0,
       "answerText": "",
@@ -1109,10 +1109,10 @@
       "timestamp": "1:12:12",
       "question": "What happens to rendering time and image quality when using Russian Roulette?",
       "options": [
-        "Rendering time increases while noise decreases",
-        "Both rendering time and noise decrease",
-        "Both rendering time and noise increase",
-        "Rendering time decreases while noise increases"
+        "Time up, noise down",
+        "Both time and noise down",
+        "Both time and noise up",
+        "Time down, noise up"
       ],
       "answer": 3,
       "answerText": "",
@@ -1133,10 +1133,10 @@
       "timestamp": "1:13:48",
       "question": "What balance must be considered when using variance reduction techniques?",
       "options": [
-        "Memory usage versus computational complexity",
-        "Algorithm simplicity versus implementation complexity",
+        "Memory vs computational cost",
+        "Simplicity vs implementation",
         "Efficiency versus accuracy",
-        "CPU versus GPU utilization"
+        "CPU vs GPU utilization"
       ],
       "answer": 2,
       "answerText": "",
@@ -1158,9 +1158,9 @@
       "question": "What topic does the lecturer preview for the next lecture?",
       "options": [
         "Variance reduction techniques",
-        "Animation with Monte Carlo rendering",
-        "GPU acceleration for ray tracing",
-        "Advanced material models"
+        "Monte Carlo animation methods",
+        "GPU ray tracing acceleration",
+        "Advanced material modeling"
       ],
       "answer": 0,
       "answerText": "",

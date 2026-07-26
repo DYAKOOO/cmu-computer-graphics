@@ -77,10 +77,10 @@
       "timestamp": "00:41",
       "question": "What defines a transformation as a rotation according to the lecture?",
       "options": [
-        "The invariants that are preserved by the transformation",
-        "The specific matrix properties that form a rotation matrix",
-        "The mathematical formula used to compute the rotation",
-        "The axis of rotation and the angle of rotation"
+        "Rotation invariants preserved",
+        "Matrix properties of rotation",
+        "Formula for rotation computation",
+        "Axis and angle of rotation"
       ],
       "answer": 0,
       "answerText": "",
@@ -125,10 +125,10 @@
       "timestamp": "01:47",
       "question": "What distinguishes a pure rotation from a rotation combined with a translation?",
       "options": [
-        "A pure rotation fixes the origin (a center point remains fixed)",
-        "A pure rotation must occur around one of the principal axes",
-        "The angle of rotation must be less than 180 degrees",
-        "The speed at which the transformation is applied"
+        "Fixes origin (center fixed)",
+        "Around principal axes only",
+        "Angle less than 180 degrees",
+        "Speed of transformation applied"
       ],
       "answer": 0,
       "answerText": "",
@@ -175,10 +175,10 @@
       "timestamp": "02:32",
       "question": "Why might someone initially think 3D rotations have three degrees of freedom?",
       "options": [
-        "Because there are three coordinates (x, y, z) in 3D space",
-        "Because a rotation vector has three components",
-        "Because you can specify the angle of rotation around the x-axis, y-axis, and z-axis",
-        "Because a rotation matrix has three rows"
+        "Three coordinates in 3D space",
+        "Three components in vector",
+        "Euler angles per axis x,y,z",
+        "Three rows in matrix"
       ],
       "answer": 2,
       "answerText": "",
@@ -224,9 +224,9 @@
       "question": "What is the relationship between 2D rotations regarding their order of application?",
       "options": [
         "2D rotations are commutative",
-        "2D rotations must be applied in a specific order to work correctly",
-        "2D rotations are associative but not commutative",
-        "2D rotations cannot be combined"
+        "Order-specific application",
+        "Associative but not commutative",
+        "Cannot be combined"
       ],
       "answer": 0,
       "answerText": "",
@@ -247,10 +247,10 @@
       "timestamp": "06:50",
       "question": "How do 3D rotations behave regarding their order of application?",
       "options": [
-        "3D rotations do not commute; the order matters",
-        "3D rotations commute only when applied around the same axis",
-        "3D rotations always commute, like 2D rotations",
-        "3D rotations sometimes commute, depending on the angle"
+        "3D rotations don't commute",
+        "Commute only same-axis",
+        "Always commute like 2D",
+        "Sometimes commute by angle"
       ],
       "answer": 0,
       "answerText": "",
@@ -273,10 +273,10 @@
       "timestamp": "07:13",
       "question": "What physical experiment does the lecturer suggest to demonstrate the non-commutativity of 3D rotations?",
       "options": [
-        "Observing a rotating bicycle wheel",
-        "Throwing a ball in the air with spin",
-        "Spinning a toy gyroscope",
-        "Rotating a water bottle around different axes"
+        "Bicycle wheel observation",
+        "Spinning ball throw",
+        "Toy gyroscope spin",
+        "Water bottle multi-axis"
       ],
       "answer": 3,
       "answerText": "",
@@ -299,10 +299,10 @@
       "timestamp": "10:52",
       "question": "In deriving the 2D rotation matrix, what function does the lecturer define to help with the derivation?",
       "options": [
-        "A function that takes a vector and returns its rotated version",
-        "A function that converts between coordinate systems",
-        "A function that computes the sine and cosine of an angle",
-        "A function s(θ) that gives the point on the circle after rotating counterclockwise by θ"
+        "Vector to rotated version",
+        "Coordinate system conversion",
+        "Sine/cosine computation",
+        "Point on circle after θ"
       ],
       "answer": 3,
       "answerText": "",
@@ -323,10 +323,10 @@
       "timestamp": "13:24",
       "question": "How are the columns of a 2D rotation matrix determined?",
       "options": [
-        "They represent the sine and cosine of the rotation angle",
-        "They are arbitrary as long as they are orthogonal",
-        "They represent the rotated versions of the standard basis vectors",
-        "They are the eigenvectors of the rotation"
+        "They are arbitrary as long as they form an orthonormal set",
+        "They represent the sine and cosine of the rotation angle applied to each basis vector",
+        "Rotated basis vectors",
+        "They are the eigenvectors of the rotation matrix corresponding to eigenvalue 1"
       ],
       "answer": 2,
       "answerText": "",
@@ -347,10 +347,10 @@
       "timestamp": "14:24",
       "question": "What are Euler angles as described in the lecture?",
       "options": [
-        "A method that uses quaternions for 3D rotations",
-        "A way to represent rotations using complex numbers",
-        "A system that uses four parameters to represent rotations",
-        "A scheme where rotations are applied around the three principal axes x, y, and z"
+        "Quaternion-based method",
+        "Complex number representation",
+        "Four-parameter scheme",
+        "x-y-z principal axis scheme"
       ],
       "answer": 3,
       "answerText": "",
@@ -371,10 +371,10 @@
       "timestamp": "14:52",
       "question": "What is the primary advantage of Euler angles according to the lecture?",
       "options": [
-        "They allow for smooth interpolation between rotations",
-        "They avoid all singularities in representing rotations",
-        "They're conceptually easy to understand",
-        "They provide the most efficient computations"
+        "Smooth interpolation support",
+        "No singularities guaranteed",
+        "Conceptually easy to grasp",
+        "Most efficient computation"
       ],
       "answer": 2,
       "answerText": "",
@@ -472,10 +472,10 @@
       "timestamp": "18:46",
       "question": "What problematic situation arises in the gimbal lock example?",
       "options": [
-        "The rotation becomes undefined mathematically",
-        "The rotation matrix becomes singular and cannot be inverted",
-        "The system requires more than three parameters to define the rotation",
-        "Two different parameters (theta x and theta z) only allow rotation around a single axis"
+        "Rotation becomes undefined",
+        "Matrix singular, non-invertible",
+        "Needs >3 parameters",
+        "Theta x/z rotate single axis"
       ],
       "answer": 3,
       "answerText": "",
@@ -496,10 +496,10 @@
       "timestamp": "19:20",
       "question": "What practical example does the lecturer give where gimbal lock could be problematic?",
       "options": [
-        "Virtual reality headset tracking",
-        "Robot arm movement",
-        "Control of an airplane or fighter jet",
-        "Satellite orientation systems"
+        "Precise head pose estimation in immersive VR environments",
+        "Kinematic control of multi-joint manipulators in industrial robotics",
+        "Aircraft attitude control using pitch/yaw/roll dynamics",
+        "Three-axis stabilization of geostationary satellites using reaction wheels"
       ],
       "answer": 2,
       "answerText": "",
@@ -546,10 +546,10 @@
       "timestamp": "20:47",
       "question": "Why does the lecturer introduce complex numbers in the context of rotations?",
       "options": [
-        "To make the mathematics more complicated",
-        "To prepare for quaternion algebra",
-        "As a way to encode geometric transformations in two dimensions",
-        "Because they're computationally faster than matrices"
+        "Make math more complex",
+        "Prepare for quaternion algebra",
+        "Encode 2D transformations",
+        "Faster than matrices"
       ],
       "answer": 2,
       "answerText": "",
@@ -570,10 +570,10 @@
       "timestamp": "22:19",
       "question": "How does the lecturer ask students to think about complex numbers?",
       "options": [
-        "As extensions of real numbers",
-        "As abstract mathematical objects defined by the square root of -1",
-        "As points on the complex plane",
-        "As ordinary two-dimensional vectors with additional operations"
+        "Extensions of reals",
+        "Square root of -1 objects",
+        "Points on complex plane",
+        "2D vectors with extra ops"
       ],
       "answer": 3,
       "answerText": "",
@@ -594,10 +594,10 @@
       "timestamp": "23:39",
       "question": "What approach to understanding complex numbers does the lecturer explicitly reject?",
       "options": [
-        "The algebraic approach",
-        "The idea of i as the square root of -1",
-        "The vector space approach",
-        "The geometric approach"
+        "Algebraic approach",
+        "i as sqrt(-1) idea",
+        "Vector space approach",
+        "Geometric approach"
       ],
       "answer": 1,
       "answerText": "",
@@ -621,10 +621,10 @@
       "timestamp": "24:20",
       "question": "What geometric interpretation does the lecturer give for the imaginary unit i?",
       "options": [
-        "A reflection across the x-axis",
-        "A scaling operation that doubles the length",
-        "A projection onto the y-axis",
-        "A quarter turn (90°) in the counterclockwise direction"
+        "Reflection across x-axis",
+        "Scaling doubles length",
+        "Projection onto y-axis",
+        "Quarter turn CCW"
       ],
       "answer": 3,
       "answerText": "",
@@ -645,10 +645,10 @@
       "timestamp": "25:13",
       "question": "Why is i² equal to -1 according to the lecturer's geometric interpretation?",
       "options": [
-        "Because the Euler formula dictates this relationship",
-        "Because of a fundamental algebraic property",
-        "Because applying the imaginary unit twice makes a half turn (180°)",
-        "Because complex numbers have special mathematical properties"
+        "Euler formula dictates it",
+        "Fundamental algebra property",
+        "i twice gives half turn",
+        "Special complex properties"
       ],
       "answer": 2,
       "answerText": "",
@@ -669,10 +669,10 @@
       "timestamp": "26:25",
       "question": "How does the lecturer describe complex numbers in terms of vector spaces?",
       "options": [
-        "As one-dimensional vectors over the complex field",
-        "As two-dimensional vectors using bases named 1 and i instead of e₁ and e₂",
-        "As four-dimensional vectors with special properties",
-        "As extensions of real numbers with imaginary components"
+        "1D vectors over C field",
+        "2D vectors with bases 1,i",
+        "4D vectors with special props",
+        "Reals with imaginary parts"
       ],
       "answer": 1,
       "answerText": "",
@@ -749,9 +749,9 @@
       "timestamp": "33:09",
       "question": "What is Euler's formula as presented in the lecture?",
       "options": [
-        "sin²(θ) + cos²(θ) = 1",
-        "e^(iθ) = i·sin(θ) - cos(θ)",
-        "e^(iθ) = cos(θ) + i·sin(θ)",
+        "sin²θ + cos²θ = 1",
+        "e^(iθ) = i·sinθ - cosθ",
+        "e^(iθ) = cosθ + i·sinθ",
         "e^(iπ) + 1 = 0"
       ],
       "answer": 2,
@@ -773,10 +773,10 @@
       "timestamp": "34:04",
       "question": "How should e^(iθ) be interpreted according to the lecturer?",
       "options": [
-        "As a rotation matrix in disguise",
-        "As a power series expansion",
-        "As a complex exponential function",
-        "As the point on the unit circle at angle θ from the x-axis"
+        "Rotation matrix in disguise",
+        "Power series expansion",
+        "Complex exponential function",
+        "Unit circle point at angle θ"
       ],
       "answer": 3,
       "answerText": "",
@@ -797,10 +797,10 @@
       "timestamp": "38:20",
       "question": "What advantage does the lecturer highlight when comparing complex number representation with matrices for 2D rotations?",
       "options": [
-        "Complex numbers lead to simpler expressions without trig identities",
-        "Complex numbers produce more accurate results",
-        "Complex numbers are computationally faster",
-        "Complex numbers work in higher dimensions"
+        "Complex numbers avoid trigonometric identities and simplify derivation",
+        "Complex numbers yield higher precision in double-precision arithmetic",
+        "Complex numbers reduce CPU cycle count due to fused multiply-add support",
+        "Complex numbers generalize seamlessly to 3D and 4D rotations without modification"
       ],
       "answer": 0,
       "answerText": "",
@@ -876,10 +876,10 @@
       "timestamp": "40:50",
       "question": "What was Hamilton's key insight about representing 3D rotations?",
       "options": [
-        "That 4 components, not 3, are needed to represent 3D rotations like complex numbers",
-        "That 3D rotations can be reduced to a series of 2D rotations",
-        "That 3D rotations can be represented by 3×3 matrices",
-        "That Euler angles are the best representation"
+        "4 components needed for 3D",
+        "3D → series of 2D rotations",
+        "3D rotations as 3×3 matrices",
+        "Euler angles best rep"
       ],
       "answer": 0,
       "answerText": "",
@@ -900,12 +900,12 @@
       "timestamp": "41:37",
       "question": "How should the four components of a quaternion be conceptualized according to the lecturer?",
       "options": [
-        "As the four corners of a tetrahedron",
-        "As homogeneous coordinates in projective space",
-        "As one real component and three imaginary components that encode points in 3D space",
-        "As four separate rotation angles"
+        "As one real and three imaginary components",
+        "As the four corners of a tetrahedron in 3D space",
+        "As homogeneous coordinates embedded in projective 4-space",
+        "As four separate rotation angles about orthogonal axes"
       ],
-      "answer": 2,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "The lecturer explains at [41:37]: \"The right way to think about these if you want to get your head around using quaternions for three-dimensional geometry is to imagine that the last three components the so-called imaginary components are used to encode points in three-dimensional space.\"",
@@ -924,10 +924,10 @@
       "timestamp": "43:44",
       "question": "What are the basic algebraic rules for quaternion multiplication presented in the lecture?",
       "options": [
-        "i² = -1, j² = 1, k² = -1, ijk = 1",
-        "i² = j² = k² = ijk = -1",
-        "i² = j² = k² = 1, ijk = -1",
-        "i² = j² = k² = ijk = 1"
+        "i²=-1,j²=1,k²=-1,ijk=1",
+        "i²=j²=k²=ijk=-1",
+        "i²=j²=k²=1,ijk=-1",
+        "i²=j²=k²=ijk=1"
       ],
       "answer": 1,
       "answerText": "",
@@ -948,10 +948,10 @@
       "timestamp": "44:23",
       "question": "What important property of quaternion multiplication distinguishes it from rotation (not complex multiplication?) ?",
       "options": [
-        "Quaternion multiplication is not associative",
-        "Quaternion multiplication does not preserve norms",
-        "Quaternion multiplication is not distributive",
-        "Quaternion multiplication is not commutative"
+        "Not associative",
+        "Doesn't preserve norms",
+        "Not distributive",
+        "Not commutative"
       ],
       "answer": 3,
       "answerText": "",
@@ -997,10 +997,10 @@
       "timestamp": "48:54",
       "question": "What simplified form does the quaternion product take when applied to two vectors in R³?",
       "options": [
-        "The cross product minus the dot product (as a quaternion)",
-        "The cross product plus the dot product (as a quaternion)",
-        "Only the dot product of the vectors",
-        "Only the cross product of the vectors"
+        "The cross product minus the dot product",
+        "The cross product plus the dot product (both embedded in quaternion form)",
+        "Only the scalar (dot) component of the quaternion product",
+        "Only the vector (cross) component of the quaternion product"
       ],
       "answer": 0,
       "answerText": "",
@@ -1047,10 +1047,10 @@
       "timestamp": "51:29",
       "question": "What does q̄ (q bar) represent for a quaternion?",
       "options": [
-        "The quaternion with unchanged real part and negated imaginary parts",
-        "The quaternion with negated real part and unchanged imaginary parts",
-        "The transpose of the quaternion matrix",
-        "The multiplicative inverse of the quaternion"
+        "Real same, imag negated",
+        "Real negated, imag same",
+        "Transpose of quat matrix",
+        "Multiplicative inverse"
       ],
       "answer": 0,
       "answerText": "",
@@ -1071,12 +1071,12 @@
       "timestamp": "52:14",
       "question": "How do you construct a quaternion that represents a rotation around axis u by angle θ?",
       "options": [
-        "sin(θ/2)·u",
-        "cos(θ) + sin(θ)·u",
-        "cos(θ) + u",
-        "cos(θ/2) + sin(θ/2)·u"
+        "cos(θ/2) + sin(θ/2)·u",
+        "sin(θ/2) times the unit axis vector u",
+        "cos(θ) + sin(θ)·u (a malformed quaternion with wrong angle halving)",
+        "cos(θ/2) + u (missing sine coefficient and magnitude scaling)"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [52:14], the lecturer provides the formula: \"The quaternion q representing rotation around the axis u by the angle theta is nothing more than q is equal to cosine theta over two plus sine theta over two times the axis u.\"",
@@ -1098,7 +1098,7 @@
         "Spherical Linear Interpolation",
         "Spherical Linear Extrapolation",
         "Special Linear Representation",
-        "Smooth Linear Rotation Procedure"
+        "Smooth Linear Rotation Proc"
       ],
       "answer": 0,
       "answerText": "",
@@ -1121,12 +1121,12 @@
       "timestamp": "55:30",
       "question": "What advantage does the lecturer highlight about quaternion interpolation using SLERP?",
       "options": [
-        "It requires less memory than matrix interpolation",
-        "It can represent rotations larger than 360 degrees",
-        "It's computationally faster than other methods",
-        "It provides nice smooth interpolation with minimal wiggling between poses"
+        "It provides smooth, minimal-torque interpolation between orientations",
+        "It requires less memory than interpolating full 4×4 transformation matrices",
+        "It can represent rotations larger than 360 degrees without aliasing",
+        "It's computationally faster than spherical linear interpolation using matrices"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [55:30], the lecturer states: \"If you do this you'll get nice smooth interpolation kind of the interpolation between the two poses that wiggles the least as you rotate from one to the other.\"",
@@ -1148,10 +1148,10 @@
       "timestamp": "55:55",
       "question": "What graphics application of complex numbers does the lecturer highlight?",
       "options": [
-        "Animation of 2D characters",
-        "Rendering transparent objects",
+        "2D character animation",
+        "Transparent object rendering",
         "Lighting calculations",
-        "Texture mapping on curved surfaces"
+        "Texture mapping on curves"
       ],
       "answer": 3,
       "answerText": "",
@@ -1172,10 +1172,10 @@
       "timestamp": "56:12",
       "question": "What property makes complex numbers particularly useful for texture mapping?",
       "options": [
-        "They minimize distortion of straight lines",
-        "They guarantee no overlap in the mapping",
-        "They preserve areas during mapping",
-        "They preserve angles (conformal mapping)"
+        "Minimize straight-line distortion",
+        "Guarantee no mapping overlap",
+        "Preserve areas during mapping",
+        "Preserve angles (conformal)"
       ],
       "answer": 3,
       "answerText": "",
@@ -1201,10 +1201,10 @@
       "timestamp": "57:19",
       "question": "What mathematical visualization technique involving complex numbers does the lecturer describe as \"beautiful\"?",
       "options": [
-        "Fractal generation through iterative processes",
-        "Phase portraits of differential equations",
-        "Streamline visualization of vector fields",
-        "Contour plots of complex functions"
+        "Fractal generation iteratively",
+        "Phase portraits of ODEs",
+        "Streamline vector field viz",
+        "Contour plots of complex funcs"
       ],
       "answer": 0,
       "answerText": "",
@@ -1225,12 +1225,12 @@
       "timestamp": "58:13",
       "question": "What advanced representation of rotations does the lecturer mention but not cover in detail?",
       "options": [
-        "Dual quaternions",
-        "Homogeneous matrices",
         "Lie algebras and Lie groups",
-        "Spin groups"
+        "Dual quaternions used for rigid-body motion",
+        "Homogeneous 4×4 matrices representing SE(3)",
+        "Spin groups Spin(3), which double-cover SO(3)"
       ],
-      "answer": 2,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "The lecturer states at [58:13]: \"One that we won't cover today because it takes a while to really get into is the perspective of lead algebras and lead groups.\"",
@@ -1275,10 +1275,10 @@
       "timestamp": "58:48",
       "question": "What statistical application of rotation representations does the lecturer mention?",
       "options": [
-        "Clustering rotations into similar groups",
-        "Finding the most likely rotation given noisy data",
-        "Calculating the standard deviation of rotations",
-        "Computing the mean or average of multiple rotations"
+        "Clustering similar rotations",
+        "Most likely rot from noisy data",
+        "Std dev of rotations",
+        "Mean or average of rotations"
       ],
       "answer": 3,
       "answerText": "",
@@ -1326,10 +1326,10 @@
       "timestamp": "1:00:40",
       "question": "What is the lecturer's position on the \"right\" way to represent rotations?",
       "options": [
-        "Quaternions are always the best representation",
-        "Euler angles should be avoided at all costs",
-        "There is no single right or best way to work with rotations",
-        "Matrices are more fundamental and should be preferred"
+        "Quats always best",
+        "Avoid Euler angles entirely",
+        "No single best way",
+        "Matrices more fundamental"
       ],
       "answer": 2,
       "answerText": "",
@@ -1375,9 +1375,9 @@
       "question": "What topic does the lecturer preview for the next lecture?",
       "options": [
         "Perspective and texture mapping",
-        "Quaternion algebras",
-        "Ray tracing algorithms",
-        "Mesh generation techniques"
+        "Quaternion algebras used in geometric modeling",
+        "Ray tracing algorithms that rely on surface normals",
+        "Mesh generation techniques involving subdivision schemes"
       ],
       "answer": 0,
       "answerText": "",
@@ -1398,10 +1398,10 @@
       "timestamp": "47:15",
       "question": "How does the lecturer suggest encoding a 3D point as a quaternion?",
       "options": [
-        "As x + yi + zj + k",
-        "As 1 + xi + yj + zk",
-        "As xi + yj + zk",
-        "As 0 + xi + yj + zk"
+        "x + yi + zj + k",
+        "1 + xi + yj + zk",
+        "xi + yj + zk",
+        "0 + xi + yj + zk"
       ],
       "answer": 3,
       "answerText": "",
@@ -1422,10 +1422,10 @@
       "timestamp": "47:45",
       "question": "How does the lecturer suggest conceptualizing quaternions for simplicity?",
       "options": [
-        "As a scalar-vector pair",
-        "As a point in 4D space",
-        "As an angle and a direction vector",
-        "As four separate components"
+        "Scalar-vector pair",
+        "Point in 4D space",
+        "Angle and direction vector",
+        "Four separate components"
       ],
       "answer": 0,
       "answerText": "",
@@ -1446,10 +1446,10 @@
       "timestamp": "49:32",
       "question": "What relationship between standard vector operations does the quaternion product reveal?",
       "options": [
-        "It combines the dot product and cross product",
-        "It combines vector projection and rejection",
-        "It combines addition and subtraction",
-        "It combines scalar multiplication and vector addition"
+        "Combines dot and cross",
+        "Combines projection/rejection",
+        "Combines add/subtract",
+        "Combines scalar mult/vector add"
       ],
       "answer": 0,
       "answerText": "",
@@ -1470,12 +1470,12 @@
       "timestamp": "59:56",
       "question": "How does the lecturer characterize the difference between 2D and 3D rotations?",
       "options": [
-        "2D rotations are unique while 3D rotations are ambiguous",
-        "2D rotations are continuous while 3D rotations are discrete",
         "2D rotations are trivial while 3D rotations are extremely rich",
-        "2D rotations are linear while 3D rotations are non-linear"
+        "2D rotations are unique up to sign while 3D rotations have infinitely many representations",
+        "2D rotations form a simple circle group S¹ while 3D rotations form the non-Abelian group SO(3)",
+        "2D rotations are always commutative while 3D rotations are generally non-commutative"
       ],
-      "answer": 2,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [59:56], the lecturer states: \"You hopefully get the feeling that rotations are surprisingly complicated once we go from 2d to 3d 2d is pretty trivial 3d is extremely rich.\"",
@@ -1495,9 +1495,9 @@
       "question": "What distinguishes a rotation from a reflection according to the lecturer?",
       "options": [
         "Rotations preserve orientation while reflections reverse it",
-        "Rotations preserve the origin while reflections don't",
-        "Rotations preserve lengths but reflections don't",
-        "Rotations preserve angles but reflections don't"
+        "Rotations preserve the origin and reflections may translate it",
+        "Rotations preserve Euclidean distances while reflections do not",
+        "Rotations preserve angles between vectors while reflections distort them"
       ],
       "answer": 0,
       "answerText": "",
@@ -1518,10 +1518,10 @@
       "timestamp": "26:02",
       "question": "What happens when the imaginary unit i is applied four times in sequence?",
       "options": [
-        "The result is a 360° rotation, returning to the original vector",
-        "The result becomes undefined",
-        "The result becomes a pure imaginary number",
-        "The result is a diagonal reflection"
+        "A 360° rotation",
+        "The result becomes undefined due to division by zero in the rotation formula",
+        "The result becomes a pure imaginary number because the real part vanishes identically",
+        "The result is a diagonal reflection across the line y = x"
       ],
       "answer": 0,
       "answerText": "",

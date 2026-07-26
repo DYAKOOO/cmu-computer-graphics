@@ -104,8 +104,8 @@
       "timestamp": "01:37",
       "question": "What specific application area in graphics does the lecturer mention that relies on partial differential equations?",
       "options": [
-        "Hardware acceleration",
-        "Color grading",
+        "Hardware acceleration support",
+        "Color grading techniques",
         "Physically based animation",
         "File compression algorithms"
       ],
@@ -130,7 +130,7 @@
       "options": [
         "It works only in 3D space",
         "It measures angles between vectors",
-        "It is the length preserved by rigid motions of space",
+        "Preserved by rigid motions",
         "It always yields positive values"
       ],
       "answer": 2,
@@ -206,10 +206,10 @@
       "timestamp": "05:10",
       "question": "How does the lecturer define the Euclidean inner product in geometric terms?",
       "options": [
-        "As the projection of one vector onto another",
-        "As the reciprocal of the distance between vectors",
-        "As the norm of u times norm of v times cosine of the angle between them",
-        "As the sum of component-wise products"
+        "Projection of one onto another",
+        "Reciprocal of vector distance",
+        "Norm u norm v cos angle",
+        "Sum of component-wise products"
       ],
       "answer": 2,
       "answerText": "",
@@ -230,10 +230,10 @@
       "timestamp": "06:44",
       "question": "What condition must be met for the dot product formula to have geometric meaning?",
       "options": [
-        "The vectors must have the same dimension",
-        "The coordinates must come from an orthonormal basis",
-        "The vectors must be normalized",
-        "The vectors must be perpendicular"
+        "Same dimension required",
+        "Orthonormal basis needed",
+        "Vectors must be normalized",
+        "Vectors must be perpendicular"
       ],
       "answer": 1,
       "answerText": "",
@@ -257,10 +257,10 @@
       "timestamp": "07:24",
       "question": "What does the cross product of two vectors produce, according to the lecture?",
       "options": [
-        "A matrix",
-        "A tensor",
+        "A matrix representation",
+        "A rank-2 tensor",
         "A scalar value",
-        "A vector"
+        "A vector result"
       ],
       "answer": 3,
       "answerText": "",
@@ -281,10 +281,10 @@
       "timestamp": "07:52",
       "question": "What two properties define the cross product geometrically?",
       "options": [
-        "Its magnitude is the sum of the vectors and its direction is their difference",
-        "Its magnitude is the product of vector lengths and its direction is the average of their directions",
-        "Its magnitude is the dot product of the vectors and its direction is along their sum",
-        "Its magnitude is the area of the parallelogram and its direction is orthogonal to both vectors"
+        "Magnitude sum, direction difference",
+        "Product length, average direction",
+        "Magnitude dot product, sum direction",
+        "Area magnitude, orthogonal direction"
       ],
       "answer": 3,
       "answerText": "",
@@ -337,7 +337,7 @@
         "Using quaternions instead of vectors",
         "Using complex numbers instead of vectors",
         "Ignoring the cross product entirely for 2D",
-        "Reporting just the signed area of the parallelogram"
+        "Signed area scalar"
       ],
       "answer": 3,
       "answerText": "",
@@ -415,7 +415,7 @@
       "timestamp": "14:30",
       "question": "What is the result of n cross (n cross u) according to the lecture?",
       "options": [
-        "A vector perpendicular to both n and u",
+        "Perpendicular to n and u",
         "-u",
         "n",
         "u"
@@ -439,10 +439,10 @@
       "timestamp": "15:47",
       "question": "How can the dot product be expressed using matrix operations?",
       "options": [
-        "As the eigenvalue of the vectors' outer product",
-        "As u transpose times v",
-        "As the trace of the matrix formed by the vectors",
-        "As the determinant of a matrix containing both vectors"
+        "Eigenvalue of outer product",
+        "u transpose times v",
+        "Trace of vector matrix",
+        "Determinant of vector matrix"
       ],
       "answer": 1,
       "answerText": "",
@@ -467,10 +467,10 @@
       "timestamp": "17:17",
       "question": "How does the lecturer represent a general inner product with coefficients using matrices?",
       "options": [
-        "By using the determinant of a coefficient matrix",
-        "By constructing a diagonal matrix of coefficients",
-        "By constructing a matrix of coefficients and using u^T A v",
-        "By using the trace of a coefficient matrix"
+        "Determinant of coefficient matrix",
+        "Diagonal matrix of coefficients",
+        "Matrix A with u^T A v",
+        "Trace of coefficient matrix"
       ],
       "answer": 2,
       "answerText": "",
@@ -491,10 +491,10 @@
       "timestamp": "19:04",
       "question": "What important property does the matrix representing a general inner product have?",
       "options": [
-        "It must be invertible",
-        "It must be diagonal",
-        "It must be positive definite",
-        "It must be symmetric"
+        "Must be invertible",
+        "Must be diagonal",
+        "Must be positive definite",
+        "Must be symmetric"
       ],
       "answer": 3,
       "answerText": "",
@@ -519,12 +519,12 @@
       "timestamp": "19:21",
       "question": "How can the cross product be represented using a matrix?",
       "options": [
+        "As a skew-symmetric matrix",
         "As the eigenvalues of the vector's components",
         "As a 3×3 identity matrix multiplied by the vector",
-        "As a skew-symmetric matrix constructed from the vector components",
         "As a symmetric matrix multiplied by the vector"
       ],
-      "answer": 2,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "The lecturer explains at [19:40]: \"This matrix has an interesting structure. It has the three components of the vector in it but half of them are negated... And you notice that this matrix now instead of being symmetric it's anti-symmetric or skew-symmetric.\"",
@@ -541,10 +541,10 @@
       "timestamp": "21:11",
       "question": "What happens when you swap the order of vectors in a cross product?",
       "options": [
-        "The result is the same",
-        "The result is rotated by 90 degrees",
-        "The result is the negative of the original cross product",
-        "The result is orthogonal to the original cross product"
+        "Result is identical",
+        "Rotated by 90 degrees",
+        "Negative of original",
+        "Orthogonal to original"
       ],
       "answer": 2,
       "answerText": "",
@@ -570,10 +570,10 @@
       "timestamp": "23:54",
       "question": "What geometric interpretation does the lecturer give for the determinant of three vectors?",
       "options": [
-        "The sum of the vector magnitudes",
-        "The angle between the vectors",
-        "The volume of the parallelepiped formed by the vectors",
-        "The projection of one vector onto another"
+        "Sum of vector magnitudes",
+        "Angle between vectors",
+        "Parallelepiped volume",
+        "Projection onto another"
       ],
       "answer": 2,
       "answerText": "",
@@ -598,10 +598,10 @@
       "timestamp": "24:56",
       "question": "How does the lecturer geometrically calculate the volume of the parallelepiped formed by three vectors?",
       "options": [
-        "By computing the triple integral of the vectors",
-        "By summing the magnitudes of all three vectors",
-        "By taking the dot product of one vector with the cross product of the other two",
-        "By calculating the eigenvalues of the matrix formed by the vectors"
+        "Triple integral of vectors",
+        "Sum of all magnitudes",
+        "Dot with cross of other two",
+        "Eigenvalues of vector matrix"
       ],
       "answer": 2,
       "answerText": "",
@@ -837,10 +837,10 @@
       "timestamp": "35:30",
       "question": "What is the most basic definition of a derivative according to the lecture?",
       "options": [
-        "The limit of a difference quotient",
-        "The change in a function with respect to time",
-        "The second-order approximation of a function",
-        "The slope or rise over run of a function"
+        "Limit of difference quotient",
+        "Change w.r.t. time",
+        "Second-order approximation",
+        "Slope or rise over run"
       ],
       "answer": 3,
       "answerText": "",
@@ -963,10 +963,10 @@
       "timestamp": "39:22",
       "question": "Why does the lecturer say approximating functions with linear or quadratic terms is useful in graphics?",
       "options": [
-        "Because it reduces memory usage",
-        "Because it improves color accuracy",
-        "Because it makes computation easier",
-        "Because it creates more realistic visualizations"
+        "Reduces memory usage",
+        "Improves color accuracy",
+        "Makes computation easier",
+        "Creates realistic visualizations"
       ],
       "answer": 2,
       "answerText": "",
@@ -987,10 +987,10 @@
       "timestamp": "40:19",
       "question": "What is the directional derivative?",
       "options": [
-        "The curl of a function at a point",
-        "A vector pointing in the direction of steepest ascent",
-        "The change in direction of a vector field",
-        "The derivative of a multivariable function along a specific direction"
+        "Curl at a point",
+        "Steepest ascent direction",
+        "Change in vector field direction",
+        "Derivative along direction"
       ],
       "answer": 3,
       "answerText": "",
@@ -1092,10 +1092,10 @@
       "timestamp": "44:02",
       "question": "What is the proper name of the symbol ∇ used for the gradient?",
       "options": [
-        "Nabla",
-        "Gradient",
-        "Laplacian",
-        "Del"
+        "Nabla operator",
+        "Gradient operator",
+        "Laplacian operator",
+        "Del symbol"
       ],
       "answer": 0,
       "answerText": "",
@@ -1116,10 +1116,10 @@
       "timestamp": "44:30",
       "question": "How is the gradient defined in terms of partial derivatives?",
       "options": [
-        "The list of all partial derivatives along coordinate directions",
-        "The sum of all partial derivatives",
-        "The maximum of all partial derivatives",
-        "The product of all partial derivatives"
+        "List of partial derivatives",
+        "Sum of partial derivatives",
+        "Maximum of partial derivatives",
+        "Product of partial derivatives"
       ],
       "answer": 0,
       "answerText": "",
@@ -1217,10 +1217,10 @@
       "timestamp": "49:18",
       "question": "What does the gradient represent geometrically, according to the lecturer?",
       "options": [
-        "The level curves of the function",
-        "The boundary of the function",
-        "The direction of steepest ascent",
-        "The second derivative of the function"
+        "Level curves",
+        "Domain boundary",
+        "Steepest ascent",
+        "Second derivative"
       ],
       "answer": 2,
       "answerText": "",
@@ -1292,7 +1292,7 @@
       "question": "What is the gradient of the dot product u·v with respect to u?",
       "options": [
         "u + v",
-        "u - v",
+        "u − v",
         "v",
         "u"
       ],
@@ -1315,10 +1315,10 @@
       "timestamp": "54:50",
       "question": "What pattern does the lecturer identify for the gradient of xᵀy with respect to x?",
       "options": [
-        "It equals y",
-        "It equals x",
-        "It equals the transpose of y",
-        "It equals x + y"
+        "Equals y",
+        "Equals x",
+        "Equals transpose of y",
+        "Equals x + y"
       ],
       "answer": 0,
       "answerText": "",
@@ -1364,8 +1364,8 @@
       "question": "What resource does the lecturer recommend for matrix derivatives?",
       "options": [
         "Linear Algebra Done Right",
-        "The professor's lecture notes",
-        "Matrix Calculus for Machine Learning",
+        "Lecture notes",
+        "Matrix Calculus ML",
         "The Matrix Cookbook"
       ],
       "answer": 3,
@@ -1390,7 +1390,7 @@
         "A tensor field",
         "A complex-valued function",
         "A function of another function",
-        "A quaternion"
+        "A quaternion representing spatial rotation"
       ],
       "answer": 2,
       "answerText": "",
@@ -1411,10 +1411,10 @@
       "timestamp": "59:40",
       "question": "In the advanced example, what is the function Big F of little f?",
       "options": [
-        "The derivative of little f",
-        "The L2 inner product of little f and little g",
-        "The maximum value of little f",
-        "The integral of little f squared"
+        "Derivative of f",
+        "L2 inner product f,g",
+        "Maximum of f",
+        "Integral of f squared"
       ],
       "answer": 1,
       "answerText": "",
@@ -1435,10 +1435,10 @@
       "timestamp": "1:00:44",
       "question": "What does the lecturer claim is the gradient of Big F(little f) = ⟨little f, little g⟩₂?",
       "options": [
-        "The derivative of little g",
-        "The function little f",
-        "The function little g",
-        "The zero function"
+        "Derivative of g",
+        "Function f",
+        "Function g",
+        "Zero function"
       ],
       "answer": 2,
       "answerText": "",
@@ -1459,10 +1459,10 @@
       "timestamp": "1:01:26",
       "question": "What intuition does the lecturer use to explain why the gradient of the L2 inner product is the function little g?",
       "options": [
-        "That any function can be represented as an inner product",
-        "That the derivative of a product is the sum of derivatives",
-        "That the derivative of the inner product is always zero",
-        "That the inner product measures alignment, and the function best aligned with g is g itself"
+        "Any f as inner product",
+        "Derivative of product rule",
+        "Derivative of inner product zero",
+        "Inner product measures alignment"
       ],
       "answer": 3,
       "answerText": "",
@@ -1486,8 +1486,8 @@
       "timestamp": "1:04:42",
       "question": "What is the gradient of the squared L2 norm of f with respect to f?",
       "options": [
-        "The norm of f",
-        "The square of f",
+        "Norm of f",
+        "Square of f",
         "2f",
         "f"
       ],
@@ -1534,10 +1534,10 @@
       "timestamp": "1:06:32",
       "question": "How does the lecturer define a vector field?",
       "options": [
-        "A matrix that transforms vectors",
-        "A collection of vectors in space",
-        "A mapping from points in space to vectors",
-        "A derivative of a scalar field"
+        "Matrix transforming vectors",
+        "Collection of vectors",
+        "Points to vectors mapping",
+        "Derivative of scalar field"
       ],
       "answer": 2,
       "answerText": "",
@@ -1558,10 +1558,10 @@
       "timestamp": "1:07:25",
       "question": "How many basic derivatives for vector fields does the lecturer identify?",
       "options": [
-        "Two - the divergence and curl",
-        "Four - the gradient, divergence, curl, and Laplacian",
-        "One - the gradient",
-        "Three - the gradient, divergence, and curl"
+        "Two: div and curl",
+        "Four: grad, div, curl, Lap",
+        "One: gradient",
+        "Three: grad, div, curl"
       ],
       "answer": 0,
       "answerText": "",
@@ -1585,10 +1585,10 @@
       "timestamp": "1:08:01",
       "question": "What does the divergence measure about a vector field?",
       "options": [
-        "The circulation or rotational behavior",
+        "The circulation or rotational behavior of a vector field around a point",
         "The rate of expansion or contraction (source/sink behavior)",
-        "The total energy of the field",
-        "The average vector direction"
+        "The total energy density integrated over the domain",
+        "The average direction weighted by magnitude across the region"
       ],
       "answer": 1,
       "answerText": "",
@@ -1609,10 +1609,10 @@
       "timestamp": "1:09:03",
       "question": "What does the curl measure about a vector field?",
       "options": [
-        "How much the field is spinning (rotational behavior)",
-        "The magnitude of the vectors",
-        "The rate of expansion or contraction",
-        "The gradient of the field's energy"
+        "How much field spins",
+        "Vector magnitude",
+        "Expansion/contraction rate",
+        "Gradient of field energy"
       ],
       "answer": 0,
       "answerText": "",
@@ -1658,9 +1658,9 @@
       "question": "What is the coordinate formula for the divergence of a vector field?",
       "options": [
         "The cross product of the gradient with the vector field",
-        "The sum of the partial derivatives of each component with respect to its corresponding coordinate",
-        "The determinant of the vector field's Jacobian",
-        "The trace of the vector field's gradient"
+        "The sum of partial derivatives",
+        "The determinant of the vector field's Jacobian matrix",
+        "The trace of the vector field's gradient tensor"
       ],
       "answer": 1,
       "answerText": "",
@@ -1708,9 +1708,9 @@
       "question": "What is the 2D curl formula?",
       "options": [
         "∂x₁/∂x₁ + ∂x₂/∂x₂",
-        "The divergence of the 2D vector field",
-        "The determinant of the 2×2 Jacobian matrix",
-        "∂x₂/∂x₁ - ∂x₁/∂x₂"
+        "2D field divergence",
+        "Det of 2×2 Jacobian",
+        "∂x₂/∂x₁ − ∂x₁/∂x₂"
       ],
       "answer": 3,
       "answerText": "",
@@ -1735,9 +1735,9 @@
       "question": "What relationship does the lecturer identify between curl and divergence?",
       "options": [
         "The divergence of X equals the curl of the 90° rotation of X",
-        "They are completely independent operations",
-        "The curl is always perpendicular to the divergence",
-        "The sum of curl and divergence always equals zero"
+        "They are completely independent operations with no general relationship",
+        "The curl is always perpendicular to the divergence vector",
+        "The sum of the curl (a vector) and divergence (a scalar) is undefined and meaningless"
       ],
       "answer": 0,
       "answerText": "",
@@ -1811,10 +1811,10 @@
       "timestamp": "1:21:19",
       "question": "How can the Laplacian be written in terms of other differential operators?",
       "options": [
-        "As the gradient of the divergence",
-        "As the curl of the gradient",
-        "As the divergence of the curl",
-        "As the divergence of the gradient"
+        "Grad of divergence",
+        "Curl of gradient",
+        "Div of curl",
+        "Div of gradient"
       ],
       "answer": 3,
       "answerText": "",
@@ -1839,10 +1839,10 @@
       "timestamp": "1:27:25",
       "question": "How does the lecturer define the Hessian in terms of the gradient?",
       "options": [
-        "The Hessian is the determinant of the gradient",
-        "The Hessian is the integral of the gradient",
-        "The Hessian is the transpose of the gradient",
-        "The Hessian gives the directional derivative of the gradient"
+        "Hessian = det of grad",
+        "Hessian = integral of grad",
+        "Hessian = transpose of grad",
+        "Hessian = dir deriv of grad"
       ],
       "answer": 3,
       "answerText": "",

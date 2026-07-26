@@ -80,7 +80,7 @@
         "Linear algebra",
         "Vector calculus",
         "Number theory",
-        "Differential equations"
+        "Differential eqs"
       ],
       "answer": 0,
       "answerText": "",
@@ -101,12 +101,12 @@
       "timestamp": "00:42",
       "question": "According to the lecture, what is a key computational advantage of expressing a problem in terms of linear algebra?",
       "options": [
-        "It makes the code easier to read",
+        "It lets you use existing numerical libraries",
         "You can hand it off to an existing numerical linear algebra package",
-        "It automatically parallelizes the computation",
-        "It requires less computer memory"
+        "It makes the code easier to read and maintain over time",
+        "It automatically parallelizes the computation and reduces memory usage"
       ],
-      "answer": 1,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "The lecturer explains at [00:42]: \"Once you can express the solution to a problem in terms of linear algebra you're really in good shape you can now just hand off your linear system to a computer to an existing numerical linear algebra package and it does a lot of the work for you.\"",
@@ -125,10 +125,10 @@
       "timestamp": "02:37",
       "question": "What approach does Professor Crane advocate when learning mathematical definitions?",
       "options": [
-        "Never accept rules handed to you by an authority; understand why they're true",
-        "Focus only on the rules that seem intuitive",
-        "Skip the details and focus only on applications",
-        "Memorize all rules precisely as given by authorities"
+        "Question authority; understand why rules hold",
+        "Focus only on the rules that seem intuitive or familiar",
+        "Skip the details and focus only on applications in graphics",
+        "Memorize all rules precisely as given by authorities without deviation"
       ],
       "answer": 0,
       "answerText": "",
@@ -152,10 +152,10 @@
       "timestamp": "04:08",
       "question": "What intuitive representation of a vector does the professor describe as a \"really really good cartoon\"?",
       "options": [
-        "A sequence of numbers",
-        "A point in space",
+        "A numeric sequence",
+        "A spatial point",
         "A little arrow",
-        "A mathematical function"
+        "A math function"
       ],
       "answer": 2,
       "answerText": "",
@@ -176,10 +176,10 @@
       "timestamp": "05:32",
       "question": "What two fundamental pieces of information does a vector encode?",
       "options": [
-        "Position and velocity",
-        "Origin and endpoint",
+        "Position and velocity of a particle",
+        "Origin and endpoint of a segment",
         "Direction and magnitude",
-        "Force and acceleration"
+        "Force and acceleration in Newtonian mechanics"
       ],
       "answer": 2,
       "answerText": "",
@@ -202,7 +202,7 @@
       "timestamp": "06:22",
       "question": "In linear algebra, what is NOT typically associated with a vector according to the lecture?",
       "options": [
-        "Base point (starting point)",
+        "Base point",
         "Orientation",
         "Magnitude",
         "Direction"
@@ -228,10 +228,10 @@
       "timestamp": "07:38",
       "question": "Why must we be cautious when using measurements of vectors in different coordinate systems?",
       "options": [
-        "Some measurements are only meaningful relative to a particular coordinate system",
-        "Vectors cannot be compared across different coordinate systems",
-        "Different coordinate systems produce different vector magnitudes",
-        "All coordinate systems measure vectors incorrectly"
+        "Measurements depend on coordinate system",
+        "Vectors can't be compared across systems",
+        "Magnitudes differ by coordinate choice",
+        "All systems measure vectors incorrectly"
       ],
       "answer": 0,
       "answerText": "",
@@ -255,7 +255,7 @@
       "question": "According to the lecture, who is credited with developing Cartesian coordinates?",
       "options": [
         "René Descartes",
-        "Carl Friedrich Gauss",
+        "Carl Gauss",
         "Isaac Newton",
         "Leonhard Euler"
       ],
@@ -282,10 +282,10 @@
       "timestamp": "11:05",
       "question": "What is the geometric meaning of vector addition as described in the lecture?",
       "options": [
-        "Finding the average of two vectors",
-        "Placing vectors end to end",
-        "Doubling the length of a vector",
-        "Rotating a vector by 90 degrees"
+        "Average two vectors",
+        "Place end to end",
+        "Double vector length",
+        "Rotate 90 degrees"
       ],
       "answer": 1,
       "answerText": "",
@@ -389,9 +389,9 @@
       "question": "According to the lecture, where do the rules of vector spaces come from?",
       "options": [
         "Geometric pictures and behavior of arrows",
-        "Physical laws of nature",
-        "Computer science algorithms",
-        "Abstract mathematical theory"
+        "Physical laws of nature governing motion and forces",
+        "Computer science algorithms for rendering pipelines",
+        "Abstract mathematical theory of fields and rings"
       ],
       "answer": 0,
       "answerText": "",
@@ -438,10 +438,10 @@
       "timestamp": "18:33",
       "question": "In the lecture, R³ is described as:",
       "options": [
-        "A matrix with three rows",
-        "A space of three-dimensional functions",
-        "A list of three real numbers",
-        "A collection of 3D shapes"
+        "3-row matrix",
+        "3D function space",
+        "Three real numbers",
+        "Collection of 3D shapes"
       ],
       "answer": 2,
       "answerText": "",
@@ -488,10 +488,10 @@
       "timestamp": "21:30",
       "question": "How is function addition defined in the lecture?",
       "options": [
-        "By adding the domains of the functions",
-        "By adding the values of each function at each point",
-        "By finding the average of two functions",
-        "By concatenating the functions sequentially"
+        "Add domains of functions",
+        "Add values at each point",
+        "Average two functions",
+        "Concatenate sequentially"
       ],
       "answer": 1,
       "answerText": "",
@@ -516,9 +516,9 @@
       "timestamp": "22:24",
       "question": "How is function scaling defined in the lecture?",
       "options": [
-        "By finding the derivative of the function",
-        "By stretching the domain of the function",
-        "By evaluating the function at a scaled input",
+        "By finding the derivative of the function with respect to its input",
+        "By stretching the domain of the function uniformly in all directions",
+        "By evaluating the function at a scaled input and adjusting for Jacobian",
         "By evaluating the function and scaling the resulting value"
       ],
       "answer": 3,
@@ -541,7 +541,7 @@
       "question": "When adding two vectors in coordinates, what operation is performed on their components?",
       "options": [
         "Multiplication",
-        "The larger component is selected",
+        "Larger component selected",
         "Component-wise addition",
         "Cross product"
       ],
@@ -567,10 +567,10 @@
       "timestamp": "26:01",
       "question": "According to the lecture, why is it important to verify that coordinate-wise operations correspond to vector space properties?",
       "options": [
-        "It's not important; the professor just mentions it in passing",
-        "To make computations more complicated",
-        "As examples become more complex, intuition alone may not be sufficient",
-        "To discover new vector spaces"
+        "Not important; professor mentions it",
+        "Make computations more complex",
+        "Intuition fails as examples grow",
+        "Discover new vector spaces"
       ],
       "answer": 2,
       "answerText": "",
@@ -619,8 +619,8 @@
       "options": [
         "Matrix inversion",
         "Vector normalization",
-        "Calculating a cross product",
-        "Finding a midpoint"
+        "Cross product",
+        "Midpoint calculation"
       ],
       "answer": 3,
       "answerText": "",
@@ -672,8 +672,8 @@
       "options": [
         "A dark cave",
         "The bright sun",
-        "It depends on the color spectrum",
-        "Both would have equal norms"
+        "Depends on color spectrum",
+        "Equal norms both cases"
       ],
       "answer": 1,
       "answerText": "",
@@ -694,10 +694,10 @@
       "timestamp": "34:15",
       "question": "What key property must a norm have regarding its sign?",
       "options": [
-        "It can be any real number",
-        "It must always be positive",
-        "It must be non-negative",
-        "It must be negative for vectors pointing downward"
+        "Any real number",
+        "Always positive",
+        "Non-negative",
+        "Negative if downward"
       ],
       "answer": 2,
       "answerText": "",
@@ -721,10 +721,10 @@
       "timestamp": "35:04",
       "question": "When is the norm of a vector equal to zero?",
       "options": [
-        "When the vector is very small",
-        "If and only if the vector is the zero vector",
-        "When the vector is horizontal",
-        "When the vector points in a negative direction"
+        "When very small",
+        "Only if zero vector",
+        "When horizontal",
+        "When negative direction"
       ],
       "answer": 1,
       "answerText": "",
@@ -748,10 +748,10 @@
       "timestamp": "36:15",
       "question": "If a vector is scaled by a factor c, how does its norm change?",
       "options": [
-        "It increases by c",
-        "It remains unchanged",
-        "It increases by c²",
-        "It is multiplied by |c|"
+        "Increases by c",
+        "Remains unchanged",
+        "Increases by c²",
+        "Multiplied by |c|"
       ],
       "answer": 3,
       "answerText": "",
@@ -773,8 +773,8 @@
       "timestamp": "36:47",
       "question": "What geometric principle is illustrated by the triangle inequality?",
       "options": [
-        "Angles in a triangle sum to 180 degrees",
-        "The shortest path between two points is a straight line",
+        "Triangle angles sum to 180°",
+        "Shortest path is straight line",
         "Similar triangles have proportional sides",
         "Parallel lines never meet"
       ],
@@ -851,10 +851,10 @@
       "timestamp": "40:22",
       "question": "What domain restriction is placed on functions when defining the L² norm?",
       "options": [
-        "The functions must be defined over the unit interval [0,1]",
-        "The functions must be continuous",
-        "The functions must be periodic",
-        "The functions must be polynomials"
+        "Defined on [0,1]",
+        "Must be continuous",
+        "Must be periodic",
+        "Must be polynomials"
       ],
       "answer": 0,
       "answerText": "",
@@ -952,10 +952,10 @@
       "timestamp": "45:35",
       "question": "According to the lecture, how are most integrals in graphics actually calculated?",
       "options": [
-        "Using numerical integration performed by a computer",
-        "By avoiding integration entirely",
-        "By simplifying to elementary functions",
-        "By hand using symbolic integration"
+        "Numerical integration",
+        "Avoid integration entirely",
+        "Simplify to elementary functions",
+        "Hand symbolic integration"
       ],
       "answer": 0,
       "answerText": "",
@@ -977,8 +977,8 @@
       "question": "What operation measures the relative direction or alignment between two vectors?",
       "options": [
         "Scalar multiplication",
-        "The Euclidean norm",
-        "The inner product",
+        "Euclidean norm",
+        "Inner product",
         "Vector addition"
       ],
       "answer": 2,
@@ -1028,10 +1028,10 @@
       "timestamp": "49:52",
       "question": "What geometric interpretation of the inner product is given for unit vectors u and v?",
       "options": [
-        "The sine of the angle between them",
-        "The cosine of the angle between them",
-        "The area of the parallelogram they form",
-        "The length of the projection of v onto u"
+        "Sine of angle between",
+        "Cosine of angle between",
+        "Area of parallelogram",
+        "Length of v onto u"
       ],
       "answer": 3,
       "answerText": "",
@@ -1102,10 +1102,10 @@
       "timestamp": "55:49",
       "question": "How is the L² inner product of two functions f and g defined?",
       "options": [
-        "∫₀¹ [f(x) + g(x)] dx",
-        "∫₀¹ f(x)·g(x) dx",
-        "∫₀¹ |f(x) - g(x)| dx",
-        "∫₀¹ max(f(x), g(x)) dx"
+        "∫₀¹ [f+g] dx",
+        "∫₀¹ f·g dx",
+        "∫₀¹ |f−g| dx",
+        "∫₀¹ max(f,g) dx"
       ],
       "answer": 1,
       "answerText": "",
@@ -1180,10 +1180,10 @@
       "timestamp": "1:02:16",
       "question": "Why are linear equations computationally appealing according to the lecture?",
       "options": [
-        "They're easy to solve compared to nonlinear equations",
-        "They're always faster than quadratic equations",
-        "They require less memory",
-        "They're easier to debug"
+        "Easier than nonlinear equations",
+        "Faster than quadratic equations",
+        "Requires less memory",
+        "Easier to debug"
       ],
       "answer": 0,
       "answerText": "",
@@ -1232,10 +1232,10 @@
       "timestamp": "1:05:31",
       "question": "What additional constraint must a linear map satisfy beyond preserving straight lines?",
       "options": [
-        "It must fix the origin (send zero to zero)",
-        "It must preserve distances",
-        "It must be invertible",
-        "It must preserve angles"
+        "Fixes origin (0→0)",
+        "Preserves distances",
+        "Must be invertible",
+        "Preserves angles"
       ],
       "answer": 0,
       "answerText": "",
@@ -1259,10 +1259,10 @@
       "timestamp": "1:06:16",
       "question": "What are the two defining properties of a linear map?",
       "options": [
-        "It preserves addition and scalar multiplication",
-        "It's differentiable and smooth",
-        "It preserves distances and angles",
-        "It's invertible and continuous"
+        "Preserves add & scalar mult",
+        "Differentiable and smooth",
+        "Preserves distances & angles",
+        "Invertible and continuous"
       ],
       "answer": 0,
       "answerText": "",
@@ -1285,12 +1285,12 @@
       "timestamp": "1:08:12",
       "question": "In the geometric picture of a linear map from R² to R³, how does the professor describe where a point u ends up?",
       "options": [
+        "By linear combination",
         "By projecting u onto the nearest point in R³",
         "By multiplying u by a constant",
-        "By walking along a₁ by distance u₁ and along a₂ by distance u₂",
         "By rotating u around the origin"
       ],
-      "answer": 2,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "The lecturer explains at [1:08:12]: \"I have my vector u in r2 it has components u1 u2 what is the linear map going to do well i have these two fixed vectors a1 and a2 and r3 and to see where u ends up i'm just going to walk along a1 by a distance u1 and i'm going to then walk along a2 by a distance u2.\"",
@@ -1309,10 +1309,10 @@
       "timestamp": "1:09:47",
       "question": "Why is the function f(x) = ax + b NOT a linear function despite appearing as a line when graphed?",
       "options": [
-        "Because a must equal 1 for linearity",
-        "Because it doesn't pass through the origin when b ≠ 0",
-        "Because it doesn't preserve vector operations",
-        "Because it's not defined for all real numbers"
+        "a must equal 1",
+        "Fails origin when b≠0",
+        "Fails vector operations",
+        "Not defined for all reals"
       ],
       "answer": 2,
       "answerText": "",
@@ -1364,10 +1364,10 @@
       "timestamp": "1:13:12",
       "question": "What is the geometric meaning of the span of two vectors u and v in R³?",
       "options": [
-        "The entire 3D space",
-        "A line through the origin",
-        "A sphere with radius |u| + |v|",
-        "A plane through the origin containing u and v"
+        "All of 3D space",
+        "A line through the origin spanned by u",
+        "A sphere centered at the origin with radius |u| + |v|",
+        "The plane through the origin containing u and v"
       ],
       "answer": 3,
       "answerText": "",
@@ -1390,10 +1390,10 @@
       "timestamp": "1:14:17",
       "question": "How does the concept of span relate to linear maps?",
       "options": [
-        "The image of a linear map is the span of some collection of (fixed?) vectors",
-        "Linear maps can only be applied to spans of vectors",
-        "The span of vectors can only be calculated using linear maps",
-        "The span of vectors is unrelated to linear maps"
+        "Image is span of some vectors",
+        "Linear maps apply only to spans",
+        "Span calc requires linear maps",
+        "Span unrelated to linear maps"
       ],
       "answer": 0,
       "answerText": "",
@@ -1416,10 +1416,10 @@
       "timestamp": "1:15:36",
       "question": "What is a basis for Rⁿ?",
       "options": [
-        "At least n vectors that span Rⁿ",
-        "Exactly n vectors that span Rⁿ",
-        "Any collection of n vectors",
-        "Any set of linearly independent vectors"
+        "At least n spanning vectors",
+        "Exactly n spanning vectors",
+        "Any n vectors",
+        "Any linearly independent set"
       ],
       "answer": 1,
       "answerText": "",
@@ -1471,10 +1471,10 @@
       "timestamp": "1:21:28",
       "question": "What is the first step in the Gram-Schmidt process?",
       "options": [
-        "Find the cross product of the vectors",
-        "Find the determinant of the matrix",
-        "Take the first vector and normalize it",
-        "Subtract any component of the first vector from the second one"
+        "Find cross product",
+        "Find determinant",
+        "Normalize first vector",
+        "Subtract component of first from second"
       ],
       "answer": 2,
       "answerText": "",
@@ -1526,10 +1526,10 @@
       "timestamp": "1:27:15",
       "question": "How does the professor describe the Fourier transform in terms of linear algebra concepts?",
       "options": [
-        "As projecting a function onto an orthonormal basis",
-        "As computing a determinant",
-        "As a matrix multiplication",
-        "As a vector decomposition"
+        "Projection onto orthonormal basis",
+        "Evaluating a determinant expression",
+        "Multiplying matrices representing the function and basis",
+        "Breaking a vector into non-orthogonal components"
       ],
       "answer": 0,
       "answerText": "",
@@ -1583,10 +1583,10 @@
       "timestamp": "1:32:53",
       "question": "What geometric situation would lead to a linear system having no solution?",
       "options": [
-        "When the system includes parallel lines that don't intersect",
-        "When the system has complex coefficients",
-        "When the system has more variables than equations",
-        "When all equations describe the same line"
+        "No solution due to inconsistent parallel lines",
+        "When coefficients involve imaginary numbers",
+        "When there are more unknowns than equations",
+        "When all equations represent identical geometric objects"
       ],
       "answer": 0,
       "answerText": "",
@@ -1609,10 +1609,10 @@
       "timestamp": "1:33:48",
       "question": "When might a system of linear equations have many solutions?",
       "options": [
-        "When it has more equations than variables",
-        "When the system is inconsistent",
-        "When the system includes non-linear terms",
-        "When some equations are redundant (describe the same constraint)"
+        "More equations than variables",
+        "System inconsistent",
+        "Non-linear terms present",
+        "Redundant equations"
       ],
       "answer": 3,
       "answerText": "",
@@ -1637,10 +1637,10 @@
       "timestamp": "1:36:11",
       "question": "According to the lecture, why can matrices interfere with understanding linear algebra?",
       "options": [
-        "They obscure the geometric meaning with numerical procedures",
-        "They are too abstract for beginners",
-        "Matrices are too computationally intensive",
-        "They can't represent important linear algebra concepts"
+        "Obscure geometry with numerics",
+        "Too abstract for introductory students",
+        "Computationally prohibitive for large problems",
+        "Unable to express key ideas like rank or nullspace"
       ],
       "answer": 0,
       "answerText": "",
@@ -1664,10 +1664,10 @@
       "timestamp": "1:37:11",
       "question": "How do matrix entries relate to coordinate systems?",
       "options": [
-        "Matrix entries are independent of coordinate systems",
-        "Matrix entries must use Cartesian coordinates",
-        "Matrix entries are always the same in any coordinate system",
-        "Matrix entries depend on the choice of coordinates"
+        "Entries independent of coords",
+        "Must use Cartesian coords",
+        "Entries same in all coords",
+        "Entries depend on coordinates"
       ],
       "answer": 3,
       "answerText": "",
@@ -1691,12 +1691,12 @@
       "timestamp": "1:38:08",
       "question": "Despite their limitations, why do we use matrices according to the lecture?",
       "options": [
-        "They make linear algebra problems more challenging",
-        "They're useful for symbolic manipulation and efficient numerical computation",
-        "They're easier to teach than other representations",
-        "They're the only way to represent linear maps"
+        "Efficient computation and symbolic manipulation",
+        "They increase problem difficulty unnecessarily",
+        "They simplify pedagogy compared to geometric reasoning",
+        "They uniquely capture all linear transformations"
       ],
-      "answer": 1,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "The lecturer explains at [1:38:08]: \"They are very very useful for doing certain kinds of symbolic manipulation but more importantly for doing numerical computation at the end of the day we want to boil down our linear algebra problem into a matrix equation that we can hand off to our computer and our computer will solve that for us very very fast.\"",
@@ -1715,10 +1715,10 @@
       "timestamp": "1:40:52",
       "question": "How do you construct a matrix representing a linear map f(u) = u₁a₁ + u₂a₂?",
       "options": [
-        "Compute the inverse of the vectors a₁ and a₂",
-        "Use a₁ and a₂ as the rows of the matrix",
-        "Use a₁ and a₂ as the columns of the matrix",
-        "Take the cross product of a₁ and a₂"
+        "Invert vectors a₁,a₂",
+        "Use a₁,a₂ as rows",
+        "Use a₁,a₂ as columns",
+        "Cross product a₁,a₂"
       ],
       "answer": 2,
       "answerText": "",

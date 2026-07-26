@@ -40,10 +40,10 @@
       "timestamp": "03:44",
       "question": "What scientific question motivated Muybridge's 1878 photographic film \"Sallie Gardner\"?",
       "options": [
-        "Whether animals moved differently when observed versus unobserved",
-        "Whether all four legs of a galloping horse ever leave the ground simultaneously",
-        "Whether a camera could capture motion faster than the human hand could draw it",
-        "Whether the human eye could perceive motion at more than 12 frames per second"
+        "Animal motion observer effect",
+        "Horse legs all off ground?",
+        "Camera vs hand-drawing speed",
+        "Eye perception >12 fps?"
       ],
       "answer": 1,
       "answerText": "",
@@ -69,10 +69,10 @@
       "timestamp": "07:24",
       "question": "What was historically significant about Ivan Sutherland's \"Sketchpad\" (1963)?",
       "options": [
-        "It was the first digital computer animation and a landmark in human-computer interaction",
-        "It introduced the first physically-based simulation for character animation",
-        "It was the first feature-length computer-animated film",
-        "It was the first use of ray tracing in computer graphics"
+        "First digital computer animation",
+        "First physics-based character sim",
+        "First feature-length CGI film",
+        "First ray tracing in graphics"
       ],
       "answer": 0,
       "answerText": "",
@@ -94,10 +94,10 @@
       "timestamp": "05:21",
       "question": "What was historically notable about Lotte Reiniger's \"Die Abenteuer des Prinzen Achmed\" (1926)?",
       "options": [
-        "First use of computer-generated imagery in a film",
-        "First feature-length animation film",
-        "First film to use motion capture for character animation",
-        "First animation to use spline interpolation for smooth movement"
+        "First CGI in a film",
+        "First feature animation",
+        "First motion capture film",
+        "First spline interpolation use"
       ],
       "answer": 1,
       "answerText": "",
@@ -119,10 +119,10 @@
       "timestamp": "13:54",
       "question": "What is the \"beta phenomenon\" in the perception of motion?",
       "options": [
-        "The eye retains an afterimage on the retina for ~1/24 second, creating perceived motion",
-        "The phi phenomenon where the brain fills in missing frames between sparse keyframes",
-        "The brain keeps a visual memory of recent motion, not the eyeball — creating perceived continuity",
-        "High frame rates cause the brain to interpret motion as unnaturally smooth (\"soap opera effect\")"
+        "Retinal afterimage ~1/24 sec",
+        "Phi phenomenon fills gaps",
+        "Brain retains motion memory",
+        "Soap opera effect at high fps"
       ],
       "answer": 2,
       "answerText": "",
@@ -148,10 +148,10 @@
       "timestamp": "14:25",
       "question": "What is the \"phi phenomenon\" in motion perception?",
       "options": [
-        "The optical illusion where two adjacent static images appear to move toward each other",
-        "The perceived increase in brightness when objects move rapidly across the visual field",
-        "The brain anticipates motion based on visual cues, giving a sense that motion is about to occur",
-        "The minimum frame rate required for smooth motion perception (phi ≈ 24 fps)"
+        "Two images appear to move",
+        "Motion-induced brightness gain",
+        "Brain anticipates motion onset",
+        "Minimum smooth fps ≈ 24"
       ],
       "answer": 2,
       "answerText": "",
@@ -175,10 +175,10 @@
       "timestamp": "16:03",
       "question": "What is the traditional hand-drawn animation workflow?",
       "options": [
-        "A senior artist draws keyframes; an apprentice draws the inbetweens (\"tweening\")",
-        "All frames are drawn by one artist in sequence from start to finish",
-        "Every animator draws every frame independently; no collaboration is used",
-        "Keyframes are drawn by computer; only inbetweens require human artists"
+        "Senior draws keys; junior tweens",
+        "One artist draws all frames",
+        "Each animator draws all frames",
+        "Computer draws keys; humans tween"
       ],
       "answer": 0,
       "answerText": "",
@@ -202,10 +202,10 @@
       "timestamp": "17:15",
       "question": "What are the three basic techniques in computer animation?",
       "options": [
-        "Artist-directed (keyframing), data-driven (motion capture), and procedural (simulation)",
-        "Spline interpolation, particle systems, and skeletal rigging",
-        "Rasterization, ray tracing, and path tracing",
-        "Forward kinematics, inverse kinematics, and physics simulation"
+        "Keyframing, motion capture, simulation",
+        "Spline interpolation, particle systems, skeletal rigging",
+        "Rasterization, ray tracing, path tracing",
+        "Forward kinematics, inverse kinematics, physics simulation"
       ],
       "answer": 0,
       "answerText": "",
@@ -226,10 +226,10 @@
       "timestamp": "18:30",
       "question": "What is the core idea of keyframing in computer animation?",
       "options": [
-        "Drawing every frame by hand and scanning them into the computer",
-        "Physically simulating all forces so the computer generates motion automatically",
-        "Capturing real motion data from actors using reflective markers",
-        "Specifying only important events; the computer fills in the rest via interpolation"
+        "Hand-drawing and scanning every frame",
+        "Full physical simulation of all forces",
+        "Capturing actor motion with reflective markers",
+        "Specifying key events; computer interpolates"
       ],
       "answer": 3,
       "answerText": "",
@@ -304,10 +304,10 @@
       "timestamp": "24:00",
       "question": "What does it mean for a spline to \"interpolate\" data?",
       "options": [
-        "The spline uses the data only to determine tangent directions, not positions",
-        "The spline approximates the data with minimum error but doesn't pass through the points exactly",
-        "The spline passes exactly through all specified data values at the knot locations",
-        "The spline smoothly blends between data values using weighted averages"
+        "Tangents only, not positions",
+        "Approximates data, no exact fit",
+        "Passes through all knot points",
+        "Weighted average blending"
       ],
       "answer": 2,
       "answerText": "",
@@ -330,10 +330,10 @@
       "timestamp": "28:20",
       "question": "Why are cubic polynomials (degree 3) the most common choice for splines?",
       "options": [
-        "Among all interpolating curves, cubics minimize the norm of the second derivative (bending energy)",
-        "They are the lowest degree polynomials that can match position and derivative at both endpoints",
-        "They are the only polynomials that guarantee C2 continuity across multiple segments",
-        "They are the highest degree polynomials that can be evaluated in real time on a GPU"
+        "Minimizes bending energy norm",
+        "Lowest degree matching pos/deriv",
+        "Only polynomials with C2 continuity",
+        "Highest degree GPU-evaluable"
       ],
       "answer": 0,
       "answerText": "",
@@ -356,10 +356,10 @@
       "timestamp": "27:52",
       "question": "What is the Runge phenomenon?",
       "options": [
-        "The visual artifact where B-splines fail to interpolate their control points",
-        "The tendency of splines to overshoot between keyframes due to high tangent magnitudes",
-        "Numerical instability in spline evaluation caused by floating-point cancellation",
-        "A high-frequency oscillation that appears when using high-degree polynomials to interpolate data"
+        "B-spline non-interpolation artifact",
+        "Overshoot from high tangents",
+        "Floating-point cancellation error",
+        "Runge oscillation in high-degree"
       ],
       "answer": 3,
       "answerText": "",
@@ -380,10 +380,10 @@
       "timestamp": "31:00",
       "question": "How many degrees of freedom does a cubic polynomial have, and what does that mean for fitting?",
       "options": [
-        "6 DOFs — matching positions and derivatives at both ends is exactly determined",
-        "4 DOFs — the four coefficients (a, b, c, d); matching both endpoint positions uses only 2, leaving 2 free",
-        "3 DOFs — enough to match position and derivative at one end plus position at the other",
-        "2 DOFs — enough to match only one endpoint position and one derivative"
+        "6 DOFs — fully determined by position/derivative matches",
+        "4 DOFs — four coefficients; two used for endpoints, two free",
+        "3 DOFs — position + derivative at one end, position at other",
+        "2 DOFs — only one position and one derivative"
       ],
       "answer": 1,
       "answerText": "",
@@ -404,10 +404,10 @@
       "timestamp": "40:19",
       "question": "What is a natural spline and how does it fix the remaining degrees of freedom?",
       "options": [
-        "It requires the first and last segments to be linear rather than cubic",
-        "It uses the physical catenary curve (hanging chain) as its shape model",
-        "It constrains the tangents at endpoints to point toward the nearest neighbor keyframe",
-        "It sets the second derivative (curvature) to zero at both endpoints"
+        "First/last segments linear",
+        "Catenary hanging-chain model",
+        "Tangents point to neighbors",
+        "Zero curvature at both ends"
       ],
       "answer": 3,
       "answerText": "",
@@ -428,10 +428,10 @@
       "timestamp": "42:00",
       "question": "What are the three desirable properties of a spline, and how does the natural spline perform?",
       "options": [
-        "Speed, accuracy, simplicity — natural splines excel at all three",
-        "Interpolation, continuity, locality — natural splines have continuity and locality but NOT interpolation",
-        "Interpolation, differentiability, efficiency — natural splines fail only at efficiency",
-        "Interpolation, continuity, locality — natural splines have interpolation and continuity but NOT locality"
+        "Speed, accuracy, simplicity",
+        "Interp, continuity, locality — no interp",
+        "Interp, diff, efficiency — no eff",
+        "Interp, continuity, locality — no local"
       ],
       "answer": 3,
       "answerText": "",
@@ -452,10 +452,10 @@
       "timestamp": "45:26",
       "question": "What is a Hermite spline and how is it specified?",
       "options": [
-        "Specified by curvature values at endpoints; tangents are derived by integration",
-        "Specified by knot positions only; tangents are computed automatically from neighbors",
-        "Specified by four control points per segment; passes through only the first and last",
-        "Specified by endpoint positions AND endpoint tangents; each cubic piece is fully determined by these four values"
+        "Defined by curvature at endpoints; tangents via integration",
+        "Defined by knot positions; tangents auto-computed from neighbors",
+        "Defined by four control points; passes through first/last only",
+        "Defined by endpoint positions AND tangents"
       ],
       "answer": 3,
       "answerText": "",
@@ -476,10 +476,10 @@
       "timestamp": "47:00",
       "question": "How does the Hermite spline differ from the natural spline at joints between segments?",
       "options": [
-        "Hermite enforces C2 continuity (matching curvature) at joints; natural spline only enforces C1",
-        "Both enforce exactly C1 continuity — they differ only in how endpoint tangents are set",
-        "Natural spline enforces C2 continuity at joints automatically; Hermite only enforces C1 if tangents happen to match",
-        "Hermite enforces C0 continuity (position only) at joints; natural enforces C2"
+        "Hermite enforces C2; natural C1",
+        "Both enforce exactly C1 only",
+        "Natural enforces C2; Hermite C1",
+        "Hermite C0; natural C2"
       ],
       "answer": 2,
       "answerText": "",
@@ -500,10 +500,10 @@
       "timestamp": "52:46",
       "question": "What is a Catmull-Rom spline and what problem does it solve?",
       "options": [
-        "A spline defined recursively via de Casteljau subdivision",
-        "A spline that sacrifices interpolation for C2 continuity and local control",
-        "A B-spline variant that always passes through its control points",
-        "A Hermite spline where tangents are automatically computed as differences of neighboring values"
+        "De Casteljau-defined recursive spline",
+        "B-spline variant with C2 continuity and local control",
+        "Interpolating B-spline passing through all control points",
+        "Hermite spline with tangents as neighbor differences"
       ],
       "answer": 3,
       "answerText": "",
@@ -551,7 +551,7 @@
         "Higher-degree splines are never worth using because of the Runge phenomenon",
         "Every spline type requires the same computational cost regardless of its properties",
         "Adding more control points always increases the computational cost superlinearly",
-        "No single spline type achieves all three desiderata (interpolation, continuity, locality) simultaneously"
+        "No single spline type achieves all three desiderata simultaneously"
       ],
       "answer": 3,
       "answerText": "",
@@ -572,10 +572,10 @@
       "timestamp": "1:02:10",
       "question": "What is being interpolated in a simple camera animation?",
       "options": [
-        "The camera's projection matrix directly, as a 4×4 matrix spline",
-        "The camera's position, view direction, and \"up\" direction — each as a separate spline",
-        "Only the camera's focal length; position is fixed",
-        "Only the camera position; direction is always computed to look at a fixed target"
+        "Projection matrix as 4×4 spline",
+        "Pos, view, up — each as spline",
+        "Focal length only; fixed pos",
+        "Position only; fixed look target"
       ],
       "answer": 1,
       "answerText": "",
@@ -621,7 +621,7 @@
       "question": "What is inverse kinematics (IK) and how does it differ from forward kinematics?",
       "options": [
         "Forward kinematics: used for rigid bodies. IK: used only for deformable bodies",
-        "Forward kinematics: set joint angles → compute end-effector position. IK: set end-effector goal → algorithm computes joint angles",
+        "FK: joint angles → end-effector position. IK: end-effector goal → joint angles",
         "Forward kinematics: physics drives joint motion. IK: artist specifies joint angles directly",
         "Forward kinematics: works in 2D. IK: extends kinematics to 3D"
       ],
@@ -670,7 +670,7 @@
       "options": [
         "Procedural noise functions blended together to create organic surface textures",
         "Blending motion capture data from multiple actors to create new animations",
-        "Directly interpolating between a set of pre-modeled surface shapes (e.g., facial expressions) using spline-controlled blend weights",
+        "Interpolating between pre-modeled shapes using spline-controlled blend weights",
         "Physics-based blending of rigid body and soft body simulations"
       ],
       "answer": 2,
@@ -692,10 +692,10 @@
       "timestamp": "33:00",
       "question": "In a spline system, how does each constraint (e.g., matching a keyframe value) translate into a solvable system?",
       "options": [
-        "Constraints are encoded as penalty terms in an optimization objective function",
-        "Each constraint adds one linear equality; m constraints with m DOFs yield an m×m linear system",
-        "Each constraint reduces the polynomial degree by one; enough constraints give a linear function",
-        "Each constraint adds a nonlinear equation; solved by Newton's method iteratively"
+        "Constraints as penalty terms",
+        "Each constraint adds linear equality",
+        "Each constraint lowers degree by one",
+        "Each constraint adds nonlinear equation"
       ],
       "answer": 1,
       "answerText": "",
@@ -718,7 +718,7 @@
       "options": [
         "High-degree polynomials cannot satisfy C2 continuity conditions",
         "The rendering pipeline only supports polynomials up to degree 3",
-        "A single high-degree polynomial risks the Runge phenomenon — wild oscillations between data points",
+        "A single high-degree polynomial risks the Runge phenomenon",
         "High-degree polynomials can only be evaluated at integer time steps"
       ],
       "answer": 2,
@@ -741,7 +741,7 @@
       "question": "What is a zoetrope and what principle does it demonstrate?",
       "options": [
         "A 3D printer that creates solid objects by layering cross-sections",
-        "A spinning cylinder with sequential images viewed through slits, creating the illusion of motion from static frames",
+        "A spinning cylinder with sequential images viewed through slits",
         "A hand-cranked camera that captures motion at 24 frames per second",
         "An early computer monitor that displayed animation by scanning electron beams"
       ],
@@ -764,12 +764,12 @@
       "timestamp": "09:45",
       "question": "What pattern appears repeatedly in the history of both film and computer animation?",
       "options": [
-        "Advances in animation technology always follow advances in hardware capability",
+        "Animation technologies always emerge first in scientific research before entertainment adoption",
         "Each new animation technology first emerged as a scientific tool, then was adopted for entertainment",
-        "New animation technologies are always developed by entertainment studios first",
-        "Animation techniques invented in Europe always took decades to reach the United States"
+        "Historically, every major animation technique was invented by university researchers and only later licensed to Hollywood studios",
+        "The timeline of animation tech development shows consistent precedence of academic labs over industry R&D departments"
       ],
-      "answer": 1,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "From slides 9 and 14: Film — \"Originally used as scientific tool rather than for entertainment. Critical technology that accelerated development of animation.\" Computer animation — \"New technology, also developed as a scientific tool. Again turbo-charged the development of animation.\" Muybridge was settling a scientific bet; Sutherland was studying human-computer interaction; both tools became the foundation of modern animation.",
@@ -812,7 +812,7 @@
       "timestamp": "54:00",
       "question": "Why are Catmull-Rom splines particularly useful for animation compared to Hermite splines?",
       "options": [
-        "They require the animator to specify only keyframe values — tangents are computed automatically as neighbor differences",
+        "They compute tangents automatically from keyframe differences",
         "They are the only splines that can handle non-uniform time spacing between keyframes",
         "They always produce C2-continuous curves, unlike Hermite splines which only guarantee C1",
         "They use fewer control points per segment, making them faster to evaluate"
@@ -836,7 +836,7 @@
       "timestamp": "1:04:30",
       "question": "In character animation, why is interpolating joint rotations preferred over interpolating joint positions directly?",
       "options": [
-        "The kinematic chain structure means child joint positions are implicit once parent rotations are set — only rotations need to be keyframed",
+        "Only rotations need keyframing — positions are implicit",
         "Interpolating positions causes the Runge phenomenon; rotations are immune to this",
         "Rotations are always easier to interpolate than positions",
         "Positions can only be interpolated linearly; rotations support spline interpolation"
@@ -860,7 +860,7 @@
       "timestamp": "02:53",
       "question": "What was the Phenakistoscope and why was it significant?",
       "options": [
-        "A spinning disc with sequential images viewed through slits — one of the first devices to create the illusion of motion from static images",
+        "A spinning disc with sequential images viewed through slits",
         "An early projector that displayed animation on a wall for an audience",
         "A zoetrope variant that used mirrors instead of slits to view the animation",
         "The first motion picture camera, which recorded images at 12 frames per second"
@@ -884,12 +884,12 @@
       "timestamp": "57:00",
       "question": "What does the B-spline basis being \"defined recursively\" mean in practice?",
       "options": [
+        "Each B-spline basis function is a linear blend of two lower-degree basis functions",
         "B-spline evaluation requires a recursive tree traversal with exponential time complexity",
         "B-splines are defined by subdividing control polygons recursively, like Catmull-Clark surfaces",
-        "B-splines are computed by recursive neural networks that learn the optimal shape from data",
-        "Each degree-d B-spline basis function is a linear blend of two degree-(d-1) basis functions over shifted knot intervals"
+        "B-splines are computed by recursive neural networks that learn the optimal shape from data"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "The recursion is: a degree-0 B-spline is just a box function (1 inside an interval, 0 outside). A degree-1 B-spline blends two adjacent box functions linearly — giving a tent function. A degree-2 blends two tent functions — giving a smoother bump. Each degree-up smooths the previous. This is why higher-degree B-splines are smoother: each recursion level adds one more convolution with a box, which smooths.",
       "explanation": "From slide 47: \"B-spline basis defined recursively: linear interpolation [between shifted lower-degree bases]. B-spline itself is then a linear combination of these bases.\" The recursive definition ensures each basis function has compact support (affects only a local range of the parameter), which is what gives B-splines their locality property.",

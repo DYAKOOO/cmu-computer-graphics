@@ -101,9 +101,9 @@
       "timestamp": "01:05",
       "question": "Why is measuring light intensity important in rendering?",
       "options": [
-        "It's primarily used for shadow calculations",
         "It helps determine the processing power needed",
-        "It enables us to determine both color and brightness at every point",
+        "It's primarily used for shadow calculations",
+        "Determines color and brightness at every point",
         "It's only important for artistic effects"
       ],
       "answer": 2,
@@ -125,10 +125,10 @@
       "timestamp": "01:59",
       "question": "What is the \"geometric optics model\" of light?",
       "options": [
-        "A macroscopic model appropriate for human perception",
-        "A model focusing on diffraction and interference",
-        "A model showing how light bends around large masses",
-        "A quantum mechanical model focusing on wave properties"
+        "Macroscopic human-perception model",
+        "Diffraction and interference model",
+        "Light-bending near massive objects",
+        "Quantum wave-property model"
       ],
       "answer": 0,
       "answerText": "",
@@ -149,10 +149,10 @@
       "timestamp": "02:17",
       "question": "In the geometric optics model, how do photons travel through space?",
       "options": [
-        "In a wave-like pattern",
-        "In curved paths around objects",
-        "In straight lines",
-        "In quantum jumps between energy states"
+        "Wave-like propagation pattern",
+        "Curved paths around obstacles",
+        "Straight-line propagation",
+        "Quantum energy-state jumps"
       ],
       "answer": 2,
       "answerText": "",
@@ -175,7 +175,7 @@
       "options": [
         "Memorize all terms before understanding concepts",
         "Focus only on the mathematical formulas",
-        "Understand the concepts first, then learn the terminology",
+        "Understand concepts first, then terminology",
         "Skip the terminology completely"
       ],
       "answer": 2,
@@ -199,7 +199,7 @@
       "options": [
         "That birds should be studied in nature, not in books",
         "That different languages have different names for objects",
-        "That names don't constitute knowledge; understanding the thing is more important",
+        "Names aren't knowledge; understand the thing",
         "That memorizing scientific terminology is essential"
       ],
       "answer": 2,
@@ -221,10 +221,10 @@
       "timestamp": "05:24",
       "question": "Why do we need to measure light in computer graphics?",
       "options": [
-        "Only for shadow calculations",
-        "To understand how much energy photons are carrying at each point in the scene",
-        "Only to create special visual effects",
-        "To reduce computational complexity"
+        "Shadow-only calculation use",
+        "Photon energy per point in scene",
+        "Special-effects-only purpose",
+        "Reduces computational complexity"
       ],
       "answer": 1,
       "answerText": "",
@@ -248,7 +248,7 @@
         "Light always has the same wavelength",
         "Light travels only in straight paths",
         "Light only travels at a constant speed",
-        "Light distribution reaches an equilibrium quickly that doesn't change over time"
+        "Reaches equilibrium quickly"
       ],
       "answer": 3,
       "answerText": "",
@@ -270,7 +270,7 @@
       "question": "Why can't we normally see the phenomenon of light propagating through objects?",
       "options": [
         "The effect only happens in transparent objects",
-        "Light travels far too quickly for the naked eye to observe",
+        "Too fast to observe directly",
         "Light is invisible",
         "Our eyes can only see the final state"
       ],
@@ -293,10 +293,10 @@
       "timestamp": "09:13",
       "question": "What is radiant energy?",
       "options": [
-        "The energy contained in a light source",
-        "The total number of photon hits on surfaces in a scene",
-        "The color of light at different wavelengths",
-        "The rate at which photons are emitted"
+        "Energy content of light source",
+        "Total photon hits on surfaces",
+        "Color per wavelength spectrum",
+        "Photon emission rate over time"
       ],
       "answer": 1,
       "answerText": "",
@@ -317,10 +317,10 @@
       "timestamp": "10:23",
       "question": "What is radiant flux?",
       "options": [
-        "The brightness of a light source",
-        "The color intensity of light",
-        "The total number of photon hits per second",
-        "The total energy over all time"
+        "Light source brightness measure",
+        "Color intensity across spectrum",
+        "Photon hits per second per area",
+        "Total energy integrated over time"
       ],
       "answer": 2,
       "answerText": "",
@@ -341,10 +341,10 @@
       "timestamp": "11:45",
       "question": "What is irradiance?",
       "options": [
-        "The distance light travels before being absorbed",
-        "The total energy in a scene",
-        "The number of hits per second per unit area",
-        "The color of light at a point"
+        "Distance before absorption occurs",
+        "Total energy present in scene",
+        "Hits per second per unit area",
+        "Color value at a given point"
       ],
       "answer": 2,
       "answerText": "",
@@ -389,10 +389,10 @@
       "timestamp": "15:31",
       "question": "How does the energy of a photon relate to its wavelength?",
       "options": [
-        "Energy and wavelength are unrelated",
-        "All photons have the same energy regardless of wavelength",
-        "Shorter wavelength (bluer) photons have more energy",
-        "Longer wavelength (redder) photons have more energy"
+        "Wavelength and energy unrelated",
+        "All photons have equal energy",
+        "Shorter λ (bluer) → more energy",
+        "Longer λ (redder) → more energy"
       ],
       "answer": 2,
       "answerText": "",
@@ -440,7 +440,7 @@
         "Joules per meter squared",
         "Watts per square meter",
         "Joules",
-        "Watts (joules per second)"
+        "Watts"
       ],
       "answer": 3,
       "answerText": "",
@@ -461,9 +461,9 @@
       "timestamp": "19:50",
       "question": "What are the units of irradiance?",
       "options": [
-        "Joules",
+        "Joules total energy",
         "Watts per square meter",
-        "Steradians",
+        "Steradians solid angle",
         "Watts (joules per second)"
       ],
       "answer": 1,
@@ -485,10 +485,10 @@
       "timestamp": "21:29",
       "question": "What is the spectral power distribution?",
       "options": [
-        "The pattern of shadows created by different wavelengths",
-        "The total energy across all wavelengths",
+        "Shadow patterns by wavelength",
+        "Total energy across wavelengths",
         "Irradiance per unit wavelength",
-        "The distribution of light sources in a scene"
+        "Light-source spatial layout"
       ],
       "answer": 2,
       "answerText": "",
@@ -511,8 +511,8 @@
       "options": [
         "Watts per cubic meter",
         "Watts per square meter",
-        "Joules",
-        "Watts"
+        "Joules total energy",
+        "Watts (joules per second)"
       ],
       "answer": 0,
       "answerText": "",
@@ -533,10 +533,10 @@
       "timestamp": "23:32",
       "question": "The lecturer uses Earth's seasons as an analogy to explain what concept in radiometry?",
       "options": [
-        "Why shadows change length during the day",
-        "How different wavelengths of light create different colors",
-        "How light travels at different speeds through media",
-        "Why surfaces appear darker when tilted away from the light source"
+        "Shadow length variation daily",
+        "Wavelengths produce color differences",
+        "Speed varies across media",
+        "Tilted surfaces appear darker"
       ],
       "answer": 3,
       "answerText": "",
@@ -557,10 +557,10 @@
       "timestamp": "26:33",
       "question": "In Lambert's Law, how does irradiance change as a surface tilts away from a light source?",
       "options": [
-        "It increases proportionally to the cosine of the angle",
-        "It remains constant regardless of the angle",
-        "It decreases proportionally to the cosine of the angle",
-        "It decreases with the square of the cosine of the angle"
+        "Increases with cosine of angle",
+        "Constant regardless of angle",
+        "Decreases with cosine of angle",
+        "Decreases with cos² of angle"
       ],
       "answer": 2,
       "answerText": "",
@@ -581,10 +581,10 @@
       "timestamp": "28:20",
       "question": "What is the most basic way to shade a surface in computer graphics according to the lecture?",
       "options": [
-        "Calculate the inverse square of the distance to the light",
-        "Calculate the distance from each point to the light source",
-        "Use the cross product of the normal and view direction",
-        "Take the dot product of the unit normal vector and the unit direction to the light"
+        "Inverse square of light distance",
+        "Point-to-light distance calc",
+        "Cross product of normal/view",
+        "Dot product of normal/light dir"
       ],
       "answer": 3,
       "answerText": "",
@@ -606,9 +606,9 @@
       "question": "What modification should be made to the basic N·L shading when the dot product becomes negative?",
       "options": [
         "Return zero (clamp to zero)",
-        "Use the absolute value of the dot product",
-        "Add a constant ambient term",
-        "Invert the normal"
+        "Use absolute value of dot",
+        "Add constant ambient term",
+        "Invert surface normal vector"
       ],
       "answer": 0,
       "answerText": "",
@@ -629,12 +629,12 @@
       "timestamp": "30:18",
       "question": "What is a directional light in computer graphics?",
       "options": [
+        "An infinitely bright light source at infinity",
         "A light that changes direction over time",
         "A light that has different intensities in different directions",
-        "A light with a cone-shaped distribution",
-        "An infinitely bright light source at infinity with identical light directions"
+        "A light with a cone-shaped distribution"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [30:18], the lecturer describes it as \"a strange abstraction we imagine we have an infinitely bright light source all the way off at infinity and the thing that's nice about this is because it's so far off in the distance all light directions are identical.\"",
@@ -701,10 +701,10 @@
       "timestamp": "31:56",
       "question": "Why does light appear dimmer as you move away from a point light source, even though photons don't lose energy as they travel?",
       "options": [
-        "Photons actually do lose energy over distance",
-        "The viewer's sensitivity decreases with distance",
-        "The same amount of energy gets spread over a larger area as distance increases",
-        "Air absorbs some photons over distance"
+        "Photons lose energy over range",
+        "Viewer sensitivity drops with r",
+        "Energy spreads over larger area",
+        "Air absorbs photons over distance"
       ],
       "answer": 2,
       "answerText": "",
@@ -749,10 +749,10 @@
       "timestamp": "34:35",
       "question": "Why is it challenging to light large rooms with point lights in both real and virtual environments?",
       "options": [
-        "Point lights have a local influence due to quadratic falloff, requiring many lights",
-        "Point lights cannot produce the necessary spectrum of light",
-        "Point light shadows are too complex to calculate",
-        "Point lights are too expensive computationally"
+        "Local influence needs many lights",
+        "Spectrum limitations of point lights",
+        "Complex shadow computation",
+        "High computational cost"
       ],
       "answer": 0,
       "answerText": "",
@@ -773,10 +773,10 @@
       "timestamp": "34:55",
       "question": "What aspect of physically-based lighting do graphics artists sometimes modify for practical reasons?",
       "options": [
-        "They make shadows darker than physically accurate",
-        "They change the light's color based on distance",
-        "They increase the speed of light",
-        "They adjust the inverse square falloff to be less steep (e.g., linear)"
+        "Make shadows unnaturally dark",
+        "Color shifts with distance",
+        "Increase light speed artificially",
+        "Flatten falloff (e.g., linear)"
       ],
       "answer": 3,
       "answerText": "",
@@ -797,10 +797,10 @@
       "timestamp": "35:52",
       "question": "How is an angle mathematically defined?",
       "options": [
-        "As the slope of a line",
-        "As the ratio of an arc length on a circle to the radius of that circle",
-        "As the difference between two directions",
-        "As a measure of rotation in three dimensions"
+        "Slope of a linear function",
+        "Arc length divided by radius",
+        "Difference between two directions",
+        "3D rotational measure"
       ],
       "answer": 1,
       "answerText": "",
@@ -821,10 +821,10 @@
       "timestamp": "36:33",
       "question": "What is a solid angle?",
       "options": [
-        "The ratio of a patch of area on a sphere to the squared radius",
-        "The angle between two solid objects",
-        "A three-dimensional wedge",
-        "An angle that doesn't change over time"
+        "Sphere patch area over r²",
+        "Angle between solid objects",
+        "3D wedge-shaped region",
+        "Time-invariant angular measure"
       ],
       "answer": 0,
       "answerText": "",
@@ -869,10 +869,10 @@
       "timestamp": "37:37",
       "question": "According to the lecturer, what interesting fact relates the Sun and Moon as seen from Earth?",
       "options": [
-        "They both have the same mass",
-        "They both rotate at the same speed",
-        "They both emit the same wavelengths of light",
-        "They both subtend approximately the same solid angle"
+        "Same mass as celestial bodies",
+        "Identical rotational speed",
+        "Emit same light wavelengths",
+        "Subtend same solid angle"
       ],
       "answer": 3,
       "answerText": "",
@@ -965,9 +965,9 @@
       "timestamp": "42:37",
       "question": "What are the units of radiance?",
       "options": [
-        "Watts per meter squared",
-        "Watts",
-        "Watts per meter squared per steradian",
+        "Watts per square meter",
+        "Watts total power",
+        "Watts/m²/steradian",
         "Watts per steradian"
       ],
       "answer": 2,
@@ -1061,10 +1061,10 @@
       "timestamp": "45:36",
       "question": "What important property does radiance have along a ray in a vacuum?",
       "options": [
-        "It oscillates",
-        "It increases with distance",
-        "It remains constant",
-        "It decreases with distance"
+        "Oscillates with position",
+        "Grows with increasing distance",
+        "Remains constant along ray",
+        "Falls off with distance"
       ],
       "answer": 2,
       "answerText": "",
@@ -1109,10 +1109,10 @@
       "timestamp": "46:22",
       "question": "How does a standard camera relate to the light field?",
       "options": [
-        "It creates a light field artificially",
-        "It modifies the light field through its lens",
-        "It captures the complete light field",
-        "It captures a small slice of the light field"
+        "Artificially generates light field",
+        "Modifies field via lens optics",
+        "Captures full light field",
+        "Captures narrow light-field slice"
       ],
       "answer": 3,
       "answerText": "",
@@ -1205,10 +1205,10 @@
       "timestamp": "48:56",
       "question": "According to the lecturer, what is a good example of an object where incident radiance differs significantly from exitant radiance?",
       "options": [
-        "A white wall",
-        "A black surface",
-        "A light bulb",
-        "A mirror"
+        "White wall surface",
+        "Black absorbing surface",
+        "Light-emitting bulb",
+        "Specular mirror surface"
       ],
       "answer": 2,
       "answerText": "",
@@ -1253,10 +1253,10 @@
       "timestamp": "50:46",
       "question": "How do you calculate the irradiance at a point from incident radiance?",
       "options": [
+        "Integrating L_i cos θ over the hemisphere",
         "By integrating the incident radiance weighted by the cosine of the angle over the hemisphere",
         "By multiplying the incident radiance by π",
-        "By dividing the incident radiance by the distance squared",
-        "By adding all the incident radiance values"
+        "By dividing the incident radiance by the distance squared"
       ],
       "answer": 0,
       "answerText": "",
@@ -1277,12 +1277,12 @@
       "timestamp": "51:14",
       "question": "What is a uniform hemispherical light source?",
       "options": [
+        "Equally distributed over a hemisphere",
         "A light source with uniform color across its surface",
         "A light source that only illuminates the upper half of objects",
-        "A light source with a hemisphere shape",
-        "A light source equally distributed over half a sphere, like an overcast day"
+        "A light source with a hemisphere shape"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [51:20], the lecturer explains it as \"rather than thinking about a light bulb or a light source that's in some direction at infinity, you just imagine that you have light coming in from all directions by the same amount. A good example of this would be like a cloudy day, an overcast day.\"",
@@ -1325,10 +1325,10 @@
       "timestamp": "52:35",
       "question": "Despite having mathematically uniform irradiance, why don't objects under a hemispherical light source appear with uniform brightness?",
       "options": [
-        "Occlusion from geometry blocks some of the light rays",
-        "Human perception distorts the appearance",
-        "The light source actually varies in intensity across the hemisphere",
-        "The assumptions in the mathematical model are incorrect"
+        "Geometry blocks some light rays",
+        "Perceptual distortion effect",
+        "Intensity varies across hemisphere",
+        "Model assumptions are flawed"
       ],
       "answer": 0,
       "answerText": "",
@@ -1349,10 +1349,10 @@
       "timestamp": "53:04",
       "question": "Why is ray-scene intersection so important in rendering?",
       "options": [
+        "To detect ray blocking by geometry",
         "It's used to detect when rays are blocked by geometry",
         "It's only needed for shadow calculation",
-        "It's primarily for reflections",
-        "It's only important for realistic materials"
+        "It's primarily for reflections"
       ],
       "answer": 0,
       "answerText": "",
@@ -1373,12 +1373,12 @@
       "timestamp": "53:48",
       "question": "What is ambient occlusion in computer graphics?",
       "options": [
+        "Pre-computed self-shadowing under uniform lighting",
         "A method for improving color accuracy",
         "A technique that only works with ambient light sources",
-        "An algorithm for calculating shadow maps",
-        "A pre-computed approximation of how objects self-shadow under a uniform light"
+        "An algorithm for calculating shadow maps"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [53:48], the lecturer describes it as \"I'm just going to do an approximation and say well I kind of at least know that the object is gonna occlude itself, it's gonna cause some kind of self shadowing\" and at [54:07] continues, \"The irradiance is now completely rotation and translation invariant... that's nice because it means we can pre-compute.\"",
@@ -1397,10 +1397,10 @@
       "timestamp": "54:07",
       "question": "What property of ambient occlusion makes it particularly useful for real-time applications?",
       "options": [
-        "It works with any light source",
-        "It's faster to compute in real-time than other lighting",
-        "It's rotation and translation invariant, allowing pre-computation",
-        "It produces more realistic shadows than other methods"
+        "Works with arbitrary light types",
+        "Real-time faster than alternatives",
+        "Rotation/translation invariant",
+        "Most physically accurate shadows"
       ],
       "answer": 2,
       "answerText": "",
@@ -1421,10 +1421,10 @@
       "timestamp": "54:19",
       "question": "How is ambient occlusion typically stored for real-time rendering?",
       "options": [
-        "In a texture map",
-        "As vertex colors",
-        "In a special data structure",
-        "As a set of equations"
+        "Stored in texture maps",
+        "Encoded as vertex colors",
+        "Held in custom data structure",
+        "Represented as equations"
       ],
       "answer": 0,
       "answerText": "",
@@ -1445,12 +1445,12 @@
       "timestamp": "55:31",
       "question": "What is screen-space ambient occlusion (SSAO)?",
       "options": [
+        "Uses depth buffer to estimate occlusion",
         "A technique that only works on flat surfaces",
         "A technique that calculates occlusion in 3D space",
-        "A pre-computed ambient occlusion technique",
-        "An approximation method that uses depth buffer information to estimate occlusion"
+        "A pre-computed ambient occlusion technique"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [55:36], the lecturer describes, \"The observation here is that actually you have a little bit of information about the geometry just in the depth buffer... Just by looking at a given sample in the depth buffer and the depths of the samples in a nearby vicinity you can guess or kind of approximate what would be this irradiance value.\"",
@@ -1469,10 +1469,10 @@
       "timestamp": "56:14",
       "question": "According to the lecturer, what visual effect does screen-space ambient occlusion provide?",
       "options": [
+        "Corner/crevice darkening",
         "Darkening around corners and in crevices",
         "Blurring of distant objects",
-        "Bright highlights at edges",
-        "More saturated colors"
+        "Bright highlights at edges"
       ],
       "answer": 0,
       "answerText": "",
@@ -1493,10 +1493,10 @@
       "timestamp": "56:39",
       "question": "What is an area light source?",
       "options": [
-        "A light source that covers an entire scene",
-        "Multiple point lights arranged in a pattern",
-        "A light that only illuminates a specific area",
-        "A light source with a specific area shape emitting light uniformly"
+        "Global scene illumination",
+        "Patterned point-light array",
+        "Localized-area illuminator",
+        "Uniform-area-shape emitter"
       ],
       "answer": 3,
       "answerText": "",
@@ -1517,10 +1517,10 @@
       "timestamp": "56:46",
       "question": "Why are area lights considered more realistic than point lights?",
       "options": [
+        "Resemble real-world area lights",
         "They more closely resemble real-world light sources like fluorescent tubes",
         "They produce brighter illumination",
-        "They consume less computational power",
-        "They don't produce shadows"
+        "They consume less computational power"
       ],
       "answer": 0,
       "answerText": "",
@@ -1541,12 +1541,12 @@
       "timestamp": "57:06",
       "question": "How is irradiance calculated for a uniform area light source?",
       "options": [
+        "Integrate L_i cos θ dω over source solid angle",
         "By taking the light's intensity and dividing by distance",
         "By using the inverse square law",
-        "By multiplying the area of the light by its intensity",
-        "By integrating the incident radiance weighted by the cosine over the solid angle subtended by the source"
+        "By multiplying the area of the light by its intensity"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [57:06], the lecturer states, \"If the source emits irradiance L, then we can say the irradiance at a point P arriving at a point P is the integral over the Hemisphere around that point of the incident radiance L at the point P in the direction Omega times cosine theta D Omega.\"",
@@ -1565,10 +1565,10 @@
       "timestamp": "58:08",
       "question": "What is projected solid angle?",
       "options": [
-        "The solid angle divided by π",
-        "The cosine-weighted solid angle",
-        "The solid angle without accounting for direction",
-        "The solid angle projected onto a flat surface"
+        "Solid angle divided by π",
+        "Cosine-weighted solid angle",
+        "Raw unweighted solid angle",
+        "Projected flat-surface angle"
       ],
       "answer": 1,
       "answerText": "",
@@ -1589,10 +1589,10 @@
       "timestamp": "58:16",
       "question": "What example of an area light does the lecturer use to demonstrate solid angle calculations?",
       "options": [
-        "A uniform disk source",
-        "A rectangular area light",
-        "A cylindrical light",
-        "A triangular light"
+        "Uniform disk light source",
+        "Rectangular area light",
+        "Cylindrical light emitter",
+        "Triangular area light"
       ],
       "answer": 0,
       "answerText": "",
@@ -1613,10 +1613,10 @@
       "timestamp": "59:20",
       "question": "For most light sources, how are the irradiance integrals typically solved?",
       "options": [
-        "Using lookup tables",
-        "Only using the inverse square law",
-        "Using closed-form analytical solutions",
-        "Using numerical techniques and approximations"
+        "Lookup table acceleration",
+        "Pure inverse square law",
+        "Closed-form analytical solutions",
+        "Numerical approximations used"
       ],
       "answer": 3,
       "answerText": "",
@@ -1637,10 +1637,10 @@
       "timestamp": "59:50",
       "question": "What visual characteristic distinguishes area lights from point lights?",
       "options": [
-        "Area lights produce softer shadows and gradients",
-        "Area lights are always brighter",
-        "Area lights don't produce shadows",
-        "Area lights have more saturated colors"
+        "Softer shadows and gradients",
+        "Area lights are always brighter than point lights",
+        "Area lights never cast hard shadows under any condition",
+        "Area lights emit more saturated color due to extended spectral emission"
       ],
       "answer": 0,
       "answerText": "",
@@ -1661,10 +1661,10 @@
       "timestamp": "1:00:30",
       "question": "What is a goniometric diagram?",
       "options": [
-        "A type of shadow map",
-        "A diagram showing the position of lights in a scene",
-        "A chart showing light intensity as a function of angle",
-        "A 3D model of a lighting setup"
+        "A shadow mapping technique that uses multiple cascaded depth buffers",
+        "A schematic diagram showing the spatial arrangement and types of light sources in a 3D scene",
+        "A plot of luminous intensity versus polar angle for a light source",
+        "A full-scale 3D simulation used to prototype lighting before physical installation"
       ],
       "answer": 2,
       "answerText": "",
@@ -1685,9 +1685,9 @@
       "timestamp": "1:01:14",
       "question": "What practical application of photorealistic rendering does the lecturer highlight?",
       "options": [
-        "Video game development",
-        "Movie special effects",
-        "Medical imaging",
+        "Creating real-time interactive environments for console and PC games",
+        "Generating photorealistic visual effects for film and television post-production",
+        "Rendering anatomical structures from CT/MRI scans for diagnostic support",
         "Architectural pre-visualization to see how buildings will look"
       ],
       "answer": 3,
@@ -1757,9 +1757,9 @@
       "timestamp": "1:02:24",
       "question": "How is luminance (Y) calculated from spectral radiance?",
       "options": [
-        "By taking the maximum radiance across all wavelengths",
-        "By averaging the radiance values",
-        "By selecting only the green wavelengths",
+        "By computing the peak value of spectral radiance across the visible spectrum",
+        "By computing the arithmetic mean of sampled radiance values at discrete wavelengths",
+        "By using only the radiance measured at 555 nm, where photopic sensitivity peaks",
         "By integrating radiance over all wavelengths, weighted by the eye's response curve"
       ],
       "answer": 3,
@@ -1781,10 +1781,10 @@
       "timestamp": "1:03:01",
       "question": "What aspect of human vision affects photometric measurements in different lighting conditions?",
       "options": [
-        "Eye adaptation between daytime and nighttime vision",
-        "The focal length of the eye",
-        "The reflection off the back of the retina",
-        "The number of cones in the retina"
+        "Day/night eye adaptation",
+        "Eye focal length property",
+        "Retinal back-reflection effect",
+        "Cone count in retina"
       ],
       "answer": 0,
       "answerText": "",
@@ -1806,9 +1806,9 @@
       "question": "Why are there so many different terms and units in radiometry and photometry?",
       "options": [
         "Because people in different fields use different names for the same or analogous quantities",
-        "Because light measurement is inherently complex",
-        "Because each term refers to a completely different concept",
-        "Because the field is still developing standardized terminology"
+        "Because light measurement involves many interdependent physical variables that resist simple categorization",
+        "Because each term corresponds to a mathematically orthogonal and physically disjoint phenomenon",
+        "Because the International Commission on Illumination (CIE) has not yet ratified official definitions for these terms"
       ],
       "answer": 0,
       "answerText": "",
@@ -1829,9 +1829,9 @@
       "timestamp": "1:05:44",
       "question": "What small-scale light effects does the geometric optics model ignore?",
       "options": [
-        "Color and wavelength",
-        "Intensity and brightness",
-        "Reflection and refraction",
+        "The relationship between hue and photon energy in vacuum",
+        "How perceived brightness changes with incident power and adaptation state",
+        "How surfaces redirect light based on surface normal and Fresnel coefficients",
         "Diffraction and iridescence"
       ],
       "answer": 3,

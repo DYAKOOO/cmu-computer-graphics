@@ -77,12 +77,12 @@
       "timestamp": "00:00",
       "question": "What is the primary goal of the rendering equation in computer graphics?",
       "options": [
+        "To generate photorealistic images",
         "To calculate the memory requirements for storing scene geometry",
         "To optimize GPU performance for real-time rendering",
-        "To determine the most efficient data structures for 3D models",
-        "To model the behavior of light to generate photorealistic images"
+        "To determine the most efficient data structures for 3D models"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "The lecturer introduces the topic at [00:00] stating: \"Today we're gonna bring together a bunch of ideas that we've been talking about for a few lectures now about color and measurement of light and so forth into the equation that's gonna let us render photorealistic images.\"",
@@ -125,10 +125,10 @@
       "timestamp": "02:08",
       "question": "How is irradiance mathematically related to radiance?",
       "options": [
-        "Irradiance is the derivative of radiance with respect to time",
-        "Irradiance equals radiance divided by the surface area",
-        "Irradiance is the integral of radiance over the hemisphere",
-        "Irradiance equals radiance multiplied by distance squared"
+        "Derivative over time",
+        "Radiance / surface area",
+        "Hemisphere integral",
+        "Radiance × distance²"
       ],
       "answer": 2,
       "answerText": "",
@@ -149,12 +149,12 @@
       "timestamp": "02:52",
       "question": "In radiometry, what is radiance precisely?",
       "options": [
+        "Radiant energy per unit time per solid angle per unit area",
         "The total amount of light energy in a scene",
-        "The radiant energy per unit time per solid angle per unit area perpendicular to the direction",
         "The brightness of a light source measured in candela",
         "The direct lighting component excluding indirect illumination"
       ],
-      "answer": 1,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [02:52], the lecturer defines radiance as \"the radiant energy per unit time per solid angle per unit area perpendicular to n\" where n is the normal direction.",
@@ -173,12 +173,12 @@
       "timestamp": "03:44",
       "question": "What are the \"two cosines\" that the lecturer discusses as potentially confusing?",
       "options": [
+        "Lambert's cosine law and spherical integration",
         "Cosines in the incident and exitant directions",
         "Cosines in diffuse and specular reflection models",
-        "Cosines in the real and imaginary parts of light",
-        "Lambert's cosine law and the cosine from spherical integration"
+        "Cosines in the real and imaginary parts of light"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [03:44], the lecturer explains the \"tale of two cosines\" as being: \"One is for a physical reason due to Lambert's cosine law... the other cosine is coming purely from the way that we write down spherical integrals from the way we parameterize the sphere.\"",
@@ -197,7 +197,7 @@
       "timestamp": "05:00",
       "question": "What are the two main components of the rendering equation?",
       "options": [
-        "Emitted radiance and reflected radiance (integral term)",
+        "Emitted and reflected radiance",
         "Direct lighting and ambient occlusion",
         "Reflection and refraction",
         "Absorption and transmission"
@@ -221,10 +221,10 @@
       "timestamp": "06:52",
       "question": "What makes the rendering equation particularly challenging to solve?",
       "options": [
-        "It has too many variables to track efficiently",
-        "It is recursive in nature",
-        "It requires specialized hardware accelerators",
-        "It's an NP-hard problem in computer science"
+        "Too many variables",
+        "Recursive nature",
+        "Needs special hardware",
+        "NP-hard problem"
       ],
       "answer": 1,
       "answerText": "",
@@ -245,10 +245,10 @@
       "timestamp": "07:26",
       "question": "How does recursive raytracing terminate?",
       "options": [
-        "When a ray hits an emissive surface",
-        "When the scene boundary is reached",
-        "When a predetermined depth limit is reached",
-        "When the contribution becomes too small"
+        "Hit emissive surface",
+        "Reach scene boundary",
+        "Depth limit reached",
+        "Contribution too small"
       ],
       "answer": 0,
       "answerText": "",
@@ -317,12 +317,12 @@
       "timestamp": "09:55",
       "question": "In the geometric optics model, what is scattering?",
       "options": [
+        "Light bouncing off a surface unchanged",
         "The bending of light as it passes from one medium to another",
-        "The process of light hitting a surface and bouncing off without changing frequency",
         "The diffraction of light around small obstacles",
         "The absorption of light by opaque materials"
       ],
-      "answer": 1,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [09:55], the lecturer defines: \"At least in our geometric optics model of light transport reflection or scattering is the process by which light that's incident on a surface that's coming in and hitting a surface interacts with the surface... It leaves the same side of the surface meaning it kind of bounces off the surface without changing frequency.\"",
@@ -341,12 +341,12 @@
       "timestamp": "11:21",
       "question": "What aspect of light transport is the geometric optics model most appropriate for?",
       "options": [
+        "Human vision at macroscopic scale",
         "Diffraction through very small apertures",
         "Quantum effects at the atomic level",
-        "Interference patterns in thin films",
-        "Human-level vision of macroscopic objects"
+        "Interference patterns in thin films"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [11:21], the lecturer notes: \"We want to pick a model for light transport that is suitable or is appropriate for human level vision of a scene. I'm talking about macroscopic objects I'm talking about the way that humans see things I'm not going to account for effects like diffraction very small scale effects.\"",
@@ -365,10 +365,10 @@
       "timestamp": "11:54",
       "question": "What characterizes specular reflection?",
       "options": [
-        "Light gets partially absorbed and partially reflected",
-        "Light bounces off in the direction determined by reflecting around the surface normal",
-        "Light bounces back in the direction it came from",
-        "Light scatters equally in all directions regardless of incoming direction"
+        "Partial absorption/reflection",
+        "Reflect around surface normal",
+        "Bounce back along incident",
+        "Equal scatter in all directions"
       ],
       "answer": 1,
       "answerText": "",
@@ -509,10 +509,10 @@
       "timestamp": "15:41",
       "question": "What microscopic explanation does the lecturer give for why materials have different appearances?",
       "options": [
-        "Variations in electron configurations cause different color absorption",
-        "Electromagnetic fields around atoms determine reflection patterns",
-        "Surface temperatures affect how light is processed",
-        "Materials with glossy appearance might have many tiny perfect mirrors oriented in random directions"
+        "Electron config color absorption",
+        "EM fields determine reflection",
+        "Surface temp affects light",
+        "Tiny random perfect mirrors"
       ],
       "answer": 3,
       "answerText": "",
@@ -557,10 +557,10 @@
       "timestamp": "17:13",
       "question": "What fundamental physical principle constrains all scattering functions?",
       "options": [
-        "The uncertainty principle",
-        "The equivalence principle",
+        "Uncertainty principle",
+        "Equivalence principle",
         "Conservation of energy",
-        "The second law of thermodynamics"
+        "Second law of thermodynamics"
       ],
       "answer": 2,
       "answerText": "",
@@ -581,10 +581,10 @@
       "timestamp": "18:05",
       "question": "What mental model does the lecturer use to help visualize incident radiance?",
       "options": [
-        "A satellite view looking down at Earth",
-        "A laser beam hitting different surfaces",
-        "A camera with different exposure settings",
-        "A bug on the ground looking up at the world"
+        "Satellite view of Earth",
+        "Laser hitting surfaces",
+        "Camera exposure settings",
+        "Bug looking up at world"
       ],
       "answer": 3,
       "answerText": "",
@@ -605,10 +605,10 @@
       "timestamp": "18:43",
       "question": "How does a diffuse reflection transform incident radiance?",
       "options": [
-        "It uniformly averages and blurs it in all outgoing directions",
-        "It absorbs all the incident radiance",
-        "It selectively filters certain wavelengths",
-        "It reflects it perfectly with no changes"
+        "Uniformly averages outgoing",
+        "Absorbs all incident radiance",
+        "Filters certain wavelengths",
+        "Reflects perfectly unchanged"
       ],
       "answer": 0,
       "answerText": "",
@@ -629,10 +629,10 @@
       "timestamp": "19:00",
       "question": "How does specular reflection transform the incident radiance?",
       "options": [
-        "It blurs it in all directions",
-        "It flips the image while preserving the distribution",
-        "It concentrates all light in a single direction",
-        "It completely randomizes the distribution"
+        "Blurs in all directions",
+        "Flips image distribution",
+        "Concentrates in one direction",
+        "Randomizes distribution completely"
       ],
       "answer": 1,
       "answerText": "",
@@ -725,10 +725,10 @@
       "timestamp": "21:21",
       "question": "When light is absorbed by a material rather than reflected, what happens to the energy?",
       "options": [
-        "It is stored indefinitely",
-        "It is converted to heat",
-        "It is transmitted through the material",
-        "It is destroyed"
+        "Stored indefinitely",
+        "Converted to heat",
+        "Transmitted through material",
+        "Destroyed"
       ],
       "answer": 1,
       "answerText": "",
@@ -797,12 +797,12 @@
       "timestamp": "24:11",
       "question": "In the context of Lambertian reflection, what does the term \"albedo\" refer to?",
       "options": [
-        "The roughness of the material surface",
         "The brightness factor or reflection coefficient of the surface",
-        "The angular distribution of reflected light",
-        "The rate at which energy is converted to heat"
+        "A dimensionless scalar scaling the incident radiance to reflected radiance at normal incidence",
+        "The angular distribution of reflected light relative to incident direction",
+        "The rate at which energy is converted to heat per unit area"
       ],
-      "answer": 1,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [24:11], the lecturer states: \"There's a common name for the brightness factor which is the albedo.\"",
@@ -869,10 +869,10 @@
       "timestamp": "26:51",
       "question": "What mathematical construct is used to represent the specular BRDF?",
       "options": [
-        "A Gaussian distribution",
-        "A linear function",
-        "A cosine function",
-        "The Dirac delta function"
+        "Gaussian distribution",
+        "Linear function",
+        "Cosine function",
+        "Dirac delta function"
       ],
       "answer": 3,
       "answerText": "",
@@ -893,10 +893,10 @@
       "timestamp": "28:13",
       "question": "What happens to light when it passes from one medium to another?",
       "options": [
-        "It refracts, changing direction based on the indices of refraction",
-        "It increases in intensity proportional to the density difference",
-        "It always splits into reflected and transmitted components equally",
-        "It maintains its direction perfectly"
+        "Refracts per indices",
+        "Intensity ∝ density difference",
+        "Splits equally always",
+        "Direction unchanged"
       ],
       "answer": 0,
       "answerText": "",
@@ -919,7 +919,7 @@
       "options": [
         "Brewster's law",
         "Fermat's principle",
-        "The law of reflection",
+        "Law of reflection",
         "Snell's law"
       ],
       "answer": 3,
@@ -989,10 +989,10 @@
       "timestamp": "32:07",
       "question": "What visual difference is demonstrated between glass spheres rendered with and without Fresnel effects?",
       "options": [
-        "The sphere with Fresnel effects has a different color",
-        "The sphere without Fresnel effects doesn't cast shadows",
-        "The sphere without Fresnel effects is completely transparent",
-        "The sphere with Fresnel effects shows increased reflectivity at grazing angles"
+        "The sphere with Fresnel effects has a different color due to wavelength-dependent reflectance",
+        "The sphere without Fresnel effects doesn't cast shadows because it lacks proper BRDF integration",
+        "The sphere without Fresnel effects is completely transparent since it ignores reflectance variation",
+        "Fresnel reflectivity increases at grazing angles"
       ],
       "answer": 3,
       "answerText": "",
@@ -1013,10 +1013,10 @@
       "timestamp": "32:32",
       "question": "What is anisotropic reflection?",
       "options": [
-        "Reflection that is stronger in certain azimuthal directions",
-        "Reflection that changes with time",
-        "Reflection that is wavelength-dependent",
-        "Reflection that depends only on the incoming direction"
+        "Azimuthally stronger reflection",
+        "Time-varying reflection",
+        "Wavelength-dependent reflection",
+        "Incoming-direction-only reflection"
       ],
       "answer": 0,
       "answerText": "",
@@ -1040,7 +1040,7 @@
         "Clear glass and water",
         "Matte paint and clay",
         "Plastic and rubber",
-        "Brushed metals like doorknobs and tea kettles"
+        "Brushed metals"
       ],
       "answer": 3,
       "answerText": "",
@@ -1133,12 +1133,12 @@
       "timestamp": "34:55",
       "question": "What does BSSRDF stand for?",
       "options": [
-        "Bidirectional Surface Scattering Reflectance Distribution Function",
-        "Basic Subsurface Scattering Reflectance Distribution Function",
         "Bidirectional Subsurface Scattering Reflection Distribution Function",
-        "Bidirectional Scattering Surface Reflection Distribution Function"
+        "Bidirectional Surface Scattering Reflectance Distribution Function — a common misnomer conflating surface and subsurface phenomena",
+        "Basic Subsurface Scattering Reflectance Distribution Function — incorrectly omits 'bidirectional' and misuses 'basic'",
+        "Bidirectional Scattering Surface Reflection Distribution Function — swaps 'subsurface' with 'surface', altering physical meaning"
       ],
-      "answer": 2,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [34:55], the lecturer introduces \"a BSS RDF a bi-directional subsurface reflection distribution function.\"",
@@ -1159,7 +1159,7 @@
       "options": [
         "Twice as many (4)",
         "Four times as many (8)",
-        "The same number (2)",
+        "Same number (2)",
         "One more (3)"
       ],
       "answer": 0,
@@ -1182,9 +1182,9 @@
       "question": "What makes computing with BSSRDFs particularly challenging?",
       "options": [
         "They need multidimensional integrals over complicated geometries",
-        "They only work with specific material types",
-        "They require special hardware that isn't widely available",
-        "They aren't physically accurate in most situations"
+        "They only work with specific material types — e.g., purely diffuse or perfectly specular, ignoring real-world mixtures",
+        "They require special hardware that isn't widely available — a misconception; many path tracers run on CPUs",
+        "They aren't physically accurate in most situations — false: they’re derived from the rendering equation and are fundamentally accurate"
       ],
       "answer": 0,
       "answerText": "",
@@ -1205,9 +1205,9 @@
       "timestamp": "36:26",
       "question": "What visual improvement does the BSSRDF model provide over BRDF for the marble statue example?",
       "options": [
-        "More realistic translucent appearance",
+        "More realistic translucency",
         "More saturated colors",
-        "Better reflection of the environment",
+        "Better environment reflection",
         "More accurate shadows"
       ],
       "answer": 0,
@@ -1229,10 +1229,10 @@
       "timestamp": "37:23",
       "question": "What is the reflection equation essentially?",
       "options": [
-        "The integral over all outgoing directions",
-        "The rendering equation without the emission term",
-        "The scattering function multiplied by the incident light",
-        "The differential form of the rendering equation"
+        "Integral over outgoing directions",
+        "Rendering equation minus emission",
+        "Scattering × incident light",
+        "Differential rendering equation"
       ],
       "answer": 1,
       "answerText": "",
@@ -1325,10 +1325,10 @@
       "timestamp": "40:31",
       "question": "What creates the recursive structure in the reflected light estimation algorithm?",
       "options": [
-        "Having to trace a ray to determine the incident radiance, which itself requires the same estimation process",
-        "Repetitive sampling of the same scattering function",
-        "The need to calculate multiple bounces of light",
-        "Multiple levels of Monte Carlo integration"
+        "Having to trace a ray to determine the incident radiance",
+        "Repetitive sampling of the same scattering function — inefficient but not the core recursive issue",
+        "The need to calculate multiple bounces of light — descriptive but not the fundamental self-referential cause",
+        "Multiple levels of Monte Carlo integration — a consequence, not the root structural problem"
       ],
       "answer": 0,
       "answerText": "",
@@ -1349,10 +1349,10 @@
       "timestamp": "42:18",
       "question": "What key strategy does path tracing use to tackle the rendering equation?",
       "options": [
-        "Breaking the equation into direct and indirect illumination terms",
-        "Solving the equation analytically for simple scenes",
-        "Ignoring all but the first bounce of light",
-        "Using specialized hardware to accelerate calculations"
+        "Split into direct/indirect terms",
+        "Analytic solve for simple scenes",
+        "Ignore bounces beyond first",
+        "Specialized hardware acceleration"
       ],
       "answer": 0,
       "answerText": "",
@@ -1373,10 +1373,10 @@
       "timestamp": "43:19",
       "question": "How does path tracing deal with paths that could potentially bounce forever?",
       "options": [
-        "By ignoring all paths that bounce more than once",
-        "By simulating only a fixed maximum number of bounces",
+        "By ignoring all paths that bounce more than once — breaks correctness and causes severe bias",
+        "By simulating only a fixed maximum number of bounces — truncates without compensation, causing energy loss",
         "By cutting paths short after a certain point in a way that preserves correctness on average",
-        "By using special hardware that computes infinite series"
+        "By using special hardware that computes infinite series — no such hardware exists for general path termination"
       ],
       "answer": 2,
       "answerText": "",
@@ -1397,12 +1397,12 @@
       "timestamp": "43:52",
       "question": "What are the two main components shown in the example scene with two spheres?",
       "options": [
-        "Diffuse and specular components",
-        "Explicit and implicit light paths",
-        "Primary rays and shadow rays",
-        "Direct illumination plus reflection/transparency and indirect illumination"
+        "Direct illumination plus reflection/transparency and indirect illumination",
+        "Diffuse and specular components — describes BRDF behavior, not light transport categories",
+        "Explicit and implicit light paths — nonstandard terminology not used in the rendering equation context",
+        "Primary rays and shadow rays — low-level ray types, not conceptual light-path classifications"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [43:52], the lecturer describes: \"Here's an image of two spheres... what we're visualizing here is just the direct illumination plus reflect and transparency. We can now add in pads that come from our recursive rendering equation from following the light around the scene or the array around the scene until it hits a light source.\"",
@@ -1421,12 +1421,12 @@
       "timestamp": "44:25",
       "question": "According to the lecturer, what is the impact of adding indirect illumination to a rendered scene?",
       "options": [
-        "It adds special effects like lens flares",
-        "It only makes a small visual difference",
-        "It makes the scene appear brighter but less realistic",
-        "It dramatically increases realism, making the image look more like a photograph"
+        "It dramatically increases realism, making the image look more like a photograph",
+        "It adds special effects like lens flares — unrelated to global illumination",
+        "It only makes a small visual difference — contradicts empirical and perceptual evidence",
+        "It makes the scene appear brighter but less realistic — opposite of the actual effect"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [44:25], the lecturer states: \"What you see is this indirect illumination really really is important for capturing the realism of the scene. If you don't have this in there it looks way too dark it looks really synthetic it looks like computer graphics if you add all these pads in it looks more like a photograph it becomes easier to fool the eye.\"",
@@ -1445,12 +1445,12 @@
       "timestamp": "44:56",
       "question": "What limitation of rasterization does the lecturer highlight in comparison to ray tracing?",
       "options": [
-        "Rasterization requires specialized hardware",
-        "Rasterization cannot handle high-resolution images",
-        "Rasterization is much slower than ray tracing",
-        "Rasterization cannot achieve the level of realism that ray tracing provides"
+        "Rasterization cannot achieve the level of realism that ray tracing provides",
+        "Rasterization requires specialized hardware — false: software rasterizers exist and are widely used",
+        "Rasterization cannot handle high-resolution images — resolution-agnostic by design",
+        "Rasterization is much slower than ray tracing — generally false; rasterization is typically faster for primary visibility"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [44:56], the lecturer concludes: \"That's why we go to all the trouble of adding these secondary and tertiary paths into the equation and why it's really important to say well you know rasterization is cool it's really fast but it doesn't get us this level of realism.\"",
@@ -1493,12 +1493,12 @@
       "timestamp": "00:00",
       "question": "What is the ultimate goal of the rendering equation in the context of the full lecture?",
       "options": [
-        "To optimize code for GPU acceleration",
-        "To develop new data structures for scene representation",
-        "To create more efficient algorithms for triangle rasterization",
-        "To provide a mathematical foundation for photorealistic image generation"
+        "To provide a mathematical foundation for photorealistic image generation",
+        "To optimize code for GPU acceleration — implementation concern, not foundational goal",
+        "To develop new data structures for scene representation — useful but secondary to theory",
+        "To create more efficient algorithms for triangle rasterization — orthogonal to the rendering equation’s purpose"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "From the entire lecture context, particularly the introduction at [00:00], the rendering equation is presented as the mathematical foundation that enables photorealistic rendering by modeling light transport accurately.",
@@ -1541,10 +1541,10 @@
       "timestamp": "34:01",
       "question": "Which real-world objects most clearly demonstrate the need for subsurface scattering models?",
       "options": [
-        "Polished metals and mirrors",
-        "Clear glass and water",
+        "Polished metals/mirrors",
+        "Clear glass/water",
         "Matte painted walls",
-        "Jade, skin, and leaves"
+        "Jade/skin/leaves"
       ],
       "answer": 3,
       "answerText": "",
@@ -1565,10 +1565,10 @@
       "timestamp": "17:13",
       "question": "According to physical principles discussed in the lecture, what happens to light energy that is absorbed by a material?",
       "options": [
-        "It is re-emitted at different wavelengths",
-        "It is converted into quantum states",
-        "It is stored indefinitely in the material",
-        "It is converted to heat energy"
+        "Re-emitted at different wavelengths",
+        "Converted to quantum states",
+        "Stored indefinitely",
+        "Converted to heat energy"
       ],
       "answer": 3,
       "answerText": "",

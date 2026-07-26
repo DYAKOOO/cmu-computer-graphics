@@ -77,10 +77,10 @@
       "timestamp": "04:15",
       "question": "What is the key difference between kinematics and dynamics?",
       "options": [
-        "Kinematics describes motion without reference to causes; dynamics studies forces and their effect on motion",
-        "Kinematics uses differential equations; dynamics uses algebraic equations",
-        "Kinematics requires numerical simulation; dynamics has closed-form solutions",
-        "Kinematics applies only to rigid bodies; dynamics applies to deformable bodies"
+        "Kinematics: motion without causes; dynamics: forces and effects",
+        "Kinematics uses differential equations; dynamics uses algebraic ones",
+        "Kinematics needs numerical simulation; dynamics has closed forms",
+        "Kinematics only for rigid bodies; dynamics for deformable ones"
       ],
       "answer": 0,
       "answerText": "",
@@ -125,10 +125,10 @@
       "timestamp": "05:46",
       "question": "What does the lecturer call \"the animation equation\"?",
       "options": [
-        "The Euler-Lagrange equation: d/dt(∂L/∂q̇) = ∂L/∂q",
-        "The wave equation: ∂²u/∂t² = c²∂²u/∂x²",
+        "Euler-Lagrange: d/dt(∂L/∂q̇) = ∂L/∂q",
+        "Wave equation: ∂²u/∂t² = c²∂²u/∂x²",
         "Newton's second law: F = ma",
-        "The rendering equation: L_o = L_e + ∫ f_r L_i cos θ dω"
+        "Rendering equation: L_o = L_e + ∫ f_r L_i cos θ dω"
       ],
       "answer": 2,
       "answerText": "",
@@ -272,10 +272,10 @@
       "timestamp": "13:40",
       "question": "What is the general form of an ordinary differential equation (ODE) in generalized coordinates?",
       "options": [
-        "F = -∇U(Q) (gradient of potential)",
-        "∂u/∂t = α∇²u (heat equation)",
-        "∇²u = 0 (Laplace equation)",
-        "Q̇ = f(Q, Q̇, t), a function relating the rate of change of Q to its current state"
+        "F = -∇U(Q)",
+        "Heat equation: ∂u/∂t = α∇²u",
+        "Laplace equation: ∇²u = 0",
+        "Q̇ = f(Q, Q̇, t)"
       ],
       "answer": 3,
       "answerText": "",
@@ -296,10 +296,10 @@
       "timestamp": "14:44",
       "question": "For the scalar ODE u̇ = au, what is the exact solution and what does the sign of a determine?",
       "options": [
-        "u(t) = u₀ + at; sign of a determines whether u grows or shrinks linearly",
-        "u(t) = Be^(at); a > 0 gives exponential growth, a < 0 gives exponential decay",
-        "u(t) = B/t; a determines the rate of hyperbolic decay",
-        "u(t) = B cos(at); a determines the oscillation frequency"
+        "u(t) = u₀ + at",
+        "u(t) = Be^(at)",
+        "u(t) = B/t",
+        "u(t) = B cos(at)"
       ],
       "answer": 1,
       "answerText": "",
@@ -322,7 +322,7 @@
       "options": [
         "The pendulum requires tracking more particles",
         "The pendulum requires a 3D coordinate system while the ballistic trajectory is 2D",
-        "The pendulum has a constraint (stays on a circle), and there is no closed-form solution",
+        "Constrained, no closed-form",
         "Gravity has a different magnitude for the pendulum"
       ],
       "answer": 2,
@@ -346,10 +346,10 @@
       "timestamp": "24:46",
       "question": "What is Lagrangian mechanics and what is its central object L?",
       "options": [
-        "A constraint-force approach; L is the Lagrange multiplier vector",
-        "A way to discretize PDEs on a mesh; L is the mesh Laplacian",
-        "A technique using L = K - U (kinetic minus potential energy); Euler-Lagrange equations then give the dynamics",
-        "A method for solving ODEs numerically using L as the step-size parameter"
+        "Constraint-force method; L is Lagrange multiplier vector",
+        "Mesh PDE discretization; L is mesh Laplacian",
+        "Lagrangian L = K − U; Euler-Lagrange gives dynamics",
+        "ODE solver; L is step-size parameter"
       ],
       "answer": 2,
       "answerText": "",
@@ -371,10 +371,10 @@
       "timestamp": "25:44",
       "question": "What are the Euler-Lagrange equations?",
       "options": [
-        "∂L/∂t = ∂L/∂q + ∂L/∂q̇ (total time derivative identity)",
-        "d/dt(∂L/∂q̇) = ∂L/∂q (time derivative of velocity-gradient equals position-gradient)",
-        "L = 0 at all times (Lagrangian is always zero at equilibrium)",
-        "d²L/dt² = ∂L/∂q (second time derivative equals spatial gradient)"
+        "∂L/∂t = ∂L/∂q + ∂L/∂q̇",
+        "d/dt(∂L/∂q̇) = ∂L/∂q",
+        "L = 0 at equilibrium",
+        "d²L/dt² = ∂L/∂q"
       ],
       "answer": 1,
       "answerText": "",
@@ -395,10 +395,10 @@
       "timestamp": "28:33",
       "question": "For a pendulum of mass m and length L, what are the generalized coordinates?",
       "options": [
-        "The (x, y, θ) triple: position and orientation",
-        "The angle θ the pendulum makes with vertical (one degree of freedom)",
-        "The arc length traveled along the circular path",
-        "The xy Cartesian position of the pendulum bob"
+        "(x, y, θ) position and orientation",
+        "Angle θ from vertical (one DOF)",
+        "Arc length along circular path",
+        "xy position of pendulum bob"
       ],
       "answer": 1,
       "answerText": "",
@@ -420,10 +420,10 @@
       "timestamp": "30:47",
       "question": "For the pendulum, what is the potential energy U in terms of θ?",
       "options": [
-        "U = ½k(L - L₀)² (spring potential)",
-        "U = mgL cos(θ) (height = L cos θ from pivot)",
-        "U = mgL sin(θ) (horizontal component)",
-        "U = ½mL²θ̇² (kinetic-like term)"
+        "U = ½k(L − L₀)²",
+        "U = mgL cos(θ)",
+        "U = mgL sin(θ)",
+        "U = ½mL²θ̇²"
       ],
       "answer": 1,
       "answerText": "",
@@ -551,10 +551,10 @@
       "timestamp": "42:55",
       "question": "Why is the double pendulum a famous example in dynamics?",
       "options": [
-        "It demonstrates perfectly periodic motion regardless of initial conditions",
-        "It is the simplest system with a closed-form solution",
-        "It can be solved analytically using Lagrangian mechanics",
-        "It is a chaotic system: tiny changes in initial conditions produce completely different trajectories"
+        "Perfectly periodic regardless of ICs",
+        "Simplest with closed-form solution",
+        "Solvable analytically via Lagrangian mechanics",
+        "Chaotic: sensitive to initial conditions"
       ],
       "answer": 3,
       "answerText": "",
@@ -631,7 +631,7 @@
       "question": "What is the potential energy of a spring with stiffness k, rest length L₀, and current length L?",
       "options": [
         "U = k/L (inverse distance potential)",
-        "U = ½k(L - L₀)² (quadratic deviation from rest length)",
+        "U = ½k(L - L₀)²",
         "U = ½kL₀² (constant, independent of deformation)",
         "U = kL (linear potential)"
       ],
@@ -655,7 +655,7 @@
       "question": "How can cloth be modeled using a mass-spring system?",
       "options": [
         "Each triangle of the mesh is a rigid body; cloth is modeled as articulated joints",
-        "Every mesh vertex is a particle; every mesh edge is a spring; some vertices are pinned to the character",
+        "Every vertex is a particle; every edge is a spring; some vertices are pinned",
         "Cloth is modeled as a fluid with high viscosity",
         "The cloth is a single particle with a large mass and many constraints"
       ],
@@ -683,7 +683,7 @@
       "options": [
         "Use random sampling (Monte Carlo) to estimate the solution",
         "Replace continuous functions with Fourier series expansions",
-        "Replace time derivatives with finite differences; replace continuous Q(t) with discrete time samples Q_k",
+        "Replace time derivatives with finite differences",
         "Convert ODEs to PDEs to apply spatial discretization"
       ],
       "answer": 2,
@@ -708,10 +708,10 @@
       "timestamp": "1:05:56",
       "question": "What is the Forward Euler update rule?",
       "options": [
-        "q_{k+1} = q_k - τ·f(q_{k+1}) (implicit, uses future state)",
-        "q_{k+1} = q_k + τ·∇²f(q_k) (uses Laplacian of velocity)",
-        "q_{k+1} = q_k + τ·f(q_k) (explicit, uses current state velocity)",
-        "q_{k+1} = ½(q_k + q_{k-1}) + τ·f(q_k) (uses two past states)"
+        "q_{k+1} = q_k − τ·f(q_{k+1})",
+        "q_{k+1} = q_k + τ·∇²f(q_k)",
+        "q_{k+1} = q_k + τ·f(q_k)",
+        "q_{k+1} = ½(q_k + q_{k−1}) + τ·f(q_k)"
       ],
       "answer": 2,
       "answerText": "",
@@ -763,7 +763,7 @@
       "question": "Why does stiffness (e.g., hair, stiff springs) cause problems for Forward Euler?",
       "options": [
         "Stiff systems violate energy conservation, so Forward Euler gives wrong forces",
-        "Large stiffness constant a forces very small time steps (τ < 2/a) to maintain stability",
+        "Large stiffness constant a forces very small time steps to maintain stability",
         "Forward Euler cannot handle spring forces at all; only gravity",
         "Stiff systems require non-linear solvers that Forward Euler cannot handle"
       ],
@@ -786,10 +786,10 @@
       "timestamp": "1:12:32",
       "question": "What is the Backward Euler update rule and why is it called \"implicit\"?",
       "options": [
-        "q_{k+1} = 2q_k - q_{k-1} + τ²·f(q_k); it is implicit because it uses two past states",
-        "q_{k+1} = q_k·exp(τ·a); it is implicit because the exponential cannot be computed directly",
-        "q_{k+1} = q_k + τ·f(q_{k+1}); it is implicit because q_{k+1} appears on both sides",
-        "q_{k+1} = q_k + τ·f(q_k); it is implicit because f depends on the past"
+        "q_{k+1} = 2q_k − q_{k−1} + τ²·f(q_k)",
+        "q_{k+1} = q_k·exp(τ·a)",
+        "q_{k+1} = q_k + τ·f(q_{k+1})",
+        "q_{k+1} = q_k + τ·f(q_k)"
       ],
       "answer": 2,
       "answerText": "",
@@ -868,10 +868,10 @@
       "timestamp": "1:17:31",
       "question": "What is the Symplectic Euler update rule?",
       "options": [
-        "v_{k+1} = v_k + τ·f(q_k); q_{k+1} = q_k + τ·v_k (both use current state)",
-        "v_{k+1} = v_k + τ·f(q_{k+1}); q_{k+1} = q_k + τ·v_{k+1} (implicit velocity, implicit position)",
-        "q_{k+1} = q_k + τ·v_k + ½τ²·f(q_k) (Verlet position update)",
-        "v_{k+1} = v_k + τ·f(q_k); q_{k+1} = q_k + τ·v_{k+1} (explicit velocity from current q, position uses new v)"
+        "v_{k+1} = v_k + τ·f(q_k); q_{k+1} = q_k + τ·v_k",
+        "v_{k+1} = v_k + τ·f(q_{k+1}); q_{k+1} = q_k + τ·v_{k+1}",
+        "q_{k+1} = q_k + τ·v_k + ½τ²·f(q_k)",
+        "v_{k+1} = v_k + τ·f(q_k); q_{k+1} = q_k + τ·v_{k+1}"
       ],
       "answer": 3,
       "answerText": "",
@@ -943,10 +943,10 @@
       "timestamp": "1:29:47",
       "question": "What problem arises when h is made too small in numerical differentiation?",
       "options": [
-        "Floating-point precision is exhausted — numbers are indistinguishable — and error increases",
-        "Division by zero occurs because h appears in the denominator",
-        "The algorithm converges too quickly and overshoots the derivative",
-        "The perturbation exceeds the domain of the function"
+        "FP precision exhausted — error increases",
+        "Division by zero due to h in denominator",
+        "Converges too fast and overshoots",
+        "Perturbation exceeds function domain"
       ],
       "answer": 0,
       "answerText": "",
@@ -1018,7 +1018,7 @@
       "timestamp": "1:33:38",
       "question": "How does symbolic differentiation work, and what is its key limitation compared to geometric reasoning?",
       "options": [
-        "It builds an expression tree for f, applies derivative transformation rules to get a tree for f’, then evaluates it; limitation is it often produces unnecessarily complicated results",
+        "It builds an expression tree for f, applies derivative transformation rules to get a tree for f’",
         "It perturbs inputs numerically; limitation is floating-point precision loss",
         "It uses Fourier analysis to decompose f into sinusoids; limitation is it only works for periodic functions",
         "It replays a recorded computation graph backwards; limitation is high memory cost"

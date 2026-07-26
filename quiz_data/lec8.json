@@ -77,10 +77,10 @@
       "timestamp": "01:38",
       "question": "What does lecture 8 cover to complete the rasterization pipeline?",
       "options": [
-        "Depth (occlusion) and transparency (alpha blending)",
+        "Depth and transparency",
         "Shading and antialiasing",
-        "Normal mapping and displacement mapping",
-        "Texture mapping and perspective projection"
+        "Normal and displacement mapping",
+        "Texture and perspective projection"
       ],
       "answer": 0,
       "answerText": "",
@@ -101,12 +101,12 @@
       "timestamp": "01:59",
       "question": "What is the occlusion problem in rasterization?",
       "options": [
+        "Which triangle is visible per sample",
         "How to handle light bouncing between surfaces",
-        "Which of multiple overlapping triangles is visible at each sample point",
         "How to make objects appear semi-transparent",
         "How to remove objects that are behind the camera"
       ],
-      "answer": 1,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [01:59], the lecturer explains: \"The question of occlusion is okay we're rendering a bunch of different triangles into our image which of those triangles is visible at each sample point.\"",
@@ -125,7 +125,7 @@
       "timestamp": "03:27",
       "question": "How is the depth value computed at interior sample points of a triangle?",
       "options": [
-        "By interpolating vertex depths using barycentric coordinates",
+        "By interpolating vertex depths",
         "By using the depth of the nearest vertex",
         "By shooting a ray from the camera through the pixel",
         "By taking the average of the three vertex depths"
@@ -175,12 +175,12 @@
       "timestamp": "04:36",
       "question": "What does the depth buffer (Z-buffer) store at each sample point?",
       "options": [
+        "The depth of the closest triangle",
         "The color of the nearest surface",
         "The surface normal of the nearest triangle",
-        "The depth of the closest triangle seen so far at that sample",
         "The number of triangles that cover that sample"
       ],
-      "answer": 2,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [04:36–04:42], the lecturer explains: \"The solution to this is a very nice idea called the depth buffer or the z buffer... at each sample point in addition to a color we're also going to keep track of the depth of the closest triangle or the closest primitive seen so far.\"",
@@ -202,10 +202,10 @@
       "timestamp": "05:02",
       "question": "What value is the depth buffer initialized to before any triangles are drawn?",
       "options": [
-        "Infinity (or the maximum representable depth value)",
-        "The average depth of the scene",
-        "The depth of the nearest expected object",
-        "Zero"
+        "Infinity or max depth value",
+        "Scene average depth",
+        "Expected nearest object depth",
+        "Zero depth value"
       ],
       "answer": 0,
       "answerText": "",
@@ -228,10 +228,10 @@
       "timestamp": "05:52",
       "question": "What key property of the Z-buffer does the lecturer emphasize regarding triangle drawing order?",
       "options": [
-        "Triangles must be drawn front-to-back for correct results",
-        "The order in which triangles are drawn does not matter",
-        "Triangles must be drawn back-to-front for correct results",
-        "Only the first triangle drawn at each pixel is kept"
+        "Front-to-back draw order required",
+        "Draw order does not matter",
+        "Back-to-front draw order required",
+        "Only first triangle kept per pixel"
       ],
       "answer": 1,
       "answerText": "",
@@ -252,10 +252,10 @@
       "timestamp": "09:13",
       "question": "What does the depth test check when rasterizing a new fragment?",
       "options": [
-        "Whether the new fragment's texture coordinates are valid",
-        "Whether the new fragment falls inside the view frustum",
-        "Whether the new fragment's color is brighter than the stored color",
-        "Whether the new fragment's depth is less than the depth stored in the Z-buffer at that sample"
+        "Valid texture coordinate check",
+        "View frustum containment test",
+        "Brightness comparison with stored color",
+        "Depth less than Z-buffer value"
       ],
       "answer": 3,
       "answerText": "",
@@ -278,12 +278,12 @@
       "timestamp": "10:49",
       "question": "Why does the Z-buffer handle intersecting (interpenetrating) triangles correctly?",
       "options": [
+        "It evaluates depth per-sample exactly where needed",
         "It averages the colors of intersecting triangles",
-        "It makes occlusion decisions per-sample rather than per-triangle, so relative depth is evaluated exactly where it matters",
         "It sorts triangles before rasterizing them",
         "It splits intersecting triangles at their intersection line"
       ],
-      "answer": 1,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [10:49], the lecturer explains: \"This occlusion test is based on the depth of the triangles at a given sample point right so the relative depth of triangles can be different at different sample points we're considering things only on a sample by sample basis not on a triangle by triangle basis.\"",
@@ -329,10 +329,10 @@
       "timestamp": "12:51",
       "question": "How does depth buffering interact with supersampling for antialiasing?",
       "options": [
-        "Depth buffering is incompatible with supersampling and must be disabled",
-        "Supersampling requires doubling the depth buffer size separately from the color buffer",
-        "Depth is only stored at pixel centers, not at supersamples",
-        "It works correctly as long as there is one depth value per supersample in the buffer"
+        "Incompatible with supersampling",
+        "Doubles depth buffer size separately",
+        "Depth only at pixel centers",
+        "One depth per supersample works"
       ],
       "answer": 3,
       "answerText": "",
@@ -353,10 +353,10 @@
       "timestamp": "14:20",
       "question": "What is the memory overhead of adding a Z-buffer compared to a color-only image?",
       "options": [
-        "It requires a sorted list of depths at each sample",
-        "It doubles storage because depth and color are the same size",
-        "It adds one additional value per sample — constant space regardless of how many triangles overlap",
-        "It requires O(n) extra space proportional to the number of triangles"
+        "Needs sorted depth list per sample",
+        "Doubles storage for depth+color",
+        "One extra value per sample only",
+        "O(n) space per triangle overlap"
       ],
       "answer": 2,
       "answerText": "",
@@ -404,10 +404,10 @@
       "timestamp": "16:21",
       "question": "In the alpha opacity model, what does the value alpha represent?",
       "options": [
-        "The roughness of a surface for shading",
-        "The opacity of a surface — a value from 0 (fully transparent) to 1 (fully opaque)",
-        "The color saturation of a surface",
-        "The reflectivity of a surface"
+        "Surface roughness parameter",
+        "Opacity from 0 to 1",
+        "Color saturation level",
+        "Surface reflectivity factor"
       ],
       "answer": 1,
       "answerText": "",
@@ -428,10 +428,10 @@
       "timestamp": "18:25",
       "question": "What common artifact arises when color and alpha are not handled correctly during compositing?",
       "options": [
-        "Texture swimming as the camera moves",
-        "Fringing — dark or colored halos around semi-transparent objects",
-        "Z-fighting between overlapping surfaces",
-        "Aliased triangle edges"
+        "Texture swimming on camera move",
+        "Fringing halos around transparents",
+        "Z-fighting on overlapping surfaces",
+        "Aliased triangle edge artifacts"
       ],
       "answer": 1,
       "answerText": "",
@@ -455,12 +455,12 @@
       "timestamp": "19:40",
       "question": "What is the \"over\" operator?",
       "options": [
+        "Compositing B over A using alpha",
         "An operator that selects the brighter of two pixel colors",
         "An operator that multiplies two color values together",
-        "An operator that blends two images by averaging pixel colors",
-        "An operator that composites a foreground image B over a background image A using their alpha values"
+        "An operator that blends two images by averaging pixel colors"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [19:40], the lecturer defines: \"Our basic operation is going to be something called the over operator so the idea of the over operator is to composite an image b that has opacity alpha b over or on top of an image a that has opacity alpha sub a.\"",
@@ -481,10 +481,10 @@
       "timestamp": "20:24",
       "question": "Is the \"over\" compositing operator commutative?",
       "options": [
-        "Yes — \"B over A\" always equals \"A over B\"",
-        "It is commutative only when both images have alpha = 0.5",
-        "It is commutative only when both images have the same color",
-        "No — the order matters, and compositing in the wrong order produces incorrect colors"
+        "Commutative: B over A equals A over B",
+        "Commutative only at alpha=0.5",
+        "Commutative only for same color",
+        "Non-commutative: order matters"
       ],
       "answer": 3,
       "answerText": "",
@@ -507,12 +507,12 @@
       "timestamp": "21:20",
       "question": "Using non-premultiplied alpha, what is the formula for the output color when compositing image B (opacity α_B) over image A (opacity α_A)?",
       "options": [
-        "C_out = (C_A + C_B) / 2",
-        "C_out = C_B + C_A",
-        "C_out = α_B × C_B + (1 − α_B) × α_A × C_A",
-        "C_out = α_B × C_B × C_A"
+        "C_out = α_B C_B + (1−α_B) α_A C_A",
+        "C_out = (C_A + C_B) / 2, ignoring alpha",
+        "C_out = C_B + C_A, assuming both are opaque",
+        "C_out = α_B × C_B × C_A, treating alpha as multiplicative gain"
       ],
-      "answer": 2,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [21:20], the lecturer derives: \"Then a simple way to composite would be to say the new color c is alpha b times b... plus 1 minus alpha b times alpha a times a.\" B contributes its color scaled by α_B; whatever light passes through B (1 − α_B) then sees A scaled by α_A.",
@@ -533,10 +533,10 @@
       "timestamp": "22:42",
       "question": "What is \"pre-multiplied alpha,\" and how does it change how colors are stored?",
       "options": [
-        "Alpha is computed ahead of time and cached in a lookup table",
-        "The alpha value is squared to increase dynamic range in bright regions",
-        "The RGB color values are multiplied by alpha before storage, so transparent pixels store darker (attenuated) colors",
-        "Alpha is always set to 1 before compositing to avoid fringing"
+        "Alpha is precomputed and stored in a texture atlas for speed",
+        "The alpha value is gamma-corrected before compositing to match display response",
+        "RGB values are multiplied by alpha before storage",
+        "Alpha is clamped to [0.1, 0.9] to prevent numerical instability"
       ],
       "answer": 2,
       "answerText": "",
@@ -631,10 +631,10 @@
       "timestamp": "26:51",
       "question": "What visual artifact appears when using non-premultiplied alpha during upsampling and compositing a blue blob on a gray background?",
       "options": [
-        "Pixelation and blocky edges along the boundary",
-        "A green halo around the blob",
-        "The blob becomes completely transparent",
-        "A bright white halo around the blob"
+        "Pixelation at blob boundary",
+        "Green halo around the blob",
+        "Blob becomes fully transparent",
+        "White halo around the blob"
       ],
       "answer": 1,
       "answerText": "",
@@ -705,10 +705,10 @@
       "timestamp": "29:38",
       "question": "When downsampling using pre-multiplied alpha, what happens to the colors at transparent pixels before averaging?",
       "options": [
-        "They are set to white (1,1,1) to avoid color contamination",
-        "They are replaced with the background color of the scene",
-        "They are multiplied by alpha, making them dark/black at fully transparent regions",
-        "They are averaged with adjacent opaque pixels before premultiplying"
+        "They are set to the average of neighboring non-transparent pixels",
+        "They are replaced with interpolated background values from the z-buffer",
+        "They are multiplied by alpha",
+        "They are forced to zero unless alpha > 0.5, to suppress noise"
       ],
       "answer": 2,
       "answerText": "",
@@ -727,10 +727,10 @@
       "timestamp": "29:57",
       "question": "After downsampling pre-multiplied colors, how is the final color recovered before compositing?",
       "options": [
-        "By multiplying the averaged color by alpha again",
-        "By subtracting the background color from the result",
-        "By dividing the averaged pre-multiplied color by the averaged alpha",
-        "By clamping the color to the [0,1] range"
+        "Multiply averaged color by alpha again",
+        "Subtract background from result",
+        "Divide pre-multiplied color by alpha",
+        "Clamp color to [0,1] range"
       ],
       "answer": 2,
       "answerText": "",
@@ -752,8 +752,8 @@
       "question": "When compositing a 50%-opaque bright red primitive over another 50%-opaque bright red primitive using non-premultiplied alpha, what is the resulting alpha?",
       "options": [
         "0.75",
-        "0.5",
-        "1.0",
+        "0.50",
+        "1.00",
         "0.25"
       ],
       "answer": 0,
@@ -775,10 +775,10 @@
       "timestamp": "31:17",
       "question": "When compositing two identical 50%-opaque bright red primitives using non-premultiplied alpha, what RGB value do you get before un-premultiplying?",
       "options": [
-        "(0.75, 0, 0)",
-        "(1.0, 0, 0)",
-        "(0.5, 0, 0)",
-        "(0.25, 0, 0)"
+        "(0.75,0,0)",
+        "(1.00,0,0)",
+        "(0.50,0,0)",
+        "(0.25,0,0)"
       ],
       "answer": 0,
       "answerText": "",
@@ -823,10 +823,10 @@
       "timestamp": "32:41",
       "question": "When compositing two identical 50%-opaque bright red primitives using pre-multiplied alpha, what is the final recovered RGB color?",
       "options": [
-        "(1.0, 0, 0)",
-        "(0.75, 0, 0)",
-        "(0.5, 0, 0)",
-        "(0.25, 0, 0)"
+        "(1.0,0,0)",
+        "(0.75,0,0)",
+        "(0.50,0,0)",
+        "(0.25,0,0)"
       ],
       "answer": 0,
       "answerText": "",
@@ -871,10 +871,10 @@
       "timestamp": "34:02",
       "question": "Why does pre-multiplied alpha \"fit naturally into the rasterization pipeline\"?",
       "options": [
-        "The pipeline already uses homogeneous coordinates and 4×4 matrices, and pre-mult color is just a 4-vector in the same space",
-        "It reduces the number of triangles that need to be drawn",
-        "It eliminates the need for a depth buffer when rendering transparent objects",
-        "It allows texture coordinates to be omitted for transparent surfaces"
+        "Uses same 4-vector homogeneous space",
+        "Reduces triangle count needed",
+        "Eliminates depth buffer for transparencies",
+        "Omits UVs for transparent surfaces"
       ],
       "answer": 0,
       "answerText": "",
@@ -972,7 +972,7 @@
       "options": [
         "Render transparent first, then opaque — so transparent surfaces always composite over the opaque ones",
         "Render each primitive independently into a separate buffer and composite them all at the end",
-        "First render opaque primitives in any order using the depth buffer; then disable depth writes and render transparent primitives back-to-front",
+        "Opaque first (depth-tested), then transparent back-to-front (depth-read-only)",
         "Render all primitives in one pass using a combined depth-and-alpha test"
       ],
       "answer": 2,
@@ -996,10 +996,10 @@
       "timestamp": "38:46",
       "question": "In the two-pass approach, what happens to the depth buffer when rendering the transparent pass?",
       "options": [
-        "It is preserved from the opaque pass, but depth writes are disabled — only depth reads occur",
-        "It is cleared completely so transparent triangles can write fresh depth values",
-        "It is replaced with a separate transparency depth buffer",
-        "It is inverted so that transparency appears in front of all opaque geometry"
+        "Preserved but depth writes disabled",
+        "Cleared for fresh transparent depth",
+        "Replaced with separate transparency buffer",
+        "Inverted for front-facing transparency"
       ],
       "answer": 0,
       "answerText": "",
@@ -1046,10 +1046,10 @@
       "timestamp": "40:54",
       "question": "Which of the following is NOT mentioned as an input to the rasterization pipeline?",
       "options": [
-        "Texture coordinates (UV) per vertex",
-        "Lighting equations and light source positions",
+        "Vertex texture coordinates (UV)",
+        "Lighting equations and sources",
         "Perspective transform matrix",
-        "Triangle vertex positions (in homogeneous coordinates)"
+        "Vertex positions in homogeneous coords"
       ],
       "answer": 1,
       "answerText": "",
@@ -1073,7 +1073,7 @@
         "Homogeneous divide to convert from 4D to 3D",
         "Perspective projection to normalized device coordinates",
         "Clipping against the view frustum",
-        "Transformation into camera space using the inverse camera transform"
+        "Camera-space transform via inverse camera matrix"
       ],
       "answer": 3,
       "answerText": "",
@@ -1144,10 +1144,10 @@
       "timestamp": "44:39",
       "question": "What determines whether a sample's color is written to the color buffer?",
       "options": [
-        "Whether the sample's UV coordinates are within the valid texture range",
-        "Whether the sample falls within the center half of the triangle",
-        "Whether the sample has a non-zero alpha value",
-        "Whether the sample passes the depth test (its depth is less than what is stored in the Z-buffer)"
+        "UV in valid texture range",
+        "Sample in triangle center half",
+        "Non-zero alpha value check",
+        "Depth test against Z-buffer"
       ],
       "answer": 3,
       "answerText": "",
@@ -1193,10 +1193,10 @@
       "timestamp": "48:08",
       "question": "How does the lecturer describe a GPU architecturally?",
       "options": [
-        "A heterogeneous multi-core processor with both programmable cores and highly specialized fixed-function hardware",
-        "A single very fast processor optimized for floating-point operations",
-        "A collection of many identical CPU cores running in parallel",
-        "A purely software-based parallel compute system"
+        "Heterogeneous multi-core processor",
+        "A single very fast processor optimized for floating-point operations and designed specifically for graphics workloads",
+        "A collection of many identical CPU cores running in parallel, each executing the same instruction stream",
+        "A purely software-based parallel compute system that emulates GPU behavior on general-purpose CPUs"
       ],
       "answer": 0,
       "answerText": "",
@@ -1217,10 +1217,10 @@
       "timestamp": "48:27",
       "question": "What specific fixed-function hardware units does the lecturer say GPUs contain?",
       "options": [
-        "Hardware for bilinear texture filtering, triangle clipping, and blending operations like the \"over\" operator",
-        "Hardware for mesh tessellation and level-of-detail selection",
-        "Hardware neural network accelerators and SIMD vector units",
-        "Hardware for shadow map generation and ambient occlusion"
+        "Hardware for bilinear filtering, clipping, and blending",
+        "Specialized fixed-function hardware dedicated to adaptive mesh tessellation and dynamic level-of-detail control",
+        "Dedicated neural network inference accelerators combined with wide SIMD vector units for AI-enhanced rendering",
+        "Custom hardware units designed exclusively for real-time shadow map generation, variance shadow mapping, and screen-space ambient occlusion computation"
       ],
       "answer": 0,
       "answerText": "",
@@ -1241,10 +1241,10 @@
       "timestamp": "49:07",
       "question": "How has GPU pipeline design evolved over time, according to the lecturer?",
       "options": [
-        "From parallel to sequential processing to simplify debugging",
-        "From large discrete chips toward fully integrated CPU designs",
-        "From fixed-function stages toward increasingly programmable, flexible stages — while still retaining specialized hardware components",
-        "From flexible programmable designs toward fixed-function hardware for maximum efficiency"
+        "Parallel to sequential processing",
+        "Discrete chips to integrated CPUs",
+        "Fixed-function to programmable stages",
+        "Programmable to fixed-function hardware"
       ],
       "answer": 2,
       "answerText": "",
@@ -1266,10 +1266,10 @@
       "timestamp": "51:05",
       "question": "What advantage of ray tracing over rasterization does the NVIDIA real-time demo illustrate?",
       "options": [
-        "Ray tracing produces physically accurate lighting, shadows, and reflections in real time — effects that rasterization can only approximate with tricks",
-        "Ray tracing is significantly faster than rasterization for all scene types",
-        "Ray tracing requires less GPU memory than rasterization",
-        "Ray tracing eliminates the need for texture mapping"
+        "Ray tracing enables physically accurate lighting, shadows, reflections",
+        "Ray tracing is asymptotically faster than rasterization for scenes with high geometric complexity and global illumination requirements",
+        "Ray tracing reduces overall GPU memory bandwidth pressure by eliminating frame buffer ping-ponging and intermediate render target storage",
+        "Ray tracing completely replaces texture mapping by synthesizing surface appearance procedurally via material shaders and light transport sampling"
       ],
       "answer": 0,
       "answerText": "",
@@ -1290,10 +1290,10 @@
       "timestamp": "52:28",
       "question": "In what order does the lecturer say the remaining course topics will be covered?",
       "options": [
-        "Geometry → materials and lighting and photorealistic rendering → animation",
-        "Materials and lighting → geometry → animation",
+        "Geometry → materials/lighting → animation",
+        "Materials/lighting → geometry → animation",
         "Ray tracing → animation → geometry",
-        "Animation → geometry → materials and lighting"
+        "Animation → geometry → materials/lighting"
       ],
       "answer": 0,
       "answerText": "",

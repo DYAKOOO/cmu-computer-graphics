@@ -77,10 +77,10 @@
       "timestamp": "00:00",
       "question": "What is the primary focus of this lecture on geometric queries?",
       "options": [
-        "Finding relationships between geometric objects such as closest points and intersections",
-        "Creating new geometric objects in space",
-        "Mathematical proofs about geometric objects",
-        "Different ways to render geometric objects"
+        "Closest points and intersections",
+        "Creating new geometric objects",
+        "Mathematical proofs about geometry",
+        "Different rendering techniques"
       ],
       "answer": 0,
       "answerText": "",
@@ -101,10 +101,10 @@
       "timestamp": "01:04",
       "question": "What problem in geometry processing motivates the study of closest point queries?",
       "options": [
-        "Converting between different file formats",
-        "The desire to create smoother surfaces",
-        "Signal degradation during mesh processing operations",
-        "The need to reduce polygon count"
+        "Converting between file formats",
+        "Desire for smoother surfaces",
+        "Signal degradation in mesh ops",
+        "Reducing polygon count"
       ],
       "answer": 2,
       "answerText": "",
@@ -125,9 +125,9 @@
       "timestamp": "01:56",
       "question": "What solution is proposed to help preserve shape fidelity after mesh processing?",
       "options": [
+        "Closest point projection",
         "Pushing processed vertices back onto the original surface via closest point projection",
         "Using specialized file formats that preserve geometric information",
-        "Using implicit instead of explicit surfaces",
         "Storing higher-resolution versions of the mesh"
       ],
       "answer": 0,
@@ -149,10 +149,10 @@
       "timestamp": "03:02",
       "question": "What is the core problem of closest point queries?",
       "options": [
-        "How to determine if a point is inside or outside a surface",
-        "How to find the point on a surface that is closest to a given query point",
-        "How to measure the surface area of a mesh",
-        "How to determine if two meshes intersect"
+        "Point inside/outside test",
+        "Closest point on surface",
+        "Measuring mesh surface area",
+        "Testing mesh intersection"
       ],
       "answer": 1,
       "answerText": "",
@@ -197,10 +197,10 @@
       "timestamp": "06:07",
       "question": "In the \"closest point on point\" warm-up exercise, what is the answer to finding the closest point to P on point A?",
       "options": [
-        "There is no unique answer",
-        "The origin of the coordinate system",
+        "No unique answer exists",
+        "Origin of coordinate system",
         "Point A itself",
-        "The midpoint between P and A"
+        "Midpoint of P and A"
       ],
       "answer": 2,
       "answerText": "",
@@ -222,7 +222,7 @@
       "question": "How is a line described implicitly in the lecture?",
       "options": [
         "As a parametric equation",
-        "As an equation n^T x = C, where n is the unit normal",
+        "n^T x = C",
         "As a set of two endpoints",
         "As a set of connected vertices"
       ],
@@ -317,10 +317,10 @@
       "timestamp": "13:30",
       "question": "What are the two main cases identified when finding the closest point on a line segment?",
       "options": [
-        "Points above the line and points below the line",
-        "Points with positive parameter values and points with negative parameter values",
-        "Points where the closest point is an endpoint and points where it's on the interior",
-        "Points closer to the start of the segment and points closer to the end"
+        "Points above vs below line",
+        "Positive vs negative parameter T",
+        "Closest at endpoint vs interior",
+        "Closer to start vs end point"
       ],
       "answer": 2,
       "answerText": "",
@@ -413,7 +413,7 @@
       "timestamp": "17:37",
       "question": "What are the possible locations for the closest point on a triangle to a query point in 2D?",
       "options": [
-        "On a vertex, on an edge, or in the interior if the query point is inside the triangle",
+        "Vertex, edge, or interior",
         "Only in the interior of the triangle",
         "Only on the edges of the triangle",
         "Only at the vertices of the triangle"
@@ -437,10 +437,10 @@
       "timestamp": "19:01",
       "question": "What connection does the lecturer make between the point-in-triangle test and earlier assignments?",
       "options": [
-        "It's unrelated to previous assignments",
-        "It's the same test used in the rasterization assignment",
-        "It's identical to the mesh simplification algorithm",
-        "It's the inverse of the ray-tracing algorithm"
+        "Unrelated to past work",
+        "Same as rasterization test",
+        "Identical to simplification algo",
+        "Inverse of ray tracing"
       ],
       "answer": 1,
       "answerText": "",
@@ -485,10 +485,10 @@
       "timestamp": "21:24",
       "question": "What method does the lecturer suggest for testing if a projected point is inside a 3D triangle?",
       "options": [
-        "Using a specialized triangle-point distance formula",
-        "Using a 2D coordinate transformation",
-        "Using half-space tests",
-        "Using the Möller–Trumbore algorithm"
+        "Triangle-point distance formula",
+        "2D coordinate transformation",
+        "Half-space tests",
+        "Möller–Trumbore algorithm"
       ],
       "answer": 2,
       "answerText": "",
@@ -509,10 +509,10 @@
       "timestamp": "22:28",
       "question": "How does the closest point on a plane calculation relate to the closest point on a line?",
       "options": [
-        "They use completely different formulas",
-        "The plane case is a special case of the line calculation",
-        "The plane case requires a complex 3D transformation",
-        "The expression is exactly the same, just with 3D vectors instead of 2D"
+        "Different formulas used",
+        "Plane case is line special case",
+        "Requires complex 3D transform",
+        "Same expression, 3D vectors"
       ],
       "answer": 3,
       "answerText": "",
@@ -533,10 +533,10 @@
       "timestamp": "24:23",
       "question": "What is the naive algorithm for finding the closest point on a triangle mesh?",
       "options": [
-        "Use a specialized data structure to avoid checking all triangles",
-        "Use a binary search tree to find the closest triangle",
-        "Only check triangles in the approximate region of the query point",
-        "Project the point onto each triangle and keep track of the closest result"
+        "Use spatial acceleration structure",
+        "Binary search tree lookup",
+        "Check only local region triangles",
+        "Project point onto all triangles"
       ],
       "answer": 3,
       "answerText": "",
@@ -557,9 +557,9 @@
       "timestamp": "25:38",
       "question": "What is the computational complexity of the naive closest point on mesh algorithm?",
       "options": [
-        "O(log n) where n is the number of triangles",
-        "O(n²) where n is the number of triangles",
-        "O(n) where n is the number of triangles",
+        "O(log n) time complexity",
+        "O(n²) time complexity",
+        "O(n) time complexity",
         "O(1) constant time"
       ],
       "answer": 2,
@@ -584,7 +584,7 @@
         "Bounding volume hierarchies",
         "Octrees",
         "Point clouds",
-        "Implicit surfaces, particularly distance fields"
+        "Distance fields (implicit)"
       ],
       "answer": 3,
       "answerText": "",
@@ -605,12 +605,12 @@
       "timestamp": "28:50",
       "question": "What method does the lecturer suggest for finding the closest point on an implicit surface?",
       "options": [
-        "Marching cubes",
+        "Gradient descent",
         "Gradient descent using the distance field",
-        "Monte Carlo sampling",
-        "Bisection search"
+        "Marching cubes algorithm for isosurface extraction",
+        "Monte Carlo sampling of the implicit surface"
       ],
-      "answer": 1,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [29:17] the lecturer describes: \"I'm going to compute the gradient of the distance or minus the gradient of the distance I could do this using any technique like I could use finite differences on my grid and then I could take a little step in the gradient direction that'll bring me closer to the surface.\"",
@@ -629,9 +629,9 @@
       "timestamp": "30:30",
       "question": "What trade-off does the lecturer discuss regarding closest point queries on distance fields?",
       "options": [
-        "Accuracy versus speed",
-        "Speed versus memory (precomputation)",
-        "Implementation difficulty versus quality",
+        "Accuracy versus speed tradeoff",
+        "Speed versus memory tradeoff",
+        "Implementation difficulty vs quality",
         "Robustness versus complexity"
       ],
       "answer": 1,
@@ -653,10 +653,10 @@
       "timestamp": "31:52",
       "question": "What is a ray in the context of geometric queries?",
       "options": [
-        "A light source with a specific intensity",
-        "A line without any particular direction",
-        "A line segment with a specific length",
-        "An oriented line or oriented line segment with a starting point and direction"
+        "Light source with intensity",
+        "Directionless infinite line",
+        "Finite-length line segment",
+        "Oriented ray or segment"
       ],
       "answer": 3,
       "answerText": "",
@@ -677,10 +677,10 @@
       "timestamp": "33:33",
       "question": "What is one way ray-mesh intersection can be used for inside-outside testing?",
       "options": [
-        "By measuring the total distance traveled by the ray",
-        "By determining if the ray is reflected or refracted",
-        "By counting the number of intersections with the surface (even vs. odd)",
-        "By measuring the angle between the ray and the surface"
+        "By measuring the total distance traveled by the ray before termination",
+        "By determining whether the ray undergoes reflection or refraction at the surface",
+        "By counting intersections (even = outside, odd = inside)",
+        "By measuring the angle between the incident ray and the surface normal"
       ],
       "answer": 2,
       "answerText": "",
@@ -725,10 +725,10 @@
       "timestamp": "36:02",
       "question": "How is a ray mathematically expressed in the lecture?",
       "options": [
-        "R(t) = O · D where · is the dot product",
-        "R(t) = O × D where × is the cross product",
-        "R(t) = |O - D| where | | is the magnitude",
-        "R(t) = O + tD where D is a unit vector"
+        "R(t) = O · D (dot product)",
+        "R(t) = O × D (cross product)",
+        "R(t) = |O - D| (magnitude)",
+        "R(t) = O + tD (unit D)"
       ],
       "answer": 3,
       "answerText": "",
@@ -749,10 +749,10 @@
       "timestamp": "37:22",
       "question": "What is the general strategy for finding where a ray intersects an implicit surface?",
       "options": [
-        "Use numerical integration along the ray path",
-        "Apply the closest point algorithm repeatedly",
-        "Substitute the ray equation into the implicit surface equation and solve for t",
-        "Convert the implicit surface to an explicit representation first"
+        "Numerical integration along ray",
+        "Iterate closest point algorithm",
+        "Substitute ray into implicit eq",
+        "Convert implicit to explicit first"
       ],
       "answer": 2,
       "answerText": "",
@@ -773,12 +773,12 @@
       "timestamp": "38:15",
       "question": "What is the implicit equation for a unit sphere?",
       "options": [
-        "|x| - 1 = 0",
         "|x|² - 1 = 0",
+        "The unit sphere defined by x·x = 1",
         "|x|² = 1",
         "|x| = 1"
       ],
-      "answer": 1,
+      "answer": 3,
       "answerText": "",
       "intuition": "",
       "explanation": "At [38:22] the lecturer states: \"The function f is just f of X is the norm of x squared minus 1 any point that has unit norm will evaluate to 0 those points are on the sphere.\"",
@@ -821,10 +821,10 @@
       "timestamp": "40:47",
       "question": "When considering ray-sphere intersection, what is the geometric meaning of having two solutions to the quadratic equation?",
       "options": [
-        "The ray pierces the sphere twice (entering and exiting)",
-        "The ray completely misses the sphere",
-        "There's an error in the calculation",
-        "The ray is tangent to the sphere"
+        "The ray intersects the sphere at exactly one point",
+        "The ray misses the sphere entirely with no real solutions",
+        "There's an error in the quadratic discriminant calculation",
+        "The ray grazes the sphere — single intersection with multiplicity two"
       ],
       "answer": 0,
       "answerText": "",
@@ -845,10 +845,10 @@
       "timestamp": "42:04",
       "question": "What is the geometric meaning when a ray-sphere intersection equation has exactly one solution?",
       "options": [
-        "The ray passes through the center of the sphere",
-        "The ray is tangent to the sphere at a single point",
-        "The ray misses the sphere entirely",
-        "The ray starts inside the sphere"
+        "Ray through sphere center",
+        "Ray tangent at one point",
+        "Ray misses sphere entirely",
+        "Ray starts inside sphere"
       ],
       "answer": 1,
       "answerText": "",
@@ -869,10 +869,10 @@
       "timestamp": "42:50",
       "question": "What does a negative t value signify in ray-object intersection calculations?",
       "options": [
-        "The ray misses the object entirely",
-        "The ray is inside the object",
-        "The ray passes through the object's center",
-        "The intersection point is in the opposite direction of the ray"
+        "Ray misses object entirely",
+        "Ray starts inside object",
+        "Ray through object center",
+        "Hit behind ray origin"
       ],
       "answer": 3,
       "answerText": "",
@@ -893,10 +893,10 @@
       "timestamp": "44:34",
       "question": "How is a plane implicitly described in the lecture?",
       "options": [
-        "As n^T x = C where n is the unit normal",
-        "As the cross product of two vectors",
-        "As a parametric equation with two parameters",
-        "As a set of three points"
+        "n^T x = C with unit n",
+        "Cross product of two vectors",
+        "Two-parameter parametric form",
+        "Three defining points"
       ],
       "answer": 0,
       "answerText": "",
@@ -917,10 +917,10 @@
       "timestamp": "47:12",
       "question": "What is the geometric meaning when n^T D = 0 in a ray-plane intersection calculation?",
       "options": [
-        "The ray is perpendicular to the plane",
-        "The ray originates from the plane",
-        "The ray is traveling parallel to the plane",
-        "The ray passes through the origin"
+        "Ray perpendicular to plane",
+        "Ray originates on plane",
+        "Ray parallel to plane",
+        "Ray passes through origin"
       ],
       "answer": 2,
       "answerText": "",
@@ -941,10 +941,10 @@
       "timestamp": "49:01",
       "question": "What two-step approach does the lecturer suggest for ray-triangle intersection?",
       "options": [
-        "First test each vertex, then test each edge",
-        "First check if the ray is facing the triangle, then compute the intersection",
-        "First conduct a bounding box test, then do detailed intersection",
-        "First check if the ray intersects the plane of the triangle, then check if the hit point is inside the triangle"
+        "Test vertices then edges",
+        "Face test then intersection",
+        "Bounding box then detailed test",
+        "Plane hit then inside triangle"
       ],
       "answer": 3,
       "answerText": "",
@@ -965,10 +965,10 @@
       "timestamp": "51:15",
       "question": "What method does the lecturer suggest for determining if a point is inside a triangle?",
       "options": [
-        "Using the triangle's medians",
-        "Checking if the point is visible from all three vertices",
-        "Measuring the area of the triangle with the point included",
-        "Computing barycentric coordinates and checking if they're all positive"
+        "Using the triangle's medians to partition the plane",
+        "Checking visibility from all three vertices via ray casting",
+        "Measuring signed area ratios to infer containment",
+        "Computing barycentric coordinates and verifying positivity"
       ],
       "answer": 3,
       "answerText": "",
@@ -1037,10 +1037,10 @@
       "timestamp": "55:23",
       "question": "What recent hardware development has advanced ray tracing capabilities?",
       "options": [
-        "Dedicated ray tracing hardware in GPUs (RTX pipeline)",
-        "Specialized CPU instruction sets",
-        "Multi-core processors",
-        "New RAM architectures"
+        "RTX pipeline",
+        "Dedicated hardware units for accelerating ray-triangle intersection and bounding volume hierarchy traversal",
+        "General-purpose parallel computing enhancements to improve rendering throughput",
+        "Memory subsystem optimizations enabling higher bandwidth for texture and geometry data"
       ],
       "answer": 0,
       "answerText": "",

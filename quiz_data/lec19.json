@@ -125,7 +125,7 @@
       "timestamp": "03:02",
       "question": "What is the expected value of a discrete random variable?",
       "options": [
-        "The weighted average of all possible values, with weights being the probability of each value",
+        "Weighted average by probability",
         "The median of all possible values",
         "The minimum possible value the variable can take",
         "The maximum possible value the variable can take"
@@ -149,10 +149,10 @@
       "timestamp": "04:13",
       "question": "If a fair coin (with probability 1/2 for heads and tails) gives a value of 1 for heads and 0 for tails, what is the expected value of a coin toss?",
       "options": [
-        "0",
-        "1",
-        "0.5",
-        "0.25"
+        "Value zero",
+        "Value one",
+        "Value 0.5",
+        "Value 0.25"
       ],
       "answer": 2,
       "answerText": "",
@@ -197,10 +197,10 @@
       "timestamp": "06:24",
       "question": "How do you calculate the probability of a continuous random variable taking a value in a specific interval?",
       "options": [
-        "By multiplying the length of the interval by the maximum value of the function",
-        "By taking the average of the probabilities at the endpoints",
-        "By integrating the probability density function over that interval",
-        "By counting the number of values in that interval"
+        "Multiply interval length by max value",
+        "Average endpoint probabilities",
+        "Integrate density over the interval",
+        "Count values inside the interval"
       ],
       "answer": 2,
       "answerText": "",
@@ -221,10 +221,10 @@
       "timestamp": "06:42",
       "question": "How is the expected value of a continuous random variable defined?",
       "options": [
-        "As the most frequently occurring value",
-        "As the integral of the probability density times the value over the entire domain",
-        "As the midpoint of the domain",
-        "As the maximum value of the probability density function"
+        "Most frequent value in distribution",
+        "Integral of value times density",
+        "Midpoint of the variable's domain",
+        "Maximum of the density function"
       ],
       "answer": 1,
       "answerText": "",
@@ -245,10 +245,10 @@
       "timestamp": "08:49",
       "question": "What does the \"flaw of averages\" refer to in the context of probability distributions?",
       "options": [
-        "That averages are mathematically incorrect for non-normal distributions",
-        "That the average is affected by outliers more than other statistics",
-        "The fact that the average is always higher than the median",
-        "That looking at just the average discards important information about the distribution's shape"
+        "Averages are invalid for non-normal data",
+        "Averages are overly sensitive to outliers",
+        "Average always exceeds the median",
+        "Average alone hides distribution shape"
       ],
       "answer": 3,
       "answerText": "",
@@ -269,10 +269,10 @@
       "timestamp": "09:18",
       "question": "What does the variance of a random variable measure?",
       "options": [
-        "The range of possible values",
-        "How far the values tend to be from the expected value",
-        "The rate at which the random variable changes",
-        "The average value of the random variable"
+        "Range of possible variable values",
+        "How far values deviate from mean",
+        "Rate of change of the variable",
+        "Mean value of the random variable"
       ],
       "answer": 1,
       "answerText": "",
@@ -293,10 +293,10 @@
       "timestamp": "10:30",
       "question": "What is the relationship between variance and standard deviation?",
       "options": [
-        "They are completely different measures with no relationship",
-        "The standard deviation is the square of the variance",
-        "The standard deviation is the log of the variance",
-        "The standard deviation is the square root of the variance"
+        "No relationship between measures",
+        "Std dev equals variance squared",
+        "Std dev equals log of variance",
+        "Std dev equals sqrt of variance"
       ],
       "answer": 3,
       "answerText": "",
@@ -317,10 +317,10 @@
       "timestamp": "11:28",
       "question": "Why is variance reduction important in photorealistic rendering?",
       "options": [
-        "To increase the speed of the rendering process",
-        "To simplify the mathematics of light transport",
-        "To reduce the amount of noise in the rendered image",
-        "To reduce the memory requirements of the rendering algorithm"
+        "Speed up rendering computations",
+        "Simplify light transport math",
+        "Reduce noise in rendered images",
+        "Lower memory usage in rendering"
       ],
       "answer": 2,
       "answerText": "",
@@ -341,10 +341,10 @@
       "timestamp": "14:25",
       "question": "When trying to reduce variance in Monte Carlo integration, which of the following can be reduced?",
       "options": [
-        "Neither the integrand variance nor the estimator variance",
-        "The variance of the integrand (the function being integrated)",
-        "The variance of the estimator (the method used to approximate the integral)",
-        "Both the integrand variance and the estimator variance"
+        "Neither integrand nor estimator variance",
+        "Variance of the integrand function",
+        "Variance of the estimation method",
+        "Both integrand and estimator variance"
       ],
       "answer": 2,
       "answerText": "",
@@ -365,10 +365,10 @@
       "timestamp": "15:33",
       "question": "What is an estimator in the context of numerical integration?",
       "options": [
-        "A function that reduces the complexity of an integral",
-        "A formula used to approximate an integral",
-        "A method to simplify the domain of integration",
-        "A hardware device that measures integration speed"
+        "Function simplifying integral complexity",
+        "Formula approximating an integral",
+        "Method simplifying integration domain",
+        "Hardware device measuring integration speed"
       ],
       "answer": 1,
       "answerText": "",
@@ -389,10 +389,10 @@
       "timestamp": "16:38",
       "question": "What does it mean for an estimator to be consistent?",
       "options": [
-        "It is unbiased for any number of samples",
-        "It has a low computational cost",
-        "It converges to the correct answer as the number of samples increases",
-        "It gives the same result every time it's used"
+        "Unbiased for any sample count",
+        "Low computational overhead",
+        "Converges as samples increase",
+        "Deterministic across runs"
       ],
       "answer": 2,
       "answerText": "",
@@ -437,10 +437,10 @@
       "timestamp": "18:54",
       "question": "What is the relationship between consistency and unbiasedness?",
       "options": [
-        "Consistency does not imply unbiasedness, and vice versa",
-        "Consistency and unbiasedness are the same property",
-        "All consistent estimators are unbiased",
-        "All unbiased estimators are consistent"
+        "Consistency ≠ unbiasedness",
+        "Same property entirely",
+        "All consistent estimators unbiased",
+        "All unbiased estimators consistent"
       ],
       "answer": 0,
       "answerText": "",
@@ -462,9 +462,9 @@
       "question": "In the example of estimating the total brightness of an image using a fixed grid of points, this estimator is:",
       "options": [
         "Consistent and unbiased",
-        "Unbiased but not consistent",
+        "Unbiased but inconsistent",
         "Neither consistent nor unbiased",
-        "Consistent but not unbiased"
+        "Consistent but biased"
       ],
       "answer": 3,
       "answerText": "",
@@ -509,10 +509,10 @@
       "timestamp": "25:03",
       "question": "What is a key advantage of using unbiased estimators in rendering?",
       "options": [
-        "They are always faster than biased estimators",
-        "They are easier to implement than biased estimators",
-        "They have more predictable behavior and error reduction rates",
-        "They require less memory than biased estimators"
+        "Always faster than biased versions",
+        "Easier implementation than biased ones",
+        "Predictable behavior and error rates",
+        "Lower memory than biased versions"
       ],
       "answer": 2,
       "answerText": "",
@@ -534,8 +534,8 @@
       "question": "According to the lecture, which rendering algorithm is neither consistent nor unbiased?",
       "options": [
         "Metropolis light transport",
-        "Path tracing",
-        "Rasterization",
+        "Path tracing algorithm",
+        "Rasterization pipeline",
         "Bidirectional path tracing"
       ],
       "answer": 2,
@@ -559,7 +559,7 @@
       "options": [
         "The variance in the surface reflectivity",
         "The limited number of available ray bounces",
-        "The extremely low probability of randomly sampling the correct reflection path",
+        "Low-probability path sampling",
         "The computational complexity of simulating liquid in the cup"
       ],
       "answer": 2,
@@ -583,7 +583,7 @@
       "options": [
         "Neither consistent nor unbiased",
         "Consistent and unbiased",
-        "Unbiased but not consistent",
+        "Unbiased but inconsistent",
         "Consistent but biased"
       ],
       "answer": 3,
@@ -653,10 +653,10 @@
       "timestamp": "34:03",
       "question": "In the brute force approach to rendering the disco ball scene, approximately how many samples per pixel were required to start seeing the caustics clearly?",
       "options": [
-        "8,192 samples",
+        "8192 samples",
         "16 samples",
         "128 samples",
-        "1,024 samples"
+        "1024 samples"
       ],
       "answer": 0,
       "answerText": "",
@@ -725,12 +725,12 @@
       "timestamp": "37:16",
       "question": "In importance sampling, how are samples from regions with higher probability density weighted?",
       "options": [
+        "They are given less weight to compensate for oversampling",
         "They are weighted the same as all other samples",
-        "They are given less weight to compensate for their higher sampling frequency",
         "Their weight depends on the total number of samples taken",
         "They are given more weight to emphasize their importance"
       ],
-      "answer": 1,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "The lecturer states at [37:16]: \"We say if this region was sampled more often we're gonna wait it less if this region was sampled less often we're gonna wait it more so that everything balances out. If I sample X more frequently each sample should count for less if I sample X less frequently each sample should account for more.\"",
@@ -749,10 +749,10 @@
       "timestamp": "37:50",
       "question": "What would be the ideal importance sampling distribution?",
       "options": [
-        "Distribution proportional to the integrand itself",
-        "Distribution that concentrates all samples at the maximum of the integrand",
-        "Distribution proportional to the derivative of the integrand",
-        "Uniform distribution across the domain"
+        "Distribution ∝ integrand",
+        "All samples at integrand maximum",
+        "Distribution ∝ integrand derivative",
+        "Uniform distribution over domain"
       ],
       "answer": 0,
       "answerText": "",
@@ -797,10 +797,10 @@
       "timestamp": "40:09",
       "question": "What are the two important classes of local importance sampling strategies in rendering?",
       "options": [
-        "Sampling according to camera position and sampling according to object complexity",
-        "Sampling according to materials and sampling according to lights",
-        "Sampling according to image brightness and sampling according to scene geometry",
-        "Sampling according to color and sampling according to depth"
+        "Camera vs geometry sampling",
+        "Materials vs lights sampling",
+        "Brightness vs geometry sampling",
+        "Color vs depth sampling"
       ],
       "answer": 1,
       "answerText": "",
@@ -821,10 +821,10 @@
       "timestamp": "40:45",
       "question": "For what type of material should you only sample the reflection direction?",
       "options": [
-        "Perfect mirror",
-        "Diffuse material",
-        "Rough material",
-        "Translucent material"
+        "Perfect mirror surface",
+        "Diffuse scattering material",
+        "Rough scattering surface",
+        "Translucent transmission material"
       ],
       "answer": 0,
       "answerText": "",
@@ -845,10 +845,10 @@
       "timestamp": "41:43",
       "question": "What is the path space formulation of light transport?",
       "options": [
-        "A perspective that considers the entire space of possible light paths as the domain of integration",
-        "A technique for visualizing light paths in 3D space",
-        "A method for optimizing the recursive rendering equation",
-        "A mathematical model for simulating light refraction"
+        "Light paths as integration domain",
+        "3D visualization of light paths",
+        "Optimization of recursive equation",
+        "Math model for light refraction"
       ],
       "answer": 0,
       "answerText": "",
@@ -893,10 +893,10 @@
       "timestamp": "46:58",
       "question": "What is bidirectional path tracing?",
       "options": [
-        "A method that combines paths traced from both the eye and the light source",
-        "An approach that separates direct and indirect illumination",
-        "A strategy that uses two different integration techniques simultaneously",
-        "A technique that traces paths from two different camera positions"
+        "Combines eye and light paths",
+        "Separates direct/indirect lighting",
+        "Two integration techniques together",
+        "Paths from two camera positions"
       ],
       "answer": 0,
       "answerText": "",
@@ -941,10 +941,10 @@
       "timestamp": "51:21",
       "question": "What makes the \"door crack\" example particularly challenging for path tracing methods?",
       "options": [
-        "The door material is difficult to simulate",
-        "The crack changes position over time",
-        "Finding the tiny crack that lets light through is extremely improbable with random sampling",
-        "The crack is too small to be represented in the scene geometry"
+        "Door material hard to simulate",
+        "Crack moves over time",
+        "Tiny crack improbable to find",
+        "Crack too small geometrically"
       ],
       "answer": 2,
       "answerText": "",
@@ -965,10 +965,10 @@
       "timestamp": "52:50",
       "question": "What is Metropolis Light Transport (MLT)?",
       "options": [
-        "A method that perturbs good paths slightly to find nearby good paths",
-        "A technique that models light as particles with mass",
-        "A strategy that traces paths from multiple light sources simultaneously",
-        "An approach that uses physics-based simulation of light waves"
+        "Perturbs good paths slightly",
+        "Models light as massive particles",
+        "Traces from multiple light sources",
+        "Physics-based wave simulation"
       ],
       "answer": 0,
       "answerText": "",
@@ -1013,10 +1013,10 @@
       "timestamp": "55:55",
       "question": "What property must mutations in the Metropolis-Hastings algorithm have to ensure correct results?",
       "options": [
-        "They must be ergodic, allowing the algorithm to reach everywhere in the domain",
-        "They must decrease in size as the algorithm runs",
-        "They must be symmetric around the current point",
-        "They must be large enough to cover the entire domain"
+        "Must be ergodic globally",
+        "Step size must shrink over time",
+        "Must be symmetric around point",
+        "Must cover entire domain"
       ],
       "answer": 0,
       "answerText": "",
@@ -1037,7 +1037,7 @@
       "timestamp": "57:26",
       "question": "In the Metropolis-Hastings algorithm, what strategy is used to ensure ergodicity?",
       "options": [
-        "Occasionally jumping to a completely random new point",
+        "Occasionally proposing random jumps",
         "Increasing the step size over time",
         "Using a predetermined path through the domain",
         "Always accepting moves to regions with zero value"
@@ -1061,10 +1061,10 @@
       "timestamp": "58:44",
       "question": "What image gradually appears in the Metropolis-Hastings demonstration?",
       "options": [
-        "The probability density function graph",
-        "A portrait of a famous mathematician",
-        "A cityscape of Pittsburgh with bridges",
-        "A fractal pattern"
+        "PDF graph visualization",
+        "Portrait of famous mathematician",
+        "Pittsburgh bridges cityscape",
+        "Fractal pattern generation"
       ],
       "answer": 2,
       "answerText": "",
@@ -1085,10 +1085,10 @@
       "timestamp": "1:01:01",
       "question": "What example is used to demonstrate the effectiveness of Metropolis Light Transport compared to path tracing?",
       "options": [
-        "A disco ball with caustics",
-        "A mirror-filled room",
-        "A forest scene with complex shadows",
-        "A swimming pool with light refractions"
+        "Disco ball with caustics",
+        "Mirror-filled room scene",
+        "Forest with complex shadows",
+        "Swimming pool refractions"
       ],
       "answer": 3,
       "answerText": "",
@@ -1133,12 +1133,12 @@
       "timestamp": "1:02:50",
       "question": "In the balanced heuristic for Multiple Importance Sampling, how are samples weighted?",
       "options": [
-        "By the value of the integrand at that sample",
+        "By the PDF at that sample",
         "By the inverse of the total number of samples",
         "By the probability density of all strategies at that sample point",
         "Equally regardless of which strategy generated them"
       ],
-      "answer": 2,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "The lecturer describes at [1:03:02]: \"I'm going to divide by the sum over all strategies of the fraction of samples taken with a cait strategy times the Kate importance density.\" This weighting mechanism balances the contributions from different strategies.",
@@ -1206,9 +1206,9 @@
       "question": "What is stratified sampling?",
       "options": [
         "Using multiple different sampling techniques",
-        "Sampling according to a predefined pattern",
+        "Sampling according to a fixed deterministic pattern like a grid or lattice",
         "Dividing the domain into bins and sampling uniformly within each bin",
-        "Sampling more frequently in important regions"
+        "Sampling more frequently in regions where the integrand has higher magnitude"
       ],
       "answer": 2,
       "answerText": "",
@@ -1253,10 +1253,10 @@
       "timestamp": "1:09:49",
       "question": "What is discrepancy as a measure of sample quality?",
       "options": [
-        "The deviation from an ideal distribution where the number of samples in a region is proportional to its area",
+        "The deviation from area-proportional sampling",
         "The variance of the sample distribution",
-        "The maximum distance between any two samples",
-        "The average distance between samples"
+        "The maximum distance between any two adjacent samples",
+        "The average pairwise Euclidean distance between all samples"
       ],
       "answer": 0,
       "answerText": "",
@@ -1301,10 +1301,10 @@
       "timestamp": "1:14:09",
       "question": "What is the radical inverse function used for?",
       "options": [
-        "Finding the maximum value of the integrand",
-        "Determining the optimal bin size for stratified sampling",
-        "Computing the gradient of the function",
-        "Generating low discrepancy sample points"
+        "Find integrand maximum",
+        "Optimal bin size for stratified",
+        "Compute function gradient",
+        "Generate low-discrepancy points"
       ],
       "answer": 3,
       "answerText": "",
@@ -1350,9 +1350,9 @@
       "question": "What is blue noise sampling inspired by?",
       "options": [
         "The distribution of cells on the retina of mammals",
-        "Ocean wave patterns",
-        "Atmospheric interference patterns",
-        "Quantum mechanical phenomena"
+        "Ocean wave patterns under stochastic wind forcing",
+        "Atmospheric interference patterns observed in radio astronomy",
+        "Quantum mechanical phenomena such as electron orbital distributions"
       ],
       "answer": 0,
       "answerText": "",
@@ -1373,9 +1373,9 @@
       "timestamp": "1:19:12",
       "question": "How is the quality of sampling patterns analyzed in the Fourier domain?",
       "options": [
-        "By calculating the entropy of the pattern",
-        "By measuring the maximum amplitude",
-        "By comparing the pattern to a Gaussian distribution",
+        "By calculating the entropy of the spatial frequency spectrum",
+        "By measuring the maximum amplitude of the Fourier transform",
+        "By comparing the pattern's power spectrum to a Gaussian distribution",
         "By checking for preferred frequencies or directions in the pattern"
       ],
       "answer": 3,

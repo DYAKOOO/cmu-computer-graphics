@@ -77,10 +77,10 @@
       "timestamp": "00:06",
       "question": "What is the primary focus of the lecture?",
       "options": [
+        "PDE-based animation",
         "Physically based animation through PDEs",
         "Optimization techniques for animation",
-        "Real-time rendering algorithms",
-        "Machine learning for computer graphics"
+        "Real-time rendering algorithms"
       ],
       "answer": 0,
       "answerText": "",
@@ -99,10 +99,10 @@
       "timestamp": "01:02",
       "question": "How does the lecturer relate optimization to today's topic?",
       "options": [
-        "PDEs are always easier to solve than optimization problems",
-        "Optimization problems use PDEs but PDEs don't use optimization",
-        "Gradient descent is an example of an ordinary differential equation",
-        "They are completely unrelated topics"
+        "PDEs are simpler than optimization",
+        "Optimization uses PDEs only",
+        "Gradient descent is an ODE",
+        "They share no connection"
       ],
       "answer": 2,
       "answerText": "",
@@ -127,12 +127,12 @@
       "timestamp": "02:05",
       "question": "What is the key distinction between ordinary differential equations (ODEs) and partial differential equations (PDEs)?",
       "options": [
-        "ODEs are always easier to solve than PDEs",
+        "ODEs involve derivatives in time only",
+        "ODEs are always easier to solve than PDEs because they lack spatial coupling",
         "ODEs describe explicit functions while PDEs are only used for implicit surfaces",
-        "ODEs involve derivatives in time while PDEs involve derivatives in both time and space",
         "ODEs describe static phenomena while PDEs describe dynamic phenomena"
       ],
-      "answer": 2,
+      "answer": 0,
       "answerText": "",
       "intuition": "An ODE tracks one thing over time — like a ball's position x(t). A PDE tracks a whole field over time AND space — like temperature u(t,x) at every point in a room simultaneously. More independent variables = more partial derivatives = PDE. Whenever you care about HOW something varies spatially (not just temporally), you need a PDE.",
       "explanation": "At [02:05], the lecturer defines: \"An ordinary differential equation is that we're going to implicitly describe a function in terms of its time derivatives... likewise a partial differential equation is going to be an implicit description of some phenomenon but now involving both time derivatives and spatial derivatives.\"",
@@ -225,10 +225,10 @@
       "timestamp": "09:33",
       "question": "What special effect was demonstrated in the liquid simulation example that wouldn't be possible in physical reality?",
       "options": [
+        "Artificially changing density to induce buoyancy",
         "Artificially changing the density of one liquid to make it float",
         "Making the liquid glow in the dark",
-        "Creating water from nothing",
-        "Freezing the liquid instantly"
+        "Creating water from nothing"
       ],
       "answer": 0,
       "answerText": "",
@@ -251,10 +251,10 @@
       "timestamp": "10:42",
       "question": "How does the lecturer describe hair in terms of elastic bodies?",
       "options": [
-        "Hair is a one-dimensional elastic body that can bend and twist",
-        "Hair is a non-elastic material that cannot be simulated",
-        "Hair is a fully rigid body that doesn't deform",
-        "Hair is a two-dimensional elastic sheet"
+        "1D elastic body with bend/twist",
+        "Non-elastic, unsimulatable hair",
+        "Fully rigid undeforming body",
+        "2D elastic sheet model"
       ],
       "answer": 0,
       "answerText": "",
@@ -301,10 +301,10 @@
       "timestamp": "12:09",
       "question": "In the mathematical definition of PDEs, what does u(t,x) represent?",
       "options": [
-        "The uncertainty in the system over time",
-        "The universal constant of physics",
-        "The upper bound of the algorithm's complexity",
-        "The function we want to solve for, depending on time and space"
+        "The uncertainty in the system over time as modeled by stochastic PDEs",
+        "The universal constant of physics that appears in all wave equations",
+        "The upper bound of the algorithm's complexity in terms of grid resolution",
+        "The function we want to solve for"
       ],
       "answer": 3,
       "answerText": "",
@@ -354,9 +354,9 @@
       "timestamp": "14:08",
       "question": "According to the lecturer, what makes a PDE non-linear?",
       "options": [
-        "When the equation contains constants",
-        "When it involves time derivatives",
-        "When it involves spatial derivatives",
+        "When the equation contains constants that vary with position",
+        "When it involves time derivatives of order higher than one",
+        "When it involves spatial derivatives of order higher than two",
         "When the function is multiplied by itself or its derivatives"
       ],
       "answer": 3,
@@ -381,10 +381,10 @@
       "timestamp": "15:29",
       "question": "What rule of thumb does the lecturer provide about the difficulty of solving PDEs?",
       "options": [
-        "Non-linear and higher-order PDEs are harder to solve",
-        "Linear PDEs are always harder to solve than non-linear PDEs",
-        "All PDEs have the same level of difficulty",
-        "PDEs with boundary conditions are always easier to solve"
+        "Nonlinear/higher-order PDEs harder",
+        "Linear always harder than nonlinear",
+        "All PDEs equally hard",
+        "Boundary conditions make PDEs easier"
       ],
       "answer": 0,
       "answerText": "",
@@ -405,12 +405,12 @@
       "timestamp": "16:15",
       "question": "Which of the following correctly describes the Laplace equation?",
       "options": [
+        "Elliptic interpolation PDE",
         "A stochastic PDE that models random processes",
         "A hyperbolic PDE that models wave propagation",
-        "An elliptic PDE that finds the smoothest function interpolating boundary data",
         "A parabolic PDE that models heat diffusion"
       ],
-      "answer": 2,
+      "answer": 0,
       "answerText": "",
       "intuition": "Think of a soap film stretched across a wire frame — it takes the shape that minimizes surface area. That shape is exactly a solution to Laplace's equation. Every interior point is the average of its neighbors, so there are no unnecessary bumps. Given boundary values (the wire frame), Laplace finds the smoothest possible surface that hits those values — no more, no less.",
       "explanation": "At [16:15], the lecturer says: \"One of the most basic equations is the laplace equation which says that if i apply the laplacian to my function u it's equal to zero at every point and this is the canonical example of what's called an elliptic equation.\" He then explains it as finding \"the smoothest function that interpolates these known values.\"",
@@ -432,10 +432,10 @@
       "timestamp": "17:04",
       "question": "What is the heat equation and what type of PDE is it?",
       "options": [
-        "The laplacian of u equals zero; a parabolic PDE",
-        "The third time derivative of u equals the laplacian of u; an elliptic PDE",
-        "The time derivative of u equals the laplacian of u; a parabolic PDE",
-        "The second time derivative of u equals the laplacian of u; a hyperbolic PDE"
+        "Laplacian u = 0; parabolic",
+        "u_tt = Laplacian u; elliptic",
+        "u_t = Laplacian u; parabolic",
+        "u_tt = Laplacian u; hyperbolic"
       ],
       "answer": 2,
       "answerText": "",
@@ -460,10 +460,10 @@
       "timestamp": "17:28",
       "question": "What is the wave equation and what type of PDE is it?",
       "options": [
-        "The gradient of u equals zero; a hyperbolic PDE",
-        "The second time derivative of u equals the laplacian of u; a hyperbolic PDE",
-        "The time derivative of u equals the laplacian of u; a parabolic PDE",
-        "The laplacian of u equals zero; an elliptic PDE"
+        "The gradient of u equals zero; a hyperbolic PDE describing steady-state flow",
+        "The second time derivative of u equals the laplacian of u",
+        "The time derivative of u equals the laplacian of u; a parabolic PDE modeling diffusion",
+        "The laplacian of u equals zero; an elliptic PDE representing harmonic functions"
       ],
       "answer": 1,
       "answerText": "",
@@ -514,12 +514,12 @@
       "timestamp": "20:49",
       "question": "How does the lecturer relate the heat equation to the Laplace equation?",
       "options": [
-        "The heat equation is just the Laplace equation with a negative sign",
-        "They are completely unrelated equations",
-        "The heat equation is always harder to solve than the Laplace equation",
-        "In the long run (steady state), the solution to the heat equation is the same as the solution to the Laplace equation"
+        "The heat equation reduces to Laplace only under restrictive symmetry assumptions",
+        "The Laplace equation is the time-independent limit of the heat equation",
+        "The heat and Laplace equations share no mathematical relationship",
+        "The heat equation is just the Laplace equation with a time derivative added"
       ],
-      "answer": 3,
+      "answer": 1,
       "answerText": "",
       "intuition": "",
       "explanation": "At [20:49], the lecturer explains: \"How is this related to the laplace equation well if i keep letting this heat flow longer and longer and longer really interesting point the solution is the same as the solution to the laplace equation.\"",
@@ -542,10 +542,10 @@
       "timestamp": "22:24",
       "question": "Why might the wave equation be harder to solve numerically than the Laplace equation?",
       "options": [
-        "Because it requires more memory",
-        "Because it can only be solved with quantum computers",
-        "Because numerical errors propagate along the wave for a long time",
-        "Because it always has complex-valued solutions"
+        "Because it requires solving dense linear systems at every timestep",
+        "Because its solutions exhibit dispersion that breaks energy conservation numerically",
+        "Because numerical errors propagate along characteristics indefinitely",
+        "Because it involves second-order time derivatives that amplify roundoff error"
       ],
       "answer": 2,
       "answerText": "",
@@ -568,10 +568,10 @@
       "timestamp": "35:36",
       "question": "In discretizing the first derivative, what basic approach does the lecturer present?",
       "options": [
-        "Looking up derivatives in a pre-computed table",
-        "Using the chain rule to find the derivative analytically",
-        "Using Fourier transforms to compute derivatives",
-        "Approximating the derivative using a limit definition with differences between neighboring values"
+        "Looking up derivatives in a pre-computed table indexed by grid coordinates",
+        "Using the chain rule to find the derivative analytically from a closed-form expression",
+        "Using Fourier transforms to compute derivatives in spectral space",
+        "Approximating the derivative using differences"
       ],
       "answer": 3,
       "answerText": "",
@@ -592,10 +592,10 @@
       "timestamp": "37:34",
       "question": "How does the lecturer suggest approximating the second derivative?",
       "options": [
-        "By using the first derivative approximation twice",
-        "By always using central differences",
-        "By using Lagrange multipliers",
-        "By using Monte Carlo integration"
+        "Applying a first-derivative finite difference stencil twice in sequence",
+        "Using fourth-order accurate non-uniform stencils derived from Taylor series",
+        "Fitting a cubic spline and differentiating it analytically",
+        "Taking the discrete Fourier transform, multiplying by ik, then inverse transforming"
       ],
       "answer": 0,
       "answerText": "",
@@ -618,10 +618,10 @@
       "timestamp": "39:46",
       "question": "What are two approaches mentioned for discretizing the Laplacian on different geometries?",
       "options": [
-        "Particle systems and procedural generation",
-        "Finite element method and boundary element method",
-        "Finite difference on grids and cotangent formula on triangle meshes",
-        "Monte Carlo method and simulated annealing"
+        "Particle systems and procedural gen",
+        "FEM and boundary element method",
+        "Grid finite diff and mesh cotangent",
+        "Monte Carlo and simulated annealing"
       ],
       "answer": 2,
       "answerText": "",
@@ -644,10 +644,10 @@
       "timestamp": "41:37",
       "question": "What is the approach described for numerically solving the Laplace equation?",
       "options": [
-        "Solving the wave equation and letting time go to infinity",
-        "Setting the finite difference approximation of the Laplacian to zero at every grid cell",
-        "Using symbolic differentiation software",
-        "Using complex contour integration"
+        "Solving the wave equation and letting time go to infinity until transients vanish",
+        "Setting the finite difference approximation of the Laplacian to zero",
+        "Using symbolic differentiation software to derive exact expressions for equilibrium",
+        "Using complex contour integration to invert the Green's function"
       ],
       "answer": 1,
       "answerText": "",
@@ -670,10 +670,10 @@
       "timestamp": "44:01",
       "question": "What approach does the lecturer suggest for solving the system of equations arising from the discretized Laplace equation?",
       "options": [
-        "Solving the system by hand",
-        "Converting it to a matrix equation and using sparse linear solvers",
-        "Using gradient descent",
-        "Using the Newton-Raphson method"
+        "Solving the system manually with substitution and elimination",
+        "Using sparse linear solvers",
+        "Applying iterative gradient-based optimization until convergence",
+        "Iteratively refining an initial guess using second-derivative information"
       ],
       "answer": 1,
       "answerText": "",
@@ -695,10 +695,10 @@
       "timestamp": "23:00",
       "question": "What is the key conceptual difference between Lagrangian and Eulerian simulation approaches?",
       "options": [
-        "Lagrangian is only for fluids; Eulerian is only for solids",
-        "Lagrangian tracks individual particles while Eulerian observes fixed points in space",
-        "Lagrangian is faster to compute; Eulerian is more accurate",
-        "Lagrangian uses grids; Eulerian uses point clouds"
+        "Lagrangian methods deform a fixed reference mesh; Eulerian methods use stationary grids",
+        "Lagrangian follows material points; Eulerian samples field values at fixed locations",
+        "Lagrangian formulations inherently conserve momentum; Eulerian do not",
+        "Eulerian descriptions require remeshing; Lagrangian avoids it entirely"
       ],
       "answer": 1,
       "answerText": "",
@@ -722,10 +722,10 @@
       "timestamp": "26:00",
       "question": "Can Lagrangian and Eulerian simulation approaches be mixed, and how does this relate to PDE formulation?",
       "options": [
-        "No, they are mutually exclusive frameworks that cannot be combined",
-        "Only when using finite element methods on triangle meshes",
-        "Yes, and the choice also relates to how you first formulate the PDEs on continuous domains",
-        "Only in fluid simulations, not solid body simulations"
+        "No — discretization frameworks are fundamentally incompatible and require separate codebases",
+        "Only when using finite element methods on triangle meshes with piecewise-linear basis functions",
+        "Yes — the choice of discretization affects how PDEs are derived and posed on continuous domains",
+        "Only in fluid simulations, since solid body simulations require Lagrangian formulations"
       ],
       "answer": 2,
       "answerText": "",
@@ -751,7 +751,7 @@
       "options": [
         "Convert to ODEs then solve analytically using closed-form expressions",
         "Apply symbolic integration techniques to find exact analytical solutions",
-        "Discretize the domain, approximate derivatives with finite differences, set up Ax=b, and solve with a sparse linear solver",
+        "Discretize, approximate derivatives, solve Ax=b",
         "Use machine learning to approximate solutions from training data"
       ],
       "answer": 2,
@@ -773,10 +773,10 @@
       "timestamp": "47:00",
       "question": "What does a Dirichlet boundary condition specify?",
       "options": [
-        "The value of the function itself at the boundary (prescribed values)",
-        "The rate of change of the function perpendicular to the boundary",
-        "The flux of the function through the boundary surface",
-        "The normal derivative of the function at the boundary"
+        "Function value prescribed at boundary",
+        "Perpendicular rate of change at boundary",
+        "Function flux through boundary surface",
+        "Normal derivative at boundary"
       ],
       "answer": 0,
       "answerText": "",
@@ -801,7 +801,7 @@
       "options": [
         "The second derivative of the function at the boundary",
         "The integral of the function over the boundary",
-        "The normal derivative — how quickly the function changes perpendicular to the boundary",
+        "Normal derivative",
         "The value of the function at the boundary"
       ],
       "answer": 2,
@@ -853,7 +853,7 @@
       "question": "Can we always satisfy the Laplace equation given Neumann boundary conditions?",
       "options": [
         "Yes, but only in 2D or higher dimensions",
-        "No — the second derivative is a rate of change of the first derivative; if the first derivative is not changing, the second derivative cannot be nonzero",
+        "No — constant first derivative implies zero second derivative",
         "Yes, always — any Neumann conditions can always be satisfied",
         "No, because Neumann conditions are always mathematically inconsistent"
       ],
@@ -879,10 +879,10 @@
       "timestamp": "52:00",
       "question": "Can we satisfy the 2D Laplace equation with Dirichlet boundary conditions?",
       "options": [
-        "Only if the domain is convex",
-        "No — the 2D case is fundamentally different from 1D and has no general solution",
-        "Only for rectangular or triangular domains",
-        "Yes — with appropriate boundary data a unique smooth solution exists interpolating those values"
+        "Only if domain convex",
+        "No — 2D fundamentally different from 1D",
+        "Only rectangular or triangular domains",
+        "Yes — unique smooth solution exists"
       ],
       "answer": 3,
       "answerText": "",
@@ -906,7 +906,7 @@
       "timestamp": "53:00",
       "question": "Can we satisfy the 2D Laplace equation with Neumann boundary conditions?",
       "options": [
-        "Yes — because what goes in must come out (the net flux through the boundary must be zero)",
+        "Yes — net flux must be zero",
         "Only if all Dirichlet values are also specified simultaneously",
         "No, the 2D Neumann problem never has a solution",
         "Only if boundary values are identically zero everywhere"
@@ -933,10 +933,10 @@
       "timestamp": "55:00",
       "question": "What is the standard numerical approach for solving the heat equation?",
       "options": [
-        "March forward in time: at each step update u by adding timestep times Laplacian(u)",
-        "Solve it as an elliptic (Laplace) equation ignoring time",
-        "Solve analytically using Fourier transforms only",
-        "Apply boundary conditions only at the final timestep"
+        "March in time: u += dt * Laplacian(u)",
+        "Solve as elliptic (Laplace) ignoring time",
+        "Fourier transform only for analytic solve",
+        "Apply BCs only at final timestep"
       ],
       "answer": 0,
       "answerText": "",
@@ -959,7 +959,7 @@
       "timestamp": "57:00",
       "question": "What is the standard numerical approach for solving the wave equation?",
       "options": [
-        "Track height u and velocity v at each grid point, update both each timestep using second-order time integration",
+        "Track u and v, update with second-order time integration",
         "Compute the Fourier transform of the initial conditions and propagate analytically",
         "Use only Dirichlet boundary conditions and solve once",
         "Treat it as a parabolic equation with only one time derivative"
@@ -988,7 +988,7 @@
         "Implement algorithms for one specific geometry type only and do not generalize",
         "Always start with discrete data structures (grids or graphs) and optimize later",
         "Use machine learning to learn algorithms from example data rather than deriving them",
-        "Formulate problems as PDEs on continuous domains first — this makes it easy to port algorithms across different representations"
+        "Formulate as PDEs on continuous domains first"
       ],
       "answer": 3,
       "answerText": "",

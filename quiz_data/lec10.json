@@ -79,10 +79,10 @@
       "timestamp": "00:00",
       "question": "What was the primary focus of the previous lecture according to Professor Crane?",
       "options": [
-        "Different types of geometry in nature",
-        "Rasterization pipeline implementation",
-        "Mesh subdivision algorithms",
-        "Array-based data structures"
+        "Natural geometry types",
+        "Rasterization pipeline",
+        "Mesh subdivision methods",
+        "Array-based structures"
       ],
       "answer": 0,
       "answerText": "",
@@ -175,10 +175,10 @@
       "timestamp": "12:05",
       "question": "What is the mnemonic given for determining if a polygon mesh has manifold connectivity?",
       "options": [
-        "\"Loops, not links\"",
-        "\"Edges, not vertices\"",
-        "\"Circles, not stars\"",
-        "\"Fans, not fins\""
+        "Loops not links",
+        "Edges not vertices",
+        "Circles not stars",
+        "Fans not fins"
       ],
       "answer": 3,
       "answerText": "",
@@ -199,10 +199,10 @@
       "timestamp": "12:32",
       "question": "What is the first condition for a polygon mesh to have manifold connectivity?",
       "options": [
-        "Every edge must be contained in only two polygons",
-        "Every vertex must be contained in at most one face",
-        "Every face must be a triangle",
-        "Every vertex must be connected to exactly three edges"
+        "Each edge in two polys",
+        "Each vertex in one face",
+        "Each face is triangle",
+        "Each vertex has three edges"
       ],
       "answer": 0,
       "answerText": "",
@@ -223,10 +223,10 @@
       "timestamp": "13:28",
       "question": "What is the second condition for a polygon mesh to have manifold connectivity?",
       "options": [
-        "Every vertex must be contained in a single fan or loop of polygons",
-        "Every edge must connect exactly two vertices",
-        "Every face must be convex",
-        "The mesh must be orientable"
+        "Vertex in fan or loop",
+        "Edge connects two verts",
+        "Each face convex",
+        "Mesh must be orientable"
       ],
       "answer": 0,
       "answerText": "",
@@ -247,10 +247,10 @@
       "timestamp": "14:22",
       "question": "What defines a boundary on a surface according to the lecture?",
       "options": [
-        "Where two surfaces intersect",
-        "Where the normal vector changes direction",
-        "Where the surface has holes",
-        "Where the surface ends"
+        "Surface intersection",
+        "Normal direction change",
+        "Surface holes present",
+        "Boundary of surface"
       ],
       "answer": 3,
       "answerText": "",
@@ -271,10 +271,10 @@
       "timestamp": "15:02",
       "question": "What important property do boundaries have according to the lecture?",
       "options": [
-        "They can never intersect themselves",
-        "They must be composed of straight line segments",
-        "They always form a single closed loop",
-        "They always have sharp corners"
+        "No self-intersection",
+        "Straight line segments",
+        "Single closed loop",
+        "Always sharp corners"
       ],
       "answer": 2,
       "answerText": "",
@@ -296,7 +296,7 @@
       "question": "Why is the manifold assumption useful according to the lecture?",
       "options": [
         "Because manifold meshes render faster",
-        "Because it makes data structures and algorithms simpler and more efficient",
+        "Simpler algorithms",
         "Because manifold shapes are more aesthetically pleasing",
         "Because manifold geometry is easier to animate"
       ],
@@ -391,10 +391,10 @@
       "timestamp": "26:20",
       "question": "What is the time complexity of finding all polygons touching a specific vertex using the adjacency list representation for a large mesh?",
       "options": [
-        "O(n²) - quadratic time",
-        "O(log n) - logarithmic time",
-        "O(n) - linear time with the number of polygons",
-        "O(1) - constant time"
+        "O(n²) quadratic",
+        "O(log n) log time",
+        "O(n) linear time",
+        "O(1) constant time"
       ],
       "answer": 2,
       "answerText": "",
@@ -490,7 +490,7 @@
         "It supports parallel processing",
         "It uses less memory than any other format",
         "It's the easiest format to implement",
-        "It's really fast for actual matrix math operations"
+        "Fast for matrix math"
       ],
       "answer": 3,
       "answerText": "",
@@ -513,7 +513,7 @@
       "options": [
         "Storing only half of the mesh data to save memory",
         "Maintaining exact half of the vertices as control points",
-        "Splitting each edge into two directed halfedges pointing in opposite directions",
+        "Splitting each edge into two directed halfedges",
         "Using arrays to store mesh elements for faster access"
       ],
       "answer": 2,
@@ -583,10 +583,10 @@
       "timestamp": "47:24",
       "question": "What is the relationship between halfedge data structures and manifold meshes?",
       "options": [
-        "Halfedge structures can efficiently represent both manifold and non-manifold meshes",
-        "Halfedge data structures can only represent a subset of manifold meshes",
-        "If a mesh has valid halfedge connectivity, it will always describe a manifold polygon mesh",
-        "Manifold meshes require more complex data structures than halfedge"
+        "Handles both manifolds",
+        "Only subset of manifolds",
+        "Valid halfedge ⇒ manifold",
+        "Manifolds need more complex"
       ],
       "answer": 2,
       "answerText": "",
@@ -608,7 +608,7 @@
       "question": "What is the key distinction between connectivity and geometry in meshes?",
       "options": [
         "Connectivity is only relevant for manifold meshes while geometry applies to all meshes",
-        "Connectivity relates to how mesh elements are connected while geometry relates to vertex positions",
+        "Connectivity = element adjacency; geometry = vertex positions",
         "Connectivity is a 2D property while geometry is 3D",
         "Connectivity is about the number of vertices while geometry is about the number of faces"
       ],
@@ -631,10 +631,10 @@
       "timestamp": "55:15",
       "question": "Why are halfedge meshes particularly good for editing operations?",
       "options": [
-        "Because they use less memory than other representations",
-        "Because they render faster",
-        "Because they enforce non-manifold connections",
-        "Because they're like linked lists, making it easy to insert and delete elements"
+        "Less memory use",
+        "Faster rendering",
+        "Enforce non-manifold",
+        "Like linked lists"
       ],
       "answer": 3,
       "answerText": "",
@@ -706,7 +706,7 @@
         "Both require specialized hardware for efficient computation",
         "Signal processing is being replaced by geometry processing",
         "Both deal with continuous functions that need to be sampled",
-        "Digital geometry processing generalizes traditional digital signal processing"
+        "Geometry processing generalizes signal processing"
       ],
       "answer": 3,
       "answerText": "",

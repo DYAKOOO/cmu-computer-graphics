@@ -101,10 +101,10 @@
       "timestamp": "01:06",
       "question": "What practical challenge occurs when transitioning from digital media to print media?",
       "options": [
-        "Printers add colors that weren't in the original digital file",
-        "The printed output often looks duller than the digital version",
-        "Print media can display a wider range of colors than digital media",
-        "Digital colors are always more vibrant than print colors"
+        "Printers add colors not in the original file",
+        "Print output looks duller than digital",
+        "Print media has wider gamut than digital",
+        "Digital colors always exceed print vibrancy"
       ],
       "answer": 1,
       "answerText": "",
@@ -125,10 +125,10 @@
       "timestamp": "02:23",
       "question": "How is color used in scientific applications?",
       "options": [
-        "To distinguish between different scientific disciplines",
-        "Only in astronomy, not in other scientific fields",
-        "To encode important information about the phenomenon being studied",
-        "Only for aesthetic purposes in visualization"
+        "To separate scientific disciplines clearly",
+        "Used only in astronomy, not elsewhere",
+        "Encodes key info about the phenomenon",
+        "Serves aesthetic goals in visualization"
       ],
       "answer": 2,
       "answerText": "",
@@ -149,10 +149,10 @@
       "timestamp": "03:03",
       "question": "According to the lecture, why might a sunset photo appear less impressive than seeing it in person?",
       "options": [
-        "Cameras have limited resolution compared to the human eye",
-        "The perceptual experience of color is not fully captured by the camera",
-        "Sunsets are always enhanced by human memory",
-        "Digital displays can't show sunset colors at all"
+        "Cameras have lower resolution than eyes",
+        "Perceptual color isn't fully captured",
+        "Sunsets are enhanced by memory recall",
+        "Displays can't render sunset hues at all"
       ],
       "answer": 1,
       "answerText": "",
@@ -269,10 +269,10 @@
       "timestamp": "08:14",
       "question": "What principle allows thermal imaging to detect people through walls?",
       "options": [
-        "Special thermal cameras use x-rays to see through barriers",
-        "Thermal cameras can detect sound waves through walls",
-        "People emit visible light that passes through walls",
-        "Bodies emit infrared radiation because they're warm"
+        "Thermal cameras use x-rays through walls",
+        "They detect sound waves through barriers",
+        "People emit visible light through walls",
+        "Warm bodies emit infrared radiation"
       ],
       "answer": 3,
       "answerText": "",
@@ -293,10 +293,10 @@
       "timestamp": "09:04",
       "question": "Why don't we see everything glowing at night even though all warm objects emit some light?",
       "options": [
-        "Objects at normal temperatures don't emit any light at all",
-        "Most objects emit light outside the narrow range of human visible spectrum",
-        "Air molecules absorb all the light emitted by objects",
-        "The human brain filters out this constant glow"
+        "Normal-temp objects emit no light at all",
+        "Most objects emit outside visible range",
+        "Air absorbs all emitted object light",
+        "Brain filters out constant ambient glow"
       ],
       "answer": 1,
       "answerText": "",
@@ -317,10 +317,10 @@
       "timestamp": "10:11",
       "question": "What is white light composed of?",
       "options": [
-        "Only the three primary colors: red, green, and blue",
-        "The absence of any color or frequency",
-        "A single frequency that appears white to the human eye",
-        "A mixture of all visible colors/frequencies"
+        "Only red, green, and blue primaries",
+        "Absence of all color or frequency",
+        "Single frequency appearing white to eye",
+        "Mixture of all visible frequencies"
       ],
       "answer": 3,
       "answerText": "",
@@ -413,10 +413,10 @@
       "timestamp": "15:16",
       "question": "What perceptual trick do compact fluorescent bulbs rely on?",
       "options": [
-        "They create the illusion of brighter light with less energy",
-        "They make the room appear larger than it actually is",
-        "They fool the eye into believing the light has the same color despite having a different spectrum",
-        "They create the illusion of continuous illumination through rapid flashing"
+        "Creates illusion of brighter light efficiently",
+        "Makes rooms appear physically larger",
+        "Fools eye into same hue despite spectrum shift",
+        "Simulates continuous light via rapid flashing"
       ],
       "answer": 2,
       "answerText": "",
@@ -437,10 +437,10 @@
       "timestamp": "17:22",
       "question": "Why do plants appear green?",
       "options": [
-        "Because the human eye is most sensitive to green wavelengths",
-        "Because plants absorb red and blue light, reflecting mostly green light",
-        "Because plants emit green light",
-        "Because plants absorb green light and reflect other colors"
+        "Eye sensitivity peaks at green wavelengths",
+        "Plants absorb red/blue, reflect green",
+        "Plants emit green light actively",
+        "Plants absorb green, reflect other colors"
       ],
       "answer": 1,
       "answerText": "",
@@ -533,10 +533,10 @@
       "timestamp": "22:24",
       "question": "Why is color reproduction challenging when going from one medium to another?",
       "options": [
-        "Because most people are at least partially colorblind",
-        "Because different cultures perceive colors differently",
-        "Because the interaction between light sources, surfaces, and eyes creates a complex chain",
-        "Because the color names are inconsistent across media"
+        "Most people have some colorblindness",
+        "Cultures perceive colors differently",
+        "Light-surface-eye chain creates complexity",
+        "Color names vary inconsistently across media"
       ],
       "answer": 2,
       "answerText": "",
@@ -605,10 +605,10 @@
       "timestamp": "26:27",
       "question": "What phenomenon demonstrates the brain's ability to adapt to inverted visual input?",
       "options": [
-        "People eventually seeing normal colors when wearing special glasses that invert the world",
-        "The brain turning upside-down images right-side up",
+        "People adapt to inverted-world glasses",
+        "Brain flips upside-down retinal images",
         "Color blindness compensation over time",
-        "The ability to read mirrored text after practice"
+        "Reading mirrored text after practice"
       ],
       "answer": 0,
       "answerText": "",
@@ -653,10 +653,10 @@
       "timestamp": "29:26",
       "question": "What are the two main types of photoreceptors in the human eye?",
       "options": [
-        "Sensors and detectors",
-        "Cones and pyramids",
-        "Rods and cones",
-        "Spheres and cylinders"
+        "Sensors and detectors in imaging devices",
+        "Cones and pyramids in retinal anatomy",
+        "Rods and cones as photoreceptor types",
+        "Spheres and cylinders in optical models"
       ],
       "answer": 2,
       "answerText": "",
@@ -677,10 +677,10 @@
       "timestamp": "30:35",
       "question": "What is the primary function of rod cells in human vision?",
       "options": [
-        "Detecting colors in bright light",
-        "Blocking excessive light from damaging the retina",
-        "Capturing intensity in dim light conditions",
-        "Distinguishing between colors in the peripheral vision"
+        "Detecting colors under bright illumination",
+        "Blocking excess light to protect retina",
+        "Capturing low-light intensity signals",
+        "Distinguishing colors in peripheral vision"
       ],
       "answer": 2,
       "answerText": "",
@@ -701,10 +701,10 @@
       "timestamp": "30:35",
       "question": "How many different types of cone cells are found in the typical human eye?",
       "options": [
-        "Two types",
-        "Five types",
-        "Three types",
-        "Four types"
+        "There are exactly two distinct categories",
+        "There are five recognized classifications",
+        "Three main categories exist",
+        "Four fundamental classifications are defined"
       ],
       "answer": 2,
       "answerText": "",
@@ -749,10 +749,10 @@
       "timestamp": "33:17",
       "question": "What causes the blind spot in human vision?",
       "options": [
-        "A region of the retina that becomes damaged over time",
-        "A psychological phenomenon rather than a physical one",
-        "The point where the optic nerve connects to the retina lacks photoreceptors",
-        "A developmental defect in the eye"
+        "Retinal region damaged by aging",
+        "Psychological rather than physical effect",
+        "Optic nerve entry lacks photoreceptors",
+        "Developmental eye defect present at birth"
       ],
       "answer": 2,
       "answerText": "",
@@ -773,10 +773,10 @@
       "timestamp": "34:15",
       "question": "What does the peripheral vision color experiment described in the lecture demonstrate?",
       "options": [
-        "Peripheral vision is more accurate for certain colors than others",
-        "The brain often incorrectly guesses colors in the peripheral vision",
-        "People can see colors more vividly in their peripheral vision",
-        "Color vision improves with practice in the periphery"
+        "Peripheral vision favors certain colors",
+        "Brain guesses colors incorrectly peripherally",
+        "Colors appear more vivid peripherally",
+        "Peripheral color vision improves with training"
       ],
       "answer": 1,
       "answerText": "",
@@ -845,10 +845,10 @@
       "timestamp": "38:08",
       "question": "Why do two of the three cone types (M and L) have similar response curves that cluster in the green part of the spectrum?",
       "options": [
-        "Green light is most important for survival",
-        "The Sun emits more strongly in the green region, making it efficient for the eye to prioritize green light",
-        "It's a random evolutionary accident",
-        "It helps humans better distinguish plant matter"
+        "Green light critical for survival needs",
+        "Sun peaks in green; eye evolved efficiency",
+        "Random evolutionary accident with no advantage",
+        "Helps distinguish edible plant matter"
       ],
       "answer": 1,
       "answerText": "",
@@ -869,10 +869,10 @@
       "timestamp": "39:48",
       "question": "What fundamental limitation of the human visual system is described in the lecture?",
       "options": [
-        "The eye cannot measure the full spectrum of incoming light, instead reducing it to three values",
-        "The eye cannot detect ultraviolet radiation",
-        "The eye cannot perceive colors in dim lighting",
-        "The eye cannot focus on near and far objects simultaneously"
+        "Eye compresses full spectrum to three values",
+        "Cannot detect ultraviolet wavelengths",
+        "Fails to see color in dim lighting",
+        "Cannot focus simultaneously on near/far objects"
       ],
       "answer": 0,
       "answerText": "",
@@ -941,10 +941,10 @@
       "timestamp": "44:38",
       "question": "How is metamerism exploited for counterfeit detection?",
       "options": [
-        "By making money appear to change color when tilted",
-        "By using magnetic inks that can be detected electronically",
-        "By printing microscopic patterns that can't be reproduced",
-        "By using inks that have the same color to the naked eye but different spectra under special light"
+        "By embedding dynamic chromatic shifts with viewing angle",
+        "By incorporating magnetically responsive pigments",
+        "By encoding unduplicable sub-wavelength surface textures",
+        "By using spectrally distinct but visually matched inks"
       ],
       "answer": 3,
       "answerText": "",
@@ -991,8 +991,8 @@
       "options": [
         "By measuring plant heights with radar",
         "By detecting moisture content in plants",
-        "By detecting the shape of leaves from orbit",
-        "By identifying unique spectral signatures of different plant types"
+        "By detecting leaf shape from orbit",
+        "By spectral signatures"
       ],
       "answer": 3,
       "answerText": "",
@@ -1013,10 +1013,10 @@
       "timestamp": "48:00",
       "question": "What is the distinction between a color space and a color model?",
       "options": [
-        "Color spaces are the full range of available colors while color models are ways to identify points in that space",
-        "Color spaces are three-dimensional while color models are two-dimensional",
-        "Color spaces are used by artists while color models are used by scientists",
-        "Color spaces are limited to digital systems while color models apply to all media"
+        "Color spaces define gamut; models locate points",
+        "Spaces are 3D; models are 2D representations",
+        "Artists use spaces; scientists use models",
+        "Spaces limited to digital; models apply universally"
       ],
       "answer": 0,
       "answerText": "",
@@ -1037,10 +1037,10 @@
       "timestamp": "49:23",
       "question": "How does an RGB color model identify a specific color?",
       "options": [
-        "Using three numbers that specify red, green, and blue intensities",
-        "Using a descriptive name like \"yellow ochre\"",
-        "Using wavelength measurements",
-        "Using a hexadecimal value"
+        "Using RGB intensities",
+        "Using descriptive names like \"yellow ochre\"",
+        "Using precise wavelength measurements",
+        "Using hex values like #FF5733"
       ],
       "answer": 0,
       "answerText": "",
@@ -1085,10 +1085,10 @@
       "timestamp": "51:30",
       "question": "Why does the CMYK color model include black (K) when theoretically cyan, magenta, and yellow should produce black when combined?",
       "options": [
-        "To achieve deeper blacks than CMY alone and for efficiency in printing common black text",
-        "To save money on colored inks",
-        "Because K stands for \"kontrast\" in the original German model",
-        "Because printers cannot accurately align the three colors"
+        "Deeper blacks and efficient black text printing",
+        "Cost savings on colored ink usage",
+        "K stands for German \"kontrast\"",
+        "Misalignment prevents accurate CMY registration"
       ],
       "answer": 0,
       "answerText": "",
@@ -1109,10 +1109,10 @@
       "timestamp": "52:22",
       "question": "In the additive color model demonstration, what color is produced when red and green lights overlap?",
       "options": [
-        "Blue",
-        "White",
-        "Brown",
-        "Yellow"
+        "Blue pigment in standard color sets",
+        "White reflects all visible wavelengths",
+        "Brown absorbs most visible frequencies",
+        "Yellow reflects green and red light"
       ],
       "answer": 3,
       "answerText": "",
@@ -1133,10 +1133,10 @@
       "timestamp": "53:13",
       "question": "When white light passes through both yellow and magenta filters, what color results?",
       "options": [
-        "Green",
-        "Black",
-        "Blue",
-        "Red"
+        "Green reflects mid-spectrum wavelengths",
+        "Black absorbs nearly all incident light",
+        "Blue reflects short-wavelength light",
+        "Red reflects long-wavelength light"
       ],
       "answer": 3,
       "answerText": "",
@@ -1158,9 +1158,9 @@
       "question": "Why is HSV often preferred over RGB for user interfaces where people select colors?",
       "options": [
         "HSV requires less memory to store",
-        "HSV is the industry standard for all applications",
-        "HSV produces more vibrant colors on screen",
-        "HSV is more intuitive for humans to specify colors than RGB"
+        "HSV is the universal industry standard",
+        "HSV yields more vibrant on-screen output",
+        "HSV is more intuitive"
       ],
       "answer": 3,
       "answerText": "",
@@ -1181,10 +1181,10 @@
       "timestamp": "55:09",
       "question": "What does the \"S\" represent in the SML color model?",
       "options": [
-        "Spectrum",
-        "Sensitivity",
-        "Saturation",
-        "Short wavelength (cones)"
+        "Spectrum refers to visible light range",
+        "Sensitivity describes photoreceptor response",
+        "Saturation indicates color purity",
+        "Short-wavelength cones"
       ],
       "answer": 3,
       "answerText": "",
@@ -1229,10 +1229,10 @@
       "timestamp": "57:05",
       "question": "What is the purpose of using hexadecimal notation for RGB colors?",
       "options": [
-        "To efficiently pack 8 bits per channel using just 2 characters per channel",
-        "To make colors look more professional in code",
-        "To confuse beginners learning about colors",
-        "Because hexadecimal is faster for computers to process"
+        "To encode 8 bits per channel in two hex digits",
+        "To improve visual professionalism in codebases",
+        "To increase learning difficulty for newcomers",
+        "Because CPUs natively process hex faster"
       ],
       "answer": 0,
       "answerText": "",
@@ -1277,10 +1277,10 @@
       "timestamp": "59:30",
       "question": "What is the Pantone matching system?",
       "options": [
-        "A collection of colored filters for photography",
-        "A standardized color calibration method for monitors",
-        "A technique for matching colors between different printers",
-        "An industry standard with 1114 reference colors for specifying paints and materials"
+        "A set of physical colored filters used in studio photography",
+        "A monitor calibration protocol defined by ISO",
+        "A cross-printer color matching technique",
+        "A standardized palette of 1114 physical reference colors"
       ],
       "answer": 3,
       "answerText": "",
@@ -1301,10 +1301,10 @@
       "timestamp": "1:00:31",
       "question": "According to the lecture, why do operating systems sometimes use \"crayon box\" style color selection?",
       "options": [
-        "It takes less screen space than other color pickers",
-        "It's more technically precise than HSV or RGB pickers",
-        "It's convenient for users to choose colors by name",
-        "It's required by law for accessibility reasons"
+        "Takes minimal screen real estate",
+        "More technically precise than HSV/RGB",
+        "Lets users pick colors by familiar names",
+        "Legally mandated for accessibility compliance"
       ],
       "answer": 2,
       "answerText": "",
@@ -1374,7 +1374,7 @@
       "question": "In the color compression example shown in the lecture, why does the reconstructed image look good despite massive color downsampling?",
       "options": [
         "Modern displays automatically correct for color compression",
-        "The human visual system is more sensitive to brightness than color",
+        "Brightness sensitivity > color sensitivity",
         "The lecturer used a special algorithm to enhance the colors",
         "The colors weren't actually downsampled that much"
       ],
@@ -1421,10 +1421,10 @@
       "timestamp": "1:07:07",
       "question": "What is \"gamut\" in the context of color reproduction?",
       "options": [
-        "The range of colors that can be expressed by a device or in a color space",
-        "The brightness level of a display",
-        "A measure of color accuracy",
-        "The process of converting between color models"
+        "Range of reproducible colors in device/space",
+        "Display brightness level setting",
+        "Quantitative measure of color fidelity",
+        "Process of converting between color representations"
       ],
       "answer": 0,
       "answerText": "",
@@ -1469,10 +1469,10 @@
       "timestamp": "1:09:49",
       "question": "What does a chromaticity diagram show?",
       "options": [
-        "The intensity-independent component of color (the \"color\" part without brightness)",
-        "The relationship between RGB and CMYK",
-        "How colors change over time",
-        "The historical development of color theory"
+        "Hue component, independent of brightness",
+        "RGB-CMYK conversion mathematics",
+        "Temporal evolution of color perception",
+        "Historical progression of color theories"
       ],
       "answer": 0,
       "answerText": "",
@@ -1493,10 +1493,10 @@
       "timestamp": "1:11:26",
       "question": "According to the lecture, why don't digital photos of sunsets look as vivid as they do to the naked eye?",
       "options": [
-        "Camera sensors have lower resolution than the human eye",
-        "People naturally exaggerate their memories of sunset colors",
-        "Digital displays don't support high enough contrast ratios",
-        "The sRGB color space used in digital displays covers a smaller range of colors than the human eye can see"
+        "Camera sensors have lower eye resolution",
+        "Memory exaggerates sunset color recollection",
+        "Displays lack sufficient contrast ratios",
+        "sRGB covers smaller gamut than human vision"
       ],
       "answer": 3,
       "answerText": "",
@@ -1517,7 +1517,7 @@
       "timestamp": "1:12:38",
       "question": "According to the lecture, why is it important to understand that different people perceive colors differently?",
       "options": [
-        "To design interfaces that are accessible to people with various types of color vision",
+        "For color-vision-accessible design",
         "To help people choose better clothing colors",
         "To respect cultural differences in color naming",
         "To identify which people have superior color vision"
@@ -1542,7 +1542,7 @@
       "question": "What makes color management between different devices so challenging?",
       "options": [
         "The lack of standard color models",
-        "Different gamuts, perception effects, and the fundamental complexity of matching spectra",
+        "Gamut, perception, and spectral matching complexity",
         "The high cost of color calibration equipment",
         "Device manufacturers keeping their color specifications secret"
       ],
@@ -1589,10 +1589,10 @@
       "timestamp": "1:17:40",
       "question": "Why do photographers working with RAW image files need to understand gamma correction?",
       "options": [
-        "To increase dynamic range in their photos",
-        "To properly adjust exposure values",
-        "To compensate for the gamma relationship in camera sensors when processing images",
-        "To ensure proper color balance in artificial lighting"
+        "Increase photo dynamic range capability",
+        "Set correct exposure compensation values",
+        "Correct camera sensor gamma during processing",
+        "Balance color under artificial lighting conditions"
       ],
       "answer": 2,
       "answerText": "",
@@ -1616,7 +1616,7 @@
         "How retinal fatigue causes temporary blindness",
         "How memory affects color perception",
         "Color blindness effects and limitations",
-        "Neural adaptation and the fact that neurons respond to changes in color rather than absolute values"
+        "Neural adaptation to color change"
       ],
       "answer": 3,
       "answerText": "",
@@ -1637,7 +1637,7 @@
       "timestamp": "1:20:18",
       "question": "What topics does the lecturer preview for upcoming lectures?",
       "options": [
-        "Radiometry, light interaction with cameras and materials, building toward photorealistic rendering",
+        "Radiometry → light → materials → photorealism",
         "Color psychology and marketing",
         "The history of color theory and famous artists",
         "Medical applications of color science"

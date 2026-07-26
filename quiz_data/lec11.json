@@ -77,7 +77,7 @@
       "timestamp": "00:19",
       "question": "What was the main simplifying assumption about shapes discussed at the beginning of the lecture?",
       "options": [
-        "That shapes are manifold and can be locally stretched into the Euclidean plane",
+        "Shapes are locally Euclidean",
         "That all shapes can be represented as quadrilaterals",
         "That shapes must be convex",
         "That all shapes must have regular vertex degree"
@@ -101,10 +101,10 @@
       "timestamp": "00:58",
       "question": "What defines a manifold polygon mesh in terms of its connectivity?",
       "options": [
-        "It consists only of triangular faces",
-        "It has no boundary edges",
-        "It has fans but not fins",
-        "It has exactly six edges per vertex"
+        "Composed solely of triangular faces",
+        "Has no boundary or open edges",
+        "Contains fans but excludes fins",
+        "Exactly six edges meet at each vertex"
       ],
       "answer": 2,
       "answerText": "",
@@ -221,10 +221,10 @@
       "timestamp": "08:49",
       "question": "What is the goal of downsampling in geometry processing according to the lecture?",
       "options": [
-        "To remove noise from scanned geometry",
-        "To flatten irregular surfaces for texture mapping",
-        "To create simplified meshes for faster rendering that still preserve appearance",
-        "To create a uniform triangle distribution"
+        "Removes noise from raw scanned geometry",
+        "Flattens surfaces for texture coordinate mapping",
+        "Simplifies meshes while preserving appearance",
+        "Creates uniform triangle distributions"
       ],
       "answer": 2,
       "answerText": "",
@@ -317,10 +317,10 @@
       "timestamp": "12:27",
       "question": "According to the lecture, why is mesh compression more complicated than image compression?",
       "options": [
-        "Meshes cannot be compressed without loss",
-        "Meshes are always larger than images",
-        "Meshes require specialized hardware for decompression",
-        "Meshes have both position data and connectivity data"
+        "Meshes can't be compressed losslessly",
+        "Meshes always exceed image file sizes",
+        "Specialized hardware needed for decompression",
+        "Includes both position and connectivity data"
       ],
       "answer": 3,
       "answerText": "",
@@ -342,7 +342,7 @@
       "question": "What challenge of shape analysis did the lecturer highlight?",
       "options": [
         "Determining the optimal compression rate",
-        "Identifying which parts of a mesh correspond to specific real-world features",
+        "Matching mesh regions to real-world features",
         "Converting between different mesh formats",
         "Finding algorithms that work on non-manifold meshes"
       ],
@@ -365,10 +365,10 @@
       "timestamp": "16:34",
       "question": "What is aliasing in the context of geometry as described in the lecture?",
       "options": [
-        "When polygons have incorrect normal vectors",
-        "When a bad sampling and reconstruction makes a signal appear different than it actually is",
-        "When vertex colors don't match the original model",
-        "When mesh elements have incorrect materials assigned"
+        "Caused by incorrect face normal vectors",
+        "Bad sampling makes signal appear distorted",
+        "Vertex colors mismatch original appearance",
+        "Material assignments misaligned with geometry"
       ],
       "answer": 1,
       "answerText": "",
@@ -413,10 +413,10 @@
       "timestamp": "20:53",
       "question": "What property, beyond position approximation, does the lecturer emphasize as being important to preserve in a mesh?",
       "options": [
-        "The triangle aspect ratio",
-        "The normal vectors of the smooth surface",
-        "The regularity of vertex degree",
-        "The number of triangles"
+        "Triangle aspect ratio quality metric",
+        "Smooth surface normal vector directions",
+        "Vertex degree regularity across the mesh",
+        "Total triangle count in the geometry"
       ],
       "answer": 1,
       "answerText": "",
@@ -440,7 +440,7 @@
         "All edges have equal length",
         "All triangles have equal area",
         "Every vertex has exactly six neighbors",
-        "Each triangle's circumcircle contains no other vertices inside it"
+        "No other vertex inside circumcircle"
       ],
       "answer": 3,
       "answerText": "",
@@ -464,7 +464,7 @@
         "They maximize the minimum angle in the mesh",
         "They contain the minimum number of triangles possible",
         "They guarantee manifold connectivity",
-        "They provide the smoothest interpolation of data on vertices"
+        "They yield optimal interpolation over vertices"
       ],
       "answer": 3,
       "answerText": "",
@@ -485,10 +485,10 @@
       "timestamp": "24:59",
       "question": "What does the lecturer define as \"regular vertex degree\" for a triangle mesh?",
       "options": [
-        "When no vertex has degree greater than 12",
-        "When all vertices have the same degree",
-        "When most vertices have degree 6",
-        "When the vertex degree distribution follows a power law"
+        "No vertex degree exceeds twelve",
+        "All vertices share identical degree",
+        "Most vertices have degree six",
+        "Degree distribution follows power law"
       ],
       "answer": 2,
       "answerText": "",
@@ -557,10 +557,10 @@
       "timestamp": "30:22",
       "question": "What is Catmull-Clark subdivision primarily designed for, according to the lecture?",
       "options": [
-        "Triangle meshes",
-        "Quadrilateral meshes",
-        "Point clouds",
-        "Tetrahedral meshes"
+        "Triangle-based polygonal meshes",
+        "Quadrilateral-dominant meshes",
+        "Unstructured point cloud data",
+        "Volumetric tetrahedral meshes"
       ],
       "answer": 1,
       "answerText": "",
@@ -583,8 +583,8 @@
       "options": [
         "(Q + R + (n-2)S) / n, where Q is the average of face points, R is the average of edge midpoints, and S is the original position",
         "The average of all neighboring vertices",
-        "(Q + 2R + (n-3)S) / n, where Q is the average of face points, R is the average of edge midpoints, and S is the original position",
-        "The average of all face points"
+        "(Q + 2R + (n-3)S) / n, with Q, R, S as defined",
+        "The average of all face points adjacent to the vertex"
       ],
       "answer": 2,
       "answerText": "",
@@ -605,10 +605,10 @@
       "timestamp": "34:21",
       "question": "Why does Catmull-Clark subdivision produce artifacts when applied to triangle meshes?",
       "options": [
-        "Triangle vertices typically have degree 6, which is irregular for quad meshes that expect degree 4",
-        "Triangles are not flexible enough to be subdivided",
-        "The formulas were derived only for quadrilaterals",
-        "Triangle meshes are not manifold"
+        "Triangle vertices often degree 6, not 4",
+        "Triangles lack flexibility for subdivision",
+        "Formulas derived strictly for quads",
+        "Triangle meshes inherently non-manifold"
       ],
       "answer": 0,
       "answerText": "",
@@ -630,7 +630,7 @@
       "question": "What important property of Loop subdivision vertex rules did the lecturer highlight?",
       "options": [
         "They always preserve sharp features",
-        "They form a convex combination, keeping points within the convex hull",
+        "Points stay in convex hull",
         "They work equally well on quad meshes",
         "They result in a C3 continuous surface"
       ],
@@ -655,7 +655,7 @@
       "options": [
         "Remeshing the entire surface with fewer elements",
         "Randomly removing vertices until reaching the target count",
-        "Using a greedy algorithm based on edge collapses with a quadric error metric",
+        "Edge collapses guided by quadric error metric",
         "Uniform subdivision followed by clustering"
       ],
       "answer": 2,
@@ -677,10 +677,10 @@
       "timestamp": "40:35",
       "question": "What is the quadric error metric measuring in the context of mesh simplification?",
       "options": [
-        "The distance from a vertex to the center of the mesh",
-        "The maximum edge length in the mesh",
-        "The distance to a collection of triangles (or their planes)",
-        "The change in surface area after an operation"
+        "Distance from vertex to mesh centroid",
+        "Maximum edge length in local neighborhood",
+        "Distance to nearest triangle or plane set",
+        "Change in total surface area post-operation"
       ],
       "answer": 2,
       "answerText": "",
@@ -701,10 +701,10 @@
       "timestamp": "1:17:35",
       "question": "What solution does the lecture propose for preventing signal degradation during repeated mesh processing?",
       "options": [
-        "Using higher-order numerical methods",
-        "Using a different mesh representation entirely",
-        "Limiting the number of operations to three",
-        "Projecting processed vertices back onto the original surface"
+        "Adopt higher-order numerical schemes",
+        "Switch entirely to alternative representations",
+        "Restrict operations to three per iteration",
+        "Project vertices back onto original surface"
       ],
       "answer": 3,
       "answerText": "",

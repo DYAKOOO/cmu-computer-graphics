@@ -80,9 +80,9 @@
       "question": "What are the two main topics covered in this lecture?",
       "options": [
         "Rasterization and ray tracing",
-        "Textures and colors",
-        "Lighting and shading",
-        "Perspective projection and texture mapping"
+        "Textures and colors processing",
+        "Lighting and shading models",
+        "Perspective projection mapping"
       ],
       "answer": 3,
       "answerText": "",
@@ -103,10 +103,10 @@
       "timestamp": "00:29",
       "question": "How does the lecturer describe the relationship between the two main topics of the lecture?",
       "options": [
-        "They are sequential steps in the graphics pipeline",
-        "They are two approaches that solve the same problem",
-        "They are two ideas that \"come crashing together\"",
-        "They are completely separate techniques"
+        "Sequential pipeline steps",
+        "Two solutions to same problem",
+        "Ideas that crash together",
+        "Completely separate techniques"
       ],
       "answer": 2,
       "answerText": "",
@@ -151,10 +151,10 @@
       "timestamp": "01:07",
       "question": "What happens to parallel lines in perspective projection?",
       "options": [
-        "They remain parallel",
-        "They diverge at the horizon",
-        "They converge at the horizon",
-        "They become curved"
+        "Remain parallel forever",
+        "Diverge toward horizon",
+        "Converge at the horizon",
+        "Become smoothly curved"
       ],
       "answer": 2,
       "answerText": "",
@@ -175,10 +175,10 @@
       "timestamp": "01:24",
       "question": "According to the lecture, what challenge did early painters face with perspective?",
       "options": [
-        "They lacked proper materials to create depth",
-        "They only used orthographic projection",
-        "They struggled to get accurate perspective",
-        "They intentionally rejected perspective"
+        "Lacked depth materials",
+        "Used orthographic only",
+        "Struggled with perspective",
+        "Rejected perspective intentionally"
       ],
       "answer": 2,
       "answerText": "",
@@ -227,10 +227,10 @@
       "timestamp": "02:46",
       "question": "What is a primary advantage of orthographic projection according to the lecture?",
       "options": [
-        "It's easier to implement in a graphics pipeline",
-        "It preserves sizes regardless of distance",
-        "It creates more realistic images",
-        "It adds artistic style to renderings"
+        "Easier in graphics pipeline",
+        "Preserves size with distance",
+        "Creates more realistic images",
+        "Adds artistic style always"
       ],
       "answer": 1,
       "answerText": "",
@@ -251,10 +251,10 @@
       "timestamp": "03:10",
       "question": "In the graphics transformation pipeline, what is the first stage described in the lecture?",
       "options": [
-        "World coordinates",
-        "Screen transformation",
-        "Camera transformation",
-        "Clipping"
+        "World coordinate system",
+        "Screen transformation step",
+        "Camera transformation step",
+        "Clipping space stage"
       ],
       "answer": 0,
       "answerText": "",
@@ -276,9 +276,9 @@
       "question": "What transformation is applied to input coordinates to effectively position the camera?",
       "options": [
         "Orthographic projection",
-        "The inverse of the camera transformation",
-        "The forward camera transformation",
-        "The identity transformation"
+        "Inverse camera transform",
+        "Forward camera transform",
+        "Identity transformation"
       ],
       "answer": 1,
       "answerText": "",
@@ -323,10 +323,10 @@
       "timestamp": "05:06",
       "question": "In the camera transform example, what is the position of the camera?",
       "options": [
-        "(0,0,0)",
-        "(0,0,-1)",
-        "(4,2,0)",
-        "(1,1,1)"
+        "Origin (0,0,0)",
+        "Near camera (0,0,-1)",
+        "Point (4,2,0)",
+        "Unit vector (1,1,1)"
       ],
       "answer": 2,
       "answerText": "",
@@ -347,10 +347,10 @@
       "timestamp": "06:09",
       "question": "To transform object coordinates relative to a camera at position (4,2,0), what translation should be applied?",
       "options": [
-        "(+2,+4,0)",
-        "(+4,+2,0)",
-        "(-4,-2,0)",
-        "(0,0,0)"
+        "(+2,+4,0) offset",
+        "(+4,+2,0) offset",
+        "(-4,-2,0) offset",
+        "(0,0,0) origin"
       ],
       "answer": 2,
       "answerText": "",
@@ -371,10 +371,10 @@
       "timestamp": "06:42",
       "question": "If a camera is looking down the x-axis, what rotation aligns it with the standard convention (looking down the -z axis)?",
       "options": [
-        "Rotation about z-axis by π/2",
-        "Rotation about y-axis by π/2",
-        "Rotation about y-axis by π",
-        "Rotation about x-axis by π/2"
+        "Z-axis rotation π/2",
+        "Y-axis rotation π/2",
+        "Y-axis rotation π",
+        "X-axis rotation π/2"
       ],
       "answer": 1,
       "answerText": "",
@@ -395,10 +395,10 @@
       "timestamp": "07:47",
       "question": "What property of rotation matrices makes them particularly easy to invert?",
       "options": [
-        "They are always lower triangular",
-        "Their inverse is the same as their transpose",
-        "They are always symmetric",
-        "They always have determinant 1"
+        "Always lower triangular",
+        "Inverse equals transpose",
+        "Always symmetric matrix",
+        "Determinant always equals 1"
       ],
       "answer": 1,
       "answerText": "",
@@ -419,10 +419,10 @@
       "timestamp": "11:24",
       "question": "What is the view frustum?",
       "options": [
-        "The range of colors visible in the scene",
-        "The amount of distortion in the image",
-        "The region the camera can see",
-        "The boundary of what the user can see on screen"
+        "Visible color range",
+        "Image distortion amount",
+        "Camera visible region",
+        "User screen boundary"
       ],
       "answer": 2,
       "answerText": "",
@@ -443,10 +443,10 @@
       "timestamp": "11:37",
       "question": "What is the standard convention for camera orientation in the rasterization pipeline?",
       "options": [
-        "Camera at origin looking down +x axis",
-        "Camera at origin looking down +y axis",
-        "Camera at origin looking down +z axis",
-        "Camera at origin looking down -z axis"
+        "Looks down +x axis",
+        "Looks down +y axis",
+        "Looks down +z axis",
+        "Looks down -z axis"
       ],
       "answer": 3,
       "answerText": "",
@@ -563,10 +563,10 @@
       "timestamp": "14:54",
       "question": "How does a real rasterization pipeline handle triangles that are partially inside the view frustum?",
       "options": [
-        "It draws the entire triangle",
-        "It splits the triangle into sub-triangles",
-        "It rejects the entire triangle",
-        "It reduces the triangle's resolution"
+        "Draws full triangle",
+        "Splits into sub-tris",
+        "Rejects whole triangle",
+        "Reduces triangle res"
       ],
       "answer": 1,
       "answerText": "",
@@ -665,10 +665,10 @@
       "timestamp": "18:32",
       "question": "What causes z-fighting in rendering?",
       "options": [
-        "Poor triangle mesh quality",
-        "Incorrect lighting calculations",
-        "Insufficient precision in depth values",
-        "Problems with texture coordinates"
+        "Poor triangle mesh quality due to degenerate faces",
+        "Incorrect lighting calculations from wrong normals",
+        "Insufficient depth precision",
+        "Problems with texture coordinates causing seams"
       ],
       "answer": 2,
       "answerText": "",
@@ -715,10 +715,10 @@
       "timestamp": "19:49",
       "question": "What transformation is applied to the view frustum before 2D projection?",
       "options": [
-        "Scaling to screen coordinates",
-        "Rotation to align with axes",
-        "Translation to origin",
-        "Mapping to a standard cube from -1 to 1"
+        "Scale to screen coords",
+        "Rotate to align axes",
+        "Translate to origin",
+        "Map to unit cube"
       ],
       "answer": 3,
       "answerText": "",
@@ -766,9 +766,9 @@
       "question": "How can the mapping between the view frustum and standard cube be expressed?",
       "options": [
         "As a quaternion",
-        "As a Taylor series",
+        "As Taylor series",
         "As a matrix",
-        "As a nonlinear function"
+        "As nonlinear function"
       ],
       "answer": 2,
       "answerText": "",
@@ -791,10 +791,10 @@
       "timestamp": "22:36",
       "question": "When solving the matrix equation for the view frustum transformation, what unusual aspect does the lecturer point out?",
       "options": [
-        "The matrix must be inverted first",
-        "We're solving for the matrix entries, not the vector",
-        "The determinant must be calculated differently",
-        "The matrix is always singular"
+        "Matrix must invert first",
+        "Solve for matrix entries",
+        "Det computed differently",
+        "Matrix always singular"
       ],
       "answer": 1,
       "answerText": "",
@@ -842,10 +842,10 @@
       "timestamp": "23:58",
       "question": "What benefit do homogeneous coordinates provide for spatial transformations?",
       "options": [
-        "They simplify perspective division",
-        "They use less memory",
-        "They make rotation matrices orthogonal",
-        "They allow expressing translations as linear transformations"
+        "They simplify perspective division by unifying projection math",
+        "They use less memory than separate translation vectors",
+        "They make rotation matrices orthogonal for numerical stability",
+        "Homogeneous coordinates enable translations as linear ops"
       ],
       "answer": 3,
       "answerText": "",
@@ -869,10 +869,10 @@
       "timestamp": "25:22",
       "question": "How is perspective division implemented in a perspective projection matrix?",
       "options": [
-        "By copying z into the homogeneous coordinate",
-        "By setting the determinant to zero",
-        "By adding a row of ones at the bottom",
-        "By using quaternions"
+        "By copying z into w",
+        "By setting the determinant to zero to collapse space",
+        "By adding a row of ones at the bottom of the matrix",
+        "By using quaternions to avoid gimbal lock"
       ],
       "answer": 0,
       "answerText": "",
@@ -895,10 +895,10 @@
       "timestamp": "25:47",
       "question": "After applying the perspective projection matrix and homogeneous divide, what happens to the coordinates (x,y,z,w)?",
       "options": [
-        "They become (x/z,y/z,1,1)",
-        "They become (x,y,0,w)",
-        "They become (x,y,z,1)",
-        "They become (x/w,y/w,z/w,1)"
+        "(x/z,y/z,1,1)",
+        "(x,y,0,w)",
+        "(x,y,z,1)",
+        "(x/w,y/w,z/w,1)"
       ],
       "answer": 0,
       "answerText": "",
@@ -919,10 +919,10 @@
       "timestamp": "27:00",
       "question": "After projection, what is the range of normalized device coordinates?",
       "options": [
-        "-1 to 1 in x and y",
-        "0 to width/height in x and y",
-        "-10 to 10 in x and y",
-        "0 to 1 in x and y"
+        "-1 to 1 in x,y",
+        "0 to width/height",
+        "-10 to 10 in x,y",
+        "0 to 1 in x,y"
       ],
       "answer": 0,
       "answerText": "",
@@ -943,10 +943,10 @@
       "timestamp": "27:29",
       "question": "What key difference must be addressed when converting from mathematical to image coordinates?",
       "options": [
-        "Mathematical coordinates are always positive while image coordinates can be negative",
-        "Mathematical coordinates use radians while image coordinates use degrees",
-        "Mathematical coordinates use floating point while image coordinates use integers",
-        "Mathematical coordinates have y pointing up while image coordinates have y pointing down"
+        "Math coords always pos",
+        "Math uses radians",
+        "Math uses floats",
+        "Y up vs y down"
       ],
       "answer": 3,
       "answerText": "",
@@ -967,10 +967,10 @@
       "timestamp": "28:35",
       "question": "What is the correct sequence of coordinate transformations in the rasterization pipeline?",
       "options": [
-        "World → View → Screen → Clip",
-        "View → World → Clip → Screen",
-        "World → View → Clip → Screen",
-        "World → Clip → View → Screen"
+        "World→View→Screen→Clip",
+        "View→World→Clip→Screen",
+        "World→View→Clip→Screen",
+        "World→Clip→View→Screen"
       ],
       "answer": 2,
       "answerText": "",
@@ -991,10 +991,10 @@
       "timestamp": "29:32",
       "question": "What are the two benefits of clip coordinates according to the lecture?",
       "options": [
-        "They improve performance and image quality",
-        "They make it easy to toss out primitives and they encode the projection type",
-        "They simplify rotation and lighting calculations",
-        "They save memory and processing time"
+        "They improve performance and image quality via early-z and hierarchical culling",
+        "Clip-space coordinates encode projection type and enable primitive clipping",
+        "They simplify rotation and lighting calculations in view space",
+        "They save memory and processing time by reducing vertex count"
       ],
       "answer": 1,
       "answerText": "",
@@ -1016,8 +1016,8 @@
       "question": "In the context of drawing primitives, what is a basic test to determine if a point is inside a triangle?",
       "options": [
         "Angle measurement",
-        "Texture coordinate check",
-        "Distance from point to triangle centroid",
+        "Texture coord check",
+        "Centroid distance",
         "Half-plane tests"
       ],
       "answer": 3,
@@ -1065,10 +1065,10 @@
       "timestamp": "32:49",
       "question": "In 1D linear interpolation, what parameter is created to blend between sample points?",
       "options": [
-        "A parameter that is 0 at the first point and 1 at the second point",
-        "A parameter that is the distance between sample points",
-        "A parameter based on the viewing angle",
-        "A parameter that represents the slope between points"
+        "0 to 1 parameter",
+        "Distance between samples",
+        "Based on view angle",
+        "Represents slope"
       ],
       "answer": 0,
       "answerText": "",
@@ -1089,10 +1089,10 @@
       "timestamp": "34:35",
       "question": "What type of function is used to interpolate values across a triangle?",
       "options": [
-        "Logarithmic",
-        "Quadratic",
-        "Affine (linear plus constant)",
-        "Exponential"
+        "Logarithmic interpolation is used for depth buffer values",
+        "Quadratic interpolation appears in some subdivision schemes",
+        "Affine",
+        "Exponential interpolation is sometimes used for HDR tone mapping"
       ],
       "answer": 2,
       "answerText": "",
@@ -1115,10 +1115,10 @@
       "timestamp": "36:43",
       "question": "How does the lecturer reframe 1D linear interpolation?",
       "options": [
-        "As a system of differential equations",
-        "As a Taylor series expansion",
-        "As a matrix multiplication",
-        "As a combination of basis functions"
+        "Diff eq system",
+        "Taylor expansion",
+        "Matrix multiplication",
+        "Basis functions combo"
       ],
       "answer": 3,
       "answerText": "",
@@ -1163,10 +1163,10 @@
       "timestamp": "39:02",
       "question": "What happens to basis functions as you approach a vertex of the triangle?",
       "options": [
-        "All basis functions go to zero",
-        "The basis function for that vertex approaches zero, others approach one",
-        "All basis functions go to one",
-        "The basis function for that vertex approaches one, others approach zero"
+        "All go to zero",
+        "One→0, others→1",
+        "All go to one",
+        "One→1, others→0"
       ],
       "answer": 3,
       "answerText": "",
@@ -1187,10 +1187,10 @@
       "timestamp": "42:03",
       "question": "What alternative method for computing barycentric coordinates uses triangle areas?",
       "options": [
-        "The product of the areas of all subtriangles",
-        "The difference between the overall triangle area and the subtriangle",
-        "The ratio of the areas of the whole triangle to a subtriangle",
-        "The ratio of the area of a subtriangle to the overall triangle"
+        "Product of subareas",
+        "Whole minus subarea",
+        "Whole/subtriangle ratio",
+        "Subtriangle/whole ratio"
       ],
       "answer": 3,
       "answerText": "",
@@ -1338,10 +1338,10 @@
       "timestamp": "48:05",
       "question": "What values need to be computed for perspective-correct interpolation?",
       "options": [
-        "1/z (capital Z) and φ/z (capital P) at each vertex",
-        "The screen-space coordinates and depth",
-        "The triangle normal and viewing angle",
-        "The depth value z and the attribute φ"
+        "1/z and φ/z at vertices",
+        "Screen coords and depth",
+        "Normal and view angle",
+        "Depth z and attribute φ"
       ],
       "answer": 0,
       "answerText": "",
@@ -1362,12 +1362,12 @@
       "timestamp": "48:37",
       "question": "What is the final step in perspective-correct interpolation?",
       "options": [
-        "Add the interpolated Z to the interpolated P",
+        "P / Z",
         "Divide the interpolated attribute P by the interpolated Z",
-        "Multiply the interpolated attribute by the depth",
-        "Use the interpolated values directly"
+        "Add the interpolated Z to the interpolated P",
+        "Multiply the interpolated attribute by the depth"
       ],
-      "answer": 1,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [48:37], the lecturer states: \"Finally to display the final result, we can divide the interpolated P by the interpolated Z and that gives us our final value.\"",
@@ -1413,10 +1413,10 @@
       "timestamp": "49:38",
       "question": "At its most basic, what is texture mapping?",
       "options": [
-        "Projecting 3D objects onto a 2D screen",
-        "Creating textures with a painting program",
-        "Generating procedural textures for different materials",
-        "Having 2D images and finding ways to wrap them around 3D surfaces"
+        "Project 3D to 2D",
+        "Create textures in paint",
+        "Procedural material gen",
+        "Wrap 2D images on 3D"
       ],
       "answer": 3,
       "answerText": "",
@@ -1566,8 +1566,8 @@
       "options": [
         "The camera direction",
         "The reflected direction",
-        "The surface position",
-        "The surface normal"
+        "The surface position and view vector",
+        "The surface normal and lighting direction"
       ],
       "answer": 1,
       "answerText": "",
@@ -1588,10 +1588,10 @@
       "timestamp": "54:15",
       "question": "What are texture coordinates?",
       "options": [
-        "The position of textures in memory",
-        "What define a mapping from the surface to points in the texture domain",
-        "The file paths to texture images",
-        "The resolution of texture images"
+        "Texture memory layout",
+        "UV surface mapping",
+        "File paths to images",
+        "Texture resolution"
       ],
       "answer": 1,
       "answerText": "",
@@ -1615,10 +1615,10 @@
       "timestamp": "54:22",
       "question": "How are texture coordinates typically handled across a triangle?",
       "options": [
-        "They are computed from the triangle normal",
+        "They are computed from the triangle normal using cross product",
         "They are linearly interpolated from the vertices",
-        "They are constant across each triangle",
-        "They are randomly generated for each pixel"
+        "They are constant across each triangle and ignore vertex variation",
+        "They are randomly generated per fragment for anti-aliasing"
       ],
       "answer": 1,
       "answerText": "",
@@ -1641,10 +1641,10 @@
       "timestamp": "55:54",
       "question": "How can texture coordinates be visualized using colors?",
       "options": [
-        "By using a gradient from dark to light",
-        "By using a checkerboard pattern",
-        "By assigning u to red and v to green",
-        "By using random colors for each coordinate"
+        "Dark to light gradient",
+        "Checkerboard pattern",
+        "U=red, V=green",
+        "Random color per coord"
       ],
       "answer": 2,
       "answerText": "",
@@ -1668,10 +1668,10 @@
       "timestamp": "57:42",
       "question": "Why would you want periodic texture coordinates in a scene like a building?",
       "options": [
-        "To cover the scene with a repeating pattern like bricks",
-        "To create geometric detail",
-        "To save memory by making all sides identical",
-        "To create a random pattern"
+        "Repeating brick pattern",
+        "Geometric detail",
+        "Identical sides save mem",
+        "Random pattern"
       ],
       "answer": 0,
       "answerText": "",
@@ -1692,10 +1692,10 @@
       "timestamp": "58:59",
       "question": "What is the basic algorithm for texture mapping a triangle?",
       "options": [
-        "Pre-compute texels for every possible triangle",
-        "Apply the texture to each vertex and interpolate",
-        "For each pixel, interpolate UV coordinates, sample texture, set pixel color",
-        "Compute one texture sample per triangle and apply it uniformly"
+        "Pre-compute all texels",
+        "Apply to verts, interpolate",
+        "Per-pixel UV, sample, set",
+        "One sample per triangle"
       ],
       "answer": 2,
       "answerText": "",
@@ -1819,7 +1819,7 @@
         "Trilinear filtering",
         "Anisotropic filtering",
         "Bilinear filtering",
-        "Nearest neighbor (grabbing the nearest texel)"
+        "Nearest neighbor"
       ],
       "answer": 3,
       "answerText": "",
@@ -1869,9 +1869,9 @@
       "question": "What improved technique is commonly used for magnification?",
       "options": [
         "Bilinear interpolation",
-        "Supersampling",
-        "Pre-filtering",
-        "Nearest neighbor"
+        "Supersampling with multiple texture lookups",
+        "Pre-filtering using mipmaps",
+        "Nearest neighbor sampling without interpolation"
       ],
       "answer": 0,
       "answerText": "",
@@ -1894,9 +1894,9 @@
       "timestamp": "1:05:22",
       "question": "What does bilinear interpolation do first?",
       "options": [
-        "Average all four texels",
-        "Choose the best texel",
-        "Interpolate in the vertical direction",
+        "Average all four texels in the 2×2 neighborhood",
+        "Choose the best texel based on distance to pixel center",
+        "Interpolate in the vertical direction first, then horizontal",
         "Interpolate in the horizontal direction"
       ],
       "answer": 3,
@@ -1942,10 +1942,10 @@
       "timestamp": "1:08:00",
       "question": "Why is using a single sample from the center of a screen pixel problematic in minification?",
       "options": [
-        "It prevents the use of hardware acceleration",
-        "It produces colors that are too bright",
-        "It essentially grabs one random color from a region that might contain many colors",
-        "It's too computationally expensive"
+        "Blocks hardware accel",
+        "Colors too bright",
+        "Grabs random color",
+        "Too expensive"
       ],
       "answer": 2,
       "answerText": "",
@@ -1966,10 +1966,10 @@
       "timestamp": "1:09:26",
       "question": "What is the solution to the minification problem?",
       "options": [
-        "Using nearest neighbor sampling",
-        "Using higher resolution textures",
-        "Pre-computing averages and looking them up at runtime",
-        "Disabling texture filtering entirely"
+        "Nearest neighbor sampling",
+        "Higher-res textures",
+        "Pre-compute averages",
+        "Disable filtering"
       ],
       "answer": 2,
       "answerText": "",
@@ -2016,10 +2016,10 @@
       "timestamp": "1:11:13",
       "question": "How are mipmaps organized in terms of resolution?",
       "options": [
-        "In random order for better cache coherence",
-        "In powers of two, starting from the original image",
-        "Based on viewing distance",
-        "In linear steps for smoother transitions"
+        "Random order",
+        "Powers of two",
+        "By viewing distance",
+        "Linear steps"
       ],
       "answer": 1,
       "answerText": "",
@@ -2040,10 +2040,10 @@
       "timestamp": "1:12:50",
       "question": "What is the approximate storage overhead of a mipmap?",
       "options": [
-        "50% more than the original image",
-        "Doubles the storage of the original image",
-        "Ten times the original image",
-        "About a third of the storage of the original image"
+        "50% more storage",
+        "Doubles original",
+        "Ten times original",
+        "About one-third"
       ],
       "answer": 3,
       "answerText": "",
@@ -2066,10 +2066,10 @@
       "timestamp": "1:14:33",
       "question": "Which pixels should sample from a coarser mipmap level?",
       "options": [
-        "Pixels that cover a larger region in texture space",
-        "Pixels near the edge of the screen",
-        "Pixels in shadow regions",
-        "Pixels that appear brighter"
+        "Pixels whose texture-space footprint is large relative to texel size",
+        "Pixels near the edge of the screen where projection distortion occurs",
+        "Pixels in shadow regions where lighting calculations dominate",
+        "Pixels that appear brighter due to specular highlights"
       ],
       "answer": 0,
       "answerText": "",
@@ -2139,9 +2139,9 @@
       "question": "Why is a logarithm used in determining the mipmap level?",
       "options": [
         "Because each mipmap level divides the image size by two",
-        "To make calculations faster",
-        "To correct for gamma in the image",
-        "To match the sensitivity of human vision"
+        "To reduce memory bandwidth usage during texture sampling",
+        "To correct for gamma in the image before display",
+        "To match the sensitivity of human vision to spatial frequency"
       ],
       "answer": 0,
       "answerText": "",
@@ -2162,10 +2162,10 @@
       "timestamp": "1:19:10",
       "question": "What artifact appears when using only the nearest mipmap level?",
       "options": [
-        "Incorrect colors",
-        "Texture bleeding",
-        "Visible boundaries where the level jumps",
-        "Texture swimming"
+        "Incorrect colors due to faulty gamma correction",
+        "Texture bleeding from adjacent atlas regions",
+        "Mip level banding",
+        "Texture swimming caused by unstable LOD selection"
       ],
       "answer": 2,
       "answerText": "",
@@ -2188,10 +2188,10 @@
       "timestamp": "1:20:00",
       "question": "Trilinear filtering extends bilinear filtering to 3D. Given a point (u, v, w) ∈ [0,1]³ with eight closest values f_ijk, how are the weights computed?",
       "options": [
-        "Apply bilinear interpolation twice independently",
-        "Average all eight f_ijk values equally",
-        "Take the single nearest f_ijk value",
-        "Iterate linear interpolation: weighted average along u, then v, then w"
+        "Bilinear twice",
+        "Avg all eight values",
+        "Take nearest value",
+        "Iterate u,v,w interp"
       ],
       "answer": 3,
       "answerText": "",

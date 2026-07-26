@@ -37,10 +37,10 @@
       "timestamp": "01:47",
       "question": "Which two properties geometrically define a linear map?",
       "options": [
-        "Maps circles to ellipses and preserves volume",
-        "Maps lines to lines and preserves the origin",
-        "Preserves the distance between all points",
-        "Preserves angles and areas"
+        "Maps circles to ellipses, volume preserved",
+        "Maps lines to lines, origin fixed",
+        "Preserves distance between all points",
+        "Preserves angles and surface areas"
       ],
       "answer": 1,
       "answerText": "",
@@ -85,10 +85,10 @@
       "timestamp": "04:14",
       "question": "What characteristic allows us to visually recognize different transformation types without seeing their mathematical formulas?",
       "options": [
-        "The speed at which they're applied",
-        "The color changes they produce",
+        "Their application speed differences",
+        "Their induced color transformations",
         "The invariants they preserve",
-        "The starting shape they're applied to"
+        "Their dependence on input shape"
       ],
       "answer": 2,
       "answerText": "",
@@ -110,10 +110,10 @@
       "timestamp": "05:27",
       "question": "What does a translation transformation preserve according to the lecture?",
       "options": [
-        "The origin",
-        "The angles between lines",
-        "The differences between any two pairs of points",
-        "The length of all vectors"
+        "The coordinate origin location",
+        "The angles formed by intersecting lines",
+        "Differences between point pairs",
+        "Lengths of all position vectors"
       ],
       "answer": 2,
       "answerText": "",
@@ -134,10 +134,10 @@
       "timestamp": "06:42",
       "question": "What three properties define a rotation?",
       "options": [
-        "Maps straight lines to straight lines, preserves parallelism, and preserves the origin",
-        "Preserves volumes, preserves connectivity, and preserves symmetry",
-        "Preserves angles, preserves areas, and preserves the origin",
-        "Preserves the origin, preserves distances, and preserves orientation"
+        "Lines→lines, parallelism, origin fixed",
+        "Volumes, connectivity, symmetry preserved",
+        "Angles, areas, and origin preserved",
+        "Origin, distances, orientation preserved"
       ],
       "answer": 3,
       "answerText": "",
@@ -158,10 +158,10 @@
       "timestamp": "08:06",
       "question": "What happens to a unit vector (1,0) when rotated counterclockwise by angle θ?",
       "options": [
-        "It becomes (sin θ, cos θ)",
-        "It becomes (-sin θ, cos θ)",
-        "It becomes (cos θ, sin θ)",
-        "It becomes (cos θ, -sin θ)"
+        "Becomes (sin θ, cos θ)",
+        "Becomes (-sin θ, cos θ)",
+        "Becomes (cos θ, sin θ)",
+        "Becomes (cos θ, -sin θ)"
       ],
       "answer": 2,
       "answerText": "",
@@ -182,10 +182,10 @@
       "timestamp": "11:39",
       "question": "What is the correct 2×2 matrix for a counterclockwise rotation by angle θ?",
       "options": [
-        "[[sin θ, cos θ], [-cos θ, sin θ]]",
-        "[[cos θ, sin θ], [sin θ, -cos θ]]",
-        "[[cos θ, -sin θ], [sin θ, cos θ]]",
-        "[[cos θ, sin θ], [-sin θ, cos θ]]"
+        "[[sin,cos],[-cos,sin]]",
+        "[[cos,sin],[sin,-cos]]",
+        "[[cos,-sin],[sin,cos]]",
+        "[[cos,sin],[-sin,cos]]"
       ],
       "answer": 2,
       "answerText": "",
@@ -206,10 +206,10 @@
       "timestamp": "13:28",
       "question": "How do you construct a 3D rotation matrix for rotation around the z-axis?",
       "options": [
-        "By using quaternions instead of matrices",
-        "By applying three separate rotations around each axis",
-        "By placing the 2D rotation in the upper-left 2×2 corner and adding 0,0,1 for the z-axis",
-        "By creating a completely new 3×3 matrix with different formulas"
+        "Using quaternions instead of matrices",
+        "Three axis-aligned rotations applied",
+        "2D rotation embedded with z=1 padding",
+        "New 3×3 matrix with custom formulas"
       ],
       "answer": 2,
       "answerText": "",
@@ -230,10 +230,10 @@
       "timestamp": "15:04",
       "question": "What important property relates a rotation matrix R to its transpose R^T?",
       "options": [
-        "R^T = -R",
-        "R^T × R = I (identity matrix)",
-        "R^T = det(R) × R",
-        "R^T = R"
+        "R transpose equals negative R",
+        "R transpose times R is identity",
+        "R transpose equals det(R) times R",
+        "R transpose equals R itself"
       ],
       "answer": 1,
       "answerText": "",
@@ -281,7 +281,7 @@
       "options": [
         "The angle between vectors",
         "The length of vectors",
-        "The direction of all vectors",
+        "Direction of all vectors",
         "The distance between points"
       ],
       "answer": 2,
@@ -327,10 +327,10 @@
       "timestamp": "23:21",
       "question": "What happens when you apply a negative scaling (factor -1) to all coordinates in 2D versus 3D?",
       "options": [
-        "It's a reflection in 2D but a rotation in 3D",
-        "It's a rotation in both 2D and 3D",
-        "It's a rotation in 2D but a reflection in 3D",
-        "It's a reflection in both 2D and 3D"
+        "Reflection in 2D, rotation in 3D",
+        "Rotation in both 2D and 3D",
+        "Rotation in 2D, reflection in 3D",
+        "Reflection in both 2D and 3D"
       ],
       "answer": 2,
       "answerText": "",
@@ -353,10 +353,10 @@
       "timestamp": "25:42",
       "question": "How do you represent a non-uniform scaling that scales x by a, y by b, and z by c?",
       "options": [
-        "[a, b, c]",
-        "[[a, 0, 0], [0, 0, 0], [0, 0, 0]] +",
-        "[[a, b, c], [0, 0, 0], [0, 0, 0]]",
-        "[[a, 0, 0], [0, b, 0], [0, 0, c]]"
+        "Row vector [a,b,c]",
+        "Rank-1 matrix with first row only",
+        "Matrix with first row [a,b,c]",
+        "Diagonal matrix with a,b,c"
       ],
       "answer": 3,
       "answerText": "",
@@ -375,10 +375,10 @@
       "timestamp": "26:27",
       "question": "How would you scale an object along non-standard axes?",
       "options": [
-        "Convert to polar coordinates, scale, then convert back",
-        "Apply the scaling directly using a specialized non-diagonal matrix",
-        "Apply a shear first, then scale, then apply the inverse shear",
-        "Rotate to the desired axes, apply scaling, then rotate back"
+        "Polar conversion, scale, reverse",
+        "Direct non-diagonal scaling matrix",
+        "Shear–scale–inverse shear sequence",
+        "Rotate–scale–rotate-back sequence"
       ],
       "answer": 3,
       "answerText": "",
@@ -403,7 +403,7 @@
         "A rotation around some axis",
         "A combination of rotation and translation",
         "A shear in some arbitrary direction",
-        "A non-uniform scaling along some set of orthogonal axes"
+        "Non-uniform scaling along orthogonal axes"
       ],
       "answer": 3,
       "answerText": "",
@@ -426,7 +426,7 @@
       "options": [
         "It rotates different parts of space by different amounts",
         "It displaces points proportionally to their distance from the origin",
-        "It displaces each point in direction u proportional to its distance along direction v",
+        "Displaces point ∝ dot(v, x) in direction u",
         "It maps parallel lines to parallel lines while preserving areas"
       ],
       "answer": 2,
@@ -448,10 +448,10 @@
       "timestamp": "32:21",
       "question": "What is the matrix representation of a shear transformation?",
       "options": [
-        "I + uv^T",
-        "uv",
-        "uu^T",
-        "I * (u·v)"
+        "I plus outer product uv^T",
+        "Outer product uv only",
+        "Projection matrix uu^T",
+        "Identity scaled by dot u·v"
       ],
       "answer": 0,
       "answerText": "",
@@ -472,10 +472,10 @@
       "timestamp": "33:13",
       "question": "When multiplying transformation matrices together, in what order are the transformations applied to a point?",
       "options": [
-        "In order of increasing determinant",
-        "Left to right",
-        "Top to bottom",
-        "Right to left"
+        "By increasing determinant order",
+        "Left-to-right multiplication order",
+        "Top-to-bottom matrix stacking",
+        "Right-to-left composition order"
       ],
       "answer": 3,
       "answerText": "",
@@ -522,7 +522,7 @@
       "options": [
         "A = QR where Q is orthogonal and R is upper triangular",
         "A = UDV^T where U and V are orthogonal and D is diagonal",
-        "A = QP where Q is orthogonal and P is symmetric positive semi-definite",
+        "A = QP with Q orthogonal, P sym. pos. semi-def.",
         "A = LU where L is lower triangular and U is upper triangular"
       ],
       "answer": 2,
@@ -573,10 +573,10 @@
       "timestamp": "41:21",
       "question": "What improved approach does the lecture suggest for interpolating between transformations?",
       "options": [
-        "Use quaternions instead of matrices",
-        "Separately interpolate the components of a polar decomposition",
-        "Apply the transformations sequentially instead of interpolating",
-        "Use spherical linear interpolation (SLERP)"
+        "Switch to quaternion interpolation",
+        "Interpolate polar decomposition parts",
+        "Apply transforms sequentially instead",
+        "Use spherical linear interpolation"
       ],
       "answer": 1,
       "answerText": "",
@@ -621,10 +621,10 @@
       "timestamp": "44:35",
       "question": "Why is translation not a linear transformation?",
       "options": [
-        "It cannot be represented as a matrix",
-        "It distorts shapes too much",
-        "It does not preserve the origin",
-        "It cannot be applied multiple times"
+        "Cannot be matrix-represented",
+        "Excessive shape distortion",
+        "Fails to fix the origin",
+        "Cannot be composed repeatedly"
       ],
       "answer": 2,
       "answerText": "",
@@ -669,10 +669,10 @@
       "timestamp": "48:07",
       "question": "Where did homogeneous coordinates originate from?",
       "options": [
-        "Studying perspective in drawing and painting",
-        "Linear algebra studies in the 20th century",
-        "3D modeling software development",
-        "Computer graphics research in the 1970s"
+        "Perspective study in classical art",
+        "20th-century linear algebra theory",
+        "3D software engineering history",
+        "1970s computer graphics research"
       ],
       "answer": 0,
       "answerText": "",
@@ -717,10 +717,10 @@
       "timestamp": "50:38",
       "question": "How does perspective projection relate to homogeneous coordinates?",
       "options": [
-        "Both were developed at the same time for computer graphics",
-        "Both involve converting between different coordinate systems",
-        "They are unrelated concepts from different fields",
-        "Both use the idea that points along the same line project to the same point"
+        "Developed simultaneously for CG",
+        "Both convert between coordinate systems",
+        "Unrelated concepts from different fields",
+        "Both use line-through-origin projection"
       ],
       "answer": 3,
       "answerText": "",
@@ -765,10 +765,10 @@
       "timestamp": "52:53",
       "question": "What 3D transformation corresponds to a 2D translation when using homogeneous coordinates?",
       "options": [
-        "3D shear",
-        "3D rotation",
-        "3D reflection",
-        "3D scaling"
+        "3D shear transformation",
+        "3D rotation transformation",
+        "3D reflection transformation",
+        "3D scaling transformation"
       ],
       "answer": 0,
       "answerText": "",
@@ -835,10 +835,10 @@
       "timestamp": "57:22",
       "question": "How is a 2D rotation represented in homogeneous coordinates?",
       "options": [
-        "As a 3D rotation that fixes the z-axis",
-        "As a completely different type of transformation",
-        "As a 2×2 rotation with an added row and column of zeros",
-        "As a 3D rotation around the origin"
+        "3D rotation fixing z-axis",
+        "Entirely different transform type",
+        "2×2 rotation with zero padding",
+        "3D rotation around origin"
       ],
       "answer": 0,
       "answerText": "",
@@ -863,7 +863,7 @@
       "options": [
         "By using complex matrices instead of real matrices",
         "By adding new transformation types specific to 3D",
-        "By appending one homogeneous coordinate to the 3D coordinates",
+        "By appending one homogeneous coordinate",
         "By converting to quaternions for all 3D operations"
       ],
       "answer": 2,
@@ -885,10 +885,10 @@
       "timestamp": "1:00:15",
       "question": "How are points and vectors distinguished in homogeneous coordinates?",
       "options": [
-        "Points use integer coordinates, vectors use fractional coordinates",
-        "Points use Cartesian coordinates, vectors use polar coordinates",
-        "Points have non-zero homogeneous coordinate, vectors have zero",
-        "Points have positive homogeneous coordinate, vectors have negative"
+        "Points: integer coords; vectors: fractional",
+        "Points: Cartesian; vectors: polar",
+        "Points: nonzero w; vectors: w=0",
+        "Points: positive w; vectors: negative w"
       ],
       "answer": 2,
       "answerText": "",
@@ -911,10 +911,10 @@
       "timestamp": "1:03:08",
       "question": "What happens as the homogeneous coordinate c approaches zero?",
       "options": [
-        "The point approaches infinity in the direction of the other coordinates",
-        "The point moves toward the origin",
-        "The point's coordinates become unstable",
-        "The point becomes undefined"
+        "Approaches infinity directionally",
+        "Moves toward coordinate origin",
+        "Coordinates become numerically unstable",
+        "Becomes mathematically undefined"
       ],
       "answer": 0,
       "answerText": "",
@@ -940,7 +940,7 @@
         "By zeroing out the z-coordinate",
         "By multiplying all coordinates by the z value",
         "By setting the homogeneous coordinate to 1",
-        "By copying the z-coordinate into the homogeneous coordinate"
+        "By copying z into w"
       ],
       "answer": 3,
       "answerText": "",
@@ -1069,7 +1069,7 @@
         "Only the orientation changes",
         "The scale factor is affected but not the position",
         "Nothing, they commute with each other",
-        "The final position changes because the translation gets scaled in one case"
+        "Translation gets scaled"
       ],
       "answer": 3,
       "answerText": "",
@@ -1092,10 +1092,10 @@
       "timestamp": "1:14:49",
       "question": "What is the correct sequence of operations to rotate an object around a center point x that is not the origin?",
       "options": [
-        "Rotate directly using a specialized matrix",
-        "Apply shear, rotate, apply inverse shear",
-        "Translate to origin, rotate, translate back",
-        "Scale by half, rotate, scale by two"
+        "Direct specialized rotation matrix",
+        "Shear–rotate–inverse shear",
+        "Translate–rotate–translate back",
+        "Scale–rotate–unscale sequence"
       ],
       "answer": 2,
       "answerText": "",
@@ -1116,10 +1116,10 @@
       "timestamp": "1:15:52",
       "question": "How is camera movement typically simulated in computer graphics?",
       "options": [
-        "By changing the field of view of the camera",
-        "By modifying the perspective projection matrix",
-        "By directly moving the camera through the scene",
-        "By applying the inverse transformation to the objects in the scene"
+        "Adjust camera field of view",
+        "Modify perspective projection matrix",
+        "Move camera through scene directly",
+        "Apply inverse to objects instead"
       ],
       "answer": 3,
       "answerText": "",
@@ -1140,7 +1140,7 @@
       "timestamp": "1:17:33",
       "question": "What is the main advantage of using homogeneous coordinates according to the lecture summary?",
       "options": [
-        "They allow clearly distinguishing between points and vectors",
+        "Distinguish points and vectors",
         "They reduce the memory needed for transformations",
         "They make all calculations faster",
         "They simplify the implementation of perspective projection"

@@ -77,12 +77,12 @@
       "timestamp": "00:00",
       "question": "What is the primary goal of the geometric processing and modeling section of the course?",
       "options": [
+        "To add geometric complexity",
         "To understand ray tracing algorithms",
         "To learn how to draw 3D objects on the screen",
-        "To optimize rendering performance for complex scenes",
-        "To add geometric complexity to models beyond simple shapes"
+        "To optimize rendering performance for complex scenes"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [00:19], the lecturer states: \"In the long term in this course what we want to do is work on increasing the complexity of our models going from very simplistic models like our cube creature that we can make by just applying simple linear transformations to a cube to things that look a lot more like people in the real world things that have a lot of complexity and richness and interesting materials and so forth.\"",
@@ -101,10 +101,10 @@
       "timestamp": "00:52",
       "question": "What is the etymological meaning of \"geometry\" according to the lecture?",
       "options": [
-        "The drawing of geometric shapes",
-        "The measuring of the earth",
-        "The proof of mathematical theorems",
-        "The study of angles and triangles"
+        "Drawing geometric shapes",
+        "Measuring the earth",
+        "Proving mathematical theorems",
+        "Studying angles and triangles"
       ],
       "answer": 1,
       "answerText": "",
@@ -126,9 +126,9 @@
       "question": "Which of the following statements best describes the core challenge in connecting geometry to computer science?",
       "options": [
         "Inventing new geometric primitives",
-        "Optimizing graphics hardware for geometric calculations",
-        "Creating digital representations to encode shapes",
-        "Developing ray tracing algorithms for curved surfaces"
+        "Optimizing hardware for geometry",
+        "Creating digital shape encodings",
+        "Developing ray tracing for curves"
       ],
       "answer": 2,
       "answerText": "",
@@ -149,10 +149,10 @@
       "timestamp": "02:42",
       "question": "Which of the following is NOT mentioned as a way to describe a circle?",
       "options": [
-        "x² + y² = 1 (implicit form)",
-        "(cos θ, sin θ) for θ from 0 to 2π (parametric form)",
-        "As a shape preserved by rotations (symmetry)",
-        "As a polygon with infinite sides"
+        "x² + y² = 1 (implicit)",
+        "(cos θ, sin θ), θ ∈ [0,2π]",
+        "Shape preserved under rotation",
+        "Polygon with infinite sides"
       ],
       "answer": 3,
       "answerText": "",
@@ -173,10 +173,10 @@
       "timestamp": "06:57",
       "question": "Why does the lecture argue there is no single \"best way\" to encode geometry on a computer?",
       "options": [
-        "Because geometric representations are always changing",
-        "Because rendering requirements always outweigh modeling concerns",
-        "Because some representations are inherently better than others",
-        "Because there are many different kinds of shapes with different requirements"
+        "Geometric reps always change",
+        "Rendering always outweighs modeling",
+        "Some reps are inherently better",
+        "Many shapes, different requirements"
       ],
       "answer": 3,
       "answerText": "",
@@ -223,7 +223,7 @@
       "options": [
         "Meshes",
         "Texturing",
-        "Creating realistic lighting",
+        "Realistic lighting",
         "Animation"
       ],
       "answer": 0,
@@ -245,10 +245,10 @@
       "timestamp": "11:38",
       "question": "How does the lecture categorize digital representations of geometry?",
       "options": [
-        "Surface vs volumetric representations",
-        "Regular vs irregular representations",
-        "2D vs 3D representations",
-        "Implicit vs explicit representations"
+        "Surface vs volumetric",
+        "Regular vs irregular",
+        "2D vs 3D",
+        "Implicit vs explicit"
       ],
       "answer": 3,
       "answerText": "",
@@ -293,10 +293,10 @@
       "timestamp": "14:56",
       "question": "What challenge does the \"mind reading game\" demonstrate about implicit surfaces?",
       "options": [
-        "Implicit surfaces are always more complex than explicit ones",
-        "Implicit surfaces cannot represent all shapes",
-        "Implicit surfaces require more storage than explicit ones",
-        "Finding points on an implicit surface can be difficult"
+        "Implicit always more complex",
+        "Implicit can't represent all shapes",
+        "Implicit needs more storage",
+        "Finding points on implicit is hard"
       ],
       "answer": 3,
       "answerText": "",
@@ -365,10 +365,10 @@
       "timestamp": "20:24",
       "question": "What task does the \"point sampling game\" demonstrate is easy with explicit surfaces?",
       "options": [
-        "Calculating the surface normal",
-        "Finding the distance to the surface",
-        "Sampling points on the surface",
-        "Testing if a point is inside the surface"
+        "Calculating surface normal",
+        "Finding distance to surface",
+        "Sampling points on surface",
+        "Testing point inside surface"
       ],
       "answer": 2,
       "answerText": "",
@@ -389,10 +389,10 @@
       "timestamp": "21:36",
       "question": "What challenge does the second inside-outside test demonstrate with explicit surfaces?",
       "options": [
-        "Explicit surfaces cannot be rendered efficiently",
-        "Checking if a point is inside an explicit surface is difficult",
-        "Explicit surfaces require more storage",
-        "Explicit surfaces cannot represent complex shapes"
+        "Explicit can't render efficiently",
+        "Point-inside test is hard for explicit",
+        "Explicit requires more storage",
+        "Explicit can't represent complex shapes"
       ],
       "answer": 1,
       "answerText": "",
@@ -440,7 +440,7 @@
         "Surfaces defined using grid-based approximations",
         "Surfaces constructed using boolean operations",
         "Surfaces defined using parametric equations",
-        "Surfaces defined as the zero set of a polynomial in x, y, and z"
+        "Surfaces defined by f(x,y,z)=0"
       ],
       "answer": 3,
       "answerText": "",
@@ -461,10 +461,10 @@
       "timestamp": "25:10",
       "question": "What is the core idea behind constructive solid geometry (CSG)?",
       "options": [
-        "Building complex shapes using differential equations",
-        "Building complex shapes using boolean operations on simple shapes",
-        "Building complex shapes using fractal patterns",
-        "Building complex shapes using grid-based approximations"
+        "Complex shapes via DEs",
+        "Complex shapes via boolean ops",
+        "Complex shapes via fractals",
+        "Complex shapes via grid approx"
       ],
       "answer": 1,
       "answerText": "",
@@ -485,10 +485,10 @@
       "timestamp": "26:23",
       "question": "How do blobby surfaces differ from constructive solid geometry in their approach to combining shapes?",
       "options": [
-        "Blobby surfaces use explicit representations while CSG uses implicit",
-        "Blobby surfaces use level sets while CSG uses polynomials",
-        "Blobby surfaces use gradual blending while CSG uses hard boolean operations",
-        "Blobby surfaces work only in 2D while CSG works in 3D"
+        "Blobby explicit, CSG implicit",
+        "Blobby level sets, CSG polynomials",
+        "Blobby blending, CSG hard booleans",
+        "Blobby 2D only, CSG 3D"
       ],
       "answer": 2,
       "answerText": "",
@@ -509,10 +509,10 @@
       "timestamp": "28:33",
       "question": "When creating a boolean union of shapes using distance functions, what mathematical operation is used?",
       "options": [
-        "Addition of the distance functions",
-        "Minimum of the distance functions",
-        "Multiplication of the distance functions",
-        "Maximum of the distance functions"
+        "Sum of distance functions",
+        "Min of distance functions",
+        "Product of distance functions",
+        "Max of distance functions"
       ],
       "answer": 1,
       "answerText": "",
@@ -533,10 +533,10 @@
       "timestamp": "31:35",
       "question": "What are level set methods in the context of implicit geometry?",
       "options": [
-        "Using parametric equations to define surfaces",
-        "Using a grid of values to approximate an implicit function",
-        "Using boolean operations to combine simple shapes",
-        "Using fractals to create complex surfaces"
+        "Parametric surface definition",
+        "Grid values approximating implicit",
+        "Boolean ops combining simple shapes",
+        "Fractals for complex surfaces"
       ],
       "answer": 1,
       "answerText": "",
@@ -558,9 +558,9 @@
       "question": "What optimization technique is commonly used to reduce the storage cost of level sets?",
       "options": [
         "Using lower precision values",
-        "Compressing the grid values with lossy compression",
-        "Storing only a narrow band of grid cells around the surface",
-        "Converting the level set to an explicit representation"
+        "Lossy compression of grid",
+        "Storing narrow band near surface",
+        "Converting level set to explicit"
       ],
       "answer": 2,
       "answerText": "",
@@ -581,10 +581,10 @@
       "timestamp": "34:52",
       "question": "What key characteristic defines fractals according to the lecture?",
       "options": [
-        "They must be generated using complex numbers",
-        "They are always based on the Mandelbrot set",
-        "They are only used for natural phenomena",
-        "They have self-similarity and details at all different scales"
+        "Generated with complex numbers",
+        "Based on Mandelbrot set",
+        "Only for natural phenomena",
+        "Self-similar at all scales"
       ],
       "answer": 3,
       "answerText": "",
@@ -605,10 +605,10 @@
       "timestamp": "36:24",
       "question": "How is a point determined to be in the Mandelbrot set?",
       "options": [
-        "If iterating z² + c remains bounded (doesn't go to infinity)",
-        "If it has a rational coordinate representation",
-        "If it's on the imaginary axis",
-        "If it's located within the unit circle"
+        "z² + c stays bounded",
+        "Rational coordinate representation",
+        "On the imaginary axis",
+        "Within unit circle"
       ],
       "answer": 0,
       "answerText": "",
@@ -701,7 +701,7 @@
       "timestamp": "45:39",
       "question": "How is a triangle mesh typically represented in a computer?",
       "options": [
-        "As a list of vertices and a separate list of triangles containing vertex indices",
+        "Vertex-indexed triangles",
         "As a regular grid of height values",
         "As a collection of equations defining planes",
         "As a collection of implicit functions"
@@ -725,10 +725,10 @@
       "timestamp": "47:55",
       "question": "How does the lecture interpret a triangle mesh in terms of interpolation?",
       "options": [
-        "As a cubic spline interpolation",
-        "As a linear interpolation of a point cloud",
-        "As a discrete sampling with no interpolation",
-        "As a quadratic interpolation of vertices"
+        "Cubic spline interpolation",
+        "Linear interp of point cloud",
+        "Discrete sampling, no interp",
+        "Quadratic interp of vertices"
       ],
       "answer": 1,
       "answerText": "",
@@ -749,7 +749,7 @@
       "timestamp": "49:16",
       "question": "What advantage do Bernstein basis functions have over the standard polynomial basis (1, x, x², x³)?",
       "options": [
-        "They provide local control over different regions of the curve",
+        "They provide local control",
         "They are faster to evaluate computationally",
         "They are more mathematically elegant",
         "They require fewer coefficients"
@@ -773,10 +773,10 @@
       "timestamp": "51:28",
       "question": "What is a Bézier curve as defined in the lecture?",
       "options": [
-        "A curve defined by a distance function",
-        "A curve expressed using the Bernstein basis",
-        "A curve created using subdivision",
-        "A curve defined by an implicit function"
+        "Curve via distance function",
+        "Curve in Bernstein basis",
+        "Curve via subdivision",
+        "Curve via implicit function"
       ],
       "answer": 1,
       "answerText": "",
@@ -824,7 +824,7 @@
         "Using implicit representations instead",
         "Increasing the degree of the Bernstein basis",
         "Using subdivision surfaces",
-        "Piecing together many low-order Bézier curves"
+        "Piecing together low-order Bézier curves"
       ],
       "answer": 3,
       "answerText": "",
@@ -845,10 +845,10 @@
       "timestamp": "55:17",
       "question": "What are the two main continuity requirements when connecting Bézier curve segments?",
       "options": [
-        "Position continuity and tangent continuity",
-        "Tangent continuity and normal continuity",
-        "Position continuity and curvature continuity",
-        "G¹ continuity and G² continuity"
+        "Position and tangent continuity",
+        "Tangent and normal continuity",
+        "Position and curvature continuity",
+        "G¹ and G² continuity"
       ],
       "answer": 0,
       "answerText": "",
@@ -869,10 +869,10 @@
       "timestamp": "1:00:08",
       "question": "What is a tensor product in the context of Bézier patches?",
       "options": [
-        "A product of a curve function f(u) and a curve function g(v)",
-        "A type of gradient descent",
-        "A multiplication of two matrices",
-        "A form of vector calculus"
+        "f(u) × g(v) product surface",
+        "Type of gradient descent",
+        "Multiplication of two matrices",
+        "Form of vector calculus"
       ],
       "answer": 0,
       "answerText": "",
@@ -919,7 +919,7 @@
       "options": [
         "By approximating conics with many small curve segments",
         "By using higher-degree Bernstein polynomials",
-        "By using homogeneous coordinates and rational functions",
+        "By using rational Bézier curves",
         "By using subdivision instead of polynomials"
       ],
       "answer": 2,

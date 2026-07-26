@@ -77,10 +77,10 @@
       "timestamp": "00:36",
       "question": "What is the primary motivation for studying spatial data structures according to the lecture?",
       "options": [
-        "To handle extremely complex geometry with details at different scales",
-        "To reduce memory usage when storing geometric data",
-        "To enable more realistic rendering of simple scenes",
-        "To improve the accuracy of geometric computations"
+        "To handle complex geometry at multiple scales",
+        "To reduce memory usage when storing geometric data for rendering",
+        "To enable more realistic rendering of simple scenes with global illumination",
+        "To improve the numerical accuracy of geometric computations in floating-point arithmetic"
       ],
       "answer": 0,
       "answerText": "",
@@ -101,10 +101,10 @@
       "timestamp": "01:12",
       "question": "What are the two main questions when intersecting a ray with a triangle?",
       "options": [
-        "What is the normal of the triangle and what is its reflectance property",
-        "What is the size of the triangle and how many triangles are in the scene",
-        "Does the ray hit the triangle and where/how far along the ray is the intersection",
-        "Where does the ray start and in what direction does it travel"
+        "Triangle normal and reflectance",
+        "Triangle size and count in scene",
+        "Ray-triangle hit and distance t",
+        "Ray origin and direction vector"
       ],
       "answer": 2,
       "answerText": "",
@@ -125,10 +125,10 @@
       "timestamp": "02:30",
       "question": "What additional test is required after determining that a ray pierces the plane of a triangle?",
       "options": [
-        "Computing the texture coordinates at the hit point",
-        "Verifying that the intersection point is inside the triangle",
-        "Checking if the triangle is visible from the camera",
-        "Testing if the ray origin is in front of the plane"
+        "Compute texture coordinates",
+        "Verify hit inside triangle",
+        "Check triangle visibility",
+        "Test ray origin vs plane"
       ],
       "answer": 1,
       "answerText": "",
@@ -149,10 +149,10 @@
       "timestamp": "03:02",
       "question": "How are barycentric coordinates used in ray-triangle intersection?",
       "options": [
-        "To compute the lighting at the intersection point",
-        "To determine the color of the triangle",
-        "To parameterize positions on the triangle for testing intersection",
-        "To accelerate intersection tests with multiple triangles"
+        "To compute the lighting at the intersection point using surface normals",
+        "To determine the final color of the triangle after shading and texturing",
+        "To parameterize positions on the triangle",
+        "To accelerate ray–triangle intersection tests across large triangle meshes using spatial coherence"
       ],
       "answer": 2,
       "answerText": "",
@@ -173,10 +173,10 @@
       "timestamp": "05:48",
       "question": "In the barycentric approach to ray-triangle intersection, what do the three columns of matrix M represent?",
       "options": [
-        "The three vertices of the triangle",
-        "The three barycentric coordinates",
+        "Three triangle vertices",
+        "Three barycentric values",
         "P1-P0, P2-P0, and -D",
-        "The normal vector, ray direction, and ray origin"
+        "Normal, ray dir, ray origin"
       ],
       "answer": 2,
       "answerText": "",
@@ -197,10 +197,10 @@
       "timestamp": "07:27",
       "question": "What is the \"first hit problem\" in ray tracing?",
       "options": [
-        "Finding the closest point where a ray intersects the scene",
-        "Identifying which object was first created in the scene",
-        "Determining which ray to cast first from the camera",
-        "Finding the first triangle in memory that a ray might hit"
+        "Finding the closest intersection",
+        "Identifying which object was first created in the scene graph",
+        "Determining the order in which rays should be cast from the camera for temporal coherence",
+        "Finding the first triangle in memory layout that a ray might intersect"
       ],
       "answer": 0,
       "answerText": "",
@@ -245,10 +245,10 @@
       "timestamp": "09:49",
       "question": "What is the first acceleration strategy proposed for ray-scene intersection?",
       "options": [
-        "Putting a bounding box around the mesh",
-        "Building a KD-tree for spatial subdivision",
-        "Sorting the triangles by distance",
-        "Using a uniform grid to partition space"
+        "Bounding box around mesh",
+        "KD-tree for spatial subdivision",
+        "Sort triangles by distance",
+        "Uniform grid space partition"
       ],
       "answer": 0,
       "answerText": "",
@@ -269,10 +269,10 @@
       "timestamp": "10:42",
       "question": "What is the benefit of using a bounding box for ray-scene intersection?",
       "options": [
-        "It automatically handles transparent objects",
-        "It enables early termination when the ray misses the box",
-        "It reduces the memory needed to store the scene",
-        "It allows the scene to be rendered with better quality"
+        "It automatically handles transparent objects via alpha compositing during traversal",
+        "To enable early termination",
+        "It reduces the memory needed to store the full scene hierarchy",
+        "It allows the scene to be rendered with better anti-aliased quality"
       ],
       "answer": 1,
       "answerText": "",
@@ -317,10 +317,10 @@
       "timestamp": "13:40",
       "question": "Why is ray-box intersection computation simpler than general ray-plane intersection?",
       "options": [
-        "Boxes have fewer triangles than general geometry",
-        "There's no need to compute barycentric coordinates",
-        "Box intersection doesn't require inside-outside testing",
-        "The planes of the box are axis-aligned, simplifying the normal vectors"
+        "Boxes have fewer triangles than general geometry, so intersections are cheaper",
+        "There's no need to compute barycentric coordinates because boxes aren't triangulated",
+        "Box intersection doesn't require inside-outside testing since boxes are convex solids",
+        "Axis-aligned planes simplify normal computation"
       ],
       "answer": 3,
       "answerText": "",
@@ -341,10 +341,10 @@
       "timestamp": "14:42",
       "question": "How is the final ray-box intersection determined after computing intersections with all box planes?",
       "options": [
-        "By taking the intersection of t-min/t-max intervals along each axis",
-        "By checking if the ray hits any of the planes",
-        "By taking the average of all intersection points",
-        "By finding the closest intersection to the ray origin"
+        "Intersect t-min/max per axis",
+        "Check ray vs each plane",
+        "Average all intersection points",
+        "Find closest to ray origin"
       ],
       "answer": 0,
       "answerText": "",
@@ -365,10 +365,10 @@
       "timestamp": "15:49",
       "question": "What simpler problem does the lecturer use as an analogy to spatial acceleration structures?",
       "options": [
-        "Finding the closest value in an array of integers",
-        "Finding the closest point in 2D",
-        "Implementing a hash table",
-        "Sorting a list of points"
+        "Finding the closest value in an array",
+        "Finding the closest point in 2D space using Euclidean distance",
+        "Implementing a hash table with collision resolution",
+        "Sorting a list of points by x-coordinate for scanline algorithms"
       ],
       "answer": 0,
       "answerText": "",
@@ -389,10 +389,10 @@
       "timestamp": "16:35",
       "question": "What is the naive approach to finding the closest value to K in an array?",
       "options": [
-        "Divide-and-conquer by splitting the array in half",
-        "Using a hash table to look up exact matches",
-        "Walking through the entire list and tracking the closest value seen",
-        "Binary search on the sorted array"
+        "Divide array in half",
+        "Hash table for exact matches",
+        "Scan list tracking closest",
+        "Binary search on sorted array"
       ],
       "answer": 2,
       "answerText": "",
@@ -413,10 +413,10 @@
       "timestamp": "18:11",
       "question": "What is the optimized approach for finding the closest value in an array?",
       "options": [
-        "Caching previously seen values",
-        "Using a heap data structure",
-        "Sorting the array first, then using binary search",
-        "Using a hash table for instant lookup"
+        "Cache previously seen values",
+        "Use heap data structure",
+        "Sort then binary search",
+        "Hash table for instant lookup"
       ],
       "answer": 2,
       "answerText": "",
@@ -437,10 +437,10 @@
       "timestamp": "20:12",
       "question": "What is the overall cost of the optimized (sort + binary search) approach to find a single closest value?",
       "options": [
-        "O(1)",
-        "O(n log n)",
-        "O(n)",
-        "O(log n)"
+        "O(1) — constant time per query regardless of tree size",
+        "O(log n)",
+        "O(n) — linear time scanning all nodes",
+        "O(n log n) — typical cost of building the structure"
       ],
       "answer": 1,
       "answerText": "",
@@ -461,10 +461,10 @@
       "timestamp": "21:00",
       "question": "When does the optimized (sort + binary search) approach become more efficient than the naive approach?",
       "options": [
-        "When the array is already sorted",
-        "When performing many lookups on the same data",
-        "When the elements are evenly distributed",
-        "When there are more than n² elements"
+        "Array already sorted",
+        "Many lookups on same data",
+        "Elements evenly distributed",
+        "More than n² elements"
       ],
       "answer": 1,
       "answerText": "",
@@ -533,10 +533,10 @@
       "timestamp": "24:15",
       "question": "What are the two types of nodes in a bounding volume hierarchy (BVH)?",
       "options": [
-        "Visible nodes and invisible nodes",
-        "Root nodes and branch nodes",
-        "Primary nodes and secondary nodes",
-        "Leaf nodes and interior nodes"
+        "Visible and invisible nodes",
+        "Root and branch nodes",
+        "Primary and secondary nodes",
+        "Leaf and interior nodes"
       ],
       "answer": 3,
       "answerText": "",
@@ -557,9 +557,9 @@
       "timestamp": "24:27",
       "question": "What do interior nodes in a BVH represent?",
       "options": [
-        "Individual triangles in the scene",
-        "Empty spaces in the scene",
-        "Proxies for large subsets of primitives",
+        "Individual scene triangles",
+        "Empty scene spaces",
+        "Proxies for primitive subsets",
         "Camera positions for rendering"
       ],
       "answer": 2,
@@ -581,10 +581,10 @@
       "timestamp": "26:55",
       "question": "According to the lecturer, what makes a \"better\" BVH?",
       "options": [
-        "Having deeper tree structures",
-        "Having more balanced tree structures",
-        "Having tighter fitting bounding boxes with less empty space",
-        "Having fewer total nodes"
+        "Having deeper tree structures increases cache misses and traversal cost",
+        "Having more balanced tree structures improves worst-case query time but not average",
+        "Tighter bounding boxes",
+        "Having fewer total nodes reduces memory footprint but may hurt traversal efficiency"
       ],
       "answer": 2,
       "answerText": "",
@@ -605,10 +605,10 @@
       "timestamp": "27:43",
       "question": "How are primitives partitioned in a BVH?",
       "options": [
-        "Primitives are duplicated across all relevant leaf nodes",
-        "Primitives are in disjoint sets where each primitive belongs to only one leaf node",
-        "Primitives are stored only in the root node",
-        "Primitives can be in multiple leaf nodes at once"
+        "Primitives duplicated across leaves",
+        "Primitives in disjoint leaf sets",
+        "Primitives stored only in root",
+        "Primitives in multiple leaves"
       ],
       "answer": 1,
       "answerText": "",
@@ -629,10 +629,10 @@
       "timestamp": "27:54",
       "question": "What is true about the bounding boxes of interior nodes in a BVH?",
       "options": [
-        "They must never overlap in space",
-        "They must be the same size",
-        "They must all be cubes",
-        "They can overlap in space"
+        "Never overlap in space",
+        "Must be same size",
+        "All must be cubes",
+        "Can overlap in space"
       ],
       "answer": 3,
       "answerText": "",
@@ -653,10 +653,10 @@
       "timestamp": "28:53",
       "question": "What data does a BVH node typically store?",
       "options": [
-        "Camera position and ray directions",
+        "Camera pos and ray dirs",
         "Only a bounding box",
-        "A boolean \"isLeaf\", a bounding box, and pointers to child nodes",
-        "Triangle meshes and material properties"
+        "isLeaf, bbox, child pointers",
+        "Triangle meshes and materials"
       ],
       "answer": 2,
       "answerText": "",
@@ -677,12 +677,12 @@
       "timestamp": "30:13",
       "question": "What information is stored in the \"hit info\" structure?",
       "options": [
-        "The ray origin and direction",
-        "The surface normal and material properties",
-        "All triangles the ray intersects",
-        "A pointer to the hit primitive and the distance t along the ray"
+        "Hit primitive and distance t",
+        "The ray origin and direction vector",
+        "All triangles the ray intersects during traversal",
+        "A pointer to the hit primitive and the parametric distance t along the ray"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "The lecturer states at [30:19]: \"This just stores a couple pieces of information the pointer to the primitive that was hit so which triangle was hit by the Ray and the T value how far along the Ray did that hit occur.\"",
@@ -701,10 +701,10 @@
       "timestamp": "30:49",
       "question": "What is the first step in the BVH traversal algorithm?",
       "options": [
-        "Check if the ray intersects each primitive in the scene",
-        "Compute the surface area of the bounding boxes",
-        "Check if the ray intersects the bounding box of the current node",
-        "Sort the primitives by distance from the ray"
+        "Check if the ray intersects each primitive in the scene one by one",
+        "Compute the surface area of all bounding boxes in the current subtree",
+        "Test ray–bounding-box intersection at the current node",
+        "Sort all scene primitives by increasing distance from the ray origin"
       ],
       "answer": 2,
       "answerText": "",
@@ -725,10 +725,10 @@
       "timestamp": "32:48",
       "question": "What optimization strategy improves BVH traversal performance?",
       "options": [
-        "Front-to-back traversal visiting the closest child node first",
-        "Testing primitives in random order",
-        "Back-to-front traversal visiting the farthest child node first",
-        "Always testing leaf nodes before interior nodes"
+        "Front-to-back closest-first",
+        "Random primitive order",
+        "Back-to-front farthest-first",
+        "Leaf before interior nodes"
       ],
       "answer": 0,
       "answerText": "",
@@ -773,10 +773,10 @@
       "timestamp": "39:26",
       "question": "When building a BVH, what is the problem with partitioning primitives into nodes with equal numbers?",
       "options": [
-        "It requires too much computation",
-        "It makes the tree too shallow",
-        "It creates too many leaf nodes",
-        "It can create bounding boxes with lots of empty space"
+        "It requires too much computation per split candidate",
+        "It makes the tree too shallow for effective pruning",
+        "It creates too many leaf nodes with single primitives",
+        "Leads to large empty regions inside bounding boxes"
       ],
       "answer": 3,
       "answerText": "",
@@ -797,10 +797,10 @@
       "timestamp": "40:10",
       "question": "What are the two main characteristics of a good BVH partitioning?",
       "options": [
-        "Many primitives per leaf node and few interior nodes",
-        "Small bounding boxes with minimal wasted space and minimal overlap between children",
-        "Balanced tree and deep hierarchy",
-        "Cubic boxes and evenly distributed primitives"
+        "Many primitives per leaf and few interior nodes for efficiency",
+        "Minimal overlap and tight bounding boxes",
+        "Balanced tree structure with uniform depth across branches",
+        "Cubic bounding boxes and evenly distributed primitives across space"
       ],
       "answer": 1,
       "answerText": "",
@@ -821,10 +821,10 @@
       "timestamp": "42:29",
       "question": "What is the general cost model for traversing an interior node in a BVH?",
       "options": [
-        "Sum of costs of all enclosed primitives",
-        "Fixed cost per node",
-        "Logarithm of number of enclosed primitives",
-        "Cost of traversing node + probability of hitting left child * cost of left child + probability of hitting right child * cost of right child"
+        "Sum of traversal and intersection costs for all enclosed primitives",
+        "Fixed cost assigned uniformly to every internal node",
+        "Logarithmic function of the number of primitives in the node",
+        "Traversal cost + hit-probability-weighted child costs"
       ],
       "answer": 3,
       "answerText": "",
@@ -845,10 +845,10 @@
       "timestamp": "43:49",
       "question": "What common heuristic is used for estimating the cost of traversing a child node?",
       "options": [
-        "The volume of the bounding box",
-        "The number of primitives contained by the child",
-        "The depth of the node in the tree",
-        "The surface area of the bounding box"
+        "The volume of the node’s axis-aligned bounding box",
+        "Number of primitives in the node",
+        "The depth of the node within the BVH hierarchy",
+        "The surface area of the node’s axis-aligned bounding box"
       ],
       "answer": 1,
       "answerText": "",
@@ -869,10 +869,10 @@
       "timestamp": "45:38",
       "question": "What is the surface area heuristic based on?",
       "options": [
-        "The ratio of surface areas between a convex object inside another convex object",
-        "The ratio of primitive counts",
-        "The ratio of volumes between objects",
-        "The distance between objects"
+        "Surface area ratio of nested convex objects",
+        "Ratio of total primitive counts between two nodes",
+        "Ratio of volumes occupied by two disjoint bounding boxes",
+        "Euclidean distance between centroids of two bounding boxes"
       ],
       "answer": 0,
       "answerText": "",
@@ -893,10 +893,10 @@
       "timestamp": "46:06",
       "question": "According to the surface area heuristic, what is the probability that a ray hitting an outer object B also hits an inner object A?",
       "options": [
-        "VA / VB (volume of A divided by volume of B)",
-        "1 - (SA / SB) (one minus the ratio of surface areas)",
-        "PA * PB (product of individual hit probabilities)",
-        "SA / SB (surface area of A divided by surface area of B)"
+        "VA / VB",
+        "1 - (SA / SB)",
+        "PA * PB",
+        "SA / SB"
       ],
       "answer": 3,
       "answerText": "",
@@ -917,12 +917,12 @@
       "timestamp": "50:46",
       "question": "What practical technique is used to limit the number of split planes considered when building a BVH?",
       "options": [
+        "Using a fixed number of buckets",
         "Using machine learning to predict the best split",
         "Considering only the medians of each axis",
-        "Only splitting along the longest axis",
-        "Using a fixed number of buckets (e.g., 32) along each axis"
+        "Only splitting along the longest axis"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "The lecturer explains at [50:46]: \"Modern rate racers will say look it's really not worth it in terms of the overall performance to consider every possible split plane what we're going to do instead is just pick some small small number of partitions to check or or buckets to check so maybe 32 different ways of splitting along this axis.\"",
@@ -941,12 +941,12 @@
       "timestamp": "54:15",
       "question": "How does spatial partitioning differ from primitive partitioning?",
       "options": [
+        "Divides space itself instead of sets of primitives",
         "Spatial partitioning uses smaller bounding boxes",
         "Spatial partitioning is always faster",
-        "Spatial partitioning only works with triangular primitives",
-        "Spatial partitioning divides space itself instead of sets of primitives"
+        "Spatial partitioning only works with triangular primitives"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "The lecturer contrasts at [54:15]: \"So far we've been considering what's called a primitive partitioning strategy which partitions the nodes primitives into disjoint sets right we build our tree by recursively subdividing the set of triangles. A completely different point of view is to say let's recursively subdivide space itself right let's split up space into smaller and smaller pieces.\"",
@@ -1037,10 +1037,10 @@
       "timestamp": "57:19",
       "question": "What solution is proposed for the problem of primitives overlapping multiple nodes in a KD tree?",
       "options": [
-        "Only store primitives in the root node",
-        "Duplicate primitives in all overlapping nodes",
-        "Use a hybrid KD-tree/BVH approach",
-        "Require the intersection point to be within the current leaf node"
+        "Store prims only in root",
+        "Duplicate prims in overlapping nodes",
+        "Hybrid KD-tree/BVH",
+        "Require hit within current leaf"
       ],
       "answer": 3,
       "answerText": "",
@@ -1061,12 +1061,12 @@
       "timestamp": "58:02",
       "question": "What is the \"mailboxing\" optimization used with KD trees?",
       "options": [
+        "Caching previous intersection results",
         "Dividing the scene into a grid-based layout",
         "Storing primitives in mailbox-shaped containers",
-        "Using a special data structure to track ray traversal",
-        "Caching previous intersection results to avoid recomputing"
+        "Using a special data structure to track ray traversal"
       ],
-      "answer": 3,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "The lecturer describes at [58:02]: \"One little optimization we can do to speed things up is we can cache the result we can say ah I visited this triangle before I've done this intersection before I'm just gonna store the hit point rather than recomputing it and that's called male boxing.\"",
@@ -1133,10 +1133,10 @@
       "timestamp": "1:00:09",
       "question": "What common heuristic is used for choosing the number of cells in a uniform grid?",
       "options": [
-        "Setting the number of cells equal to the number of primitives",
-        "Setting the grid dimensions to powers of two",
-        "Making the cell size equal to the average primitive size",
-        "Using a fixed number like 32³ cells"
+        "Cells = primitives count",
+        "Powers-of-two dimensions",
+        "Cell size = avg prim size",
+        "Fixed cells like 32³"
       ],
       "answer": 0,
       "answerText": "",
@@ -1157,10 +1157,10 @@
       "timestamp": "1:02:42",
       "question": "What does the \"teapot in a stadium\" problem illustrate?",
       "options": [
-        "A problem with uniform grids handling non-uniform geometry distribution",
-        "A challenge in rendering transparent objects",
-        "A test case for evaluating ray tracers",
-        "How to place objects in a virtual scene"
+        "Non-uniform geometry issue",
+        "Transparent object challenge",
+        "Ray tracer evaluation test",
+        "Virtual scene object placement"
       ],
       "answer": 0,
       "answerText": "",
@@ -1181,7 +1181,7 @@
       "timestamp": "1:04:18",
       "question": "How does an octree differ from a KD tree?",
       "options": [
-        "Octrees split each cell into eight pieces rather than doing a binary split",
+        "Split each cell into eight",
         "Octrees don't require building a hierarchy",
         "Octrees only work with eight-sided objects",
         "Octrees are always more efficient than KD trees"
@@ -1229,10 +1229,10 @@
       "timestamp": "1:14:35",
       "question": "How does ray casting differ from rasterization in terms of loop structure?",
       "options": [
-        "Ray casting loops over samples (pixels) first, while rasterization loops over primitives first",
-        "Ray casting is single-threaded while rasterization is multi-threaded",
-        "Ray casting requires preprocessing while rasterization doesn't",
-        "Ray casting uses recursion while rasterization uses iteration"
+        "Ray casting: samples first; rasterization: primitives first",
+        "Ray casting is inherently sequential and cannot exploit pixel-level parallelism, whereas rasterization is designed for massive parallelization across pixels and fragments",
+        "Ray casting requires building an acceleration structure like a BVH beforehand, while rasterization only needs vertex processing and fixed-function setup before fragment shading",
+        "Ray casting recursively traces secondary rays for reflections, refractions, and shadows, while rasterization uses iterative scanline or tile-based processing without recursion"
       ],
       "answer": 0,
       "answerText": "",
@@ -1253,10 +1253,10 @@
       "timestamp": "1:18:25",
       "question": "What advantage does ray casting have for rendering transparent surfaces?",
       "options": [
-        "It can easily find and sort all intersections along a ray",
-        "It's faster than rasterization for transparent objects",
-        "It uses less memory for transparent objects",
-        "It makes transparent objects appear more realistic"
+        "Finds/sorts all ray intersections",
+        "Faster for transparent objects",
+        "Less memory for transparents",
+        "More realistic transparent appearance"
       ],
       "answer": 0,
       "answerText": "",
@@ -1277,10 +1277,10 @@
       "timestamp": "1:19:01",
       "question": "What major limitation does ray casting have compared to rasterization?",
       "options": [
-        "Ray casting only works with triangular primitives",
-        "Ray casting produces lower quality images",
-        "Ray casting cannot handle complex lighting",
-        "Ray casting requires storing the entire scene in memory at once"
+        "Only triangular primitives",
+        "Lower image quality",
+        "Cannot handle complex lighting",
+        "Requires full scene in memory"
       ],
       "answer": 3,
       "answerText": "",

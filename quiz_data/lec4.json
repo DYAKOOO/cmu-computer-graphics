@@ -77,10 +77,10 @@
       "timestamp": "00:35",
       "question": "What is the basic principle of rasterization according to the lecture?",
       "options": [
-        "For each primitive, determine which pixels it covers",
-        "For each pixel, determine which primitive it contains",
-        "For each image, determine the viewing frustum",
-        "For each triangle, compute its barycentric coordinates"
+        "Determine pixel coverage per primitive",
+        "Determine which primitive covers each pixel",
+        "Determine viewing frustum per image",
+        "Compute barycentric coords per triangle"
       ],
       "answer": 0,
       "answerText": "",
@@ -104,10 +104,10 @@
       "timestamp": "00:42",
       "question": "According to the lecture, what is a key advantage of rasterization?",
       "options": [
-        "It handles transparency better",
-        "It works well with curved surfaces",
-        "It can be made extremely fast",
-        "It produces more photorealistic images"
+        "Better transparency handling",
+        "Good for curved surfaces",
+        "Can be made extremely fast",
+        "More photorealistic output"
       ],
       "answer": 2,
       "answerText": "",
@@ -130,10 +130,10 @@
       "timestamp": "01:35",
       "question": "What is the main difference between rasterization and ray tracing described in the lecture?",
       "options": [
-        "Ray tracing is pixel-centric while rasterization is primitive-centric",
-        "Rasterization can handle curved surfaces better",
-        "Rasterization takes longer to compute",
-        "Ray tracing is more common in video games"
+        "Ray tracing is pixel-centric",
+        "Ray tracing is more common in video games due to its real-time performance",
+        "Rasterization can handle curved surfaces better because it uses tessellation",
+        "Rasterization takes longer to compute than ray tracing for complex lighting"
       ],
       "answer": 0,
       "answerText": "",
@@ -181,9 +181,9 @@
       "timestamp": "02:26",
       "question": "What is a key characteristic of stages in a graphics pipeline?",
       "options": [
-        "They operate independently from each other",
-        "They are programmed in hardware",
-        "They all run in parallel",
+        "They operate independently from each other and require no coordination",
+        "They are programmed in hardware and thus cannot be modified by software",
+        "They all run in parallel but only on GPUs with dedicated shader cores",
         "They have highly structured input and output data"
       ],
       "answer": 3,
@@ -279,10 +279,10 @@
       "timestamp": "08:31",
       "question": "What is one of the key advantages of using triangles for rasterization?",
       "options": [
-        "They are faster to process than points or lines",
-        "They can represent curved surfaces perfectly",
-        "They require less memory than other primitives",
-        "They are always planar (have a well-defined plane)"
+        "Faster to process than points/lines",
+        "Perfectly represent curved surfaces",
+        "Require less memory than others",
+        "Always planar (well-defined plane)"
       ],
       "answer": 3,
       "answerText": "",
@@ -303,9 +303,9 @@
       "timestamp": "09:42",
       "question": "Why is the planarity of triangles particularly important for shading?",
       "options": [
-        "It makes texturing easier",
-        "It allows for faster processing",
-        "It simplifies memory storage",
+        "It makes texturing easier by aligning UV coordinates automatically",
+        "It allows for faster processing by reducing branching in shaders",
+        "It simplifies memory storage by enabling interleaved vertex buffers",
         "It ensures a well-defined normal direction"
       ],
       "answer": 3,
@@ -327,9 +327,9 @@
       "timestamp": "09:56",
       "question": "What advantage of triangles related to data at vertices is mentioned in the lecture?",
       "options": [
-        "They allow for automatic level-of-detail",
-        "They support complex texturing operations",
-        "They provide better compression of vertex data",
+        "They allow for automatic level-of-detail using screen-space metrics",
+        "They support complex texturing operations like triplanar mapping",
+        "They provide better compression of vertex data via quantization",
         "They enable easy interpolation of data across the triangle"
       ],
       "answer": 3,
@@ -351,10 +351,10 @@
       "timestamp": "11:28",
       "question": "What is the first stage in the rasterization pipeline described in the lecture?",
       "options": [
-        "Interpolating attributes at vertices",
-        "Projection onto the 2D screen",
-        "Sampling triangle coverage",
-        "Transformation and positioning in the world"
+        "Interpolating attributes at vertices before rasterization",
+        "Projection onto the 2D screen using perspective-correct division",
+        "Sampling triangle coverage using multisample anti-aliasing",
+        "Transformation and positioning in the world via model matrices"
       ],
       "answer": 3,
       "answerText": "",
@@ -375,10 +375,10 @@
       "timestamp": "13:44",
       "question": "What is the basic question of rasterization according to the lecture?",
       "options": [
-        "For each vertex, which pixels should be affected?",
-        "For each triangle, which pixels are covered by it?",
-        "For each image, how many triangles are visible?",
-        "For each pixel, which triangle is closest to the camera?"
+        "Which pixels affected per vertex?",
+        "Which pixels covered per triangle?",
+        "How many visible triangles per image?",
+        "Which triangle closest per pixel?"
       ],
       "answer": 1,
       "answerText": "",
@@ -400,9 +400,9 @@
       "question": "What is meant by the \"occlusion question\" in the lecture?",
       "options": [
         "When multiple triangles cover a pixel, which one is visible?",
-        "Which triangles are outside the viewing frustum?",
-        "Which triangles should be culled?",
-        "Which triangles are too small to be visible?"
+        "Which triangles are outside the viewing frustum and should be clipped?",
+        "Which triangles should be culled using back-face or occlusion techniques?",
+        "Which triangles are too small to be visible and thus skipped in shading?"
       ],
       "answer": 0,
       "answerText": "",
@@ -449,10 +449,10 @@
       "timestamp": "16:32",
       "question": "When defining what it means for a pixel to be covered by a triangle, which case is straightforward according to the lecture?",
       "options": [
-        "When the triangle's vertex is inside the pixel",
-        "When the triangle completely covers the pixel",
-        "When the triangle partially covers the pixel",
-        "When the triangle's edge passes through the pixel"
+        "Vertex inside pixel",
+        "Triangle fully covers pixel",
+        "Triangle partially covers pixel",
+        "Edge passes through pixel"
       ],
       "answer": 1,
       "answerText": "",
@@ -473,10 +473,10 @@
       "timestamp": "17:50",
       "question": "What approach does the lecturer suggest for handling partial pixel coverage?",
       "options": [
-        "Always treat partially covered pixels as fully covered",
-        "Never count partially covered pixels",
-        "Randomly decide whether to count partial coverage",
-        "Record the fraction of the pixel area covered by the triangle"
+        "Treat partial as full coverage",
+        "Ignore partial coverage",
+        "Random decision on partials",
+        "Record area fraction covered"
       ],
       "answer": 3,
       "answerText": "",
@@ -497,9 +497,9 @@
       "timestamp": "18:52",
       "question": "Why is it difficult to compute the exact coverage fraction when multiple triangles are involved?",
       "options": [
-        "Triangles might have different depths",
-        "Triangles might have different colors",
-        "The math is too complex to compute in real-time",
+        "Triangles might have different depths requiring depth buffering",
+        "Triangles might have different colors leading to blending complications",
+        "The math is too complex to compute in real-time without approximations",
         "Complex regions of overlap can form non-convex shapes"
       ],
       "answer": 3,
@@ -524,10 +524,10 @@
       "timestamp": "20:22",
       "question": "What is the sampling approach to determining coverage?",
       "options": [
-        "Calculate the area of triangle-pixel overlap analytically",
-        "Approximate the triangle with smaller primitives",
-        "Test several sample points and use statistics to estimate coverage",
-        "Use a lookup table for predetermined coverage patterns"
+        "Analytic triangle-pixel area calc",
+        "Approximate with smaller primitives",
+        "Sample points, estimate coverage",
+        "Use lookup table for patterns"
       ],
       "answer": 2,
       "answerText": "",
@@ -548,10 +548,10 @@
       "timestamp": "21:09",
       "question": "What is the basic definition of sampling given in the lecture?",
       "options": [
-        "Removing high-frequency components from a signal",
-        "Converting analog signals to digital values",
-        "Reducing the resolution of an image",
-        "Selecting values of a function at specific points"
+        "Remove high-frequency components",
+        "Convert analog to digital values",
+        "Reduce image resolution",
+        "Select function values at points"
       ],
       "answer": 3,
       "answerText": "",
@@ -622,10 +622,10 @@
       "timestamp": "22:33",
       "question": "What is the reconstruction problem in signal processing?",
       "options": [
-        "Creating a continuous function from discrete samples",
-        "Converting a digital signal back to analog form",
-        "Removing noise from a sampled signal",
-        "Finding the original signal from a degraded version"
+        "Create continuous func from samples",
+        "Convert digital to analog form",
+        "Remove noise from sampled signal",
+        "Recover original from degraded version"
       ],
       "answer": 0,
       "answerText": "",
@@ -648,12 +648,12 @@
       "timestamp": "23:21",
       "question": "What is the most basic reconstruction approach described in the lecture?",
       "options": [
+        "Piecewise constant",
         "Linear interpolation",
-        "Piecewise constant approximation",
-        "Sine wave interpolation",
-        "Cubic splines"
+        "Sine wave interpolation using smoothstep",
+        "Cubic splines with continuous second derivatives"
       ],
-      "answer": 1,
+      "answer": 0,
       "answerText": "",
       "intuition": "",
       "explanation": "At [23:21], the lecturer explains: \"One really basic idea would be to use a piecewise constant approximation. I don't know what the function is equal to for every value of x so what I'm going to do is just say okay find the closest value of x where I do know the function value and just use that one.\"",
@@ -674,10 +674,10 @@
       "timestamp": "24:27",
       "question": "What issue with piecewise linear reconstruction is highlighted in the lecture?",
       "options": [
-        "It uses too much memory",
-        "It requires too much computation",
-        "It can miss significant features between sample points",
-        "It creates artificial high frequencies"
+        "Uses too much memory",
+        "Requires too much computation",
+        "Misses features between samples",
+        "Creates artificial high frequencies"
       ],
       "answer": 2,
       "answerText": "",
@@ -701,10 +701,10 @@
       "timestamp": "24:56",
       "question": "What is the most basic solution to improve reconstruction quality?",
       "options": [
-        "Use a more sophisticated interpolation method",
+        "Use more sophisticated interpolation",
         "Use frequency domain techniques",
-        "Apply a smoothing filter",
-        "Increase the sampling rate"
+        "Apply smoothing filter",
+        "Increase sampling rate"
       ],
       "answer": 3,
       "answerText": "",
@@ -728,10 +728,10 @@
       "timestamp": "28:14",
       "question": "How does the lecture define the coverage function for rasterization?",
       "options": [
-        "A function that returns the depth of each pixel",
-        "A function that calculates triangle area",
-        "A binary function that indicates whether a point is inside a triangle (1) or not (0)",
-        "A function that determines pixel color based on triangle properties"
+        "Depth function per pixel",
+        "Triangle area calculator",
+        "Binary inside/outside function",
+        "Pixel color from triangle props"
       ],
       "answer": 2,
       "answerText": "",
@@ -756,10 +756,10 @@
       "timestamp": "29:06",
       "question": "What challenge arises when an edge passes directly through a sample point?",
       "options": [
-        "The pixel appears darker than it should",
+        "The pixel appears darker than it should due to undercoverage",
         "It's ambiguous which triangle covers the pixel",
-        "The algorithm fails completely",
-        "The computation becomes too slow"
+        "The algorithm fails completely and crashes the renderer",
+        "The computation becomes too slow due to excessive barycentric checks"
       ],
       "answer": 1,
       "answerText": "",
@@ -782,10 +782,10 @@
       "timestamp": "29:53",
       "question": "What is one approach mentioned for handling edge cases when a sample point falls exactly on a triangle edge?",
       "options": [
-        "Classify based on whether it's a top edge or left edge",
-        "Move the sample point slightly",
-        "Never count points exactly on edges",
-        "Always count both triangles sharing the edge"
+        "Classify top vs left edges",
+        "Move sample point slightly",
+        "Never count edge points",
+        "Always count both sharing triangles"
       ],
       "answer": 0,
       "answerText": "",
@@ -856,10 +856,10 @@
       "timestamp": "33:47",
       "question": "What is aliasing in the context of computer graphics?",
       "options": [
-        "When colors look different on different displays",
-        "When one triangle is rendered on top of another",
-        "When triangles are too small to be visible",
-        "When a mismatch occurs between sampling and reconstruction"
+        "When colors look different on different displays due to gamma mismatch",
+        "When one triangle is rendered on top of another without depth testing",
+        "When triangles are too small to be visible at current resolution",
+        "Sampling–reconstruction mismatch"
       ],
       "answer": 3,
       "answerText": "",
@@ -885,9 +885,9 @@
       "question": "How does the lecture suggest we can understand signals like audio?",
       "options": [
         "As a superposition or sum of different frequencies",
-        "As a set of discrete events",
-        "As a sequence of amplitudes over time",
-        "As a series of waveforms"
+        "As a set of discrete events occurring at irregular intervals",
+        "As a sequence of amplitudes over time with no frequency interpretation",
+        "As a series of waveforms each representing a color channel"
       ],
       "answer": 0,
       "answerText": "",
@@ -910,10 +910,10 @@
       "timestamp": "38:30",
       "question": "In the pitch-rising experiment, what unexpected phenomenon was observed?",
       "options": [
-        "The frequency remained constant",
-        "The sound became inaudible",
-        "The audio became distorted",
-        "The pitch appeared to rise and fall repeatedly"
+        "Frequency remained constant",
+        "Sound became inaudible",
+        "Audio became distorted",
+        "Pitch rose/fell repeatedly"
       ],
       "answer": 3,
       "answerText": "",
@@ -934,10 +934,10 @@
       "timestamp": "38:50",
       "question": "What explains the unexpected result in the pitch experiment?",
       "options": [
-        "Interference between multiple sound waves",
-        "Incorrect frequency generation",
+        "Interference between multiple sound waves causing beats",
+        "Incorrect frequency generation from oscillator phase error",
         "Undersampling of the high-frequency signal",
-        "A bug in the audio playback system"
+        "A bug in the audio playback system causing pitch shift"
       ],
       "answer": 2,
       "answerText": "",
@@ -958,10 +958,10 @@
       "timestamp": "40:22",
       "question": "How does the lecturer define aliasing in the audio example?",
       "options": [
-        "When sound becomes too distorted to recognize",
-        "When audio frequencies exceed human hearing range",
-        "When digital audio cannot reproduce analog sounds",
-        "When high frequencies masquerade as low frequencies after reconstruction"
+        "When sound becomes too distorted to recognize due to clipping",
+        "When audio frequencies exceed human hearing range (20 kHz)",
+        "When digital audio cannot reproduce analog sounds due to quantization",
+        "High frequencies masquerading as low frequencies after reconstruction"
       ],
       "answer": 3,
       "answerText": "",
@@ -982,10 +982,10 @@
       "timestamp": "41:44",
       "question": "In the image frequency domain representation shown in the lecture, where are the low frequencies located?",
       "options": [
-        "At the edges of the representation",
-        "At the corners only",
-        "Uniformly distributed throughout",
-        "At the dead center"
+        "At representation edges",
+        "At corners only",
+        "Uniformly distributed",
+        "At dead center"
       ],
       "answer": 3,
       "answerText": "",
@@ -1030,9 +1030,9 @@
       "timestamp": "45:32",
       "question": "What real-world example of temporal aliasing is described in the lecture?",
       "options": [
-        "Lens flare effects",
-        "Image pixelation when zooming",
-        "Motion blur in photographs",
+        "Lens flare effects caused by stray light in optics",
+        "Image pixelation when zooming into a raster image",
+        "Motion blur in photographs due to camera or subject movement",
         "Spinning wagon wheels appearing to rotate backwards"
       ],
       "answer": 3,
@@ -1154,10 +1154,10 @@
       "timestamp": "50:39",
       "question": "What common aliasing artifact appears in static images with straight lines?",
       "options": [
-        "Banding",
-        "Pixel bleeding",
-        "Moire patterns",
-        "Jaggies (jagged edges)"
+        "Banding — visible intensity bands due to insufficient bit depth",
+        "Pixel bleeding — color leakage from neighboring pixels during filtering",
+        "Moire patterns — interference artifacts from undersampling periodic structures",
+        "Jaggies"
       ],
       "answer": 3,
       "answerText": "",
@@ -1180,10 +1180,10 @@
       "timestamp": "51:39",
       "question": "What is the ideal goal when trying to reduce aliasing in pixel coverage?",
       "options": [
-        "To remove all high frequencies from the scene",
-        "To randomize the sampling pattern",
-        "To match the total light in a pixel with the total light in the original signal",
-        "To use the minimum number of samples possible"
+        "To remove all high frequencies from the scene before sampling",
+        "To randomize the sampling pattern and reduce structured aliasing",
+        "To match pixel value to signal integral",
+        "To use the minimum number of samples possible while preserving visual fidelity"
       ],
       "answer": 2,
       "answerText": "",
@@ -1233,10 +1233,10 @@
       "timestamp": "53:54",
       "question": "How are the multiple samples used in super sampling anti-aliasing?",
       "options": [
-        "The samples are averaged to determine the pixel's coverage",
-        "The samples are combined using a weighted formula",
-        "The brightest sample is selected",
-        "The median value is used"
+        "Samples averaged for coverage",
+        "Samples combined via weighted formula",
+        "Brightest sample selected",
+        "Median value used"
       ],
       "answer": 0,
       "answerText": "",
@@ -1258,9 +1258,9 @@
       "question": "What improvement was observed when increasing from 4 samples per pixel to 16 samples per pixel?",
       "options": [
         "The image became smoother but still had some artifacts",
-        "The image became darker",
-        "There was no visible difference",
-        "The image became perfectly aliasing-free"
+        "The image became darker due to energy loss in filtering",
+        "There was no visible difference because the scene lacked high frequencies",
+        "The image became perfectly aliasing-free, satisfying the Nyquist–Shannon theorem exactly"
       ],
       "answer": 0,
       "answerText": "",
@@ -1281,10 +1281,10 @@
       "timestamp": "55:42",
       "question": "Even with 1024 samples per pixel, what was observed about the anti-aliasing result?",
       "options": [
-        "It still wasn't perfect",
-        "It became perfect with no visible artifacts",
-        "It became too blurry",
-        "It introduced new artifacts"
+        "Still wasn't perfect",
+        "Became perfect, no artifacts",
+        "Became too blurry",
+        "Introduced new artifacts"
       ],
       "answer": 0,
       "answerText": "",
@@ -1332,10 +1332,10 @@
       "timestamp": "57:10",
       "question": "What is the most basic operation needed for triangle rasterization?",
       "options": [
-        "Finding the closest point on a triangle",
-        "Computing triangle area",
-        "Calculating triangle perimeter",
-        "Testing if a point is inside a triangle"
+        "Find closest point on triangle",
+        "Compute triangle area",
+        "Calculate triangle perimeter",
+        "Test point-in-triangle"
       ],
       "answer": 3,
       "answerText": "",
@@ -1358,10 +1358,10 @@
       "timestamp": "58:12",
       "question": "How is the point-in-triangle test typically implemented?",
       "options": [
-        "Using barycentric coordinates",
-        "Calculating angle sums",
-        "Testing if the point is inside the three half-planes defined by the edges",
-        "Computing distance to each edge"
+        "Using barycentric coordinates to interpolate vertex attributes",
+        "Calculating angle sums to determine point-in-polygon inclusion",
+        "Testing half-planes",
+        "Computing distance to each edge and checking sign consistency"
       ],
       "answer": 2,
       "answerText": "",
@@ -1382,10 +1382,10 @@
       "timestamp": "59:36",
       "question": "What optimization is mentioned for incremental point-in-triangle testing?",
       "options": [
-        "Pre-computing lookup tables",
+        "Pre-computing lookup tables for common edge slopes and intercepts",
         "Reusing calculations between adjacent pixels",
-        "Using graphics hardware acceleration",
-        "Approximating triangles with rectangles"
+        "Using graphics hardware acceleration via fixed-function pipelines",
+        "Approximating triangles with axis-aligned rectangles for faster culling"
       ],
       "answer": 1,
       "answerText": "",
@@ -1434,9 +1434,9 @@
       "timestamp": "1:00:46",
       "question": "What approach does modern hardware take to triangle rasterization?",
       "options": [
-        "Processing one scan line at a time",
-        "Sequential processing of each pixel",
-        "Using a lookup table for common triangle shapes",
+        "Processing one scan line at a time to leverage horizontal coherence",
+        "Sequential processing of each pixel to minimize memory footprint",
+        "Using a lookup table for common triangle shapes to avoid runtime computation",
         "Testing all samples in the triangle's bounding box in parallel"
       ],
       "answer": 3,
@@ -1459,8 +1459,8 @@
       "question": "What shape of triangle was identified as problematic for the parallel bounding box approach?",
       "options": [
         "Long, skinny triangles",
-        "Triangles with curved edges",
-        "Triangles with obtuse angles",
+        "Curved-edge triangles",
+        "Obtuse-angle triangles",
         "Very small triangles"
       ],
       "answer": 0,
@@ -1509,9 +1509,9 @@
       "timestamp": "1:03:00",
       "question": "What is the benefit of the early-out test with blocks?",
       "options": [
-        "It simplifies the triangle intersection test",
-        "It improves cache coherence",
-        "It allows hardware acceleration",
+        "It simplifies the triangle intersection test by reducing dimensionality",
+        "It improves cache coherence by accessing nearby memory locations together",
+        "It allows hardware acceleration through dedicated rasterization units",
         "It avoids unnecessary work on pixels not covered by the triangle"
       ],
       "answer": 3,
@@ -1531,10 +1531,10 @@
       "timestamp": "1:04:49",
       "question": "What important graphics concept is introduced with the recursive block testing approach?",
       "options": [
-        "Hierarchical strategy",
-        "Divide and conquer",
-        "Dynamic programming",
-        "Backtracking"
+        "Hierarchical",
+        "Divide and conquer is a general algorithmic paradigm used for solving problems recursively",
+        "Dynamic programming solves problems by breaking them into overlapping subproblems and storing results",
+        "Backtracking incrementally builds candidates and abandons invalid ones"
       ],
       "answer": 0,
       "answerText": "",
@@ -1555,10 +1555,10 @@
       "timestamp": "1:06:16",
       "question": "Why isn't hierarchical rasterization commonly used in real graphics hardware?",
       "options": [
-        "It produces visual artifacts",
-        "The overhead of traversal is too high",
-        "It's patented and requires licensing",
-        "It requires too much memory"
+        "Produces visual artifacts",
+        "Traversal overhead too high",
+        "Patented, requires licensing",
+        "Requires too much memory"
       ],
       "answer": 1,
       "answerText": "",
@@ -1600,8 +1600,8 @@
       "question": "What does the lecturer describe as the basic strategy for reducing aliasing in rasterization?",
       "options": [
         "Blurring the image",
-        "Decreasing the resolution",
-        "Using different primitive shapes",
+        "Decreasing resolution",
+        "Using different primitives",
         "Using super sampling"
       ],
       "answer": 3,
@@ -1623,10 +1623,10 @@
       "timestamp": "1:08:57",
       "question": "According to the summary, what is the \"basic building block\" for the graphics pipeline?",
       "options": [
-        "Texture mapping",
-        "Vertex transformation",
-        "Pixel shading",
-        "Triangle rasterization"
+        "Texture mapping applies images to surfaces during rendering",
+        "Vertex transformation converts object coordinates to screen space via model-view-projection",
+        "Pixel shading computes final color per fragment using lighting, materials, and textures",
+        "Rasterization"
       ],
       "answer": 3,
       "answerText": "",
@@ -1645,10 +1645,10 @@
       "timestamp": "1:09:51",
       "question": "What topic will be covered in the next lecture according to the professor?",
       "options": [
-        "3D transformations",
-        "Texture mapping",
-        "Animation",
-        "Lighting models"
+        "3D transformations include rotation, scaling, and translation in homogeneous coordinates",
+        "Texture mapping wraps 2D images onto 3D geometry using UV coordinates",
+        "Animation involves time-varying parameters like pose, deformation, or camera path",
+        "Lighting models (e.g., Phong, Blinn-Phong) approximate how light interacts with surfaces"
       ],
       "answer": 0,
       "answerText": "",
